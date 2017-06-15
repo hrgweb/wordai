@@ -4,19 +4,21 @@
 
 		<form method="POST" @submit.prevent="spinTax">
 			<div class="form-group">
-				<span>Character left: <b>{{ wordsLeft }}</b></span>
+				<span>Word count: <b>{{ count }}</b></span>
 			</div>
 
-			<textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="hit"></textarea>
+			<textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea>
 			<br>
 			<button type="submit" class="btn btn-primary">Spin Tax</button>
 			&nbsp;&nbsp;&nbsp;
-			<span v-if="isLoading">LOADING....</span>
+			<span v-if="isLoading">LOADING....</span><br>
 		</form>
 
 		<div class="Word__result" v-if="isSuccess">
+			<pre>{{ result }}</pre>
+			<br>
 			<h3 class="text-center">Spin Tax</h3>
-			<p style="white-space: pre-wrap;">{{ newWords }}</p>
+			<p style="wwordCounte-space: pre-wrap;">{{ newWords }}</p>
 		</div>
 	</div>
 </template>
@@ -26,7 +28,7 @@
 		data() {
 			return {
 				wordsMax: 1800,
-				wordsLeft: 1800,
+				count: 1800,
 				words: '',
 				newWords: '',
 				result: {},
@@ -39,9 +41,19 @@
 			// console.log(axios);
 		},
 		methods: {
-			hit() {
-				this.wordsLeft = this.wordsMax - this.words.length;
-				console.log('hit');
+			wordCount() {
+				this.words = this.words.trim();
+				let count = 0;
+
+				for (let i=0; i<this.words.length; i++) {
+					let char = this.words.charAt(i);
+
+					if (char === ' ') {
+						count++;
+					}
+				}
+
+				this.count = count;
 			},
 			spinTax() {
 				const data = { words: this.words };

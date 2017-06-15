@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Northern</title>
+    <title>WordAI</title>
 
     <!-- Styles -->
     {{-- <link rel="stylesheet" href="/css/vendor/bootstrap-superhero.min.css"> --}}
@@ -23,6 +23,8 @@
 </head>
 <body>
     <div id="app" class="container">
+		@include('partials._nav')
+
         @yield('content')
     </div>
 
