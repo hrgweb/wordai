@@ -1667,17 +1667,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['user'],
 	data: function data() {
 		return {
 			wordsMax: 1800,
-			count: 1800,
+			count: 0,
 			words: '',
 			newWords: '',
 			result: {},
 			error: '',
 			isLoading: false,
-			isSuccess: false
+			isSuccess: false,
+			authUser: {}
 		};
+	},
+	created: function created() {
+		this.authUser = JSON.parse(this.user);
 	},
 	mounted: function mounted() {
 		// console.log(axios);
@@ -1685,11 +1690,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	methods: {
 		wordCount: function wordCount() {
-			this.words = this.words.trim();
-			var count = 0;
+			var count = 1;
+			var words = this.words.trim();
 
-			for (var i = 0; i < this.words.length; i++) {
-				var char = this.words.charAt(i);
+			for (var i = 0; i < words.length; i++) {
+				var char = words.charAt(i);
 
 				if (char === ' ') {
 					count++;
@@ -1716,7 +1721,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					_this.isLoading = false;
 
 					// post
-					_this.saveSpinTax({ words: data.text });
+					var params = {
+						spintax: data.text,
+						user_id: _this.authUser.id
+					};
+					_this.saveSpinTax(params);
 				}
 			}).catch(function (error) {
 				return _this.error = error.response.data;
@@ -31890,7 +31899,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "form-group"
-  }, [_c('span', [_vm._v("Word count: "), _c('b', [_vm._v(_vm._s(_vm.count))])])]), _vm._v(" "), _c('textarea', {
+  }, [_c('span', [_vm._v("Words count: "), _c('b', [_vm._v(_vm._s(_vm.count))])])]), _vm._v(" "), _c('textarea', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -31923,7 +31932,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "text-center"
   }, [_vm._v("Spin Tax")]), _vm._v(" "), _c('p', {
     staticStyle: {
-      "wwordCounte-space": "pre-wrap"
+      "white-space": "pre-wrap"
     }
   }, [_vm._v(_vm._s(_vm.newWords))])]) : _vm._e()])
 },staticRenderFns: []}

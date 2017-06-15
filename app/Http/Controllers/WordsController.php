@@ -21,7 +21,9 @@ class WordsController extends Controller
 
 	public function postSpinTax()
 	{
-		Word::create(['spintax' => request('words')]);
+		$result = auth()->user()->words()->create(request()->all());
+
+		return response()->json($result);
 	}
 
 	private function api($text, $quality, $email, $pass)

@@ -2,8 +2,9 @@
 
 namespace App;
 
-use Illuminate\Notifications\Notifiable;
+use App\Word;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -20,5 +21,10 @@ class User extends Authenticatable
     public function setNameAttribute($name)
     {	
     	$this->attributes['name'] = ucwords($name);
+    }
+
+    public function words()
+    {
+    	return $this->hasMany(Word::class);
     }
 }

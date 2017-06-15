@@ -8,7 +8,7 @@
                 <div class="panel-heading">Dashboard</div>
 
                 <div class="panel-body">
-                    <word-api></word-api>
+                    <word-api user="{{ $user }}"></word-api>
                 </div>
             </div>
         </div>

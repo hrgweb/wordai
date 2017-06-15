@@ -4,7 +4,7 @@
 
 		<form method="POST" @submit.prevent="spinTax">
 			<div class="form-group">
-				<span>Word count: <b>{{ count }}</b></span>
+				<span>Words count: <b>{{ count }}</b></span>
 			</div>
 
 			<textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea>
@@ -18,35 +18,40 @@
 			<pre>{{ result }}</pre>
 			<br>
 			<h3 class="text-center">Spin Tax</h3>
-			<p style="wwordCounte-space: pre-wrap;">{{ newWords }}</p>
+			<p style="white-space: pre-wrap;">{{ newWords }}</p>
 		</div>
 	</div>
 </template>
 
 <script>
 	export default {
+		props: [ 'user' ],
 		data() {
 			return {
 				wordsMax: 1800,
-				count: 1800,
+				count: 0,
 				words: '',
 				newWords: '',
 				result: {},
 				error: '',
 				isLoading: false,
-				isSuccess: false
+				isSuccess: false,
+				authUser: {}
 			}
+		},
+		created() {
+			this.authUser = JSON.parse(this.user);
 		},
 		mounted() {
 			// console.log(axios);
 		},
 		methods: {
 			wordCount() {
-				this.words = this.words.trim();
-				let count = 0;
+				let count = 1;
+				let words = this.words.trim();
 
-				for (let i=0; i<this.words.length; i++) {
-					let char = this.words.charAt(i);
+				for (let i=0; i<words.length; i++) {
+					let char = words.charAt(i);
 
 					if (char === ' ') {
 						count++;
@@ -72,7 +77,11 @@
 							this.isLoading = false;
 
 							// post
-							this.saveSpinTax({ words: data.text });
+							const params = {
+								spintax: data.text,
+								user_id: this.authUser.id
+							}
+							this.saveSpinTax(params);
 						}
 					})
 					.catch(error => this.error = error.response.data);
