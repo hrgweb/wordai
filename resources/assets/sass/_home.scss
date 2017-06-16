@@ -4,6 +4,8 @@
 	a {
  	   color: #fff;
 	    font-size: 1.4em;
+
+	    &:hover { text-decoration: none; }
 	}
 }
 
@@ -11,4 +13,7 @@
     margin-right: 5em;
 }
 
-/*=============== login ===============*/ 
+/*=============== login, register ===============*/ 
+.row-table > [class*="col-"] {
+	top: 7em !important;
+}

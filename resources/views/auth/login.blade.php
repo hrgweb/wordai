@@ -4,7 +4,7 @@
 	<div class="row row-table page-wrapper">
 	    <div class="col-lg-3 col-md-6 col-sm-8 col-xs-12 align-middle">
 	        <!-- START panel-->
-	        <div class="panel panel-dark panel-flat" style="margin-top: 10em !important;">
+	        <div class="panel panel-dark panel-flat">
 	            <div class="panel-heading text-center">
 	                <p class="text-center mt-lg">
 	                    <strong>SIGN IN TO CONTINUE.</strong>
