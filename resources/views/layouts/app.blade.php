@@ -22,7 +22,7 @@
     </script>
 </head>
 <body>
-    <div id="app" class="container">
+    <div id="app">
 		@include('partials._nav')
 
         @yield('content')

@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
+	function __construct() {
+        $this->middleware('guest');
+	}
+
     public function index()
     {
-    	// return auth()->user();
-
     	return view('welcome');
     }
 }

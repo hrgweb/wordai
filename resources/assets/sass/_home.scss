@@ -17,3 +17,11 @@
 .row-table > [class*="col-"] {
 	top: 7em !important;
 }
+
+/*=============== dashboard ===============*/ 
+@media only screen and (min-width: 768px) {
+
+	.wrapper > section {
+	    padding-top: 50px !important;
+	}
+}
