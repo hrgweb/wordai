@@ -11,9 +11,9 @@
     <title>WordAI</title>
 
     <!-- Styles -->
-    {{-- <link rel="stylesheet" href="/css/vendor/bootstrap-superhero.min.css"> --}}
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/template.css') }}">
+	
     <!-- Scripts -->
     <script>
         window.Laravel = {!! json_encode([

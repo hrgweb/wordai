@@ -1,17 +1,17 @@
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
+<nav role="navigation" class="navbar navbar-default navbar-top navbar-fixed-top">
+    <!-- START navbar header-->
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href="{{ url('/') }}">WordAI</a>
+        {{-- <a href="dashboard.v1.html" class="navbar-brand"> --}}
+            {{-- <div class="brand-logo"> --}}
+                <a class="brand-logo" href="{{ url('/') }}">WordAI</a>
+            {{-- </div> --}}
+        {{-- </a> --}}
     </div>
-
-    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <ul class="nav navbar-nav navbar-right">
+    <!-- END navbar header-->
+    <!-- START Nav wrapper-->
+    <div class="nav-wrapper">
+        <!-- START Right Navbar-->
+        <ul class="nav navbar-nav navbar-right">
           <!-- Authentication Links -->
           @if (Auth::guest())
               <li><a href="{{ url('login') }}">Login</a></li>
@@ -37,6 +37,7 @@
             </li>
           @endif
       </ul>
+        <!-- END Right Navbar-->
     </div>
-  </div>
+    <!-- END Nav wrapper-->
 </nav>
