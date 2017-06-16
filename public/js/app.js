@@ -4181,13 +4181,7 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(32)();
-exports.push([module.i, "\n.Word__result {\n\t\twidth: 100%;\n    \toverflow-y: hidden;\n}\n", ""]);
-
-/***/ }),
+/* 31 */,
 /* 32 */
 /***/ (function(module, exports) {
 
@@ -31791,7 +31785,7 @@ process.umask = function() { return 0; };
 
 
 /* styles */
-__webpack_require__(39)
+__webpack_require__(53)
 
 var Component = __webpack_require__(37)(
   /* script */
@@ -31799,7 +31793,7 @@ var Component = __webpack_require__(37)(
   /* template */
   __webpack_require__(38),
   /* scopeId */
-  null,
+  "data-v-be4ea298",
   /* cssModules */
   null
 )
@@ -31887,7 +31881,15 @@ module.exports = function normalizeComponent (
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Word"
-  }, [_c('h1', [_vm._v("WordAI")]), _vm._v(" "), _c('form', {
+  }, [_c('h1', [_vm._v("WordAI")]), _vm._v(" "), (_vm.isSuccess) ? _c('div', {
+    staticClass: "Word__result"
+  }, [_c('pre', [_vm._v(_vm._s(_vm.result))]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h3', {
+    staticClass: "text-center"
+  }, [_vm._v("Spin Tax")]), _vm._v(" "), _c('p', {
+    staticStyle: {
+      "white-space": "pre-wrap"
+    }
+  }, [_vm._v(_vm._s(_vm.newWords))])]) : _vm._e(), _vm._v(" "), _c('form', {
     attrs: {
       "method": "POST"
     },
@@ -31926,15 +31928,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "submit"
     }
-  }, [_vm._v("Spin Tax")]), _vm._v("\n\t\t   \n\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')]), _vm._v(" "), (_vm.isSuccess) ? _c('div', {
-    staticClass: "Word__result"
-  }, [_c('pre', [_vm._v(_vm._s(_vm.result))]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h3', {
-    staticClass: "text-center"
-  }, [_vm._v("Spin Tax")]), _vm._v(" "), _c('p', {
-    staticStyle: {
-      "white-space": "pre-wrap"
-    }
-  }, [_vm._v(_vm._s(_vm.newWords))])]) : _vm._e()])
+  }, [_vm._v("Spin Tax")]), _vm._v("\n\t\t   \n\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -31945,32 +31939,7 @@ if (false) {
 }
 
 /***/ }),
-/* 39 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(31);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(40)("60aaaf1a", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-be4ea298\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./WordApi.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-be4ea298\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./WordApi.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
+/* 39 */,
 /* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -41958,6 +41927,46 @@ module.exports = function(module) {
 __webpack_require__(8);
 module.exports = __webpack_require__(9);
 
+
+/***/ }),
+/* 45 */,
+/* 46 */,
+/* 47 */,
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(32)();
+exports.push([module.i, "\n.Word[data-v-be4ea298] {\n\t    padding: 0 20px;\n}\n.Word__result[data-v-be4ea298] {\n\t\twidth: 100%;\n\t\tmargin-bottom: 3em;\n    \toverflow-y: hidden;\n}\n", ""]);
+
+/***/ }),
+/* 53 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(52);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(40)("5a32fd28", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-be4ea298\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./WordApi.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-be4ea298\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./WordApi.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

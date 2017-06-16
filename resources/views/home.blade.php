@@ -9,8 +9,8 @@
 				<ul class="nav">
 					<li class="nav-heading">Main navigation</li>
 					<li>
-						<a href="#">
-							<em class="fa fa-area-chart" aria-hidden="true"></em> Link001
+						<a href="{{ url('home') }}">
+							<em class="fa fa-dot-circle-o" aria-hidden="true"></em> Dashboard
 						</a>
 					</li>
 					<li><a href="#">Link002</a></li>
