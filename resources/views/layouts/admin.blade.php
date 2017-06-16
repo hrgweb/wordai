@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="{{ config('app.locale') }}">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSRF Token -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
+    <title>WordAI</title>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/template.css') }}">
+	
+    <!-- Scripts -->
+    <script>
+        window.Laravel = {!! json_encode([
+            'csrfToken' => csrf_token(),
+        ]) !!};
+    </script>
+</head>
+<body>
+    <div id="app" class="wrapper">
+		@include('partials._nav')
+
+		@if(Auth::check() && $user->isAdmin)
+			<!-- START aside-->
+			<aside class="aside">
+				<!-- START Sidebar (left)-->
+				<nav class="sidebar">
+					<ul class="nav">
+						<li class="nav-heading">Main navigation</li>
+						<li>
+							<a href="{{ url('home') }}">
+								<em class="fa fa-dot-circle-o" aria-hidden="true"></em> Dashboard
+							</a>
+						</li>
+						<li><a href="#">Link002</a></li>
+						<li><a href="#">Link003</a></li>
+						<li><a href="#">Link004</a></li>
+						<li><a href="#">Link005</a></li>
+					</ul>
+				</nav>
+
+				<!-- END Sidebar (left)-->
+			</aside>
+			<!-- End aside-->
+
+			@include('partials._content')
+		@else
+			@include('partials._content')
+		@endif
+	</div>
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}"></script>
+    @yield('footer')
+</body>
+</html>

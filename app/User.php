@@ -11,16 +11,26 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'name', 'email', 'password',
+        'firstname', 'lastname', 'email', 'password',
     ];
 
     protected $hidden = [
         'password', 'remember_token',
     ];
 
-    public function setNameAttribute($name)
+    public function setFirstnameAttribute($firstname)
     {	
-    	$this->attributes['name'] = ucwords($name);
+    	$this->attributes['firstname'] = ucwords($firstname);
+    }
+
+    public function setLastnameAttribute($lastname)
+    {	
+    	$this->attributes['lastname'] = ucwords($lastname);
+    }
+
+    public function full_name()
+    {
+    	return $this->firstname . ' ' . $this->lastname;
     }
 
     public function words()

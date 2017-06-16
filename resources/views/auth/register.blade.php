@@ -16,13 +16,24 @@
                 <form role="form" method="POST" action="{{ route('register') }}">
                 	{{ csrf_field() }}
 
-                	<div class="form-group has-feedback {{ $errors->has('name') ? ' has-error' : '' }}">
-                		<label for="name" class="text-muted">Name</label>
-            			<input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" autofocus>
+                	<div class="form-group has-feedback {{ $errors->has('firstname') ? ' has-error' : '' }}">
+                		<label for="firstname" class="text-muted">Firstname</label>
+            			<input id="firstname" type="text" class="form-control" name="firstname" value="{{ old('firstname') }}" autofocus>
 
-            			@if ($errors->has('name'))
+            			@if ($errors->has('firstname'))
 	            			<span class="help-block">
-	            				<strong>{{ $errors->first('name') }}</strong>
+	            				<strong>{{ $errors->first('firstname') }}</strong>
+	            			</span>
+            			@endif
+                	</div>
+
+                	<div class="form-group has-feedback {{ $errors->has('lastname') ? ' has-error' : '' }}">
+                		<label for="lastname" class="text-muted">lastname</label>
+            			<input id="lastname" type="text" class="form-control" name="lastname" value="{{ old('lastname') }}" autofocus>
+
+            			@if ($errors->has('lastname'))
+	            			<span class="help-block">
+	            				<strong>{{ $errors->first('lastname') }}</strong>
 	            			</span>
             			@endif
                 	</div>
