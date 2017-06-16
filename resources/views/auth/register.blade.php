@@ -5,7 +5,7 @@
 	<div class="row row-table page-wrapper">
 		<div class="col-lg-3 col-md-6 col-sm-8 col-xs-12 align-middle">
 			<!-- START panel-->
-			<div data-toggle="play-animation" class="panel panel-dark panel-flat">
+			<div data-toggle="play-animation" class="panel panel-dark panel-flat" style="width: 315px;">
 				<div class="panel-heading text-center mb-lg">
 					<p class="text-center mt-lg">
 						<strong>SIGNUP TO GET INSTANT ACCESS.</strong>
