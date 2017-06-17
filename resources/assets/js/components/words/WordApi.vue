@@ -1,6 +1,6 @@
 <template>
 	<div class="Word">
-		<h1>WordAI</h1>
+		<h1>Article</h1>
 
 		<div class="Word__result" v-if="isSuccess">
 			<pre>{{ result }}</pre>
@@ -14,7 +14,29 @@
 				<span>Words count: <b>{{ count }}</b></span>
 			</div>
 
-			<textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea>
+			<div class="form-group">
+				<label for="docTitle">Document Title</label>
+				<input type="text" class="form-control" v-model="docTitle">
+			</div>
+
+			<div class="form-group">
+				<label for="domName">Domain Name</label>
+				<select class="form-control" v-model="domName">
+					<option value="http://www.google.com">http://www.google.com</option>
+					<option value="http://www.youtube.com">http://www.youtube.com</option>
+					<option value="http://www.cnn.com">http://www.cnn.com</option>
+				</select>
+			</div>
+	
+			<!-- <textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea> -->
+			<textarea class="form-control" rows="8" v-model="words" @keyup="wordCount"></textarea>
+
+			<label for="">Protected Terms</label>
+			<textarea class="form-control" rows="8" v-model="protected" @keyup="wordCount"></textarea>
+
+			<label for="">Synonyms</label>
+			<textarea class="form-control" rows="8" v-model="synonyms" @keyup="wordCount"></textarea>
+
 			<br>
 			<button type="submit" class="btn btn-primary">Spin Tax</button>
 			&nbsp;&nbsp;&nbsp;
@@ -36,7 +58,11 @@
 				error: '',
 				isLoading: false,
 				isSuccess: false,
-				authUser: {}
+				authUser: {},
+				protected: '',
+				synonyms: '',
+				docTitle: '',
+				domName: 'http://www.cnn.com'
 			}
 		},
 		created() {
@@ -61,7 +87,11 @@
 				this.count = count;
 			},
 			spinTax() {
-				const data = { words: this.words };
+				const data = { 
+					words: this.words,  
+					protected: this.protected,
+					synonyms: this.synonyms
+				};
 
 				// show loading
 				this.isLoading = true;
@@ -78,11 +108,15 @@
 
 							// post
 							const params = {
-								spintax: data.text,
-								user_id: this.authUser.id
+								user_id: this.authUser.id,
+								doc_title: this.docTitle,
+								dom_name: this.domName,
+								spintax: data.text
 							}
 							this.saveSpinTax(params);
 						}
+
+						// console.log(response.data);
 					})
 					.catch(error => this.error = error.response.data);
 			},

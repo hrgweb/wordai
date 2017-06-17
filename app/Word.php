@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Word extends Model
 {
-    protected $fillable = ['title', 'keyword', 'lsi_terms', 'spintax'];
+    protected $fillable = ['doc_title', 'dom_name', 'spintax'];
 
     public function writer()
     {
