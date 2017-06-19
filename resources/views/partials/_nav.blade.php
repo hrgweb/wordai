@@ -23,7 +23,12 @@
                       {{ Auth::user()->full_name() }}
                   </a>
               </li>
-              <li><a href="{{ url('words/generate') }}">Generate Article</a></li>
+
+	            {{-- show if logged in as user --}}
+				@if (! $user->isAdmin)
+	              <li><a href="{{ url('words/generate') }}">Generate Article</a></li>
+				@endif
+
               <li>
                 {{-- <a href="{{ url('logout') }}" --}}
                 <a href="#"
