@@ -23,6 +23,7 @@
                       {{ Auth::user()->full_name() }}
                   </a>
               </li>
+              <li><a href="{{ url('words/generate') }}">Generate Article</a></li>
               <li>
                 {{-- <a href="{{ url('logout') }}" --}}
                 <a href="#"

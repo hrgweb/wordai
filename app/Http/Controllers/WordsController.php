@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\Spintax;
 use App\Word;
 use Illuminate\Http\Request;
 
 class WordsController extends Controller
 {
+	function __construct()
+	{
+		$this->middleware('auth');
+	}
+
 	public function store(Request $request)
 	{
 		// dd($request->all());
@@ -75,6 +81,24 @@ class WordsController extends Controller
 
 	public function article()
 	{
-		
+		return view('words.article');
+	}
+
+	public function getRawArticles()
+	{
+		$authUser = auth()->user();
+
+		$raw = Word::where('id', $authUser->id)->get();
+
+		return response()->json($raw);
+	}
+
+	public function generateArticle(Spintax $spin)
+	{
+		$article = request('spintax');
+
+		$result = $spin->process($article);
+
+		return response()->json($result);
 	}
 }

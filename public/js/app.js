@@ -831,6 +831,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_admin_Admin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_admin_Admin_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_words_WordApi_vue__ = __webpack_require__(39);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_words_WordApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_words_WordApi_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_words_GenerateArticle_vue__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_words_GenerateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_words_GenerateArticle_vue__);
 __webpack_require__(31);
 
 window.Vue = __webpack_require__(45);
@@ -839,12 +841,14 @@ window.Vue = __webpack_require__(45);
 
 
 
+
 var app = new Vue({
    name: 'WordAI',
    el: '#app',
    components: {
       Admin: __WEBPACK_IMPORTED_MODULE_0__components_admin_Admin_vue___default.a,
-      WordApi: __WEBPACK_IMPORTED_MODULE_1__components_words_WordApi_vue___default.a
+      WordApi: __WEBPACK_IMPORTED_MODULE_1__components_words_WordApi_vue___default.a,
+      GenerateArticle: __WEBPACK_IMPORTED_MODULE_2__components_words_GenerateArticle_vue___default.a
    }
 });
 
@@ -42240,6 +42244,206 @@ module.exports = function(module) {
 __webpack_require__(9);
 module.exports = __webpack_require__(10);
 
+
+/***/ }),
+/* 48 */,
+/* 49 */,
+/* 50 */,
+/* 51 */,
+/* 52 */,
+/* 53 */,
+/* 54 */,
+/* 55 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['token'],
+	data: function data() {
+		return {
+			articles: [],
+			pickArticle: 'select',
+			raw: '',
+			newArticle: '',
+			isSpin: false
+		};
+	},
+	created: function created() {
+		this.getRawArticles();
+	},
+
+	methods: {
+		getRawArticles: function getRawArticles() {
+			var _this = this;
+
+			axios.get('/words/rawArticles').then(function (response) {
+				_this.articles = response.data;
+			});
+		},
+		displayArticle: function displayArticle() {
+			var _this2 = this;
+
+			this.raw = _.head(this.articles.filter(function (article) {
+				return article.id === _this2.pickArticle;
+			}));
+		},
+		generateArticle: function generateArticle() {
+			var _this3 = this;
+
+			axios.post('/words/generateArticle', { spintax: this.raw.spintax }).then(function (response) {
+				_this3.newArticle = response.data;
+				_this3.isSpin = true;
+			});
+		}
+	}
+});
+
+/***/ }),
+/* 56 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(7)(
+  /* script */
+  __webpack_require__(55),
+  /* template */
+  __webpack_require__(57),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\words\\GenerateArticle.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] GenerateArticle.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-622d4576", Component.options)
+  } else {
+    hotAPI.reload("data-v-622d4576", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Article"
+  }, [_c('h1', [_vm._v("Generate Article")]), _vm._v(" "), _c('form', {
+    attrs: {
+      "method": "POST"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.generateArticle($event)
+      }
+    }
+  }, [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "_token"
+    },
+    domProps: {
+      "value": _vm.token
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.pickArticle),
+      expression: "pickArticle"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": [function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.pickArticle = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.displayArticle]
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "select"
+    }
+  }, [_vm._v("SELECT ARTICLE")]), _vm._v(" "), _vm._l((_vm.articles), function(article) {
+    return _c('option', {
+      domProps: {
+        "value": article.id
+      }
+    }, [_vm._v(_vm._s(article.doc_title.toUpperCase()))])
+  })], 2)]), _vm._v(" "), _c('textarea', {
+    staticClass: "form-control",
+    attrs: {
+      "rows": "12"
+    },
+    domProps: {
+      "value": _vm.raw.spintax
+    }
+  }), _c('br'), _vm._v(" "), (_vm.isSpin) ? _c('div', {
+    staticClass: "Result"
+  }, [_c('label', {
+    attrs: {
+      "for": "result"
+    }
+  }, [_vm._v("Article")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.newArticle))]), _c('br')]) : _vm._e(), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Generate")])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-622d4576", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

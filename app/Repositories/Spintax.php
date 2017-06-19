@@ -1,4 +1,7 @@
-<?PHP
+<?php
+
+namespace App\Repositories;
+
 /**
  * Spintax - A helper class to process Spintax strings.
  * @name Spintax
