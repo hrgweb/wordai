@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Article;
 use App\Repositories\Spintax;
 use App\Word;
 use Illuminate\Http\Request;
@@ -96,8 +97,9 @@ class WordsController extends Controller
 	public function generateArticle(Spintax $spin)
 	{
 		$article = request('spintax');
-
 		$result = $spin->process($article);
+
+		auth()->user()->articles()->create(['article' => $result]);
 
 		return response()->json($result);
 	}

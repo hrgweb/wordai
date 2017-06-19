@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Article;
 use App\Word;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -36,5 +37,15 @@ class User extends Authenticatable
     public function words()
     {
     	return $this->hasMany(Word::class);
+    }
+
+    public function articles()
+    {
+    	return $this->hasMany(Article::class);
+    }
+
+    public function domains()
+    {
+    	return $this->hasMany(Domain::class);
     }
 }

@@ -38,7 +38,11 @@
 								<em class="fa fa-dot-circle-o" aria-hidden="true"></em> Dashboard
 							</a>
 						</li>
-						<li><a href="#">Link002</a></li>
+						<li>
+							<a href="{{ url('domain') }}">
+								<em class="fa fa-link" aria-hidden="true"></em> Domain
+							</a>
+						</li>
 						<li><a href="#">Link003</a></li>
 						<li><a href="#">Link004</a></li>
 						<li><a href="#">Link005</a></li>

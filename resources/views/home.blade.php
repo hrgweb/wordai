@@ -2,8 +2,10 @@
 
 @section ('content')
 	<div class="row">
-		@unless($user->isAdmin)
+		@if ($user->isAdmin)
+			<pending-user></pending-user>
+		@else
 			<word-api user="{{ $user }}"></word-api>
-		@endunless
+		@endif
 	</div>
 @endsection
