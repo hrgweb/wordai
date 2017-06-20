@@ -6,7 +6,6 @@ window.Vue = require('vue');
 import Admin from './components/admin/Admin.vue';
 import PendingUser from './components/admin/PendingUser.vue';
 import Domain from './components/admin/Domain.vue';
-import DomainEdit from './components/admin/DomainEdit.vue';
 import WordApi from './components/words/WordApi.vue';
 import GenerateArticle from './components/words/GenerateArticle.vue';
 
@@ -19,6 +18,5 @@ const app = new Vue({
     	GenerateArticle,
     	PendingUser,
     	Domain,
-    	DomainEdit
     }
 });

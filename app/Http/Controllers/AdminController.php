@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Domain;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
@@ -31,5 +32,21 @@ class AdminController extends Controller
     	$domains = Domain::all();
 
     	return response()->json($domains);
+    }
+
+    public function updateDomain()
+    {
+    	$domain = request('domain');
+    	$result = DB::table('domains')->where('id', request('id'))->update(['domain' => $domain]);
+
+    	return response()->json(['result' => $result, 'domain' => $domain]);
+    }
+
+    public function removeDomain()
+    {
+    	$id = request('id');
+    	$result = DB::table('domains')->where('id', $id)->delete();
+
+    	return response()->json($result);
     }
 }
