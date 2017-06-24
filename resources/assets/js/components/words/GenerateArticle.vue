@@ -12,11 +12,11 @@
 				</select>
 			</div>
 
-			<textarea class="form-control" rows="12" :value="raw.spintax"></textarea><br>
+			<textarea class="form-control" rows="12" :value="raw.article"></textarea><br>
 
 			<div class="Result" v-if="isSpin">
 				<label for="result">Article</label>
-				<p>{{ newArticle }}</p><br>
+				<p style="white-space: pre;">{{ newArticle }}</p><br>
 			</div>
 		
 			<button type="submit" class="btn btn-primary">Generate</button>
@@ -49,7 +49,7 @@
 				this.raw = _.head(this.articles.filter(article => article.id === this.pickArticle));
 			},
 			generateArticle() {
-				axios.post('/words/generateArticle', { spintax: this.raw.spintax }).then(response => {
+				axios.post('/words/generateArticle', { spintax: this.raw.article }).then(response => {
 					this.newArticle = response.data;
 					this.isSpin = true;
 				});

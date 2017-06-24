@@ -53,25 +53,20 @@
 </template>
 
 <script>
+	import { CrudMixin } from './../../mixins/CrudMixin.js';
 	import DomainEdit from './DomainEdit.vue';
 	import Notification from './../notify/Notification.vue';
 
 	export default {
 		props: ['token'],
 		components: { DomainEdit, Notification },
+		mixins: [ CrudMixin ],
 		data() {
 			return {
 				domain: '',
 				domainIndex: 0,
 				domains: [],
-				isEdit: false,
 				raw: {},
-				isSuccess: false,
-				notify: {
-					type: true,
-					message: 'Domain',
-					action: 'saved'
-				}
 			}
 		},
 		created() {

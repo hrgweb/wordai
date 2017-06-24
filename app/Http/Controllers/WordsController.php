@@ -4,21 +4,50 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Repositories\Spintax;
+use App\Repositories\WordRepository;
 use App\Word;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class WordsController extends Controller
 {
-	function __construct()
+	private $word;
+
+	function __construct(WordRepository $word)
 	{
 		$this->middleware('auth');
+		$this->word = $word;
 	}
 
 	public function store(Request $request)
 	{
-		// dd($request->all());
+		$word = $this->word;
 
-		$text = stripslashes($request->words);
+		$validator = Validator::make($request->all(), [
+            'doc_title' => 'required', 
+	    	'keyword' => 'required',
+	    	'lsi_terms' => 'required',
+	    	// 'domain_protected' => 'required',
+	    	'article' => 'required',
+	    	'dom_name' => 'required', 
+	    	'protected' => 'required',
+	    	// 'synonyms' => 'required'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['isError' => true, 'errors' => $validator->errors()]);
+        }
+
+		$request['keyword'] = $word->remove_underline_and_spaces_for_terms(request('keyword'));
+		$request['lsi_terms'] = $word->remove_underline_and_spaces_for_terms(request('lsi_terms'));
+		$request['domain_protected'] = $word->remove_underline_and_spaces_for_terms(request('domain_protected'));
+		$request['protected'] = $word->remove_underline_and_spaces_for_terms(request('protected'));
+
+		$terms_protected =  $request['keyword'] . ',' . $request['lsi_terms'] . ',' . $request['domain_protected'] . ',' . $request['protected'];
+		$terms_protected = $word->remove_underline_and_spaces_for_terms($terms_protected);
+
+		// api - vars
+		$text = stripslashes($request->article);
 		$quality = 100;
 		$email = 'accounting@connexionsolutions.com';
 		$pass = 'fastredsportscar';
@@ -37,7 +66,7 @@ class WordsController extends Controller
 			$quality, 
 			$email, 
 			$pass, 
-			$protected, 
+			$terms_protected, 
 			$synonyms, 
 			$nonested, 
 			$sentence, 
@@ -46,7 +75,7 @@ class WordsController extends Controller
 			$nooriginal
 		);
 
-		return $result;
+    	return $result;
 	}
 
 	public function postSpinTax()
@@ -89,7 +118,7 @@ class WordsController extends Controller
 	{
 		$authUser = auth()->user();
 
-		$raw = Word::where('id', $authUser->id)->get();
+		$raw = Word::where('user_id', $authUser->id)->get();
 
 		return response()->json($raw);
 	}

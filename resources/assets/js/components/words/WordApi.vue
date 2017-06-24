@@ -3,41 +3,66 @@
 		<h1>Article</h1>
 
 		<div class="Word__result" v-if="isSuccess">
-			<pre>{{ result }}</pre>
+			<!-- <pre>{{ result }}</pre> -->
 			<br>
 			<h3 class="text-center">Spin Tax</h3>
 			<p style="white-space: pre-wrap;">{{ newWords }}</p>
 		</div>
 
 		<form method="POST" @submit.prevent="spinTax">
+			<input type="hidden" name="_token" :value="token">
+
 			<div class="form-group">
 				<span>Words count: <b>{{ count }}</b></span>
 			</div>
 
 			<div class="form-group">
-				<label for="docTitle">Document Title</label>
-				<input type="text" class="form-control" v-model="docTitle">
+				<label for="doc_title">Document Title</label>
+				<input type="text" class="form-control" v-model="spin.doc_title">
 			</div>
 
 			<div class="form-group">
-				<label for="domName">Domain Name</label>
-				<select class="form-control" v-model="domName">
+				<label for="keyword">Key Word/Phrase field</label>
+				<input type="text" class="form-control" maxlength="255" v-model="spin.keyword">
+			</div>
+
+			<!-- LSI Terms -->
+			<label for="lsi_terms">LSI Terms</label>
+			<textarea class="form-control" rows="8" v-model="spin.lsi_terms"></textarea>
+
+			<div class="row">
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<label for="domain_protected">Domain Protected Terms</label>
+					<textarea class="form-control" rows="8" v-model="spin.domain_protected"></textarea>
+				</div>
+
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<!-- <textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea> -->
+					<label for="article">Paste Article Below</label>
+					<textarea class="form-control" rows="8" v-model="spin.article" @keyup="wordCount"></textarea>
+				</div>
+			</div>
+
+			<div class="form-group">
+				<label for="dom_name">Domain Name</label>
+				<select class="form-control" v-model="spin.dom_name">
 					<option value="http://www.google.com">http://www.google.com</option>
 					<option value="http://www.youtube.com">http://www.youtube.com</option>
 					<option value="http://www.cnn.com">http://www.cnn.com</option>
 				</select>
 			</div>
-	
-			<!-- <textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea> -->
-			<textarea class="form-control" rows="8" v-model="words" @keyup="wordCount"></textarea>
 
-			<label for="">Protected Terms</label>
-			<textarea class="form-control" rows="8" v-model="protected" @keyup="wordCount"></textarea>
+			
+			<label for="protected">Protected Terms</label>
+			<textarea class="form-control" rows="8" v-model="spin.protected"></textarea>
 
-			<label for="">Synonyms</label>
-			<textarea class="form-control" rows="8" v-model="synonyms" @keyup="wordCount"></textarea>
+			<label for="synonyms">Synonyms</label>
+			<textarea class="form-control" rows="8" v-model="spin.synonyms"></textarea>
 
 			<br>
+			<error :list="errors" v-if="isFail"></error>
+			<br>
+
 			<button type="submit" class="btn btn-primary">Spin Tax</button>
 			&nbsp;&nbsp;&nbsp;
 			<span v-if="isLoading">LOADING....</span><br>
@@ -46,35 +71,41 @@
 </template>
 
 <script>
+	import Error from './../errors/Error.vue';
+
 	export default {
-		props: [ 'user' ],
+		props: [ 'user', 'token' ],
+		components: { Error },
 		data() {
 			return {
 				wordsMax: 1800,
 				count: 0,
-				words: '',
 				newWords: '',
 				result: {},
-				error: '',
+				errors: [],
 				isLoading: false,
 				isSuccess: false,
+				isFail: false,
 				authUser: {},
-				protected: '',
-				synonyms: '',
-				docTitle: '',
-				domName: 'http://www.cnn.com'
+				spin: { 
+					doc_title: '',
+					dom_name: 'http://www.cnn.com',
+					keyword: '',
+					lsi_terms: '',
+					domain_protected: '',
+					article: '',
+					protected: '',
+					synonyms: ''
+				}
 			}
 		},
 		created() {
 			this.authUser = JSON.parse(this.user);
 		},
-		mounted() {
-			// console.log(axios);
-		},
 		methods: {
 			wordCount() {
 				let count = 1;
-				let words = this.words.trim();
+				let words = this.spin.article.trim();
 
 				for (let i=0; i<words.length; i++) {
 					let char = words.charAt(i);
@@ -87,41 +118,40 @@
 				this.count = count;
 			},
 			spinTax() {
-				const data = { 
-					words: this.words,  
-					protected: this.protected,
-					synonyms: this.synonyms
-				};
-
 				// show loading
 				this.isLoading = true;
 
-				axios.post('/words', data)
-					.then(response => {
-						let data = response.data;
-						this.result = data;
-						this.newWords = data.text;
+				axios.post('/words', this.spin)
+				.then(response => {
+					let data = response.data;
 
+					data.isError = false;
+
+					// check if validation fail
+					if (data.isError === true) {
+						this.errors = data.errors;
+						this.isFail = true;
+						this.isLoading = false;
+					} else {
+						this.isFail = false;
+
+						// check if api response is success
 						if (data.status === 'Success') {
+							this.newWords = data.text;
+							this.result = data;
 							this.isSuccess = true;
 							this.isLoading = false;
 
-							// post
-							const params = {
-								user_id: this.authUser.id,
-								doc_title: this.docTitle,
-								dom_name: this.domName,
-								spintax: data.text
-							}
-							this.saveSpinTax(params);
+							// post article
+							this.spin['article'] = data.text;
+							this.postSpinTax(this.spin);
 						}
-
-						// console.log(response.data);
-					})
-					.catch(error => this.error = error.response.data);
+						// console.log(data);
+					}
+				});
 			},
-			saveSpinTax(input) {
-				axios.post('/words/postSpinTax', input).then(response => console.log(response.data));
+			postSpinTax(data) {
+				axios.post('/words/postSpinTax', data).then(response => console.log(response.data));
 			}
 		}
 	}
@@ -129,13 +159,13 @@
 
 <style scoped>
 	.Word {
-	    padding: 0 20px;
+		padding: 0 20px;
 	}
 
 	.Word__result {
 		width: 100%;
 		margin-bottom: 3em;
-    	overflow-y: hidden;
+		overflow-y: hidden;
 	}
 </style>
 

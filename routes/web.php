@@ -12,11 +12,14 @@ Route::post('words/generateArticle', 'WordsController@generateArticle');
 Route::post('words/postSpinTax', 'WordsController@postSpinTax');
 
 // Admin
+// Domain
 Route::get('admin/pendingUsers', 'AdminController@pendingUsers');
 Route::get('admin/domainList', 'AdminController@domainList');
 Route::post('admin/postDomain', 'AdminController@postDomain');
 Route::patch('admin/updateDomain', 'AdminController@updateDomain');
 Route::delete('admin/removeDomain', 'AdminController@removeDomain');
+// Protected Terms
+Route::post('admin/postProtectedTerms', 'AdminController@postProtectedTerms');
 
 
 

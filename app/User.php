@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Article;
+use App\ProtectedTerm;
 use App\Word;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -47,5 +48,10 @@ class User extends Authenticatable
     public function domains()
     {
     	return $this->hasMany(Domain::class);
+    }
+
+    public function terms()
+    {
+    	return $this->hasMany(ProtectedTerm::class);
     }
 }

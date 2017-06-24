@@ -49,4 +49,17 @@ class AdminController extends Controller
 
     	return response()->json($result);
     }
+
+    public function postProtectedTerms()
+    {
+    	$terms = explode(',', request('terms'));
+    	$terms = implode(',', request('terms'));
+
+    	return $terms;
+
+    	$result = auth()->user()->terms()->create(request()->all());
+
+    	return response()->json($result);
+    	
+    }
 }
