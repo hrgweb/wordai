@@ -3,6 +3,9 @@ export const CrudMixin = {
 		return {
 			isEdit: false,
 			isSuccess: false,
+			isLoading: false,
+			errors: [],
+			authUser: {},
 			notify: {
 				type: true,
 				message: 'Domain',

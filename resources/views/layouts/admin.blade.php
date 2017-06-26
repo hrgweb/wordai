@@ -17,7 +17,7 @@
 	
     <!-- Scripts -->
     <script>
-        window.Laravel = {!! json_encode([
+        window.WordAI = {!! json_encode([
             'csrfToken' => csrf_token(),
         ]) !!};
     </script>
@@ -43,7 +43,11 @@
 								<em class="fa fa-link" aria-hidden="true"></em> Domain
 							</a>
 						</li>
-						<li><a href="#">Link003</a></li>
+						<li>
+							<a href="{{ url('home') }}">
+								<em class="fa fa-user" aria-hidden="true"></em> User
+							</a>
+						</li>
 						<li><a href="#">Link004</a></li>
 						<li><a href="#">Link005</a></li>
 					</ul>

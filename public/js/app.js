@@ -73,7 +73,7 @@
 "use strict";
 
 
-var bind = __webpack_require__(9);
+var bind = __webpack_require__(10);
 
 /*global toString:true*/
 
@@ -731,10 +731,10 @@ function getDefaultAdapter() {
   var adapter;
   if (typeof XMLHttpRequest !== 'undefined') {
     // For browsers use XHR adapter
-    adapter = __webpack_require__(5);
+    adapter = __webpack_require__(6);
   } else if (typeof process !== 'undefined') {
     // For node use HTTP adapter
-    adapter = __webpack_require__(5);
+    adapter = __webpack_require__(6);
   }
   return adapter;
 }
@@ -809,6 +809,29 @@ module.exports = defaults;
 
 /***/ }),
 /* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CrudMixin; });
+var CrudMixin = {
+	data: function data() {
+		return {
+			isEdit: false,
+			isSuccess: false,
+			isLoading: false,
+			errors: [],
+			authUser: {},
+			notify: {
+				type: true,
+				message: 'Domain',
+				action: 'saved'
+			}
+		};
+	}
+};
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -819,7 +842,7 @@ var settle = __webpack_require__(21);
 var buildURL = __webpack_require__(24);
 var parseHeaders = __webpack_require__(30);
 var isURLSameOrigin = __webpack_require__(28);
-var createError = __webpack_require__(8);
+var createError = __webpack_require__(9);
 var btoa = (typeof window !== 'undefined' && window.btoa && window.btoa.bind(window)) || __webpack_require__(23);
 
 module.exports = function xhrAdapter(config) {
@@ -992,7 +1015,7 @@ module.exports = function xhrAdapter(config) {
 
 
 /***/ }),
-/* 6 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1018,7 +1041,7 @@ module.exports = Cancel;
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1030,7 +1053,7 @@ module.exports = function isCancel(value) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1054,7 +1077,7 @@ module.exports = function createError(message, config, code, response) {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1070,26 +1093,6 @@ module.exports = function bind(fn, thisArg) {
   };
 };
 
-
-/***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CrudMixin; });
-var CrudMixin = {
-	data: function data() {
-		return {
-			isEdit: false,
-			isSuccess: false,
-			notify: {
-				type: true,
-				message: 'Domain',
-				action: 'saved'
-			}
-		};
-	}
-};
 
 /***/ }),
 /* 11 */
@@ -1181,7 +1184,7 @@ module.exports = __webpack_require__(15);
 
 
 var utils = __webpack_require__(0);
-var bind = __webpack_require__(9);
+var bind = __webpack_require__(10);
 var Axios = __webpack_require__(17);
 var defaults = __webpack_require__(4);
 
@@ -1216,9 +1219,9 @@ axios.create = function create(instanceConfig) {
 };
 
 // Expose Cancel & CancelToken
-axios.Cancel = __webpack_require__(6);
+axios.Cancel = __webpack_require__(7);
 axios.CancelToken = __webpack_require__(16);
-axios.isCancel = __webpack_require__(7);
+axios.isCancel = __webpack_require__(8);
 
 // Expose all/spread
 axios.all = function all(promises) {
@@ -1239,7 +1242,7 @@ module.exports.default = axios;
 "use strict";
 
 
-var Cancel = __webpack_require__(6);
+var Cancel = __webpack_require__(7);
 
 /**
  * A `CancelToken` is an object that can be used to request cancellation of an operation.
@@ -1456,7 +1459,7 @@ module.exports = InterceptorManager;
 
 var utils = __webpack_require__(0);
 var transformData = __webpack_require__(22);
-var isCancel = __webpack_require__(7);
+var isCancel = __webpack_require__(8);
 var defaults = __webpack_require__(4);
 
 /**
@@ -1566,7 +1569,7 @@ module.exports = function enhanceError(error, config, code, response) {
 "use strict";
 
 
-var createError = __webpack_require__(8);
+var createError = __webpack_require__(9);
 
 /**
  * Resolve or reject a Promise based on response status.
@@ -2058,7 +2061,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notify_Notification_vue__ = __webpack_require__(56);
@@ -2298,8 +2301,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['token'],
 	data: function data() {
 		return {
 			users: [],
@@ -2310,13 +2326,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		this.pendingUsers();
 	},
 
+	watch: {
+		users: function users() {
+			this.usersCount = this.users.length;
+		}
+	},
 	methods: {
 		pendingUsers: function pendingUsers() {
 			var _this = this;
 
 			axios.get('/admin/pendingUsers').then(function (response) {
-				_this.users = response.data;
-				_this.usersCount = _this.users.length;
+				return _this.users = response.data;
+			});
+		},
+		verifySignup: function verifySignup(user, index) {
+			var _this2 = this;
+
+			axios.patch('/user/verifySignup', user).then(function (response) {
+				var data = response.data;
+
+				if (data) {
+					_this2.users.splice(index, 1);
+					_this2.usersCount = _this2.users.length;
+				}
 			});
 		}
 	}
@@ -2328,7 +2360,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__ = __webpack_require__(10);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__ = __webpack_require__(5);
 //
 //
 //
@@ -2550,6 +2582,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__errors_Error_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__ = __webpack_require__(5);
 //
 //
 //
@@ -2622,23 +2655,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['user', 'token'],
 	components: { Error: __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default.a },
+	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__["a" /* CrudMixin */]],
 	data: function data() {
 		return {
 			wordsMax: 1800,
 			count: 0,
 			newWords: '',
 			result: {},
-			errors: [],
-			isLoading: false,
-			isSuccess: false,
 			isFail: false,
-			authUser: {},
 			spin: {
 				doc_title: '',
 				dom_name: 'http://www.cnn.com',
@@ -2679,10 +2711,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.post('/words', this.spin).then(function (response) {
 				var data = response.data;
 
-				data.isError = false;
+				_this.isFail = data.isError;
 
 				// check if validation fail
-				if (data.isError === true) {
+				if (_this.isFail === true) {
 					_this.errors = data.errors;
 					_this.isFail = true;
 					_this.isLoading = false;
@@ -5179,7 +5211,7 @@ exports.push([module.i, "\n.Word[data-v-be4ea298] {\n\tpadding: 0 20px;\n}\n.Wor
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.User[data-v-d84a48a8] {\n\tpadding: 0 1em;\n}\n", ""]);
+exports.push([module.i, "\n.User[data-v-d84a48a8] {\n\tpadding: 0 1em;\n}\n.User__profile-controls[data-v-d84a48a8] {\n\tposition: relative;\n\ttop: -3em;\n}\n", ""]);
 
 /***/ }),
 /* 47 */
@@ -33496,7 +33528,44 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.spin.lsi_terms = $event.target.value
       }
     }
-  }), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "dom_name"
+    }
+  }, [_vm._v("Domain Name")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.dom_name),
+      expression: "spin.dom_name"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.spin.dom_name = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "http://www.google.com"
+    }
+  }, [_vm._v("http://www.google.com")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "http://www.youtube.com"
+    }
+  }, [_vm._v("http://www.youtube.com")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "http://www.cnn.com"
+    }
+  }, [_vm._v("http://www.cnn.com")])])]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
@@ -33551,44 +33620,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.spin.article = $event.target.value
       }
     }
-  })])]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "dom_name"
-    }
-  }, [_vm._v("Domain Name")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.spin.dom_name),
-      expression: "spin.dom_name"
-    }],
-    staticClass: "form-control",
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.spin.dom_name = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', {
-    attrs: {
-      "value": "http://www.google.com"
-    }
-  }, [_vm._v("http://www.google.com")]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "http://www.youtube.com"
-    }
-  }, [_vm._v("http://www.youtube.com")]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "http://www.cnn.com"
-    }
-  }, [_vm._v("http://www.cnn.com")])])]), _vm._v(" "), _c('label', {
+  })])]), _c('br'), _vm._v(" "), _c('label', {
     attrs: {
       "for": "protected"
     }
@@ -33612,7 +33644,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.spin.protected = $event.target.value
       }
     }
-  }), _vm._v(" "), _c('label', {
+  }), _vm._v(" "), _c('br'), _vm._v(" "), _c('label', {
     attrs: {
       "for": "synonyms"
     }
@@ -33771,9 +33803,11 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "User"
-  }, [_c('h2', [_vm._v("\n\t\tPending User\n\t\t"), _c('span', {
+  }, [(_vm.usersCount) ? _c('div', {
+    staticClass: "User__pending"
+  }, [_c('h2', [_vm._v("\n\t\t\tPending User\n\t\t\t"), _c('span', {
     staticClass: "badge"
-  }, [_vm._v(_vm._s(_vm.usersCount))])]), _vm._v(" "), _vm._l((_vm.users), function(user) {
+  }, [_vm._v(_vm._s(_vm.usersCount))])]), _vm._v(" "), _vm._l((_vm.users), function(user, index) {
     return _c('div', {
       staticClass: "User__profile list-group"
     }, [_c('a', {
@@ -33785,9 +33819,43 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "list-group-item-heading"
     }, [_vm._v(_vm._s(user.firstname) + " " + _vm._s(user.lastname))]), _vm._v(" "), _c('p', {
       staticClass: "list-group-item-text"
-    }, [_vm._v(_vm._s(user.email))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(user.created_at))])])])
-  })], 2)
-},staticRenderFns: []}
+    }, [_vm._v(_vm._s(user.email))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(user.created_at))]), _vm._v(" "), _c('form', {
+      attrs: {
+        "method": "POST"
+      },
+      on: {
+        "submit": function($event) {
+          $event.stopPropagation();
+          $event.preventDefault();
+          _vm.verifySignup(user, index)
+        }
+      }
+    }, [_c('input', {
+      attrs: {
+        "type": "hidden",
+        "name": "_token"
+      },
+      domProps: {
+        "value": _vm.token
+      }
+    }), _vm._v(" "), _c('input', {
+      attrs: {
+        "type": "hidden",
+        "name": "_method",
+        "value": "PATCH"
+      }
+    }), _vm._v(" "), _vm._m(0, true)])])])
+  })], 2) : _vm._e()])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "User__profile-controls pull-right"
+  }, [_c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Confirm")])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

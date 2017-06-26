@@ -29,6 +29,16 @@
 			<!-- LSI Terms -->
 			<label for="lsi_terms">LSI Terms</label>
 			<textarea class="form-control" rows="8" v-model="spin.lsi_terms"></textarea>
+			<br>
+
+			<div class="form-group">
+				<label for="dom_name">Domain Name</label>
+				<select class="form-control" v-model="spin.dom_name">
+					<option value="http://www.google.com">http://www.google.com</option>
+					<option value="http://www.youtube.com">http://www.youtube.com</option>
+					<option value="http://www.cnn.com">http://www.cnn.com</option>
+				</select>
+			</div>
 
 			<div class="row">
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
@@ -41,20 +51,11 @@
 					<label for="article">Paste Article Below</label>
 					<textarea class="form-control" rows="8" v-model="spin.article" @keyup="wordCount"></textarea>
 				</div>
-			</div>
+			</div><br>
 
-			<div class="form-group">
-				<label for="dom_name">Domain Name</label>
-				<select class="form-control" v-model="spin.dom_name">
-					<option value="http://www.google.com">http://www.google.com</option>
-					<option value="http://www.youtube.com">http://www.youtube.com</option>
-					<option value="http://www.cnn.com">http://www.cnn.com</option>
-				</select>
-			</div>
-
-			
 			<label for="protected">Protected Terms</label>
 			<textarea class="form-control" rows="8" v-model="spin.protected"></textarea>
+			<br>
 
 			<label for="synonyms">Synonyms</label>
 			<textarea class="form-control" rows="8" v-model="spin.synonyms"></textarea>
@@ -72,21 +73,19 @@
 
 <script>
 	import Error from './../errors/Error.vue';
+	import { CrudMixin } from './../../mixins/CrudMixin.js';
 
 	export default {
 		props: [ 'user', 'token' ],
 		components: { Error },
+		mixins: [ CrudMixin ],
 		data() {
 			return {
 				wordsMax: 1800,
 				count: 0,
 				newWords: '',
 				result: {},
-				errors: [],
-				isLoading: false,
-				isSuccess: false,
 				isFail: false,
-				authUser: {},
 				spin: { 
 					doc_title: '',
 					dom_name: 'http://www.cnn.com',
@@ -125,10 +124,10 @@
 				.then(response => {
 					let data = response.data;
 
-					data.isError = false;
+					this.isFail = data.isError;
 
 					// check if validation fail
-					if (data.isError === true) {
+					if (this.isFail === true) {
 						this.errors = data.errors;
 						this.isFail = true;
 						this.isLoading = false;

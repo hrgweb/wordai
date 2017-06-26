@@ -1,22 +1,35 @@
 <template>
 	<div class="User">
-		<h2>
-			Pending User
-			<span class="badge">{{ usersCount }}</span>
-		</h2>
+		<div class="User__pending" v-if="usersCount">
+			<h2>
+				Pending User
+				<span class="badge">{{ usersCount }}</span>
+			</h2>
 
-		<div class="User__profile list-group" v-for="user in users">
-			<a href="#" class="list-group-item">
-				<h4 class="list-group-item-heading">{{ user.firstname }} {{ user.lastname }}</h4>
-				<p class="list-group-item-text">{{ user.email }}</p>
-				<small>{{ user.created_at }}</small>
-			</a>
+			<div class="User__profile list-group" v-for="(user, index) in users">
+				<a href="#" class="list-group-item">
+					<h4 class="list-group-item-heading">{{ user.firstname }} {{ user.lastname }}</h4>
+					<p class="list-group-item-text">{{ user.email }}</p>
+					<small>{{ user.created_at }}</small>
+
+					<form method="POST" @submit.stop.prevent="verifySignup(user, index)">
+						<input type="hidden" name="_token" :value="token">
+						<input type="hidden" name="_method" value="PATCH">
+
+						<div class="User__profile-controls pull-right">
+							<button type="submit" class="btn btn-success">Confirm</button>
+							<!-- <a href="#" class="btn btn-warning">Cancel</a> -->
+						</div>
+					</form>
+				</a>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
 	export default {
+		props: [ 'token' ],
 		data() {
 			return {
 				users: [],
@@ -26,11 +39,23 @@
 		created() {
 			this.pendingUsers();
 		},
+		watch: {
+			users() {
+				this.usersCount = this.users.length;
+			}
+		},
 		methods: {
 			pendingUsers() {
-				axios.get('/admin/pendingUsers').then(response => {
-					this.users = response.data;
-					this.usersCount = this.users.length;
+				axios.get('/admin/pendingUsers').then(response => this.users = response.data);
+			},
+			verifySignup(user, index) {
+				axios.patch('/user/verifySignup', user).then(response => {
+					let data = response.data;
+
+					if (data) {
+						this.users.splice(index, 1);
+						this.usersCount = this.users.length;
+					}
 				});
 			}
 		}
@@ -40,5 +65,10 @@
 <style scoped>
 	.User {
 		padding: 0 1em;
+	}
+
+	.User__profile-controls {
+		position: relative;
+		top: -3em;
 	}
 </style>

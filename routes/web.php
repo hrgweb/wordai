@@ -21,7 +21,8 @@ Route::delete('admin/removeDomain', 'AdminController@removeDomain');
 // Protected Terms
 Route::post('admin/postProtectedTerms', 'AdminController@postProtectedTerms');
 
-
+// User
+Route::patch('user/verifySignup', 'UserController@verifySignup');
 
 Auth::routes();
 
