@@ -1,7 +1,7 @@
 <template>
 	<div class="overlay">
 		<div class="Domain-update">
-			<h1>Edit</h1>
+			<h2>Edit</h2>
 
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true" @click="$emit('closeDomainEdit')">&times;</button>
 
@@ -74,12 +74,5 @@
 	    width: 300px;
 	    margin: 15em auto;
 	    padding: 0.1em 1em 1em;
-
-	    button.close {
-	    	position: absolute;
-		    top: 1em;
-		    right: 1em;
-		    font-size: 2em;
-	    }
 	}
 </style>

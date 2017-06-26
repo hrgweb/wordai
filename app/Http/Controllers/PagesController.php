@@ -20,4 +20,9 @@ class PagesController extends Controller
     {
     	return view('admin.domain');
     }
+
+    public function user()
+    {
+    	return view('users.index');
+    }
 }

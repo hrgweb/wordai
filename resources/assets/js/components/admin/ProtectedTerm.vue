@@ -1,22 +1,11 @@
 <template>
 	<div class="Domain">
-		<h1>Protected</h1>
-
-		<!-- Domain edit -->
-		<!-- <domain-edit 
-			v-if="isEdit" 
-			@closeDomainEdit="hideDomainEdit"
-			:token="token"
-			:raw="raw">
-		</domain-edit> -->
+		<h2>Protected</h2>
 
 		<div class="panel panel-default">
 			<div class="panel-body">
 				<form method="POST" @submit.prevent="postTerm">
 					<input type="hidden" name="_token" :value="token">
-
-					<!-- Notification -->
-					<!-- <notification :data="notify" v-if="isSuccess"></notification> -->
 
 					<div class="form-group">
 						<label for="terms">Protected Terms</label>

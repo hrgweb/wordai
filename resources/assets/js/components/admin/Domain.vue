@@ -1,6 +1,6 @@
 <template>
 	<div class="Domain">
-		<h1>Domain</h1>
+		<h2>Domain</h2>
 
 		<!-- Domain edit -->
 		<domain-edit 

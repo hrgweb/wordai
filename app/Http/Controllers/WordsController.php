@@ -54,7 +54,7 @@ class WordsController extends Controller
 		$protected = $request->protected;
 		$synonyms = $request->synonyms;
 
-		$quality = 'very readable';
+		$quality = 'readable';
 		$nonested = 'off';
 		$sentence = 'on';
 		$paragraph = 'on';

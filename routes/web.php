@@ -2,7 +2,8 @@
 
 // Pages
 Route::get('/', 'PagesController@index');
-Route::get('/domain', 'PagesController@domain');
+Route::get('domain', 'PagesController@domain');
+Route::get('user', 'PagesController@user');
 
 // WordAI
 Route::get('words/generate', 'WordsController@article');
@@ -22,7 +23,10 @@ Route::delete('admin/removeDomain', 'AdminController@removeDomain');
 Route::post('admin/postProtectedTerms', 'AdminController@postProtectedTerms');
 
 // User
-Route::patch('user/verifySignup', 'UserController@verifySignup');
+Route::prefix('user')->group(function() {
+	Route::get('userList', 'UserController@userList');
+	Route::patch('verifySignup', 'UserController@verifySignup');
+});
 
 Auth::routes();
 

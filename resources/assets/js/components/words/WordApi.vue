@@ -10,7 +10,7 @@
 		</div>
 
 		<form method="POST" @submit.prevent="spinTax">
-			<input type="hidden" name="_token" :value="token">
+			<input type="hidden" name="_token" :value="token" v-once>
 
 			<div class="form-group">
 				<span>Words count: <b>{{ count }}</b></span>
@@ -47,14 +47,14 @@
 				</div>
 
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-					<!-- <textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea> -->
-					<label for="article">Paste Article Below</label>
-					<textarea class="form-control" rows="8" v-model="spin.article" @keyup="wordCount"></textarea>
+					<label for="protected">Protected Terms</label>
+					<textarea class="form-control" rows="8" v-model="spin.protected"></textarea>
 				</div>
 			</div><br>
 
-			<label for="protected">Protected Terms</label>
-			<textarea class="form-control" rows="8" v-model="spin.protected"></textarea>
+			<!-- <textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea> -->
+			<label for="article">Paste Article Below</label>
+			<textarea class="form-control" rows="40" v-once v-model="spin.article" @keyup="wordCount"></textarea>
 			<br>
 
 			<label for="synonyms">Synonyms</label>

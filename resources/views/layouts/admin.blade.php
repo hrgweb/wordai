@@ -44,12 +44,12 @@
 							</a>
 						</li>
 						<li>
-							<a href="{{ url('home') }}">
+							<a href="{{ url('user') }}">
 								<em class="fa fa-user" aria-hidden="true"></em> User
 							</a>
 						</li>
-						<li><a href="#">Link004</a></li>
-						<li><a href="#">Link005</a></li>
+						{{-- <li><a href="#">Link004</a></li> --}}
+						{{-- <li><a href="#">Link005</a></li> --}}
 					</ul>
 				</nav>
 

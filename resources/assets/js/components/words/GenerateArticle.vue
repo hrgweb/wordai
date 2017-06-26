@@ -16,7 +16,7 @@
 
 			<div class="Result" v-if="isSpin">
 				<label for="result">Article</label>
-				<p style="white-space: pre;">{{ newArticle }}</p><br>
+				<p style="white-space: pre-wrap;">{{ newArticle }}</p><br>
 			</div>
 		
 			<button type="submit" class="btn btn-primary">Generate</button>
