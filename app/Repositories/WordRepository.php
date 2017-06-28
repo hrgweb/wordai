@@ -8,6 +8,11 @@ class WordRepository
 	{
 		return preg_replace ('/,(\s+)/', ',', $terms);
 	}
+
+	public function split_article_into_paragraph($article)
+	{
+		return preg_split("/\\n\\n\\n/", $article);
+	}
 }
 
 ?>

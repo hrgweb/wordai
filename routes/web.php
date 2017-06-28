@@ -1,5 +1,8 @@
 <?php
 
+// tmp
+Route::get('test', 'WordsController@test');
+
 // Pages
 Route::get('/', 'PagesController@index');
 Route::get('domain', 'PagesController@domain');
@@ -10,6 +13,8 @@ Route::get('words/generate', 'WordsController@article');
 Route::get('words/rawArticles', 'WordsController@getRawArticles');
 Route::post('words', 'WordsController@store');
 Route::post('words/generateArticle', 'WordsController@generateArticle');
+Route::post('words/generateParagraph', 'WordsController@generateParagraph');
+Route::post('words/generateRespintax', 'WordsController@generateRespintax');
 Route::post('words/postSpinTax', 'WordsController@postSpinTax');
 
 // Admin

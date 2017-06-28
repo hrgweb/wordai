@@ -1,16 +1,28 @@
 <template>
 	<div class="Word">
-		<h1>Article</h1>
+		<h1>Article</h1><hr>
 
 		<div class="Word__result" v-if="isSuccess">
 			<!-- <pre>{{ result }}</pre> -->
 			<br>
 			<h3 class="text-center">Spin Tax</h3>
-			<p style="white-space: pre-wrap;">{{ newWords }}</p>
+			<!-- <p style="white-space: pre-wrap;">{{ paragraphs }}</p> -->
+			<div class="form-group" v-for="(para, index) in paragraphs">
+				<form method="POST" @submit.prevent="generateRespintax(para, index)">
+					<input type="hidden" name="_token" :value="token">
+
+					<textarea class="form-control" rows="12">{{ para }}</textarea>
+					<br>
+
+					<button type="submit" class="btn btn-success">Respin</button>
+					<!-- &nbsp;&nbsp;&nbsp; -->
+					<!-- <span v-if="isLoading">LOADING....</span><br> -->
+				</form>
+			</div>
 		</div>
 
 		<form method="POST" @submit.prevent="spinTax">
-			<input type="hidden" name="_token" :value="token" v-once>
+			<input type="hidden" name="_token" :value="token">
 
 			<div class="form-group">
 				<span>Words count: <b>{{ count }}</b></span>
@@ -61,10 +73,10 @@
 			<textarea class="form-control" rows="8" v-model="spin.synonyms"></textarea>
 
 			<br>
-			<error :list="errors" v-if="isFail"></error>
+			<error :list="errors" v-if="isValidationFail"></error>
 			<br>
 
-			<button type="submit" class="btn btn-primary">Spin Tax</button>
+			<button type="submit" class="btn btn-primary">Spin Now</button>
 			&nbsp;&nbsp;&nbsp;
 			<span v-if="isLoading">LOADING....</span><br>
 		</form>
@@ -83,9 +95,10 @@
 			return {
 				wordsMax: 1800,
 				count: 0,
-				newWords: '',
+				paragraph: '',
+				paragraphs: [],
 				result: {},
-				isFail: false,
+				isValidationFail: false,
 				spin: { 
 					doc_title: '',
 					dom_name: 'http://www.cnn.com',
@@ -117,40 +130,73 @@
 				this.count = count;
 			},
 			spinTax() {
-				// show loading
 				this.isLoading = true;
+				this.isValidationFail = false;
 
 				axios.post('/words', this.spin)
 				.then(response => {
 					let data = response.data;
 
-					this.isFail = data.isError;
+					this.isValidationFail = data.isError;
 
 					// check if validation fail
-					if (this.isFail === true) {
+					if (this.isValidationFail === true) {
 						this.errors = data.errors;
-						this.isFail = true;
+						this.isValidationFail = true;
 						this.isLoading = false;
 					} else {
-						this.isFail = false;
+						this.isValidationFail = false;
+						this.isLoading = false;
 
 						// check if api response is success
 						if (data.status === 'Success') {
-							this.newWords = data.text;
-							this.result = data;
+							let text = data.text;
+							let paragraphs = text.split(/\n\n\n/); // regex expression finding new line
+
+							this.result = text;
 							this.isSuccess = true;
-							this.isLoading = false;
+
+							// display finish paragraph article
+							this.generateParagraph(paragraphs);
 
 							// post article
 							this.spin['article'] = data.text;
 							this.postSpinTax(this.spin);
 						}
-						// console.log(data);
+						
+						// check if api response is fail
+						if (data.status === 'Failure') {
+							this.errors = data.error;
+							console.log(data.error);
+						}
 					}
 				});
 			},
 			postSpinTax(data) {
 				axios.post('/words/postSpinTax', data).then(response => console.log(response.data));
+			},
+			generateParagraph(paragraphs) {
+				axios.post('/words/generateParagraph', { paragraphs: paragraphs }).then(response => this.paragraphs = response.data);
+			},
+			generateRespintax(paragraph, index) {
+				// show the loading caption
+				this.isLoading = true;
+
+				this.spin['paragraph'] = paragraph;
+				axios.post('/words/generateRespintax', this.spin).then(response => {
+					let data = response.data;
+
+					if (data.status === 'Success') {
+						this.isLoading = false;
+						this.paragraphs[index] = data.text;
+					}
+
+					// check if api response is fail
+					if (data.status === 'Failure') {
+						// this.errors = data.error;
+						console.log(data.error);
+					}
+				});
 			}
 		}
 	}
