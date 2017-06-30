@@ -16,6 +16,7 @@ Route::post('words/generateArticle', 'WordsController@generateArticle');
 Route::post('words/generateParagraph', 'WordsController@generateParagraph');
 Route::post('words/generateRespintax', 'WordsController@generateRespintax');
 Route::post('words/postSpinTax', 'WordsController@postSpinTax');
+Route::post('words/processToCopyscape', 'WordsController@processToCopyscape');
 
 // Admin
 // Domain

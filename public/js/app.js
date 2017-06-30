@@ -2690,7 +2690,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue__ = __webpack_require__(61);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__errors_Error_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SeparateParagraph_vue__ = __webpack_require__(97);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SeparateParagraph_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__SeparateParagraph_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__ = __webpack_require__(5);
 //
 //
 //
@@ -2772,18 +2774,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['user', 'token'],
-	components: { Error: __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default.a },
-	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__["a" /* CrudMixin */]],
+	components: { Error: __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default.a, SeparateParagraph: __WEBPACK_IMPORTED_MODULE_1__SeparateParagraph_vue___default.a },
+	mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__["a" /* CrudMixin */]],
 	data: function data() {
 		return {
 			wordsMax: 1800,
@@ -2792,6 +2791,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			paragraphs: [],
 			result: {},
 			isValidationFail: false,
+			copyscape: {},
 			spin: {
 				doc_title: '',
 				dom_name: 'http://www.cnn.com',
@@ -2857,6 +2857,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 						// post article
 						_this.spin['article'] = data.text;
 						_this.postSpinTax(_this.spin);
+
+						// scroll window to top
+						/*$('html, body').animate({
+      	scrollTop: $('div.Word__result').find('h3').offset().top + 'px'
+      }, 1000);*/
 					}
 
 					// check if api response is fail
@@ -2879,27 +2884,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				return _this2.paragraphs = response.data;
 			});
 		},
-		generateRespintax: function generateRespintax(paragraph, index) {
-			var _this3 = this;
-
-			// show the loading caption
-			this.isLoading = true;
-
-			this.spin['paragraph'] = paragraph;
-			axios.post('/words/generateRespintax', this.spin).then(function (response) {
-				var data = response.data;
-
-				if (data.status === 'Success') {
-					_this3.isLoading = false;
-					_this3.paragraphs[index] = data.text;
-				}
-
-				// check if api response is fail
-				if (data.status === 'Failure') {
-					// this.errors = data.error;
-					console.log(data.error);
-				}
-			});
+		respinParagraph: function respinParagraph(payload) {
+			console.log(payload);
+			this.paragraphs[payload.index] = payload.paragraph;
 		}
 	}
 });
@@ -33725,51 +33712,32 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Word"
-  }, [_c('h1', [_vm._v("Article")]), _c('hr'), _vm._v(" "), (_vm.isSuccess) ? _c('div', {
+  }, [_c('h1', [_vm._v("Article")]), _c('hr'), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.isSuccess),
+      expression: "isSuccess"
+    }],
     staticClass: "Word__result"
   }, [_c('br'), _vm._v(" "), _c('h3', {
     staticClass: "text-center"
   }, [_vm._v("Spin Tax")]), _vm._v(" "), _vm._l((_vm.paragraphs), function(para, index) {
-    return _c('div', {
-      staticClass: "form-group"
-    }, [_c('form', {
+    return _c('separate-paragraph', {
+      key: "",
       attrs: {
-        "method": "POST"
+        "token": _vm.token,
+        "spin": _vm.spin,
+        "paragraph": para,
+        "index": index
       },
       on: {
-        "submit": function($event) {
-          $event.preventDefault();
-          _vm.generateRespintax(para, index)
-        }
+        "updateparagraph": _vm.respinParagraph
       }
-    }, [_c('input', {
-      attrs: {
-        "type": "hidden",
-        "name": "_token"
-      },
-      domProps: {
-        "value": _vm.token
-      }
-    }), _vm._v(" "), _c('textarea', {
-      staticClass: "form-control",
-      attrs: {
-        "rows": "12"
-      }
-    }, [_vm._v(_vm._s(para))]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
-      staticClass: "btn btn-success",
-      attrs: {
-        "type": "submit"
-      }
-    }, [_vm._v("Respin")])])])
-  })], 2) : _vm._e(), _vm._v(" "), _c('form', {
+    })
+  })], 2), _vm._v(" "), _c('form', {
     attrs: {
       "method": "POST"
-    },
-    on: {
-      "submit": function($event) {
-        $event.preventDefault();
-        _vm.spinTax($event)
-      }
     }
   }, [_c('input', {
     attrs: {
@@ -33985,8 +33953,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "btn btn-primary",
     attrs: {
       "type": "submit"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.spinTax($event)
+      }
     }
-  }, [_vm._v("Spin Now")]), _vm._v("\n\t\t   \n\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')], 1)])
+  }, [_vm._v("Spin Now")]), _vm._v("\n\t\t\t   \n\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')], 1)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('textarea', {
     directives: [{
@@ -44169,6 +44143,201 @@ module.exports = function(module) {
 __webpack_require__(12);
 module.exports = __webpack_require__(13);
 
+
+/***/ }),
+/* 86 */,
+/* 87 */,
+/* 88 */,
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__ = __webpack_require__(5);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['token', 'paragraph', 'index', 'spin'],
+	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */]],
+	data: function data() {
+		return {
+			newParagraph: '',
+			error: '',
+			isError: false
+		};
+	},
+	mounted: function mounted() {
+		this.newParagraph = this.paragraph;
+	},
+
+	methods: {
+		generateRespintax: function generateRespintax(index) {
+			var _this = this;
+
+			this.isLoading = true;
+			this.isError = false;
+
+			this.spin['paragraph'] = this.paragraph;
+			axios.post('/words/generateRespintax', this.spin).then(function (response) {
+				var data = response.data;
+				var text = data.text;
+
+				if (data.status === 'Success') {
+					_this.isLoading = false;
+					_this.newParagraph = text;
+
+					_this.$emit('updateparagraph', {
+						index: _this.index,
+						paragraph: text
+					});
+				}
+
+				// check if api response is fail
+				if (data.status === 'Failure') {
+					_this.error = data.error;
+					_this.isError = true;
+				}
+			});
+		},
+		processToCopyscape: function processToCopyscape() {
+			var _this2 = this;
+
+			this.isLoading = true;
+			this.isError = false;
+
+			this.spin['paragraph'] = this.paragraph;
+			axios.post('/words/processToCopyscape', this.spin).then(function (response) {
+				var data = response.data;
+
+				// api result response success
+				_this2.isLoading = false;
+				_this2.copyscape = data;
+
+				// check if api response is fail
+				if (data.error) {
+					_this2.error = data.error;
+					_this2.isError = true;
+				}
+			});
+		}
+	}
+});
+
+/***/ }),
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(96),
+  /* template */
+  __webpack_require__(98),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\words\\SeparateParagraph.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] SeparateParagraph.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3cf26de2", Component.options)
+  } else {
+    hotAPI.reload("data-v-3cf26de2", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "form-group"
+  }, [_c('form', {
+    attrs: {
+      "method": "POST"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.generateRespintax(_vm.index)
+      }
+    }
+  }, [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "_token"
+    },
+    domProps: {
+      "value": _vm.token
+    }
+  }), _vm._v(" "), _c('textarea', {
+    staticClass: "form-control",
+    attrs: {
+      "rows": "12"
+    }
+  }, [_vm._v(_vm._s(_vm.newParagraph))]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Respin")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-warning",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.processToCopyscape
+    }
+  }, [_vm._v("Copyscape")]), _vm._v("\n\t\t   \n\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
+    staticStyle: {
+      "color": "red"
+    }
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br')])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-3cf26de2", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

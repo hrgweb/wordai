@@ -2,26 +2,22 @@
 	<div class="Word">
 		<h1>Article</h1><hr>
 
-		<div class="Word__result" v-if="isSuccess">
+		<div class="Word__result" v-show="isSuccess">
 			<!-- <pre>{{ result }}</pre> -->
 			<br>
 			<h3 class="text-center">Spin Tax</h3>
 			<!-- <p style="white-space: pre-wrap;">{{ paragraphs }}</p> -->
-			<div class="form-group" v-for="(para, index) in paragraphs">
-				<form method="POST" @submit.prevent="generateRespintax(para, index)">
-					<input type="hidden" name="_token" :value="token">
 
-					<textarea class="form-control" rows="12">{{ para }}</textarea>
-					<br>
-
-					<button type="submit" class="btn btn-success">Respin</button>
-					<!-- &nbsp;&nbsp;&nbsp; -->
-					<!-- <span v-if="isLoading">LOADING....</span><br> -->
-				</form>
-			</div>
+			<!-- Seperate paragraph -->
+			<separate-paragraph
+				:token="token"
+				:spin="spin"
+				v-for="(para, index) in paragraphs" :paragraph="para" :index="index" key
+				@updateparagraph="respinParagraph">
+ 			</separate-paragraph>
 		</div>
 
-		<form method="POST" @submit.prevent="spinTax">
+		<form method="POST">
 			<input type="hidden" name="_token" :value="token">
 
 			<div class="form-group">
@@ -76,7 +72,7 @@
 			<error :list="errors" v-if="isValidationFail"></error>
 			<br>
 
-			<button type="submit" class="btn btn-primary">Spin Now</button>
+			<button type="submit" class="btn btn-primary" @click.prevent="spinTax">Spin Now</button>
 			&nbsp;&nbsp;&nbsp;
 			<span v-if="isLoading">LOADING....</span><br>
 		</form>
@@ -85,11 +81,12 @@
 
 <script>
 	import Error from './../errors/Error.vue';
+	import SeparateParagraph from './SeparateParagraph.vue';
 	import { CrudMixin } from './../../mixins/CrudMixin.js';
 
 	export default {
 		props: [ 'user', 'token' ],
-		components: { Error },
+		components: { Error, SeparateParagraph },
 		mixins: [ CrudMixin ],
 		data() {
 			return {
@@ -99,6 +96,7 @@
 				paragraphs: [],
 				result: {},
 				isValidationFail: false,
+				copyscape: {},
 				spin: { 
 					doc_title: '',
 					dom_name: 'http://www.cnn.com',
@@ -162,6 +160,11 @@
 							// post article
 							this.spin['article'] = data.text;
 							this.postSpinTax(this.spin);
+
+							// scroll window to top
+							/*$('html, body').animate({
+								scrollTop: $('div.Word__result').find('h3').offset().top + 'px'
+							}, 1000);*/
 						}
 						
 						// check if api response is fail
@@ -178,25 +181,9 @@
 			generateParagraph(paragraphs) {
 				axios.post('/words/generateParagraph', { paragraphs: paragraphs }).then(response => this.paragraphs = response.data);
 			},
-			generateRespintax(paragraph, index) {
-				// show the loading caption
-				this.isLoading = true;
-
-				this.spin['paragraph'] = paragraph;
-				axios.post('/words/generateRespintax', this.spin).then(response => {
-					let data = response.data;
-
-					if (data.status === 'Success') {
-						this.isLoading = false;
-						this.paragraphs[index] = data.text;
-					}
-
-					// check if api response is fail
-					if (data.status === 'Failure') {
-						// this.errors = data.error;
-						console.log(data.error);
-					}
-				});
+			respinParagraph(payload) {
+				console.log(payload);
+				this.paragraphs[payload.index] = payload.paragraph;
 			}
 		}
 	}
