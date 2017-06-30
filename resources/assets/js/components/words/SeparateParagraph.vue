@@ -6,6 +6,11 @@
 			<textarea class="form-control" rows="12">{{ newParagraph }}</textarea>
 			<br>
 
+			<copyscape-result
+				:copy="copyscape"
+				v-if="responseSuccess">
+ 			</copyscape-result>
+
 			<button type="submit" class="btn btn-success">Respin</button>
 			<button type="button" class="btn btn-warning" @click="processToCopyscape">Copyscape</button>
 			&nbsp;&nbsp;&nbsp;
@@ -16,16 +21,20 @@
 </template>
 
 <script>
+	import CopyscapeResult from './CopyscapeResult.vue';
 	import { CrudMixin } from './../../mixins/CrudMixin.js';
 
 	export default {
 		props: [ 'token', 'paragraph', 'index', 'spin' ],
+		components: { CopyscapeResult },
 		mixins: [ CrudMixin ],
 		data() {
 			return {
 				newParagraph: '',
 				error: '',
-				isError: false
+				isError: false,
+				copyscape: {},
+				responseSuccess: false
 			}
 		},
 		mounted() {
@@ -69,11 +78,13 @@
 					// api result response success
 					this.isLoading = false;
 					this.copyscape = data;
+					this.responseSuccess = true;
 
 					// check if api response is fail
 					if (data.error) {
 						this.error = data.error;
 						this.isError = true;
+						this.responseSuccess = false;
 					}
 				});
 			}

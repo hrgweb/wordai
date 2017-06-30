@@ -2791,7 +2791,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			paragraphs: [],
 			result: {},
 			isValidationFail: false,
-			copyscape: {},
 			spin: {
 				doc_title: '',
 				dom_name: 'http://www.cnn.com',
@@ -44160,7 +44159,9 @@ module.exports = __webpack_require__(13);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue__ = __webpack_require__(99);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__ = __webpack_require__(5);
 //
 //
 //
@@ -44178,17 +44179,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['token', 'paragraph', 'index', 'spin'],
-	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */]],
+	components: { CopyscapeResult: __WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue___default.a },
+	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__["a" /* CrudMixin */]],
 	data: function data() {
 		return {
 			newParagraph: '',
 			error: '',
-			isError: false
+			isError: false,
+			copyscape: {},
+			responseSuccess: false
 		};
 	},
 	mounted: function mounted() {
@@ -44237,11 +44247,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				// api result response success
 				_this2.isLoading = false;
 				_this2.copyscape = data;
+				_this2.responseSuccess = true;
 
 				// check if api response is fail
 				if (data.error) {
 					_this2.error = data.error;
 					_this2.isError = true;
+					_this2.responseSuccess = false;
 				}
 			});
 		}
@@ -44312,7 +44324,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "rows": "12"
     }
-  }, [_vm._v(_vm._s(_vm.newParagraph))]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
+  }, [_vm._v(_vm._s(_vm.newParagraph))]), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.responseSuccess) ? _c('copyscape-result', {
+    attrs: {
+      "copy": _vm.copyscape
+    }
+  }) : _vm._e(), _vm._v(" "), _c('button', {
     staticClass: "btn btn-success",
     attrs: {
       "type": "submit"
@@ -44325,11 +44341,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.processToCopyscape
     }
-  }, [_vm._v("Copyscape")]), _vm._v("\n\t\t   \n\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
+  }, [_vm._v("Copyscape")]), _vm._v("\n\t\t\t   \n\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
     staticStyle: {
       "color": "red"
     }
-  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br')])])
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br')], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -44337,6 +44353,131 @@ if (false) {
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-3cf26de2", module.exports)
   }
+}
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(103)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(100),
+  /* template */
+  __webpack_require__(101),
+  /* scopeId */
+  "data-v-7819b81c",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\words\\CopyscapeResult.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] CopyscapeResult.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7819b81c", Component.options)
+  } else {
+    hotAPI.reload("data-v-7819b81c", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 100 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['copy']
+});
+
+/***/ }),
+/* 101 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Copyscape"
+  }, [_c('div', {
+    staticClass: "results_title"
+  }, [_c('b', [_vm._v(_vm._s(_vm.copy.count) + "  result")]), _vm._v(" \n\t\tfound for the text you pasted  (" + _vm._s(_vm.copy.querywords) + " words).\n\t")]), _vm._v(" "), _vm._l((_vm.copy.result), function(copy) {
+    return _c('div', {
+      staticClass: "Copyscape__result"
+    }, [_c('a', {
+      attrs: {
+        "href": copy.url,
+        "target": "_tab"
+      }
+    }, [_vm._v(_vm._s(copy.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(copy.textsnippet))]), _vm._v(" "), _c('em', [_vm._v(_vm._s(copy.url))])])
+  })], 2)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7819b81c", module.exports)
+  }
+}
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.results_title[data-v-7819b81c] {\n    text-align: left;\n    background-color: #e5e5ff;\n    padding: 6px 15px;\n    margin-bottom: 20px;\n    margin-top: 0;\n    font-size: 13px;\n    border: 1px solid #CECEF0;\n}\n.Copyscape__result[data-v-7819b81c] {\n    margin-bottom: 2em;\n    background: #e5e8ea;\n    padding: .5em 1em;\n}\n", ""]);
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(102);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("27f0b517", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7819b81c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CopyscapeResult.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7819b81c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CopyscapeResult.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
 }
 
 /***/ })

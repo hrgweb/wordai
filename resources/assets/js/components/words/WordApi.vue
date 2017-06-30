@@ -96,7 +96,6 @@
 				paragraphs: [],
 				result: {},
 				isValidationFail: false,
-				copyscape: {},
 				spin: { 
 					doc_title: '',
 					dom_name: 'http://www.cnn.com',
