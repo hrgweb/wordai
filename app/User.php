@@ -14,7 +14,7 @@ class User extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
-        'firstname', 'lastname', 'email', 'password',
+        'user_level_id', 'firstname', 'lastname', 'email', 'password',
     ];
 
     protected $hidden = [
@@ -36,6 +36,31 @@ class User extends Authenticatable
     	return $this->firstname . ' ' . $this->lastname;
     }
 
+    public function check_if_admin_or_manager()
+    {
+    	return ($this->user_level_id === 1 || $this->user_level_id === 2) ? true : false;
+    }
+
+    public function access_name()
+    {
+    	switch ($this->user_level_id) {
+    		case 1:
+    			echo 'Manager';
+    			break;
+    		case 2:
+    			echo 'Admin';
+    			break;
+    		case 3:
+    			echo 'Editor';
+    			break;
+    		case 4:
+    			echo 'Writer';
+    			break;
+    	}
+    }
+
+    /*=============== Relationships ===============*/ 
+
     public function words()
     {
     	return $this->hasMany(Word::class);
@@ -56,7 +81,7 @@ class User extends Authenticatable
     	return $this->hasMany(ProtectedTerm::class);
     }
 
-    public function user_level()
+    public function level()
     {
     	return $this->hasOne(UserLevel::class);
     }

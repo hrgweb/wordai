@@ -26,7 +26,7 @@
     <div id="app" class="wrapper">
 		@include('partials._nav')
 
-		@if(Auth::check() && $user->isAdmin)
+		@if(Auth::check() && $user->check_if_admin_or_manager())
 			<!-- START aside-->
 			<aside class="aside">
 				<!-- START Sidebar (left)-->
