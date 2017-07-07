@@ -25,4 +25,9 @@ class PagesController extends Controller
     {
     	return view('users.index');
     }
+
+    public function home2()
+    {
+    	return view('words.home');
+    }
 }

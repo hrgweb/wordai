@@ -8,7 +8,7 @@ export const ArticleMixin = {
 		}
 	},
 	methods: {
-		generateRespintax(index) {
+		generateRespintax(index=0) {
 			this.isLoading = true;
 			this.isError = false;
 

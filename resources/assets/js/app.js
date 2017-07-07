@@ -10,6 +10,7 @@ import Domain from './components/admin/Domain.vue';
 import User from './components/admin/User.vue';
 import ProtectedTerm from './components/admin/ProtectedTerm.vue';
 import WordApi from './components/words/WordApi.vue';
+import WordApi2 from './components/words/WordApi2.vue';
 import GenerateArticle from './components/words/GenerateArticle.vue';
 
 const app = new Vue({
@@ -18,6 +19,7 @@ const app = new Vue({
     components: {
     	Admin,
     	WordApi,
+    	WordApi2,
     	GenerateArticle,
     	PendingUser,
     	Domain,

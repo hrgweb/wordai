@@ -1139,13 +1139,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_admin_ProtectedTerm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_admin_ProtectedTerm_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_words_WordApi_vue__ = __webpack_require__(69);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_words_WordApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_words_WordApi_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_words_GenerateArticle_vue__ = __webpack_require__(67);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_words_GenerateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_words_GenerateArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_words_WordApi2_vue__ = __webpack_require__(109);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_words_WordApi2_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_words_WordApi2_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_words_GenerateArticle_vue__ = __webpack_require__(67);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_words_GenerateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_words_GenerateArticle_vue__);
 __webpack_require__(45);
 
 window.Vue = __webpack_require__(91);
 
 /*=============== Components ===============*/
+
 
 
 
@@ -1161,7 +1164,8 @@ var app = new Vue({
    components: {
       Admin: __WEBPACK_IMPORTED_MODULE_0__components_admin_Admin_vue___default.a,
       WordApi: __WEBPACK_IMPORTED_MODULE_5__components_words_WordApi_vue___default.a,
-      GenerateArticle: __WEBPACK_IMPORTED_MODULE_6__components_words_GenerateArticle_vue___default.a,
+      WordApi2: __WEBPACK_IMPORTED_MODULE_6__components_words_WordApi2_vue___default.a,
+      GenerateArticle: __WEBPACK_IMPORTED_MODULE_7__components_words_GenerateArticle_vue___default.a,
       PendingUser: __WEBPACK_IMPORTED_MODULE_1__components_admin_PendingUser_vue___default.a,
       Domain: __WEBPACK_IMPORTED_MODULE_2__components_admin_Domain_vue___default.a,
       ProtectedTerm: __WEBPACK_IMPORTED_MODULE_4__components_admin_ProtectedTerm_vue___default.a,
@@ -2904,9 +2908,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	mixins: [__WEBPACK_IMPORTED_MODULE_4__mixins_CrudMixin_js__["a" /* CrudMixin */]],
 	data: function data() {
 		return {
+			article: '',
 			wordsMax: 1800,
 			count: 0,
-			article: '',
 			paragraph: '',
 			paragraphs: [],
 			result: {},
@@ -33703,12 +33707,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('form', {
     attrs: {
       "method": "POST"
-    },
-    on: {
-      "submit": function($event) {
-        $event.preventDefault();
-        _vm.generateRespintax(_vm.index)
-      }
     }
   }, [_c('input', {
     attrs: {
@@ -33730,7 +33728,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }) : _vm._e(), _vm._v(" "), _c('button', {
     staticClass: "btn btn-success",
     attrs: {
-      "type": "submit"
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        _vm.generateRespintax(_vm.index)
+      }
     }
   }, [_vm._v("Respin")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-warning",
@@ -34261,7 +34264,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "article"
     }
-  }, [_vm._v("Paste Article Below")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('br'), _vm._v(" "), _c('label', {
+  }, [_vm._v("Original Article")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('br'), _vm._v(" "), _c('label', {
     attrs: {
       "for": "synonyms"
     }
@@ -44547,13 +44550,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['token', 'spin', 'type', 'article'],
+	props: ['token', 'spintaxResult', 'spin', 'type', 'article'],
 	components: { CopyscapeResult: __WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue___default.a },
 	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleMixin_js__["a" /* ArticleMixin */]]
 });
@@ -44562,13 +44568,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 102 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(114)
+
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(101),
   /* template */
   __webpack_require__(103),
   /* scopeId */
-  null,
+  "data-v-48e391eb",
   /* cssModules */
   null
 )
@@ -44599,7 +44609,11 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Article"
-  }, [_c('h2', [_vm._v("Article")]), _vm._v(" "), _c('form', {
+  }, [_c('h2', [_vm._v("Spintax Result")]), _vm._v(" "), _c('p', {
+    staticStyle: {
+      "white-space": "pre-wrap"
+    }
+  }, [_vm._v(_vm._s(_vm.spintaxResult))]), _c('br'), _vm._v(" "), _c('h2', [_vm._v("Processed Article")]), _vm._v(" "), _c('form', {
     attrs: {
       "method": "POST",
       "role": "form"
@@ -44612,10 +44626,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "value": _vm.token
     }
-  }), _vm._v(" "), _c('textarea', {
-    staticClass: "form-control",
+  }), _vm._v(" "), _c('div', {
     attrs: {
-      "rows": "40"
+      "id": "summernote"
     }
   }, [_vm._v(_vm._s(_vm.article))]), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.responseSuccess) ? _c('copyscape-result', {
     attrs: {
@@ -44624,7 +44637,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }) : _vm._e(), _vm._v(" "), _c('button', {
     staticClass: "btn btn-success",
     attrs: {
-      "type": "submit"
+      "type": "button"
+    },
+    on: {
+      "click": _vm.generateRespintax
     }
   }, [_vm._v("Respin")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-warning",
@@ -44673,8 +44689,10 @@ var ArticleMixin = {
 	},
 
 	methods: {
-		generateRespintax: function generateRespintax(index) {
+		generateRespintax: function generateRespintax() {
 			var _this = this;
+
+			var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			this.isLoading = true;
 			this.isError = false;
@@ -44924,6 +44942,646 @@ if (false) {
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-6e84f115", module.exports)
   }
+}
+
+/***/ }),
+/* 108 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__errors_Error_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SeparateParagraph_vue__ = __webpack_require__(68);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SeparateParagraph_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__SeparateParagraph_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CopyscapeApi_vue__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CopyscapeApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__CopyscapeApi_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FullArticle_vue__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FullArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__FullArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_CrudMixin_js__ = __webpack_require__(4);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['user', 'token'],
+	components: { Error: __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default.a, SeparateParagraph: __WEBPACK_IMPORTED_MODULE_1__SeparateParagraph_vue___default.a, FullArticle: __WEBPACK_IMPORTED_MODULE_3__FullArticle_vue___default.a, CopyscapeApi: __WEBPACK_IMPORTED_MODULE_2__CopyscapeApi_vue___default.a },
+	mixins: [__WEBPACK_IMPORTED_MODULE_4__mixins_CrudMixin_js__["a" /* CrudMixin */]],
+	data: function data() {
+		return {
+			article: '',
+			wordsMax: 1800,
+			count: 0,
+			paragraph: '',
+			paragraphs: [],
+			spintaxResult: '',
+			isValidationFail: false,
+			errorType: 1, // legend: 1-input validation, 0-fail response result from server
+			spintaxType: 'article',
+			spin: {
+				doc_title: '',
+				dom_name: 'http://www.cnn.com',
+				keyword: '',
+				lsi_terms: '',
+				domain_protected: '',
+				article: '',
+				protected: '',
+				synonyms: ''
+			}
+		};
+	},
+	created: function created() {
+		this.authUser = JSON.parse(this.user);
+	},
+
+	methods: {
+		wordCount: function wordCount() {
+			var count = 1;
+			var words = this.spin.article.trim();
+
+			for (var i = 0; i < words.length; i++) {
+				var char = words.charAt(i);
+
+				if (char === ' ') {
+					count++;
+				}
+			}
+
+			this.count = count;
+		},
+		spinTax: function spinTax() {
+			var _this = this;
+
+			this.isLoading = true;
+			this.isValidationFail = false;
+
+			/*let text = `
+   	How To Apply For Social Security Disability
+   	The first step in how to apply for social security disability is to contact the Social Security Administration to schedule your disability interview. You may contact your local Social Security office by telephone, or make an office visit, or you can call the toll free Social Security number to have a disability claim taken or scheduled for you at your local office. 
+   	For those who are unclear about the differences between SSD and SSI, Social Security administers two disability programs -- Social Security disability (SSDI) and Supplemental Security Income (SSI). Social Security disability is based upon insured status, which is achieved through your work activity. Supplemental Security Income is a need-based program that does not depend upon your work history. SSI is based upon your income or resources. 
+   	Where do I go to apply?
+   `;
+   let key = 'SzFohpMVhgmvbyRx';
+   let url = 'https://api.textgears.com/check.php?text='+text+'&key='+key;
+   
+   axios.post('/words/processTextGrammar', { text: text, key: key })
+   	.then(response => {
+   		let data = response.data;
+   			console.log(data);
+   	});*/
+
+			axios.post('/words', this.spin).then(function (response) {
+				var data = response.data;
+
+				_this.isValidationFail = data.isError;
+
+				// check if validation fail
+				if (_this.isValidationFail === true) {
+					_this.errors = data.errors;
+					_this.isValidationFail = true;
+					_this.isLoading = false;
+				} else {
+					_this.isValidationFail = false;
+					_this.isLoading = false;
+
+					// check if api response is success
+					if (data.status === 'Success') {
+						var text = data.text;
+						var paragraphs = text.split(/\n\n\n/); // regex expression finding new line
+
+						_this.spintaxResult = text;
+						_this.isSuccess = true;
+
+						// article is now the spintax result
+						// display finish full article
+						_this.generateFullArticle(_this.spin.article);
+
+						// post article
+						_this.spin['article'] = data.text;
+						_this.postSpinTax(_this.spin);
+
+						// scroll window to top
+						$('html, body').animate({
+							scrollTop: $('div.Word__result').find('h3').offset().top + 'px'
+						}, 1000);
+					}
+
+					// check if api response is fail
+					if (data.status === 'Failure') {
+						_this.isValidationFail = true;
+						_this.errors = data.error;
+					}
+				}
+
+				console.log(data);
+			});
+		},
+		postSpinTax: function postSpinTax(data) {
+			axios.post('/words/postSpinTax', data).then(function (response) {
+				return console.log(response.data);
+			});
+		},
+		generateFullArticle: function generateFullArticle(article) {
+			var _this2 = this;
+
+			axios.post('/words/generateFullArticle', { article: article }).then(function (response) {
+				return _this2.article = response.data;
+			});
+		},
+		generateParagraph: function generateParagraph(paragraphs) {
+			var _this3 = this;
+
+			axios.post('/words/generateParagraph', { paragraphs: paragraphs }).then(function (response) {
+				return _this3.paragraphs = response.data;
+			});
+		},
+		respinParagraph: function respinParagraph(payload) {
+			console.log(payload);
+			this.paragraphs[payload.index] = payload.paragraph;
+		}
+	}
+});
+
+/***/ }),
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(112)
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(108),
+  /* template */
+  __webpack_require__(110),
+  /* scopeId */
+  "data-v-7a54d12e",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\words\\WordApi2.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] WordApi2.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7a54d12e", Component.options)
+  } else {
+    hotAPI.reload("data-v-7a54d12e", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Word"
+  }, [_c('h1', [_vm._v("Article")]), _c('hr'), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.isSuccess),
+      expression: "isSuccess"
+    }],
+    staticClass: "Word__result"
+  }, [_c('br'), _vm._v(" "), (_vm.isSuccess) ? _c('full-article', {
+    attrs: {
+      "token": _vm.token,
+      "spintaxResult": _vm.spintaxResult,
+      "spin": _vm.spin,
+      "article": _vm.article,
+      "type": _vm.spintaxType = 'article'
+    }
+  }) : _vm._e(), _c('br')], 1), _vm._v(" "), _c('form', {
+    attrs: {
+      "method": "POST"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.spinTax($event)
+      }
+    }
+  }, [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "_token"
+    },
+    domProps: {
+      "value": _vm.token
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('span', [_vm._v("Words count: "), _c('b', [_vm._v(_vm._s(_vm.count))])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "doc_title"
+    }
+  }, [_vm._v("Document Title")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.doc_title),
+      expression: "spin.doc_title"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.spin.doc_title)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.doc_title = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "keyword"
+    }
+  }, [_vm._v("Key Word/Phrase field")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.keyword),
+      expression: "spin.keyword"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "maxlength": "255"
+    },
+    domProps: {
+      "value": (_vm.spin.keyword)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.keyword = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "lsi_terms"
+    }
+  }, [_vm._v("LSI Terms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.lsi_terms),
+      expression: "spin.lsi_terms"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.spin.lsi_terms)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.lsi_terms = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "dom_name"
+    }
+  }, [_vm._v("Domain Name")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.dom_name),
+      expression: "spin.dom_name"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.spin.dom_name = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "http://www.google.com"
+    }
+  }, [_vm._v("http://www.google.com")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "http://www.youtube.com"
+    }
+  }, [_vm._v("http://www.youtube.com")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "http://www.cnn.com"
+    }
+  }, [_vm._v("http://www.cnn.com")])])]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c('label', {
+    attrs: {
+      "for": "domain_protected"
+    }
+  }, [_vm._v("Domain Protected Terms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.domain_protected),
+      expression: "spin.domain_protected"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.spin.domain_protected)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.domain_protected = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c('label', {
+    attrs: {
+      "for": "protected"
+    }
+  }, [_vm._v("Protected Terms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.protected),
+      expression: "spin.protected"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.spin.protected)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.protected = $event.target.value
+      }
+    }
+  })])]), _c('br'), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "article"
+    }
+  }, [_vm._v("Original Article")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('br'), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "synonyms"
+    }
+  }, [_vm._v("Synonyms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.synonyms),
+      expression: "spin.synonyms"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.spin.synonyms)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.synonyms = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.isValidationFail) ? _c('error', {
+    attrs: {
+      "type": _vm.errorType,
+      "list": _vm.errors
+    }
+  }) : _vm._e(), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Spin Now")]), _vm._v("\n\t\t\t   \n\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')], 1)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.article),
+      expression: "spin.article"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "40"
+    },
+    domProps: {
+      "value": (_vm.spin.article)
+    },
+    on: {
+      "keyup": _vm.wordCount,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.article = $event.target.value
+      }
+    }
+  })
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7a54d12e", module.exports)
+  }
+}
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.Word[data-v-7a54d12e] {\n\tpadding: 0 20px;\n}\n.Word__result[data-v-7a54d12e] {\n\twidth: 100%;\n\tmargin-bottom: 3em;\n\toverflow-y: hidden;\n}\n", ""]);
+
+/***/ }),
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(111);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("724657f5", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7a54d12e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./WordApi2.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-7a54d12e\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./WordApi2.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 113 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\nh2[data-v-48e391eb] { text-align: center;\n}\n", ""]);
+
+/***/ }),
+/* 114 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(113);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("28f92898", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-48e391eb\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FullArticle.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-48e391eb\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FullArticle.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
 }
 
 /***/ })

@@ -5,34 +5,23 @@
 		<div class="Word__result" v-show="isSuccess">
 			<!-- <pre>{{ result }}</pre> -->
 			<br>
-			<h3 class="text-center">Spin Tax</h3>
+			<!-- <h3 class="text-center">Spin Tax</h3> -->
 			<!-- <p style="white-space: pre-wrap;">{{ paragraphs }}</p> -->
 
-			<copyscape-api
+			<!-- <copyscape-api
 				:token="token"
 				v-if="isSuccess">
-			</copyscape-api><br><br>
+			</copyscape-api><br><br> -->
 
 			<!-- Full Article -->
 			<full-article
 				:token="token"
+				:spintaxResult="spintaxResult"
 				:spin="spin"
 				:article="article"
 				:type="spintaxType = 'article'"
 				v-if="isSuccess">
 			</full-article><br>
-
-			<!-- Seperate paragraph -->
-			<separate-paragraph
-				:token="token"
-				:spin="spin"
-				v-for="(para, index) in paragraphs" 
-				:paragraph="para" 
-				:index="index" 
-				:key="para"
-				:type="spintaxType ='paragraph'"
-				@updateparagraph="respinParagraph">
- 			</separate-paragraph>
 		</div>
 
 		<form method="POST" @submit.prevent="spinTax">
@@ -120,7 +109,7 @@
 				count: 0,
 				paragraph: '',
 				paragraphs: [],
-				result: {},
+				spintaxResult: '',
 				isValidationFail: false,
 				errorType: 1, // legend: 1-input validation, 0-fail response result from server
 				spintaxType: 'article',
@@ -195,14 +184,12 @@
 								let text = data.text;
 								let paragraphs = text.split(/\n\n\n/); // regex expression finding new line
 
-								this.result = text;
+								this.spintaxResult = text;
 								this.isSuccess = true;
 
+								// article is now the spintax result
 								// display finish full article
 								this.generateFullArticle(this.spin.article);
-
-								// display finish paragraph article
-								this.generateParagraph(paragraphs);
 
 								// post article
 								this.spin['article'] = data.text;
@@ -220,6 +207,8 @@
 								this.errors = data.error;
 							}
 						}
+
+						console.log(data);
 					});
 			},
 
@@ -254,4 +243,3 @@
 		overflow-y: hidden;
 	}
 </style>
-

@@ -1,6 +1,6 @@
 <template>
 	<div class="form-group">
-		<form method="POST" @submit.prevent="generateRespintax(index)">
+		<form method="POST">
 			<input type="hidden" name="_token" :value="token">
 
 			<textarea class="form-control" rows="12">{{ newParagraph }}</textarea>
@@ -11,7 +11,7 @@
 				v-if="responseSuccess">
  			</copyscape-result>
 
-			<button type="submit" class="btn btn-success">Respin</button>
+			<button type="button" class="btn btn-success" @click="generateRespintax(index)">Respin</button>
 			<button type="button" class="btn btn-warning" @click="processToCopyscape">Copyscape</button>
 			<button type="button" class="btn btn-info" @click="processToTextGear">Check Grammar</button>
 			&nbsp;&nbsp;&nbsp;
