@@ -1,16 +1,18 @@
 <template>
-	<div class="form-group">
-		<form method="POST" @submit.prevent="generateRespintax(index)">
-			<input type="hidden" name="_token" :value="token">
+	<div class="Article">
+		<h2>Article</h2>
 
-			<textarea class="form-control" rows="12">{{ newParagraph }}</textarea>
+		<form method="POST" role="form">
+			<input type="hidden" name="_token" :value="token">
+		
+			<textarea class="form-control" rows="40">{{ article }}</textarea>
 			<br>
 
 			<copyscape-result
 				:copy="copyscape"
 				v-if="responseSuccess">
  			</copyscape-result>
-
+		
 			<button type="submit" class="btn btn-success">Respin</button>
 			<button type="button" class="btn btn-warning" @click="processToCopyscape">Copyscape</button>
 			<button type="button" class="btn btn-info" @click="processToTextGear">Check Grammar</button>
@@ -27,16 +29,8 @@
 	import { ArticleMixin } from './../../mixins/ArticleMixin.js';
 
 	export default {
-		props: [ 'token', 'paragraph', 'index', 'spin', 'type' ],
+		props: ['token', 'spin', 'type', 'article'],
 		components: { CopyscapeResult },
-		mixins: [ CrudMixin, ArticleMixin ],
-		data() {
-			return {
-				newParagraph: '',
-			}
-		},
-		mounted() {
-			this.newParagraph = this.paragraph;
-		}
+		mixins: [ CrudMixin, ArticleMixin ]
 	}
 </script>

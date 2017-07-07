@@ -3,7 +3,9 @@
     <div class="navbar-header">
         {{-- <a href="dashboard.v1.html" class="navbar-brand"> --}}
             {{-- <div class="brand-logo"> --}}
-                <a class="brand-logo" href="{{ url('/') }}">WordAI</a>
+                <a class="brand-logo" href="{{ url('/') }}">
+                	Connexions Content Suite
+                </a>
             {{-- </div> --}}
         {{-- </a> --}}
     </div>

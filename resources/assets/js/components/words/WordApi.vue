@@ -8,16 +8,29 @@
 			<h3 class="text-center">Spin Tax</h3>
 			<!-- <p style="white-space: pre-wrap;">{{ paragraphs }}</p> -->
 
+			<!-- Full Article -->
+			<full-article
+				:token="token"
+				:spin="spin"
+				:article="article"
+				:type="spintaxType = 'article'"
+				v-if="isSuccess">
+			</full-article><br>
+
 			<!-- Seperate paragraph -->
 			<separate-paragraph
 				:token="token"
 				:spin="spin"
-				v-for="(para, index) in paragraphs" :paragraph="para" :index="index" key
+				v-for="(para, index) in paragraphs" 
+				:paragraph="para" 
+				:index="index" 
+				:key="para"
+				:type="spintaxType ='paragraph'"
 				@updateparagraph="respinParagraph">
  			</separate-paragraph>
 		</div>
 
-		<form method="POST">
+		<form method="POST" @submit.prevent="spinTax">
 			<input type="hidden" name="_token" :value="token">
 
 			<div class="form-group">
@@ -69,10 +82,15 @@
 			<textarea class="form-control" rows="8" v-model="spin.synonyms"></textarea>
 
 			<br>
-			<error :list="errors" v-if="isValidationFail"></error>
+			<!-- Erorr component -->
+			<error 
+				:type="errorType"
+				:list="errors"
+				v-if="isValidationFail">
+ 			</error>
 			<br>
 
-			<button type="submit" class="btn btn-primary" @click.prevent="spinTax">Spin Now</button>
+			<button type="submit" class="btn btn-primary">Spin Now</button>
 			&nbsp;&nbsp;&nbsp;
 			<span v-if="isLoading">LOADING....</span><br>
 		</form>
@@ -82,20 +100,24 @@
 <script>
 	import Error from './../errors/Error.vue';
 	import SeparateParagraph from './SeparateParagraph.vue';
+	import FullArticle from './FullArticle.vue';
 	import { CrudMixin } from './../../mixins/CrudMixin.js';
 
 	export default {
 		props: [ 'user', 'token' ],
-		components: { Error, SeparateParagraph },
+		components: { Error, SeparateParagraph, FullArticle },
 		mixins: [ CrudMixin ],
 		data() {
 			return {
 				wordsMax: 1800,
 				count: 0,
+				article: '',
 				paragraph: '',
 				paragraphs: [],
 				result: {},
 				isValidationFail: false,
+				errorType: 1, // legend: 1-input validation, 0-fail response result from server
+				spintaxType: 'article',
 				spin: { 
 					doc_title: '',
 					dom_name: 'http://www.cnn.com',
@@ -130,56 +152,81 @@
 				this.isLoading = true;
 				this.isValidationFail = false;
 
+				/*let text = `
+					How To Apply For Social Security Disability
+					The first step in how to apply for social security disability is to contact the Social Security Administration to schedule your disability interview. You may contact your local Social Security office by telephone, or make an office visit, or you can call the toll free Social Security number to have a disability claim taken or scheduled for you at your local office. 
+					For those who are unclear about the differences between SSD and SSI, Social Security administers two disability programs -- Social Security disability (SSDI) and Supplemental Security Income (SSI). Social Security disability is based upon insured status, which is achieved through your work activity. Supplemental Security Income is a need-based program that does not depend upon your work history. SSI is based upon your income or resources. 
+					Where do I go to apply?
+				`;
+				let key = 'SzFohpMVhgmvbyRx';
+				let url = 'https://api.textgears.com/check.php?text='+text+'&key='+key;
+				
+				axios.post('/words/processTextGrammar', { text: text, key: key })
+					.then(response => {
+						let data = response.data;
+
+						console.log(data);
+					});*/
+
 				axios.post('/words', this.spin)
-				.then(response => {
-					let data = response.data;
+					.then(response => {
+						let data = response.data;
 
-					this.isValidationFail = data.isError;
+						this.isValidationFail = data.isError;
 
-					// check if validation fail
-					if (this.isValidationFail === true) {
-						this.errors = data.errors;
-						this.isValidationFail = true;
-						this.isLoading = false;
-					} else {
-						this.isValidationFail = false;
-						this.isLoading = false;
+						// check if validation fail
+						if (this.isValidationFail === true) {
+							this.errors = data.errors;
+							this.isValidationFail = true;
+							this.isLoading = false;
+						} else {
+							this.isValidationFail = false;
+							this.isLoading = false;
 
-						// check if api response is success
-						if (data.status === 'Success') {
-							let text = data.text;
-							let paragraphs = text.split(/\n\n\n/); // regex expression finding new line
+							// check if api response is success
+							if (data.status === 'Success') {
+								let text = data.text;
+								let paragraphs = text.split(/\n\n\n/); // regex expression finding new line
 
-							this.result = text;
-							this.isSuccess = true;
+								this.result = text;
+								this.isSuccess = true;
 
-							// display finish paragraph article
-							this.generateParagraph(paragraphs);
+								// display finish full article
+								this.generateFullArticle(this.spin.article);
 
-							// post article
-							this.spin['article'] = data.text;
-							this.postSpinTax(this.spin);
+								// display finish paragraph article
+								this.generateParagraph(paragraphs);
 
-							// scroll window to top
-							/*$('html, body').animate({
-								scrollTop: $('div.Word__result').find('h3').offset().top + 'px'
-							}, 1000);*/
+								// post article
+								this.spin['article'] = data.text;
+								this.postSpinTax(this.spin);
+
+								// scroll window to top
+								$('html, body').animate({
+									scrollTop: $('div.Word__result').find('h3').offset().top + 'px'
+								}, 1000);
+							}
+							
+							// check if api response is fail
+							if (data.status === 'Failure') {
+								this.isValidationFail = true;
+								this.errors = data.error;
+							}
 						}
-						
-						// check if api response is fail
-						if (data.status === 'Failure') {
-							this.errors = data.error;
-							console.log(data.error);
-						}
-					}
-				});
+					});
 			},
 			postSpinTax(data) {
 				axios.post('/words/postSpinTax', data).then(response => console.log(response.data));
 			},
+
+			generateFullArticle(article) {
+				axios.post('/words/generateFullArticle', { article: article }).then(response => this.article = response.data);
+			},
+
 			generateParagraph(paragraphs) {
 				axios.post('/words/generateParagraph', { paragraphs: paragraphs }).then(response => this.paragraphs = response.data);
 			},
+
 			respinParagraph(payload) {
 				console.log(payload);
 				this.paragraphs[payload.index] = payload.paragraph;

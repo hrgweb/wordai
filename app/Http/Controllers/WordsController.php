@@ -63,7 +63,7 @@ class WordsController extends Controller
 		// $paragraphs = $word->split_article_into_paragraph($request->article);
 
 		$result = $this->api(
-			$articleOrParagraph,
+			stripslashes($articleOrParagraph),
 			$quality, 
 			$email, 
 			$pass, 
@@ -77,6 +77,13 @@ class WordsController extends Controller
 		);
 
     	return $result;
+	}
+
+	public function generateFullArticle()
+	{
+		$result = $this->spin->process(request('article'));
+
+		return response()->json($result);
 	}
 
 	public function generateParagraph()
@@ -183,9 +190,50 @@ class WordsController extends Controller
 		$url = Config::get('copyscape.url');
 		$url .= '?f='.urlencode('html');
 		$text_search = $url.'?e=UTF-8';
+		$article = request('article');
 		$paragraph = request('paragraph');
+		$type = request('type');
+		$result = '';
+
+		switch ($type) {
+			case 'article':
+				$result = copyscape_api_text_search_internet($article, 'UTF-8');
+				break;
+			case 'paragraph':
+				$result = copyscape_api_text_search_internet($paragraph, 'UTF-8');
+				break;
+		}
+
+		return $result;
+	}
+
+	public function processTextGrammar()
+	{
+		$url = 'https://api.textgears.com/check.php';
+		$text = request('text');
+		$key = request('key');
+		/*$ch = curl_init();
+
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		$result = curl_exec($ch);
+
+		curl_close($ch);
+
+		dd($result);*/
+
+
+
+		$ch = curl_init($url);
+
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt ($ch, CURLOPT_POST, 1);
+		curl_setopt ($ch, CURLOPT_POSTFIELDS, "text=$text&key=$key");
 		
-		// Copyscape API
-		return copyscape_api_text_search_internet($paragraph, 'UTF-8');
+		$result = curl_exec($ch);
+		curl_close ($ch);
+
+		dd($result);
 	}
 }
