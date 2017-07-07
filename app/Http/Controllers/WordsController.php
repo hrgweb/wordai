@@ -183,6 +183,15 @@ class WordsController extends Controller
 		return response()->json($result);
 	}
 
+	public function processCopyscapeApi()
+	{
+		include_once(app_path() . '/Functions/Copyscape.php');
+
+		$result = copyscape_api_text_search_internet(request('article'), 'UTF-8');
+
+		return response()->json($result);
+	}
+
 	public function processToCopyscape()
 	{
 		include_once(app_path() . '/Functions/Copyscape.php');

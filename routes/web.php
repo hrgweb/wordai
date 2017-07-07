@@ -14,6 +14,7 @@ Route::get('words/rawArticles', 'WordsController@getRawArticles');
 Route::post('words', 'WordsController@store');
 Route::post('words/generateArticle', 'WordsController@generateArticle');
 Route::post('words/generateParagraph', 'WordsController@generateParagraph');
+Route::post('words/processCopyscapeApi', 'WordsController@processCopyscapeApi');
 Route::post('words/generateFullArticle', 'WordsController@generateFullArticle');
 Route::post('words/generateRespintax', 'WordsController@generateRespintax');
 Route::post('words/postSpinTax', 'WordsController@postSpinTax');

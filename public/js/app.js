@@ -2782,9 +2782,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__errors_Error_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SeparateParagraph_vue__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__SeparateParagraph_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__SeparateParagraph_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FullArticle_vue__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__FullArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__FullArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_CrudMixin_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CopyscapeApi_vue__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CopyscapeApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__CopyscapeApi_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FullArticle_vue__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FullArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__FullArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_CrudMixin_js__ = __webpack_require__(4);
 //
 //
 //
@@ -2884,6 +2886,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -2892,8 +2900,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['user', 'token'],
-	components: { Error: __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default.a, SeparateParagraph: __WEBPACK_IMPORTED_MODULE_1__SeparateParagraph_vue___default.a, FullArticle: __WEBPACK_IMPORTED_MODULE_2__FullArticle_vue___default.a },
-	mixins: [__WEBPACK_IMPORTED_MODULE_3__mixins_CrudMixin_js__["a" /* CrudMixin */]],
+	components: { Error: __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default.a, SeparateParagraph: __WEBPACK_IMPORTED_MODULE_1__SeparateParagraph_vue___default.a, FullArticle: __WEBPACK_IMPORTED_MODULE_3__FullArticle_vue___default.a, CopyscapeApi: __WEBPACK_IMPORTED_MODULE_2__CopyscapeApi_vue___default.a },
+	mixins: [__WEBPACK_IMPORTED_MODULE_4__mixins_CrudMixin_js__["a" /* CrudMixin */]],
 	data: function data() {
 		return {
 			wordsMax: 1800,
@@ -34036,7 +34044,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "Word__result"
   }, [_c('br'), _vm._v(" "), _c('h3', {
     staticClass: "text-center"
-  }, [_vm._v("Spin Tax")]), _vm._v(" "), (_vm.isSuccess) ? _c('full-article', {
+  }, [_vm._v("Spin Tax")]), _vm._v(" "), (_vm.isSuccess) ? _c('copyscape-api', {
+    attrs: {
+      "token": _vm.token
+    }
+  }) : _vm._e(), _c('br'), _c('br'), _vm._v(" "), (_vm.isSuccess) ? _c('full-article', {
     attrs: {
       "token": _vm.token,
       "spin": _vm.spin,
@@ -44689,10 +44701,10 @@ var ArticleMixin = {
 				}
 			});
 		},
-		copyScapeSetup: function copyScapeSetup(data) {
+		copyScapeSetup: function copyScapeSetup(url, data) {
 			var _this2 = this;
 
-			axios.post('/words/processToCopyscape', data).then(function (response) {
+			axios.post(url, data).then(function (response) {
 				var data = response.data;
 
 				// api result response success
@@ -44713,17 +44725,18 @@ var ArticleMixin = {
 			this.isError = false;
 
 			this.spin['type'] = this.type;
+			var url = '/words/processToCopyscape';
 
 			// if type is 'article' then it is entire article
 			// else separate paragprah
 			switch (this.type) {
 				case 'article':
 					this.spin['article'] = this.article;
-					this.copyScapeSetup(this.spin);
+					this.copyScapeSetup(url, this.spin);
 					break;
 				case 'paragraph':
 					this.spin['paragraph'] = this.paragraph;
-					this.copyScapeSetup(this.spin);
+					this.copyScapeSetup(url, this.spin);
 					break;
 			}
 		},
@@ -44753,6 +44766,165 @@ var ArticleMixin = {
 		}
 	}
 };
+
+/***/ }),
+/* 105 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleMixin_js__ = __webpack_require__(104);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['token'],
+	components: { CopyscapeResult: __WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue___default.a },
+	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleMixin_js__["a" /* ArticleMixin */]],
+	data: function data() {
+		return {
+			article: ''
+		};
+	},
+
+	methods: {
+		processToCopyscape: function processToCopyscape() {
+			this.isLoading = true;
+			this.isError = false;
+
+			// call to copyscape api
+			this.copyScapeSetup('/words/processCopyscapeApi', { article: this.article });
+		}
+	}
+});
+
+/***/ }),
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(105),
+  /* template */
+  __webpack_require__(107),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\words\\CopyscapeApi.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] CopyscapeApi.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6e84f115", Component.options)
+  } else {
+    hotAPI.reload("data-v-6e84f115", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 107 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "CopyscapeApi"
+  }, [_c('h2', [_vm._v("CopyScape API")]), _vm._v(" "), _c('form', {
+    attrs: {
+      "method": "POST",
+      "role": "form"
+    }
+  }, [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "_token"
+    },
+    domProps: {
+      "value": _vm.token
+    }
+  }), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.article),
+      expression: "article"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "15"
+    },
+    domProps: {
+      "value": (_vm.article)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.article = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.responseSuccess) ? _c('copyscape-result', {
+    attrs: {
+      "copy": _vm.copyscape
+    }
+  }) : _vm._e(), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-warning",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.processToCopyscape
+    }
+  }, [_vm._v("Copyscape")]), _vm._v("\n\t\t\t   \n\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
+    staticStyle: {
+      "color": "red"
+    }
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br')], 1)])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-6e84f115", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

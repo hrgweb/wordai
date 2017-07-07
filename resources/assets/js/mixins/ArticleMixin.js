@@ -35,8 +35,8 @@ export const ArticleMixin = {
 			});
 		},
 
-		copyScapeSetup(data) {
-			axios.post('/words/processToCopyscape', data).then(response => {
+		copyScapeSetup(url, data) {
+			axios.post(url, data).then(response => {
 				let data = response.data;
 
 				// api result response success
@@ -58,17 +58,18 @@ export const ArticleMixin = {
 			this.isError = false;
 
 			this.spin['type'] = this.type;
+			let url = '/words/processToCopyscape';
 
 			// if type is 'article' then it is entire article
 			// else separate paragprah
 			switch(this.type) {
 				case 'article':
 					this.spin['article'] = this.article;
-					this.copyScapeSetup(this.spin);
+					this.copyScapeSetup(url, this.spin);
 					break;
 				case 'paragraph':
 					this.spin['paragraph'] = this.paragraph;
-					this.copyScapeSetup(this.spin);
+					this.copyScapeSetup(url, this.spin);
 					break;
 			}
 		},

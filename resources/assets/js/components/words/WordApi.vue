@@ -8,6 +8,11 @@
 			<h3 class="text-center">Spin Tax</h3>
 			<!-- <p style="white-space: pre-wrap;">{{ paragraphs }}</p> -->
 
+			<copyscape-api
+				:token="token"
+				v-if="isSuccess">
+			</copyscape-api><br><br>
+
 			<!-- Full Article -->
 			<full-article
 				:token="token"
@@ -100,12 +105,13 @@
 <script>
 	import Error from './../errors/Error.vue';
 	import SeparateParagraph from './SeparateParagraph.vue';
+	import CopyscapeApi from './CopyscapeApi.vue';
 	import FullArticle from './FullArticle.vue';
 	import { CrudMixin } from './../../mixins/CrudMixin.js';
 
 	export default {
 		props: [ 'user', 'token' ],
-		components: { Error, SeparateParagraph, FullArticle },
+		components: { Error, SeparateParagraph, FullArticle, CopyscapeApi },
 		mixins: [ CrudMixin ],
 		data() {
 			return {
@@ -148,6 +154,7 @@
 
 				this.count = count;
 			},
+
 			spinTax() {
 				this.isLoading = true;
 				this.isValidationFail = false;
@@ -215,6 +222,7 @@
 						}
 					});
 			},
+
 			postSpinTax(data) {
 				axios.post('/words/postSpinTax', data).then(response => console.log(response.data));
 			},
