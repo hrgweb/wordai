@@ -8,6 +8,7 @@ Route::get('/', 'PagesController@index');
 Route::get('domain', 'PagesController@domain');
 Route::get('user', 'PagesController@user');
 Route::get('home2', 'PagesController@home2');
+Route::get('home3', 'PagesController@home3');
 
 // WordAI
 Route::get('words/generate', 'WordsController@article');

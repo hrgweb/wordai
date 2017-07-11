@@ -30,4 +30,9 @@ class PagesController extends Controller
     {
     	return view('words.home');
     }
+
+    public function home3()
+    {
+    	return view('words.curation-edit');
+    }
 }

@@ -7,7 +7,7 @@
 		<form method="POST" role="form">
 			<input type="hidden" name="_token" :value="token">
 		
-			<div id="summernote">{{ article }}</div>
+			<div id="editor">{{ article }}</div>
 			<!-- <textarea class="form-control" rows="40">{{ article }}</textarea> -->
 			<br>
 
@@ -34,7 +34,10 @@
 	export default {
 		props: ['token', 'spintaxResult', 'spin', 'type', 'article'],
 		components: { CopyscapeResult },
-		mixins: [ CrudMixin, ArticleMixin ]
+		mixins: [ CrudMixin, ArticleMixin ],
+		mounted() {
+			$('div#editor').summernote();
+		}
 	}
 </script>
 
