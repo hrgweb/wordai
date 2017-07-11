@@ -1,7 +1,5 @@
 <template>
 	<div class="Word">
-		<h1>Article</h1><hr>
-
 		<div class="Word__result" v-show="isSuccess">
 			<!-- Full Article -->
 			<full-article
@@ -14,6 +12,8 @@
 			</full-article><br>
 		</div>
 
+		<h1>Article</h1><hr>
+		
 		<form method="POST" @submit.prevent="spinTax">
 			<input type="hidden" name="_token" :value="token">
 

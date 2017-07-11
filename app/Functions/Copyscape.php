@@ -25,7 +25,7 @@
 	4. To run the examples provided, please uncomment the next line:
 */
 
-	// $run_examples=true;
+	$run_examples=true;
 
 /*
 	Error handling:
@@ -233,6 +233,11 @@
 		foreach ($params as $name => $value)
 			$url.='&'.urlencode($name).'='.urlencode($value);
 		
+		// set response f=html
+		// $url = $url . '&f=' . urlencode('html');
+		$url = $url . '&f=xml';
+		// dd('here: ' .$url);
+
 		$curl=curl_init();
 		
 		curl_setopt($curl, CURLOPT_URL, $url);

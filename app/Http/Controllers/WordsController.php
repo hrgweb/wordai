@@ -213,8 +213,8 @@ class WordsController extends Controller
 				break;
 		}
 
-		return $result;
-		// return response()->json($result);
+		// return $result;
+		return response()->json($result);
 	}
 
 	public function processTextGrammar()
