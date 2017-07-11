@@ -214,6 +214,7 @@ class WordsController extends Controller
 		}
 
 		return $result;
+		// return response()->json($result);
 	}
 
 	public function processTextGrammar()

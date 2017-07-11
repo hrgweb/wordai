@@ -37,14 +37,15 @@
 /*
 	A. Constants you need to change
 */
-	$username = env('COPYSCAPE_USERNAME');
-	$password = env('COPYSCAPE_API_KEY');
-	$url = env('COPYSCAPE_API_URL');
+	
+	// $username = env('COPYSCAPE_USERNAME');
+	// $password = env('COPYSCAPE_API_KEY');
+	// $url = env('COPYSCAPE_API_URL');
 
-	define('COPYSCAPE_USERNAME', $username);
-	define('COPYSCAPE_API_KEY', $password);
+	define('COPYSCAPE_USERNAME', 'hbrown');
+	define('COPYSCAPE_API_KEY', 'z7crownmylq5vpg1');
 
-	define('COPYSCAPE_API_URL', $url);
+	define('COPYSCAPE_API_URL', 'https://www.copyscape.com/api');
 
 	/*function greetTest()
 	{

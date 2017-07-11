@@ -3,11 +3,6 @@
 		<h1>Article</h1><hr>
 
 		<div class="Word__result" v-show="isSuccess">
-			<!-- <pre>{{ result }}</pre> -->
-			<br>
-			<h3 class="text-center">Spin Tax</h3>
-			<!-- <p style="white-space: pre-wrap;">{{ paragraphs }}</p> -->
-
 			<copyscape-api
 				:token="token"
 				v-if="isSuccess">
@@ -209,9 +204,9 @@
 								this.postSpinTax(this.spin);
 
 								// scroll window to top
-								$('html, body').animate({
+								/*$('html, body').animate({
 									scrollTop: $('div.Word__result').find('h3').offset().top + 'px'
-								}, 1000);
+								}, 1000);*/
 							}
 							
 							// check if api response is fail

@@ -3042,6 +3042,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -3296,11 +3300,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
 
 
 
@@ -3408,9 +3407,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 						_this.postSpinTax(_this.spin);
 
 						// scroll window to top
-						$('html, body').animate({
-							scrollTop: $('div.Word__result').find('h3').offset().top + 'px'
-						}, 1000);
+						/*$('html, body').animate({
+      	scrollTop: $('div.Word__result').find('h3').offset().top + 'px'
+      }, 1000);*/
 					}
 
 					// check if api response is fail
@@ -24188,11 +24187,15 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Article"
+  }, [_c('div', {
+    staticClass: "Spintax__result"
   }, [_c('h2', [_vm._v("Spintax Result")]), _vm._v(" "), _c('p', {
     staticStyle: {
       "white-space": "pre-wrap"
     }
-  }, [_vm._v(_vm._s(_vm.spintaxResult))]), _c('br'), _vm._v(" "), _c('h2', [_vm._v("Processed Article")]), _vm._v(" "), _c('form', {
+  }, [_vm._v(_vm._s(_vm.spintaxResult))]), _c('br')]), _vm._v(" "), _c('div', {
+    staticClass: "Process__article"
+  }, [_c('h2', [_vm._v("Processed Article")]), _vm._v(" "), _c('form', {
     attrs: {
       "method": "POST",
       "role": "form"
@@ -24241,7 +24244,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "color": "red"
     }
-  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br')], 1)])
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br')], 1)])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -24794,9 +24797,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "isSuccess"
     }],
     staticClass: "Word__result"
-  }, [_c('br'), _vm._v(" "), _c('h3', {
-    staticClass: "text-center"
-  }, [_vm._v("Spin Tax")]), _vm._v(" "), (_vm.isSuccess) ? _c('copyscape-api', {
+  }, [(_vm.isSuccess) ? _c('copyscape-api', {
     attrs: {
       "token": _vm.token
     }
