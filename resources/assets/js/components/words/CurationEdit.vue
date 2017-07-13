@@ -1,18 +1,6 @@
 <template>
 	<div class="Word">
-		<h1>Article</h1><hr>
-
 		<div class="Word__result" v-show="isSuccess">
-			<!-- <pre>{{ result }}</pre> -->
-			<br>
-			<!-- <h3 class="text-center">Spin Tax</h3> -->
-			<!-- <p style="white-space: pre-wrap;">{{ paragraphs }}</p> -->
-
-			<!-- <copyscape-api
-				:token="token"
-				v-if="isSuccess">
-			</copyscape-api><br><br> -->
-
 			<!-- Full Article -->
 			<full-article
 				:token="token"
@@ -24,6 +12,8 @@
 			</full-article><br>
 		</div>
 
+		<h1>Article</h1><hr>
+		
 		<form method="POST" @submit.prevent="spinTax">
 			<input type="hidden" name="_token" :value="token">
 
@@ -185,7 +175,6 @@
 								let paragraphs = text.split(/\n\n\n/); // regex expression finding new line
 
 								this.spintaxResult = text;
-								this.isSuccess = true;
 
 								// article is now the spintax result
 								// display finish full article
@@ -196,9 +185,9 @@
 								this.postSpinTax(this.spin);
 
 								// scroll window to top
-								$('html, body').animate({
+								/*$('html, body').animate({
 									scrollTop: $('div.Word__result').find('h3').offset().top + 'px'
-								}, 1000);
+								}, 1000);*/
 							}
 							
 							// check if api response is fail
@@ -207,8 +196,6 @@
 								this.errors = data.error;
 							}
 						}
-
-						console.log(data);
 					});
 			},
 
@@ -217,7 +204,10 @@
 			},
 
 			generateFullArticle(article) {
-				axios.post('/words/generateFullArticle', { article: article }).then(response => this.article = response.data);
+				axios.post('/words/generateFullArticle', { article: article }).then(response => {
+					this.article = response.data;
+					this.isSuccess = true;
+				});
 			},
 
 			generateParagraph(paragraphs) {

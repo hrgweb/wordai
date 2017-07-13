@@ -11,6 +11,7 @@ import User from './components/admin/User.vue';
 import ProtectedTerm from './components/admin/ProtectedTerm.vue';
 import WordApi from './components/words/WordApi.vue';
 import WordApi2 from './components/words/WordApi2.vue';
+import CurationEdit from './components/words/CurationEdit.vue';
 import CopyscapeApiResult from './components/words/CopyscapeApiResult.vue';
 import CurlPage from './components/words/CurlPage.vue';
 import GenerateArticle from './components/words/GenerateArticle.vue';
@@ -22,6 +23,7 @@ const app = new Vue({
     	Admin,
     	WordApi,
     	WordApi2,
+    	CurationEdit,
     	CopyscapeApiResult,
     	CurlPage,
     	GenerateArticle,
