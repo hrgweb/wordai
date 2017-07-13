@@ -203,18 +203,46 @@ class WordsController extends Controller
 		$paragraph = request('paragraph');
 		$type = request('type');
 		$result = '';
+		$articleType = '';
 
 		switch ($type) {
 			case 'article':
-				$result = copyscape_api_text_search_internet($article, 'UTF-8');
+				$articleType = $article;
 				break;
 			case 'paragraph':
-				$result = copyscape_api_text_search_internet($paragraph, 'UTF-8');
+				$articleType = $paragraph;
 				break;
 		}
 
-		// return $result;
+		$result = copyscape_api_text_search_internet($articleType, 'UTF-8');
+
 		return response()->json($result);
+	}
+
+	public function runCurl()
+	{
+		// With a POST you pass the data via the CURLOPT_POSTFIELDS option instead 
+		// of passing it in the CURLOPT__URL.
+		// -------------------------------------------------------------------------
+
+		// return request('url');
+
+		$curl=curl_init();
+
+		// $qry_str = "x=10&y=20";
+		curl_setopt($ch, CURLOPT_URL, 'https://cnn.com');  
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($ch, CURLOPT_TIMEOUT, 3);
+
+		// Set request method to POST
+		curl_setopt($ch, CURLOPT_POST, 1);
+
+		// Set query data here with CURLOPT_POSTFIELDS
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $qry_str);
+
+		$content = trim(curl_exec($ch));
+		curl_close($ch);
+		print $content;
 	}
 
 	public function processTextGrammar()

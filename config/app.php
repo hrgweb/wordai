@@ -181,7 +181,8 @@ return [
          * Custom Service Providers
          */
         App\Providers\ViewComposerServiceProvider::class,
-        Barryvdh\Cors\ServiceProvider::class,
+        // Barryvdh\Cors\ServiceProvider::class,
+        // XmlResponse\XmlResponseServiceProvider::class
 
     ],
 

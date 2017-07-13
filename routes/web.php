@@ -9,6 +9,8 @@ Route::get('domain', 'PagesController@domain');
 Route::get('user', 'PagesController@user');
 Route::get('home2', 'PagesController@home2');
 Route::get('home3', 'PagesController@home3');
+Route::get('copyscape', 'PagesController@copyscape');
+Route::get('curl', 'PagesController@curl');
 
 // WordAI
 Route::get('words/generate', 'WordsController@article');
@@ -23,6 +25,9 @@ Route::post('words/postSpinTax', 'WordsController@postSpinTax');
 Route::post('words/processToCopyscape', 'WordsController@processToCopyscape');
 
 Route::post('words/processTextGrammar', 'WordsController@processTextGrammar')->middleware('cors');
+// tmp
+Route::post('words/runCurl', 'WordsController@runCurl');
+
 
 // Admin
 // Domain
