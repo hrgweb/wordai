@@ -35,4 +35,14 @@ class PagesController extends Controller
     {
     	return view('words.curation-edit');
     }
+
+    public function copyscape()
+    {
+    	return view('words.copyscape-api-result');
+    }
+
+    public function curl()
+    {
+    	return view('words.curl');
+    }
 }

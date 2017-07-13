@@ -25,7 +25,7 @@
 	4. To run the examples provided, please uncomment the next line:
 */
 
-	$run_examples=true;
+	// $run_examples=true;
 
 /*
 	Error handling:
@@ -37,21 +37,14 @@
 /*
 	A. Constants you need to change
 */
-	
-	// $username = env('COPYSCAPE_USERNAME');
-	// $password = env('COPYSCAPE_API_KEY');
-	// $url = env('COPYSCAPE_API_URL');
 
-	define('COPYSCAPE_USERNAME', 'hbrown');
-	define('COPYSCAPE_API_KEY', 'z7crownmylq5vpg1');
+	$username = \Config::get('copyscape.username');
+	$key = \Config::get('copyscape.key');
+	$url = \Config::get('copyscape.url');
 
-	define('COPYSCAPE_API_URL', 'https://www.copyscape.com/api');
-
-	/*function greetTest()
-	{
-		return COPYSCAPE_API_KEY;
-	}*/
-	
+	define('COPYSCAPE_USERNAME', $username);
+	define('COPYSCAPE_API_KEY', $key);
+	define('COPYSCAPE_API_URL', $url);
 /*
 	B. Functions for you to use (all accounts)
 */
@@ -233,11 +226,6 @@
 		foreach ($params as $name => $value)
 			$url.='&'.urlencode($name).'='.urlencode($value);
 		
-		// set response f=html
-		// $url = $url . '&f=' . urlencode('html');
-		$url = $url . '&f=xml';
-		// dd('here: ' .$url);
-
 		$curl=curl_init();
 		
 		curl_setopt($curl, CURLOPT_URL, $url);
