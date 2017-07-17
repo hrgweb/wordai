@@ -62,3 +62,11 @@ button.close {
     background: #e1f9dd;
     border: 1px solid #d6e6d3;
 }
+
+/*=============== summernote ===============*/ 
+
+mark { background-color: #f9e603 !important; }
+
+div.note-editable p {
+	white-space: pre-wrap;
+}

@@ -10,8 +10,8 @@
 			<form method="POST" role="form">
 				<input type="hidden" name="_token" :value="token">
 			
-				<div id="editor">{{ article }}</div>
-				<!-- <textarea class="form-control" rows="40">{{ article }}</textarea> -->
+				<div id="editor">{{ smArticle }}</div>
+				<!-- <textarea class="form-control" rows="40">{{ smArticle }}</textarea> -->
 				<br>
 
 				<copyscape-result
@@ -40,11 +40,17 @@
 		components: { CopyscapeResult },
 		mixins: [ CrudMixin, ArticleMixin ],
 		mounted() {
+			this.smArticle = this.article;
+
+			// init summernote
 			$('div#editor').summernote();
+
+			// highlight summernote paragraph
+			$('div.note-editable').find('p').text(this.article);
 		}
 	}
 </script>
 
 <style scoped>
-	h2 { text-align: center; }
+	h2 { text-align: center; }	
 </style>

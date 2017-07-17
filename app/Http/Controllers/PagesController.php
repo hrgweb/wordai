@@ -36,6 +36,11 @@ class PagesController extends Controller
     	return view('words.curation-edit');
     }
 
+    public function home4()
+    {
+    	return view('words.home4');
+    }
+
     public function copyscape()
     {
     	return view('words.copyscape-api-result');

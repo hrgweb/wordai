@@ -9,6 +9,7 @@ Route::get('domain', 'PagesController@domain');
 Route::get('user', 'PagesController@user');
 Route::get('home2', 'PagesController@home2');
 Route::get('home3', 'PagesController@home3');
+Route::get('home4', 'PagesController@home4');
 Route::get('copyscape', 'PagesController@copyscape');
 Route::get('curl', 'PagesController@curl');
 
