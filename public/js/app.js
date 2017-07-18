@@ -1044,7 +1044,7 @@ var ArticleMixin = {
 					secondArr = firstArr[j].trim();
 
 					// if second array value is not empty
-					if (secondArr.length > 0 && /[^\d]/.test(secondArr)) {
+					if (secondArr.length > 0 && /[^\d]/.test(secondArr) && $.inArray(secondArr, finds) === -1) {
 						finds.push(secondArr);
 					}
 				}
