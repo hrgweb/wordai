@@ -37,58 +37,47 @@ export const ArticleMixin = {
 			});
 		},
 
-		copyScapeData(data) {
-			let results = data;
+		splitResultBySentence(results) {
 			let duplicates = [];
-			let finds = [];
 
-			// split duplicates 
 			for (let i=0; i<results.length; i++) {
-				duplicates.push(results[i].textsnippet.split(/\.\.\./gi));
-				
-				// duplicates.push(results[i].textsnippet.match( /[^\.!\?]+[\.!\?]+/g ));
+				// duplicates.push(results[i].textsnippet.split(/(\s?)\.\.\.(\s?)/gi));
+				duplicates.push(results[i].textsnippet.match( /[^\.!\?]+/gi ));
 			}
 
-			// this.duplicates = duplicates;
+			return duplicates;
+		},
 
-			// remove empty value from duplicates
+		removeEmptyValueFromSentence(duplicates) {
+			let finds = [];
+
 			for (let i=0; i<duplicates.length; i++) {
 				let firstArr = duplicates[i]; 	// index
 				let secondArr = []; 			//value
 
 				for (let j=0; j<firstArr.length; j++) {
-					secondArr = firstArr[j];
+					secondArr = firstArr[j].trim();
 
 					// if second array value is not empty
-					if (secondArr.length > 0) {
-						finds.push(secondArr.trim());
+					if (secondArr.length > 0 && /[^\d]/.test(secondArr)) {
+						finds.push(secondArr);
 					}
 				}
 			}
 
-			// remove duplicates
-			let uniqueSentence = [];
+			return finds;
+		},
 
-			$.each(finds, function(i, el){
-			    if ($.inArray(el, uniqueSentence) === -1) uniqueSentence.push(el);
-			});
+		escapeRegExp(str) {
+			return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+		},
 
-			this.duplicates = uniqueSentence;
-
-			// prepend mark tag to search string
+		prependMarkTagToSearchSendtenceAndHighlight(finds) {
 			let article = $('div.note-editable').find('p')[0].innerText;
 			let find = '';
-			let specialCharArr = ['!', ',', '?', '.'];
 
-			for (let i=0; i<uniqueSentence.length; i++) {
-				// if (i === 1) break;
-
-				find = uniqueSentence[i].trim();
-				let lastChar = find.charAt(find.length-1);
-
-				if ($.inArray(lastChar, specialCharArr) !== -1) {
-					find = find.slice(0, find.length-1); // slice the duplicate word and remove special chars
-				}	
+			for (let i=0; i<finds.length; i++) {
+				find = this.escapeRegExp(finds[i]);
 
 				article = article.replace(RegExp(find, 'gi'), '<mark>' + find + '</mark>');
 				// console.log(article);
@@ -97,6 +86,24 @@ export const ArticleMixin = {
 			// highlight summernote paragraph
 			this.smArticle = article;
 			$('div.note-editable').find('p').html(this.smArticle);
+		},
+
+		copyScapeData(data) {
+			let results = data;
+			let duplicates = [];
+			let finds = [];
+
+			// split to sentence 
+			duplicates = this.splitResultBySentence(results);
+
+			// remove empty value from duplicates
+			finds = this.removeEmptyValueFromSentence(duplicates);
+
+			// prepend mark tag to search string and highlight
+			this.prependMarkTagToSearchSendtenceAndHighlight(finds);
+
+			// store as result in vue data
+			this.duplicates = finds;
 		},
 
 		copyScapeSetup(url, data) {
