@@ -3754,6 +3754,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -24974,7 +24979,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": _vm.errorType,
       "list": _vm.errors
     }
-  }) : _vm._e(), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
+  }) : _vm._e(), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('span', [_vm._v("Words count: "), _c('b', [_vm._v(_vm._s(_vm.count))])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     attrs: {
       "type": "submit"

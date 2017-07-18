@@ -30,6 +30,11 @@
  			</error>
 			<br>
 
+			<div class="form-group">
+				<span>Words count: <b>{{ count }}</b></span>
+			</div>
+			<br>
+
 			<button type="submit" class="btn btn-primary">Spin Now</button>
 			&nbsp;&nbsp;&nbsp;
 			<span v-if="isLoading">LOADING....</span><br>
