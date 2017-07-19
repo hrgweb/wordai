@@ -14,9 +14,6 @@
 
 		<h1>Article</h1><hr>
 
-		<!-- tmp -->
-		<!-- <button @click="sampleButton" ref="myButton">Sample Button</button> -->
-		
 		<form method="POST" @submit.prevent="spinTax">
 			<input type="hidden" name="_token" :value="token">
 
@@ -38,7 +35,7 @@
 			</div>
 			<br>
 
-			<button type="submit" class="btn btn-primary">Spin Now</button>
+			<button type="submit" class="btn btn-primary" ref="spinButton">Spin Now</button>
 			&nbsp;&nbsp;&nbsp;
 			<span v-if="isLoading">LOADING....</span><br>
 		</form>
@@ -50,6 +47,6 @@
 	import { ArticleActionMixin } from './../../mixins/ArticleActionMixin.js';
 
 	export default {
-		mixins: [ CrudMixin, ArticleActionMixin ],
+		mixins: [ CrudMixin, ArticleActionMixin ]
 	}
 </script>

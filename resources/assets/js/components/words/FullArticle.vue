@@ -20,7 +20,7 @@
 	 			</copyscape-result>
 			
 				<button type="button" class="btn btn-success" @click="generateRespintax">Respin</button>
-				<button type="button" class="btn btn-warning" @click="processToCopyscape">Copyscape</button>
+				<button type="button" class="btn btn-warning" @click="processToCopyscape" ref="csButton">Copyscape</button>
 				<button type="button" class="btn btn-info" @click="processToTextGear">Check Grammar</button>
 				&nbsp;&nbsp;&nbsp;
 				<span v-if="isLoading">LOADING....</span>
@@ -41,7 +41,7 @@
 		mixins: [ CrudMixin, ArticleMixin ],
 		mounted() {
 			this.smArticle = this.article;
-			
+
 			// init summernote
 			$('div#editor').summernote();
 

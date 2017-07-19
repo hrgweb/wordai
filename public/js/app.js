@@ -1132,6 +1132,7 @@ var ArticleMixin = {
 				_this3.isLoading = false;
 				_this3.copyscape = data;
 				_this3.responseSuccess = true;
+				_this3.$refs.csButton.disabled = false;
 
 				// find all duplicate occurences
 				_this3.copyScapeData(data.result);
@@ -1147,6 +1148,7 @@ var ArticleMixin = {
 		processToCopyscape: function processToCopyscape() {
 			this.isLoading = true;
 			this.isError = false;
+			this.$refs.csButton.disabled = true;
 
 			this.spin['type'] = this.type;
 			var url = '/words/processToCopyscape';
@@ -3744,9 +3746,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ArticleActionMixin_js__ = __webpack_require__(132);
-//
-//
-//
 //
 //
 //
@@ -24868,6 +24867,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }) : _vm._e(), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('span', [_vm._v("Words count: "), _c('b', [_vm._v(_vm._s(_vm.count))])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
+    ref: "spinButton",
     staticClass: "btn btn-primary",
     attrs: {
       "type": "submit"
@@ -25459,6 +25459,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.generateRespintax
     }
   }, [_vm._v("Respin")]), _vm._v(" "), _c('button', {
+    ref: "csButton",
     staticClass: "btn btn-warning",
     attrs: {
       "type": "button"
@@ -37136,6 +37137,7 @@ var ArticleActionMixin = {
 
 			this.isLoading = true;
 			this.isValidationFail = false;
+			this.$refs.spinButton.disabled = true;
 
 			/*let text = `
    	How To Apply For Social Security Disability
@@ -37172,6 +37174,7 @@ var ArticleActionMixin = {
 						var paragraphs = text.split(/\n\n\n/); // regex expression finding new line
 
 						_this.spintaxResult = text;
+						_this.$refs.spinButton.disabled = false;
 
 						// article is now the spintax result
 						// display finish full article

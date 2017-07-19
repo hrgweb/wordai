@@ -148,6 +148,7 @@ export const ArticleMixin = {
 				this.isLoading = false;
 				this.copyscape = data;
 				this.responseSuccess = true;
+				this.$refs.csButton.disabled = false;
 
 				// find all duplicate occurences
 				this.copyScapeData(data.result);
@@ -164,6 +165,7 @@ export const ArticleMixin = {
 		processToCopyscape() {
 			this.isLoading = true;
 			this.isError = false;
+			this.$refs.csButton.disabled = true;
 
 			this.spin['type'] = this.type;
 			let url = '/words/processToCopyscape';

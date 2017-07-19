@@ -51,6 +51,7 @@ export const ArticleActionMixin = {
 		spinTax() {
 			this.isLoading = true;
 			this.isValidationFail = false;
+			this.$refs.spinButton.disabled = true;
 
 			/*let text = `
 				How To Apply For Social Security Disability
@@ -89,6 +90,7 @@ export const ArticleActionMixin = {
 						let paragraphs = text.split(/\n\n\n/); // regex expression finding new line
 
 						this.spintaxResult = text;
+						this.$refs.spinButton.disabled = false;
 
 						// article is now the spintax result
 						// display finish full article
