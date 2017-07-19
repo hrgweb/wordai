@@ -37349,6 +37349,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 		// highlight summernote paragraph
 		$('div.note-editable').find('p').text(this.article);
+	},
+
+	methods: {
+		processCopyscapeApi: function processCopyscapeApi() {
+			var _this = this;
+
+			var data = {
+				article: $('div.note-editable').text()
+			};
+
+			this.isLoading = true;
+			this.isError = false;
+			this.$refs.csButton.disabled = true;
+
+			axios.post('/words/processCopyscapeApi', data).then(function (response) {
+				var data = response.data;
+
+				// api result response success
+				_this.isLoading = false;
+				_this.copyscape = data;
+				_this.responseSuccess = true;
+				_this.$refs.csButton.disabled = false;
+
+				// find all duplicate occurences
+				_this.copyScapeData(data.result);
+
+				// check if api response is fail
+				if (data.error) {
+					_this.error = data.error;
+					_this.isError = true;
+					_this.responseSuccess = false;
+				}
+			});
+		}
 	}
 });
 
@@ -37434,7 +37468,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "button"
     },
     on: {
-      "click": _vm.processToCopyscape
+      "click": _vm.processCopyscapeApi
     }
   }, [_vm._v("Copyscape")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-info",

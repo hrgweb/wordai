@@ -14,7 +14,7 @@
 	 			</copyscape-result>
 			
 				<!-- <button type="button" class="btn btn-success" @click="generateRespintax">Respin</button> -->
-				<button type="button" class="btn btn-warning" @click="processToCopyscape" ref="csButton">Copyscape</button>
+				<button type="button" class="btn btn-warning" @click="processCopyscapeApi" ref="csButton">Copyscape</button>
 				<button type="button" class="btn btn-info" @click="processToTextGear">Check Grammar</button>
 				&nbsp;&nbsp;&nbsp;
 				<span v-if="isLoading">LOADING....</span>
@@ -41,6 +41,37 @@
 
 			// highlight summernote paragraph
 			$('div.note-editable').find('p').text(this.article);
+		},
+		methods: {
+			processCopyscapeApi() {
+				const data = {
+					article: $('div.note-editable').text()
+				};
+
+				this.isLoading = true;
+				this.isError = false;
+				this.$refs.csButton.disabled = true;
+
+				axios.post('/words/processCopyscapeApi', data).then(response => {
+					let data = response.data;
+
+					// api result response success
+					this.isLoading = false;
+					this.copyscape = data;
+					this.responseSuccess = true;
+					this.$refs.csButton.disabled = false;
+
+					// find all duplicate occurences
+					this.copyScapeData(data.result);
+
+					// check if api response is fail
+					if (data.error) {
+						this.error = data.error;
+						this.isError = true;
+						this.responseSuccess = false;
+					}
+				});
+			}
 		}
 	}
 </script>
