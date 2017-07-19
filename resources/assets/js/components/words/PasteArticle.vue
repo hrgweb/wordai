@@ -1,17 +1,5 @@
 <template>
 	<div class="Word">
-		<div class="Word__result" v-show="isSuccess">
-			<full-article
-				:token="token"
-				:spintaxResult="spintaxResult"
-				:spin="spin"
-				:article="article"
-				:type="spintaxType = 'article'"
-				v-if="isSuccess">
-			</full-article><br>
-		</div>
-
-
 		<div class="form-group">
 			<h1>Article</h1><hr>
 
@@ -29,6 +17,17 @@
 
 		<!-- curated -->
 		<div class="Curated" v-else-if="articleType === 'Curated Content'">
+			<div class="Word__result" v-show="isSuccess">
+				<full-article
+					:token="token"
+					:spintaxResult="spintaxResult"
+					:spin="spin"
+					:article="article"
+					:type="spintaxType = 'article'"
+					v-if="isSuccess">
+				</full-article><br>
+			</div>
+		
 			<form method="POST" @submit.prevent="spinTax">
 				<input type="hidden" name="_token" :value="token">
 

@@ -3807,7 +3807,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -25012,22 +25011,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "Word"
   }, [_c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (_vm.isSuccess),
-      expression: "isSuccess"
-    }],
-    staticClass: "Word__result"
-  }, [(_vm.isSuccess) ? _c('full-article', {
-    attrs: {
-      "token": _vm.token,
-      "spintaxResult": _vm.spintaxResult,
-      "spin": _vm.spin,
-      "article": _vm.article,
-      "type": _vm.spintaxType = 'article'
-    }
-  }) : _vm._e(), _c('br')], 1), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('h1', [_vm._v("Article")]), _c('hr'), _vm._v(" "), _c('label', {
     attrs: {
@@ -25066,7 +25049,23 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "Handwritten"
   }, [_c('unique-handwritten')], 1) : (_vm.articleType === 'Curated Content') ? _c('div', {
     staticClass: "Curated"
-  }, [_c('form', {
+  }, [_c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (_vm.isSuccess),
+      expression: "isSuccess"
+    }],
+    staticClass: "Word__result"
+  }, [(_vm.isSuccess) ? _c('full-article', {
+    attrs: {
+      "token": _vm.token,
+      "spintaxResult": _vm.spintaxResult,
+      "spin": _vm.spin,
+      "article": _vm.article,
+      "type": _vm.spintaxType = 'article'
+    }
+  }) : _vm._e(), _c('br')], 1), _vm._v(" "), _c('form', {
     attrs: {
       "method": "POST"
     },
