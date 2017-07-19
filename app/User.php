@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Article;
+use App\ArticleType;
 use App\ProtectedTerm;
 use App\UserLevel;
 use App\Word;

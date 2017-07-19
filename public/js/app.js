@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 124);
+/******/ 	return __webpack_require__(__webpack_require__.s = 123);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -505,7 +505,7 @@ if (typeof DEBUG !== 'undefined' && DEBUG) {
   ) }
 }
 
-var listToStyles = __webpack_require__(121)
+var listToStyles = __webpack_require__(120)
 
 /*
 type StyleObject = {
@@ -807,7 +807,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(113)
+__webpack_require__(112)
 
 var Component = __webpack_require__(0)(
   /* script */
@@ -1199,7 +1199,7 @@ var ArticleMixin = {
 
 
 /* styles */
-__webpack_require__(116)
+__webpack_require__(115)
 
 var Component = __webpack_require__(0)(
   /* script */
@@ -1555,7 +1555,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 __webpack_require__(58);
 
 window.$ = $;
-window.Vue = __webpack_require__(122);
+window.Vue = __webpack_require__(121);
 
 /*=============== Components ===============*/
 
@@ -3745,7 +3745,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ArticleActionMixin_js__ = __webpack_require__(132);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ArticleActionMixin_js__ = __webpack_require__(59);
 //
 //
 //
@@ -4368,7 +4368,7 @@ window._ = __webpack_require__(72);
 try {
     // window.$ = window.jQuery = require('jquery');
 
-    __webpack_require__(59);
+    __webpack_require__(60);
 } catch (e) {}
 
 /**
@@ -4419,6 +4419,166 @@ $.ajaxSetup({
 
 /***/ }),
 /* 59 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_errors_Error_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_errors_Error_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_words_SeparateParagraph_vue__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_words_SeparateParagraph_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_words_SeparateParagraph_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_words_CopyscapeApi_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_words_CopyscapeApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_words_CopyscapeApi_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_words_FullArticle_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_words_FullArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_words_FullArticle_vue__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleActionMixin; });
+
+
+
+
+
+var ArticleActionMixin = {
+	props: ['user', 'token'],
+	components: { Error: __WEBPACK_IMPORTED_MODULE_0__components_errors_Error_vue___default.a, SeparateParagraph: __WEBPACK_IMPORTED_MODULE_1__components_words_SeparateParagraph_vue___default.a, FullArticle: __WEBPACK_IMPORTED_MODULE_3__components_words_FullArticle_vue___default.a, CopyscapeApi: __WEBPACK_IMPORTED_MODULE_2__components_words_CopyscapeApi_vue___default.a },
+	data: function data() {
+		return {
+			article: '',
+			wordsMax: 1800,
+			count: 0,
+			paragraph: '',
+			paragraphs: [],
+			spintaxResult: '',
+			isValidationFail: false,
+			errorType: 1, // legend: 1-input validation, 0-fail response result from server
+			spintaxType: 'article',
+			spin: {
+				doc_title: '',
+				dom_name: 'http://www.cnn.com',
+				keyword: '',
+				lsi_terms: '',
+				domain_protected: '',
+				article: '',
+				protected: '',
+				synonyms: ''
+			}
+		};
+	},
+	created: function created() {
+		this.authUser = JSON.parse(this.user);
+	},
+
+	methods: {
+		wordCount: function wordCount() {
+			var count = 1;
+			var words = this.spin.article.trim();
+
+			for (var i = 0; i < words.length; i++) {
+				var char = words.charAt(i);
+
+				if (char === ' ') {
+					count++;
+				}
+			}
+
+			this.count = count;
+		},
+		spinTax: function spinTax() {
+			var _this = this;
+
+			this.isLoading = true;
+			this.isValidationFail = false;
+			this.$refs.spinButton.disabled = true;
+
+			/*let text = `
+   	How To Apply For Social Security Disability
+   	The first step in how to apply for social security disability is to contact the Social Security Administration to schedule your disability interview. You may contact your local Social Security office by telephone, or make an office visit, or you can call the toll free Social Security number to have a disability claim taken or scheduled for you at your local office. 
+   	For those who are unclear about the differences between SSD and SSI, Social Security administers two disability programs -- Social Security disability (SSDI) and Supplemental Security Income (SSI). Social Security disability is based upon insured status, which is achieved through your work activity. Supplemental Security Income is a need-based program that does not depend upon your work history. SSI is based upon your income or resources. 
+   	Where do I go to apply?
+   `;
+   let key = 'SzFohpMVhgmvbyRx';
+   let url = 'https://api.textgears.com/check.php?text='+text+'&key='+key;
+   
+   axios.post('/words/processTextGrammar', { text: text, key: key })
+   	.then(response => {
+   		let data = response.data;
+   				console.log(data);
+   	});*/
+
+			axios.post('/words', this.spin).then(function (response) {
+				var data = response.data;
+
+				_this.isValidationFail = data.isError;
+
+				// check if validation fail
+				if (_this.isValidationFail === true) {
+					_this.errors = data.errors;
+					_this.isValidationFail = true;
+					_this.isLoading = false;
+				} else {
+					_this.isValidationFail = false;
+					_this.isLoading = false;
+
+					// check if api response is success
+					if (data.status === 'Success') {
+						var text = data.text;
+						var paragraphs = text.split(/\n\n\n/); // regex expression finding new line
+
+						_this.spintaxResult = text;
+						_this.$refs.spinButton.disabled = false;
+
+						// article is now the spintax result
+						// display finish full article
+						_this.generateFullArticle(_this.spin.article);
+
+						// post article
+						_this.spin['article'] = data.text;
+						_this.postSpinTax(_this.spin);
+
+						// scroll window to top
+						/*Vue.nextTick(() => {
+      	$('html, body').animate({
+      		scrollTop: $('div.Word__result').offset().top 
+      	}, 1000);
+      });*/
+					}
+
+					// check if api response is fail
+					if (data.status === 'Failure') {
+						_this.isValidationFail = true;
+						_this.errors = data.error;
+					}
+				}
+			});
+		},
+		postSpinTax: function postSpinTax(data) {
+			axios.post('/words/postSpinTax', data).then(function (response) {
+				return console.log(response.data);
+			});
+		},
+		generateFullArticle: function generateFullArticle(article) {
+			var _this2 = this;
+
+			axios.post('/words/generateFullArticle', { article: article }).then(function (response) {
+				_this2.article = response.data;
+				_this2.isSuccess = true;
+			});
+		},
+		generateParagraph: function generateParagraph(paragraphs) {
+			var _this3 = this;
+
+			axios.post('/words/generateParagraph', { paragraphs: paragraphs }).then(function (response) {
+				return _this3.paragraphs = response.data;
+			});
+		},
+		respinParagraph: function respinParagraph(payload) {
+			console.log(payload);
+			this.paragraphs[payload.index] = payload.paragraph;
+		}
+	}
+
+};
+
+/***/ }),
+/* 60 */
 /***/ (function(module, exports) {
 
 /*!
@@ -6801,14 +6961,13 @@ if (typeof jQuery === 'undefined') {
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
 exports.push([module.i, "\nul[data-v-1cb57eac] { padding-left: 2em;\n}\n", ""]);
 
 /***/ }),
-/* 61 */,
 /* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -23968,7 +24127,7 @@ exports.push([module.i, "\n.wrapper[data-v-efd66596] {\n\tposition: absolute;\n\
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17), __webpack_require__(123)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17), __webpack_require__(122)(module)))
 
 /***/ }),
 /* 73 */
@@ -24234,7 +24393,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(112)
+__webpack_require__(111)
 
 var Component = __webpack_require__(0)(
   /* script */
@@ -24272,7 +24431,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(119)
+__webpack_require__(118)
 
 var Component = __webpack_require__(0)(
   /* script */
@@ -24344,7 +24503,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(114)
+__webpack_require__(113)
 
 var Component = __webpack_require__(0)(
   /* script */
@@ -24382,7 +24541,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(120)
+__webpack_require__(119)
 
 var Component = __webpack_require__(0)(
   /* script */
@@ -24454,7 +24613,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(115)
+__webpack_require__(114)
 
 var Component = __webpack_require__(0)(
   /* script */
@@ -24492,7 +24651,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(111)
+__webpack_require__(110)
 
 var Component = __webpack_require__(0)(
   /* script */
@@ -24632,7 +24791,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(118)
+__webpack_require__(117)
 
 var Component = __webpack_require__(0)(
   /* script */
@@ -24670,7 +24829,7 @@ module.exports = Component.exports
 
 
 /* styles */
-__webpack_require__(117)
+__webpack_require__(116)
 
 var Component = __webpack_require__(0)(
   /* script */
@@ -26638,7 +26797,7 @@ if (false) {
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(60);
+var content = __webpack_require__(61);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -26658,8 +26817,7 @@ if(false) {
 }
 
 /***/ }),
-/* 110 */,
-/* 111 */
+/* 110 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -26685,7 +26843,7 @@ if(false) {
 }
 
 /***/ }),
-/* 112 */
+/* 111 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -26711,7 +26869,7 @@ if(false) {
 }
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -26737,7 +26895,7 @@ if(false) {
 }
 
 /***/ }),
-/* 114 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -26763,7 +26921,7 @@ if(false) {
 }
 
 /***/ }),
-/* 115 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -26789,7 +26947,7 @@ if(false) {
 }
 
 /***/ }),
-/* 116 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -26815,7 +26973,7 @@ if(false) {
 }
 
 /***/ }),
-/* 117 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -26841,7 +26999,7 @@ if(false) {
 }
 
 /***/ }),
-/* 118 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -26867,7 +27025,7 @@ if(false) {
 }
 
 /***/ }),
-/* 119 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -26893,7 +27051,7 @@ if(false) {
 }
 
 /***/ }),
-/* 120 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
@@ -26919,7 +27077,7 @@ if(false) {
 }
 
 /***/ }),
-/* 121 */
+/* 120 */
 /***/ (function(module, exports) {
 
 /**
@@ -26952,7 +27110,7 @@ module.exports = function listToStyles (parentId, list) {
 
 
 /***/ }),
-/* 122 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37026,7 +37184,7 @@ module.exports = Vue$3;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(17)))
 
 /***/ }),
-/* 123 */
+/* 122 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -37054,179 +37212,12 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 124 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(18);
 module.exports = __webpack_require__(19);
 
-
-/***/ }),
-/* 125 */,
-/* 126 */,
-/* 127 */,
-/* 128 */,
-/* 129 */,
-/* 130 */,
-/* 131 */,
-/* 132 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_errors_Error_vue__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_errors_Error_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_words_SeparateParagraph_vue__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_words_SeparateParagraph_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_words_SeparateParagraph_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_words_CopyscapeApi_vue__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_words_CopyscapeApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_words_CopyscapeApi_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_words_FullArticle_vue__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_words_FullArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_words_FullArticle_vue__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleActionMixin; });
-
-
-
-
-
-var ArticleActionMixin = {
-	props: ['user', 'token'],
-	components: { Error: __WEBPACK_IMPORTED_MODULE_0__components_errors_Error_vue___default.a, SeparateParagraph: __WEBPACK_IMPORTED_MODULE_1__components_words_SeparateParagraph_vue___default.a, FullArticle: __WEBPACK_IMPORTED_MODULE_3__components_words_FullArticle_vue___default.a, CopyscapeApi: __WEBPACK_IMPORTED_MODULE_2__components_words_CopyscapeApi_vue___default.a },
-	data: function data() {
-		return {
-			article: '',
-			wordsMax: 1800,
-			count: 0,
-			paragraph: '',
-			paragraphs: [],
-			spintaxResult: '',
-			isValidationFail: false,
-			errorType: 1, // legend: 1-input validation, 0-fail response result from server
-			spintaxType: 'article',
-			spin: {
-				doc_title: '',
-				dom_name: 'http://www.cnn.com',
-				keyword: '',
-				lsi_terms: '',
-				domain_protected: '',
-				article: '',
-				protected: '',
-				synonyms: ''
-			}
-		};
-	},
-	created: function created() {
-		this.authUser = JSON.parse(this.user);
-	},
-
-	methods: {
-		wordCount: function wordCount() {
-			var count = 1;
-			var words = this.spin.article.trim();
-
-			for (var i = 0; i < words.length; i++) {
-				var char = words.charAt(i);
-
-				if (char === ' ') {
-					count++;
-				}
-			}
-
-			this.count = count;
-		},
-		spinTax: function spinTax() {
-			var _this = this;
-
-			this.isLoading = true;
-			this.isValidationFail = false;
-			this.$refs.spinButton.disabled = true;
-
-			/*let text = `
-   	How To Apply For Social Security Disability
-   	The first step in how to apply for social security disability is to contact the Social Security Administration to schedule your disability interview. You may contact your local Social Security office by telephone, or make an office visit, or you can call the toll free Social Security number to have a disability claim taken or scheduled for you at your local office. 
-   	For those who are unclear about the differences between SSD and SSI, Social Security administers two disability programs -- Social Security disability (SSDI) and Supplemental Security Income (SSI). Social Security disability is based upon insured status, which is achieved through your work activity. Supplemental Security Income is a need-based program that does not depend upon your work history. SSI is based upon your income or resources. 
-   	Where do I go to apply?
-   `;
-   let key = 'SzFohpMVhgmvbyRx';
-   let url = 'https://api.textgears.com/check.php?text='+text+'&key='+key;
-   
-   axios.post('/words/processTextGrammar', { text: text, key: key })
-   	.then(response => {
-   		let data = response.data;
-   				console.log(data);
-   	});*/
-
-			axios.post('/words', this.spin).then(function (response) {
-				var data = response.data;
-
-				_this.isValidationFail = data.isError;
-
-				// check if validation fail
-				if (_this.isValidationFail === true) {
-					_this.errors = data.errors;
-					_this.isValidationFail = true;
-					_this.isLoading = false;
-				} else {
-					_this.isValidationFail = false;
-					_this.isLoading = false;
-
-					// check if api response is success
-					if (data.status === 'Success') {
-						var text = data.text;
-						var paragraphs = text.split(/\n\n\n/); // regex expression finding new line
-
-						_this.spintaxResult = text;
-						_this.$refs.spinButton.disabled = false;
-
-						// article is now the spintax result
-						// display finish full article
-						_this.generateFullArticle(_this.spin.article);
-
-						// post article
-						_this.spin['article'] = data.text;
-						_this.postSpinTax(_this.spin);
-
-						// scroll window to top
-						/*Vue.nextTick(() => {
-      	$('html, body').animate({
-      		scrollTop: $('div.Word__result').offset().top 
-      	}, 1000);
-      });*/
-					}
-
-					// check if api response is fail
-					if (data.status === 'Failure') {
-						_this.isValidationFail = true;
-						_this.errors = data.error;
-					}
-				}
-			});
-		},
-		postSpinTax: function postSpinTax(data) {
-			axios.post('/words/postSpinTax', data).then(function (response) {
-				return console.log(response.data);
-			});
-		},
-		generateFullArticle: function generateFullArticle(article) {
-			var _this2 = this;
-
-			axios.post('/words/generateFullArticle', { article: article }).then(function (response) {
-				_this2.article = response.data;
-				_this2.isSuccess = true;
-			});
-		},
-		generateParagraph: function generateParagraph(paragraphs) {
-			var _this3 = this;
-
-			axios.post('/words/generateParagraph', { paragraphs: paragraphs }).then(function (response) {
-				return _this3.paragraphs = response.data;
-			});
-		},
-		respinParagraph: function respinParagraph(payload) {
-			console.log(payload);
-			this.paragraphs[payload.index] = payload.paragraph;
-		}
-	}
-
-};
 
 /***/ })
 /******/ ]);

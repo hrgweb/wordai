@@ -16,6 +16,7 @@ class CreateWordsTable extends Migration
         Schema::create('words', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id')->unsigned();
+            $table->integer('article_type_id')->unsigned();
             $table->string('doc_title')->index()->nullable();
             $table->string('keyword')->nullable();
             $table->string('lsi_terms')->nullable();
