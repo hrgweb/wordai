@@ -988,7 +988,7 @@ var ArticleMixin = {
 			error: '',
 			isError: false,
 			duplicates: [],
-			smArticle: '' // sm - summernote
+			smArticle: '' // sm - summernote,
 		};
 	},
 
@@ -1157,7 +1157,7 @@ var ArticleMixin = {
 			// else separate paragprah
 			switch (this.type) {
 				case 'article':
-					this.spin['article'] = this.article;
+					this.spin['article'] = !this.responseSuccess ? this.article : $('div.note-editable').text();
 					this.copyScapeSetup(url, this.spin);
 					break;
 				case 'paragraph':
