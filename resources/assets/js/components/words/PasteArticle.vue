@@ -146,9 +146,11 @@
 								this.postSpinTax(this.spin);
 
 								// scroll window to top
-								/*$('html, body').animate({
-									scrollTop: $('div.Word__result').find('h3').offset().top + 'px'
-								}, 1000);*/
+								/*Vue.nextTick(() => {
+									$('html, body').animate({
+										scrollTop: $('div.Word__result').offset().top // + 'px'
+									}, 1000);
+								});*/
 							}
 							
 							// check if api response is fail

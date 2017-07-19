@@ -41,7 +41,7 @@
 		mixins: [ CrudMixin, ArticleMixin ],
 		mounted() {
 			this.smArticle = this.article;
-
+			
 			// init summernote
 			$('div#editor').summernote();
 

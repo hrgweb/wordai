@@ -67,6 +67,11 @@ button.close {
 
 mark { background-color: #f9e603 !important; }
 
+.Copyscape__result mark { 
+	background-color: #F73838 !important; 
+	color: #fff;
+}
+
 div.note-editable p {
 	white-space: pre-wrap;
 }

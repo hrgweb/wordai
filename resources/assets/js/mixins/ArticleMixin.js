@@ -72,20 +72,51 @@ export const ArticleMixin = {
 			return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 		},
 
-		prependMarkTagToSearchSendtenceAndHighlight(finds) {
+		setMarkTag(article, find) {
+			return article.replace(RegExp(find, 'gi'), '<mark>' + find + '</mark>');
+		},
+
+		replaceSearchSenteceByMarkTag(finds) {
 			let article = $('div.note-editable').find('p')[0].innerText;
-			let find = '';
 
 			for (let i=0; i<finds.length; i++) {
 				find = this.escapeRegExp(finds[i]);
-
-				article = article.replace(RegExp(find, 'gi'), '<mark>' + find + '</mark>');
-				// console.log(article);
+				article = this.setMarkTag(article, find);
 			}
+
+			return article;
+		},
+
+		prependMarkTagToSearchSendtenceAndHighlight(finds) {
+			let find = '';
+			let article = '';
+
+			// replace search sentence by mark tag
+			article = this.replaceSearchSenteceByMarkTag(finds);
 
 			// highlight summernote paragraph
 			this.smArticle = article;
 			$('div.note-editable').find('p').html(this.smArticle);
+		},
+
+		colorDuplicatesInRed(duplicates) {
+			let paragraphs = $('div.Copyscape__result').find('p');
+			let paragraph = '';
+			let vm = this;
+
+			$.each(paragraphs, function(index, value) {
+				paragraph = value.innerText.trim();
+
+				for (let i=0; i<duplicates.length; i++) {
+					paragraph = vm.setMarkTag(paragraph, vm.escapeRegExp(duplicates[i]));
+				}
+
+				// modify result of the copyscape[index].result.textsnippet
+				vm.copyscape.result[index].textsnippet = paragraph;
+				
+				// when search color red the duplicate
+				paragraphs.html(paragraph);
+			});
 		},
 
 		copyScapeData(data) {
@@ -101,6 +132,11 @@ export const ArticleMixin = {
 
 			// prepend mark tag to search string and highlight
 			this.prependMarkTagToSearchSendtenceAndHighlight(finds);
+
+			// replace duplicates and color by red
+			Vue.nextTick(() => {
+				this.colorDuplicatesInRed(finds);
+			});
 
 			// store as result in vue data
 			this.duplicates = finds;
