@@ -1,7 +1,6 @@
 <template>
 	<div class="Word">
 		<div class="Word__result" v-show="isSuccess">
-			<!-- Full Article -->
 			<full-article
 				:token="token"
 				:spintaxResult="spintaxResult"
@@ -12,48 +11,60 @@
 			</full-article><br>
 		</div>
 
-		<h1>Article</h1><hr>
 
-		<form method="POST" @submit.prevent="spinTax">
-			<input type="hidden" name="_token" :value="token">
+		<div class="form-group">
+			<h1>Article</h1><hr>
 
-			<div class="form-group">
-				<label for="articleType">Article Type</label>
-				<select class="form-control" v-model="articleType">
-					<option value="select">Select Article Type</option>
-				</select>
-			</div>
+			<label for="articleType">Article Type</label>
+			<select class="form-control" v-model="articleType">
+				<option value="select">Please select an article type</option>
+				<option v-for="type in articleTypes" :value="type.article_type">{{ type.article_type }}</option>
+			</select>
+		</div>
 
-			<!-- <textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea> -->
-			<label for="article">Original Article</label>
-			<textarea class="form-control" rows="40" v-once v-model="spin.article" @keyup="wordCount"></textarea>
-			<br>
+		<!-- handwritten -->
+		<div class="Handwritten" v-if="articleType === 'Unique Hand Written'">
+			<unique-handwritten></unique-handwritten>
+		</div>
 
-			<!-- Erorr component -->
-			<error 
-				:type="errorType"
-				:list="errors"
-				v-if="isValidationFail">
- 			</error>
-			<br>
+		<!-- curated -->
+		<div class="Curated" v-else-if="articleType === 'Curated Content'">
+			<form method="POST" @submit.prevent="spinTax">
+				<input type="hidden" name="_token" :value="token">
 
-			<div class="form-group">
-				<span>Words count: <b>{{ count }}</b></span>
-			</div>
-			<br>
+				<!-- <textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea> -->
+				<label for="article">Original Article</label>
+				<textarea class="form-control" rows="40" v-once v-model="spin.article" @keyup="wordCount"></textarea>
+				<br>
 
-			<button type="submit" class="btn btn-primary" ref="spinButton">Spin Now</button>
-			&nbsp;&nbsp;&nbsp;
-			<span v-if="isLoading">LOADING....</span><br>
-		</form>
+				<!-- Erorr component -->
+				<error 
+					:type="errorType"
+					:list="errors"
+					v-if="isValidationFail">
+				</error>
+				<br>
+
+				<div class="form-group">
+					<span>Words count: <b>{{ count }}</b></span>
+				</div>
+				<br>
+
+				<button type="submit" class="btn btn-primary" ref="spinButton">Spin Now</button>
+				&nbsp;&nbsp;&nbsp;
+				<span v-if="isLoading">LOADING....</span><br>
+			</form>
+		</div>
 	</div>
 </template>
 
 <script>
+	import UniqueHandwritten from './UniqueHandwritten.vue';
 	import { CrudMixin } from './../../mixins/CrudMixin.js';
 	import { ArticleActionMixin } from './../../mixins/ArticleActionMixin.js';
 
 	export default {
+		components: { UniqueHandwritten },
 		mixins: [ CrudMixin, ArticleActionMixin ]
 	}
 </script>

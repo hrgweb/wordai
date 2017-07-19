@@ -27,11 +27,14 @@ export const ArticleActionMixin = {
 				protected: '',
 				synonyms: ''
 			},
-			articleType: 'select'
+			articleType: 'select',
+			articleTypes: [],
+			isCurated: false
 		}
 	},
 	created() {
 		this.authUser = JSON.parse(this.user);
+		this.listOfArticleType();
 	},
 	methods: {
 		wordCount() {
@@ -139,7 +142,7 @@ export const ArticleActionMixin = {
 		},
 
 		listOfArticleType() {
-			axios.get()
+			axios.get('/articleType/listOfArticleType').then(response => this.articleTypes = response.data);
 		}
 	}
 
