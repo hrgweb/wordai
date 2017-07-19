@@ -134,9 +134,7 @@ export const ArticleMixin = {
 			this.prependMarkTagToSearchSendtenceAndHighlight(finds);
 
 			// replace duplicates and color by red
-			Vue.nextTick(() => {
-				this.colorDuplicatesInRed(finds);
-			});
+			Vue.nextTick(() => this.colorDuplicatesInRed(finds) );
 
 			// store as result in vue data
 			this.duplicates = finds;
