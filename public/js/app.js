@@ -3790,6 +3790,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4459,7 +4466,8 @@ var ArticleActionMixin = {
 				article: '',
 				protected: '',
 				synonyms: ''
-			}
+			},
+			articleType: 'select'
 		};
 	},
 	created: function created() {
@@ -4572,6 +4580,9 @@ var ArticleActionMixin = {
 		respinParagraph: function respinParagraph(payload) {
 			console.log(payload);
 			this.paragraphs[payload.index] = payload.paragraph;
+		},
+		listOfArticleType: function listOfArticleType() {
+			axios.get();
 		}
 	}
 
@@ -25014,7 +25025,36 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "value": _vm.token
     }
-  }), _vm._v(" "), _c('label', {
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "articleType"
+    }
+  }, [_vm._v("Article Type")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.articleType),
+      expression: "articleType"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.articleType = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "select"
+    }
+  }, [_vm._v("Select Article Type")])])]), _vm._v(" "), _c('label', {
     attrs: {
       "for": "article"
     }

@@ -17,6 +17,13 @@
 		<form method="POST" @submit.prevent="spinTax">
 			<input type="hidden" name="_token" :value="token">
 
+			<div class="form-group">
+				<label for="articleType">Article Type</label>
+				<select class="form-control" v-model="articleType">
+					<option value="select">Select Article Type</option>
+				</select>
+			</div>
+
 			<!-- <textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea> -->
 			<label for="article">Original Article</label>
 			<textarea class="form-control" rows="40" v-once v-model="spin.article" @keyup="wordCount"></textarea>

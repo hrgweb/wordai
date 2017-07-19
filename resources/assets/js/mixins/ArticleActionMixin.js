@@ -26,7 +26,8 @@ export const ArticleActionMixin = {
 				article: '',
 				protected: '',
 				synonyms: ''
-			}
+			},
+			articleType: 'select'
 		}
 	},
 	created() {
@@ -135,6 +136,10 @@ export const ArticleActionMixin = {
 		respinParagraph(payload) {
 			console.log(payload);
 			this.paragraphs[payload.index] = payload.paragraph;
+		},
+
+		listOfArticleType() {
+			axios.get()
 		}
 	}
 

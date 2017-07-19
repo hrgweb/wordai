@@ -14,31 +14,40 @@ Route::get('copyscape', 'PagesController@copyscape');
 Route::get('curl', 'PagesController@curl');
 
 // WordAI
-Route::get('words/generate', 'WordsController@article');
-Route::get('words/rawArticles', 'WordsController@getRawArticles');
-Route::post('words', 'WordsController@store');
-Route::post('words/generateArticle', 'WordsController@generateArticle');
-Route::post('words/generateParagraph', 'WordsController@generateParagraph');
-Route::post('words/processCopyscapeApi', 'WordsController@processCopyscapeApi');
-Route::post('words/generateFullArticle', 'WordsController@generateFullArticle');
-Route::post('words/generateRespintax', 'WordsController@generateRespintax');
-Route::post('words/postSpinTax', 'WordsController@postSpinTax');
-Route::post('words/processToCopyscape', 'WordsController@processToCopyscape');
+Route::prefix('words')->group(function() {
+	Route::get('generate', 'WordsController@article');
+	Route::get('rawArticles', 'WordsController@getRawArticles');
+	Route::post('/', 'WordsController@store');
+	Route::post('generateArticle', 'WordsController@generateArticle');
+	Route::post('generateParagraph', 'WordsController@generateParagraph');
+	Route::post('processCopyscapeApi', 'WordsController@processCopyscapeApi');
+	Route::post('generateFullArticle', 'WordsController@generateFullArticle');
+	Route::post('generateRespintax', 'WordsController@generateRespintax');
+	Route::post('postSpinTax', 'WordsController@postSpinTax');
+	Route::post('processToCopyscape', 'WordsController@processToCopyscape');
 
-Route::post('words/processTextGrammar', 'WordsController@processTextGrammar')->middleware('cors');
-// tmp
-Route::post('words/runCurl', 'WordsController@runCurl');
+	Route::post('processTextGrammar', 'WordsController@processTextGrammar')->middleware('cors');
+	// tmp
+	Route::post('runCurl', 'WordsController@runCurl');
+});
+
+// ArticleType
+Route::prefix('articleType')->group(function() {
+	Route::get('listOfArticleType', 'ArticleTypesController@listOfArticleType');
+});
 
 
 // Admin
-// Domain
-Route::get('admin/pendingUsers', 'AdminController@pendingUsers');
-Route::get('admin/domainList', 'AdminController@domainList');
-Route::post('admin/postDomain', 'AdminController@postDomain');
-Route::patch('admin/updateDomain', 'AdminController@updateDomain');
-Route::delete('admin/removeDomain', 'AdminController@removeDomain');
-// Protected Terms
-Route::post('admin/postProtectedTerms', 'AdminController@postProtectedTerms');
+Route::prefix('admin')->group(function() {
+	// Domain
+	Route::get('pendingUsers', 'AdminController@pendingUsers');
+	Route::get('domainList', 'AdminController@domainList');
+	Route::post('postDomain', 'AdminController@postDomain');
+	Route::patch('updateDomain', 'AdminController@updateDomain');
+	Route::delete('removeDomain', 'AdminController@removeDomain');
+	// Protected Terms
+	Route::post('postProtectedTerms', 'AdminController@postProtectedTerms');
+});
 
 // User
 Route::prefix('user')->group(function() {
