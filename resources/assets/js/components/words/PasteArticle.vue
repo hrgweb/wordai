@@ -4,7 +4,7 @@
 			<h1>Article</h1><hr>
 
 			<label for="articleType">Article Type</label>
-			<select class="form-control" v-model="articleType">
+			<select class="form-control" v-model="articleType" v-if="isArticleTypesLoaded">
 				<option value="select">Please select an article type</option>
 				<option v-for="type in articleTypes" :value="type.article_type">{{ type.article_type }}</option>
 			</select>
@@ -27,7 +27,7 @@
 					v-if="isSuccess">
 				</full-article><br>
 			</div>
-		
+
 			<form method="POST" @submit.prevent="spinTax">
 				<input type="hidden" name="_token" :value="token">
 

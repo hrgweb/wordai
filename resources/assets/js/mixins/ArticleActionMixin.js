@@ -29,12 +29,18 @@ export const ArticleActionMixin = {
 			},
 			articleType: 'select',
 			articleTypes: [],
-			isCurated: false
+			isCurated: false,
+			isArticleTypesLoaded: false
 		}
 	},
 	created() {
 		this.authUser = JSON.parse(this.user);
 		this.listOfArticleType();
+	},
+	watch: {
+		articleTypes(data) {
+			this.isArticleTypesLoaded = data.length > 0 ? true : false;
+		}
 	},
 	methods: {
 		wordCount() {

@@ -4481,7 +4481,8 @@ var ArticleActionMixin = {
 			},
 			articleType: 'select',
 			articleTypes: [],
-			isCurated: false
+			isCurated: false,
+			isArticleTypesLoaded: false
 		};
 	},
 	created: function created() {
@@ -4489,6 +4490,11 @@ var ArticleActionMixin = {
 		this.listOfArticleType();
 	},
 
+	watch: {
+		articleTypes: function articleTypes(data) {
+			this.isArticleTypesLoaded = data.length > 0 ? true : false;
+		}
+	},
 	methods: {
 		wordCount: function wordCount() {
 			var count = 1;
@@ -25016,7 +25022,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "articleType"
     }
-  }, [_vm._v("Article Type")]), _vm._v(" "), _c('select', {
+  }, [_vm._v("Article Type")]), _vm._v(" "), (_vm.isArticleTypesLoaded) ? _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -25045,7 +25051,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": type.article_type
       }
     }, [_vm._v(_vm._s(type.article_type))])
-  })], 2)]), _vm._v(" "), (_vm.articleType === 'Unique Hand Written') ? _c('div', {
+  })], 2) : _vm._e()]), _vm._v(" "), (_vm.articleType === 'Unique Hand Written') ? _c('div', {
     staticClass: "Handwritten"
   }, [_c('unique-handwritten')], 1) : (_vm.articleType === 'Curated Content') ? _c('div', {
     staticClass: "Curated"
