@@ -53,6 +53,12 @@
 
 			// highlight summernote paragraph
 			$('div.note-editable').find('p').text(this.article);
+
+			// scroll window to div.Word__result
+			$('html, body').animate({
+				// scrollTop: $('div.Word__result').offset().top 
+				scrollTop: 260
+			}, 'slow', 'swing');
 		}
 	}
 </script>

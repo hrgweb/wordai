@@ -3673,6 +3673,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 		// highlight summernote paragraph
 		$('div.note-editable').find('p').text(this.article);
+
+		// scroll window to div.Word__result
+		$('html, body').animate({
+			// scrollTop: $('div.Word__result').offset().top 
+			scrollTop: 260
+		}, 'slow', 'swing');
 	}
 });
 
@@ -4602,21 +4608,6 @@ var ArticleActionMixin = {
 			this.isValidationFail = false;
 			this.$refs.spinButton.disabled = true;
 
-			/*let text = `
-   	How To Apply For Social Security Disability
-   	The first step in how to apply for social security disability is to contact the Social Security Administration to schedule your disability interview. You may contact your local Social Security office by telephone, or make an office visit, or you can call the toll free Social Security number to have a disability claim taken or scheduled for you at your local office. 
-   	For those who are unclear about the differences between SSD and SSI, Social Security administers two disability programs -- Social Security disability (SSDI) and Supplemental Security Income (SSI). Social Security disability is based upon insured status, which is achieved through your work activity. Supplemental Security Income is a need-based program that does not depend upon your work history. SSI is based upon your income or resources. 
-   	Where do I go to apply?
-   `;
-   let key = 'SzFohpMVhgmvbyRx';
-   let url = 'https://api.textgears.com/check.php?text='+text+'&key='+key;
-   
-   axios.post('/words/processTextGrammar', { text: text, key: key })
-   	.then(response => {
-   		let data = response.data;
-   				console.log(data);
-   	});*/
-
 			axios.post('/words', this.spin).then(function (response) {
 				var data = response.data;
 
@@ -4646,13 +4637,6 @@ var ArticleActionMixin = {
 						// post article
 						_this.spin['article'] = data.text;
 						_this.postSpinTax(_this.spin);
-
-						// scroll window to top
-						/*Vue.nextTick(() => {
-      	$('html, body').animate({
-      		scrollTop: $('div.Word__result').offset().top 
-      	}, 1000);
-      });*/
 					}
 
 					// check if api response is fail
