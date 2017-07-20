@@ -26,7 +26,7 @@ Route::prefix('words')->group(function() {
 	Route::post('postSpinTax', 'WordsController@postSpinTax');
 	Route::post('processToCopyscape', 'WordsController@processToCopyscape');
 
-	Route::post('processTextGrammar', 'WordsController@processTextGrammar')->middleware('cors');
+	Route::post('processTextGrammar', 'WordsController@processTextGrammar');
 	// tmp
 	Route::post('runCurl', 'WordsController@runCurl');
 });

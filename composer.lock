@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "37acc2eb692468b4e286b713b0ae2250",
+    "content-hash": "63020d706e290031011ab9cf53508181",
     "packages": [
         {
             "name": "barryvdh/laravel-cors",
@@ -205,6 +205,49 @@
                 "parser"
             ],
             "time": "2017-03-29T16:04:15+00:00"
+        },
+        {
+            "name": "ixudra/curl",
+            "version": "6.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ixudra/curl.git",
+                "reference": "bb8bb243871f6c50f58bdcdc04e0ee153c4b6b6b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ixudra/curl/zipball/bb8bb243871f6c50f58bdcdc04e0ee153c4b6b6b",
+                "reference": "bb8bb243871f6c50f58bdcdc04e0ee153c4b6b6b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": ">=4.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ixudra\\Curl\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jan Oris",
+                    "email": "jan.oris@ixudra.be"
+                }
+            ],
+            "description": "Custom PHP Curl library for the Laravel 5 framework - developed by Ixudra",
+            "homepage": "http://ixudra.be",
+            "keywords": [
+                "Ixudra",
+                "curl",
+                "laravel"
+            ],
+            "time": "2017-07-14T14:16:54+00:00"
         },
         {
             "name": "jailtonsc/laravel-response-xml",

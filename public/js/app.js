@@ -887,7 +887,9 @@ var ArticleMixin = {
 			error: '',
 			isError: false,
 			duplicates: [],
-			smArticle: '' // sm - summernote,
+			smArticle: '', // sm - summernote,
+			textgear: {},
+			isGrammarTrue: false
 		};
 	},
 
@@ -1066,27 +1068,29 @@ var ArticleMixin = {
 			}
 		},
 		processToTextGear: function processToTextGear() {
+			var _this4 = this;
+
 			this.isLoading = true;
 			this.isError = false;
+			this.$refs.tgButton.disabled = true;
 
-			var key = 'SzFohpMVhgmvbyRx';
-			// let url = 'https://api.textgears.com/check.php?text='+this.paragraph+'&key='+key;
+			var data = { text: $('div.note-editable').text() };
 
-			axios.post(url, { text: this.paragraph, key: key }).then(function (response) {
+			axios.post('/words/processTextGrammar', data).then(function (response) {
 				var data = response.data;
 
-				// api result response success
-				/*this.isLoading = false;
-    this.copyscape = data;
-    this.responseSuccess = true;
-    	// check if api response is fail
-    if (data.error) {
-    	this.error = data.error;
-    	this.isError = true;
-    	this.responseSuccess = false;
-    }*/
-
-				console.log(data);
+				if (data.result) {
+					// api result response success
+					_this4.isLoading = false;
+					_this4.textgear = data;
+					_this4.isGrammarTrue = true;
+					_this4.$refs.tgButton.disabled = false;
+				} else {
+					// check if api response is fail
+					_this4.error = data.error;
+					_this4.isError = true;
+					_this4.isGrammarTrue = false;
+				}
 			});
 		}
 	}
@@ -3877,8 +3881,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleMixin_js__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TextgearResult_vue__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__TextgearResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__TextgearResult_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_ArticleMixin_js__ = __webpack_require__(9);
 //
 //
 //
@@ -3905,6 +3911,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -3912,8 +3924,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['token', 'spintaxResult', 'spin', 'type', 'article'],
-	components: { CopyscapeResult: __WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue___default.a },
-	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleMixin_js__["a" /* ArticleMixin */]],
+	components: { CopyscapeResult: __WEBPACK_IMPORTED_MODULE_0__CopyscapeResult_vue___default.a, TextgearResult: __WEBPACK_IMPORTED_MODULE_1__TextgearResult_vue___default.a },
+	mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_3__mixins_ArticleMixin_js__["a" /* ArticleMixin */]],
 	mounted: function mounted() {
 		this.smArticle = this.article;
 
@@ -3926,9 +3938,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	methods: {
 		processCopyscapeApi: function processCopyscapeApi() {
-			var data = {
-				article: $('div.note-editable').text()
-			};
+			var data = { article: $('div.note-editable').text() };
 
 			// process copyscape api
 			this.copyScapeSetup('/words/processCopyscapeApi', data);
@@ -25705,6 +25715,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "copy": _vm.copyscape
     }
+  }) : _vm._e(), _vm._v(" "), (_vm.isGrammarTrue) ? _c('textgear-result', {
+    attrs: {
+      "grammar": _vm.textgear
+    }
   }) : _vm._e(), _vm._v(" "), _c('button', {
     ref: "csButton",
     staticClass: "btn btn-warning",
@@ -25715,6 +25729,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.processCopyscapeApi
     }
   }, [_vm._v("Copyscape")]), _vm._v(" "), _c('button', {
+    ref: "tgButton",
     staticClass: "btn btn-info",
     attrs: {
       "type": "button"
@@ -37492,6 +37507,145 @@ module.exports = function(module) {
 __webpack_require__(18);
 module.exports = __webpack_require__(19);
 
+
+/***/ }),
+/* 129 */,
+/* 130 */,
+/* 131 */,
+/* 132 */,
+/* 133 */,
+/* 134 */,
+/* 135 */,
+/* 136 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['grammar']
+});
+
+/***/ }),
+/* 137 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.errorlist[data-v-57f506a5] {\n\tbackground: #ffedf0;\n    padding: .5em 1em;\n    margin: 0 0 2em;\n    border: 1px solid #f9d8dd;\n}\ntable[data-v-57f506a5] { \n\twidth: 70%; \n\tfont-family: tahoma;\n\tfont-weight: normal;\n\tfont-size: 1.1em;\n\tline-height: 1.6em;\n\tcolor: #B52E47;\n}\ntable td[data-v-57f506a5] { vertical-align: top;\n}\n.errorlist .red[data-v-57f506a5] { color: #B52E47;\n}\n.errorlist .green[data-v-57f506a5] { color: #3FBD44;\n}\nhr[data-v-57f506a5] { border-top: 1px solid #c5c5c5;\n}\n", ""]);
+
+/***/ }),
+/* 138 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(140)
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(136),
+  /* template */
+  __webpack_require__(139),
+  /* scopeId */
+  "data-v-57f506a5",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\words\\TextgearResult.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] TextgearResult.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-57f506a5", Component.options)
+  } else {
+    hotAPI.reload("data-v-57f506a5", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 139 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "errorlist"
+  }, [_c('h4', [_vm._v("Check Grammar Result")]), _c('hr'), _vm._v(" "), _c('table', [_c('tbody', _vm._l((_vm.grammar.errors), function(worse) {
+    return _c('tr', [_c('td', [_c('span', {
+      staticClass: "red"
+    }, [_vm._v(_vm._s(worse.bad))])]), _vm._v(" "), _c('td', {
+      staticStyle: {
+        "padding": "0 2em 0 1.5em"
+      }
+    }, [_vm._v("→")]), _vm._v(" "), _vm._l((worse.better), function(good) {
+      return _c('td', [_c('span', {
+        staticClass: "green"
+      }, [_vm._v(_vm._s(good))]), _c('br')])
+    })], 2)
+  }))]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h5', [_vm._v("Score: "), _c('b', [_vm._v(_vm._s(_vm.grammar.score))])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-57f506a5", module.exports)
+  }
+}
+
+/***/ }),
+/* 140 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(137);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("71b7a148", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-57f506a5\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TextgearResult.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-57f506a5\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./TextgearResult.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

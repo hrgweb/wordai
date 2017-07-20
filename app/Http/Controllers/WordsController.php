@@ -10,6 +10,7 @@ use App\Word;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Validator;
+use Ixudra\Curl\Facades\Curl;
 
 class WordsController extends Controller
 {
@@ -248,33 +249,18 @@ class WordsController extends Controller
 	public function processTextGrammar()
 	{
 		$url = Config::get('textgear.url');
+		$key = Config::get('textgear.key');
 		$text = request('text');
-		$key = request('key');
 
-		// reutrn $url;
+		$data = [
+			'text' => $text,
+			'key' => $key
+		];
 
-		/*$ch = curl_init();
+	    $result = Curl::to($url)
+	        ->withData($data)
+	        ->post();
 
-		curl_setopt($ch, CURLOPT_URL, $url);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-
-		$result = curl_exec($ch);
-
-		curl_close($ch);
-
-		dd($result);*/
-
-
-
-		$ch = curl_init($url);
-
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt ($ch, CURLOPT_POST, 1);
-		curl_setopt ($ch, CURLOPT_POSTFIELDS, "text=$text&key=$key");
-		
-		$result = curl_exec($ch);
-		curl_close ($ch);
-
-		dd($result);
+		return $result;
 	}
 }

@@ -181,6 +181,7 @@ return [
          * Custom Service Providers
          */
         App\Providers\ViewComposerServiceProvider::class,
+        Ixudra\Curl\CurlServiceProvider::class,
         // Barryvdh\Cors\ServiceProvider::class,
         // XmlResponse\XmlResponseServiceProvider::class
 
@@ -232,6 +233,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        'Curl'          => Ixudra\Curl\Facades\Curl::class,
 
     ],
 

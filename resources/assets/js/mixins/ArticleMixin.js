@@ -7,6 +7,8 @@ export const ArticleMixin = {
 			isError: false,
 			duplicates: [],
 			smArticle: '', // sm - summernote,
+			textgear: {},
+			isGrammarTrue: false
 		}
 	},
 	methods: {
@@ -144,7 +146,7 @@ export const ArticleMixin = {
 			this.isLoading = true;
 			this.isError = false;
 			this.$refs.csButton.disabled = true;
-			
+
 			axios.post(url, data).then(response => {
 				let data = response.data;
 
@@ -187,26 +189,23 @@ export const ArticleMixin = {
 		processToTextGear() {
 			this.isLoading = true;
 			this.isError = false;
+			this.$refs.tgButton.disabled = true;
 
-			let key = 'SzFohpMVhgmvbyRx';
-			// let url = 'https://api.textgears.com/check.php?text='+this.paragraph+'&key='+key;
+			const data = { text: $('div.note-editable').text() };
 
-			axios.post(url, { text: this.paragraph, key: key }).then(response => {
+			axios.post('/words/processTextGrammar', data).then(response => {
 				let data = response.data;
 
-				// api result response success
-				/*this.isLoading = false;
-				this.copyscape = data;
-				this.responseSuccess = true;
-
-				// check if api response is fail
-				if (data.error) {
+				if (data.result) { // api result response success
+					this.isLoading = false;
+					this.textgear = data;
+					this.isGrammarTrue = true;
+					this.$refs.tgButton.disabled = false;
+				} else { // check if api response is fail
 					this.error = data.error;
 					this.isError = true;
-					this.responseSuccess = false;
-				}*/
-
-				console.log(data);
+					this.isGrammarTrue = false;
+				}
 			});
 		}
 	}
