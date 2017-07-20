@@ -48,29 +48,8 @@
 					article: $('div.note-editable').text()
 				};
 
-				this.isLoading = true;
-				this.isError = false;
-				this.$refs.csButton.disabled = true;
-
-				axios.post('/words/processCopyscapeApi', data).then(response => {
-					let data = response.data;
-
-					// api result response success
-					this.isLoading = false;
-					this.copyscape = data;
-					this.responseSuccess = true;
-					this.$refs.csButton.disabled = false;
-
-					// find all duplicate occurences
-					this.copyScapeData(data.result);
-
-					// check if api response is fail
-					if (data.error) {
-						this.error = data.error;
-						this.isError = true;
-						this.responseSuccess = false;
-					}
-				});
+				// process copyscape api
+				this.copyScapeSetup('/words/processCopyscapeApi', data);
 			}
 		}
 	}

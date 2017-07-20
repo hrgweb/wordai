@@ -141,6 +141,10 @@ export const ArticleMixin = {
 		},
 
 		copyScapeSetup(url, data) {
+			this.isLoading = true;
+			this.isError = false;
+			this.$refs.csButton.disabled = true;
+			
 			axios.post(url, data).then(response => {
 				let data = response.data;
 
@@ -163,10 +167,6 @@ export const ArticleMixin = {
 		},
 
 		processToCopyscape() {
-			this.isLoading = true;
-			this.isError = false;
-			this.$refs.csButton.disabled = true;
-
 			this.spin['type'] = this.type;
 			let url = '/words/processToCopyscape';
 

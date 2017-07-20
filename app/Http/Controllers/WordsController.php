@@ -247,9 +247,12 @@ class WordsController extends Controller
 
 	public function processTextGrammar()
 	{
-		$url = 'https://api.textgears.com/check.php';
+		$url = Config::get('textgear.url');
 		$text = request('text');
 		$key = request('key');
+
+		// reutrn $url;
+
 		/*$ch = curl_init();
 
 		curl_setopt($ch, CURLOPT_URL, $url);
