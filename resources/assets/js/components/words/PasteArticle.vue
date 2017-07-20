@@ -6,17 +6,17 @@
 			<label for="articleType">Article Type</label>
 			<select class="form-control" v-model="articleType" v-if="isArticleTypesLoaded">
 				<option value="select">Please select an article type</option>
-				<option v-for="type in articleTypes" :value="type.article_type">{{ type.article_type }}</option>
+				<option v-for="type in articleTypes" :value="type.id">{{ type.article_type }}</option>
 			</select>
 		</div>
 
 		<!-- handwritten -->
-		<div class="Handwritten" v-if="articleType === 'Unique Hand Written'">
+		<div class="Handwritten" v-if="articleType === 1">
 			<unique-handwritten></unique-handwritten>
 		</div>
 
 		<!-- curated -->
-		<div class="Curated" v-else-if="articleType === 'Curated Content'">
+		<div class="Curated" v-else-if="articleType === 2">
 			<div class="Word__result" v-show="isSuccess">
 				<full-article
 					:token="token"

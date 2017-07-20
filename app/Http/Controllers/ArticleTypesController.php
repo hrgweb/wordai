@@ -9,7 +9,7 @@ class ArticleTypesController extends Controller
 {
     public function listOfArticleType()
     {
-    	$types = ArticleType::all();
+    	$types = ArticleType::all(['id', 'article_type']);
 
     	return $types;
     }

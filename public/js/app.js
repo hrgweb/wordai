@@ -25162,12 +25162,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Please select an article type")]), _vm._v(" "), _vm._l((_vm.articleTypes), function(type) {
     return _c('option', {
       domProps: {
-        "value": type.article_type
+        "value": type.id
       }
     }, [_vm._v(_vm._s(type.article_type))])
-  })], 2) : _vm._e()]), _vm._v(" "), (_vm.articleType === 'Unique Hand Written') ? _c('div', {
+  })], 2) : _vm._e()]), _vm._v(" "), (_vm.articleType === 1) ? _c('div', {
     staticClass: "Handwritten"
-  }, [_c('unique-handwritten')], 1) : (_vm.articleType === 'Curated Content') ? _c('div', {
+  }, [_c('unique-handwritten')], 1) : (_vm.articleType === 2) ? _c('div', {
     staticClass: "Curated"
   }, [_c('div', {
     directives: [{
