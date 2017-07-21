@@ -889,10 +889,17 @@ var ArticleMixin = {
 			duplicates: [],
 			smArticle: '', // sm - summernote,
 			textgear: {},
-			isGrammarTrue: false
+			isGrammarTrue: false,
+			articleDuplicates: [],
+			isDisableSpinAndCs: true
 		};
 	},
 
+	watch: {
+		articleDuplicates: function articleDuplicates(data) {
+			this.isDisableSpinAndCs = data.length > 0 ? false : true;
+		}
+	},
 	methods: {
 		generateRespintax: function generateRespintax() {
 			var _this = this;
@@ -1092,6 +1099,56 @@ var ArticleMixin = {
 					_this4.isGrammarTrue = false;
 				}
 			});
+		},
+		updateDuplicates: function updateDuplicates(duplicates) {
+			this.articleDuplicates = duplicates;
+		},
+		spinDuplicatesAndCopyscape: function spinDuplicatesAndCopyscape() {
+			var _this5 = this;
+
+			this.isLoading = true;
+			this.$refs.spinAndCsButton.disabled = true;
+
+			// join the duplicates e.g ['a===b===c']
+			var joinDuplicates = this.articleDuplicates.join('===');
+
+			// data for spin
+			this.spin['article'] = joinDuplicates;
+			this.spin['type'] = 'article-duplicates';
+
+			console.log(this.spin);
+
+			// run spintax and spin
+			axios.post('/words', this.spin).then(function (response) {
+				var data = response.data;
+
+				_this5.isLoading = false;
+
+				// check if api response is success
+				if (data.status === 'Success') {
+					var text = data.text;
+
+					// this.spintaxResult = text;
+					console.log(text);
+					_this5.$refs.spinAndCsButton.disabled = false;
+
+					// article is now the spintax result
+					// display finish full article
+					// this.generateFullArticle(this.spin.article);
+				}
+
+				// check if api response is fail
+				if (data.status === 'Failure') {
+					// this.isValidationFail = true;
+					_this5.errors = data.error;
+				}
+			});
+
+			// make new array of duplicates base on join results
+			// results of article duplicates
+			// search for the duplicates in the article
+			// if find then replace with the new array of join results
+			// run copyscape
 		}
 	}
 };
@@ -3364,7 +3421,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['copy']
+	props: ['copy'],
+	mounted: function mounted() {
+		this.articleDuplicates();
+	},
+
+	methods: {
+		articleDuplicates: function articleDuplicates() {
+			var article = $('div.note-editable').find('p').html();
+			var duplicates = article.match(/\<mark\>.+?\<\/mark\>/g);
+
+			this.$emit('updateduplicates', duplicates);
+		}
+	}
 });
 
 /***/ }),
@@ -3693,6 +3762,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -3706,17 +3777,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	mounted: function mounted() {
 		this.smArticle = this.article;
 
-		// init summernote
-		$('div#editor').summernote();
+		this.summernoteSetup();
+		this.scrollTopAfterSpin();
+	},
 
-		// highlight summernote paragraph
-		$('div.note-editable').find('p').text(this.article);
+	methods: {
+		summernoteSetup: function summernoteSetup() {
+			// init summernote
+			$('div#editor').summernote();
 
-		// scroll window to div.Word__result
-		$('html, body').animate({
-			// scrollTop: $('div.Word__result').offset().top 
-			scrollTop: 260
-		}, 'slow', 'swing');
+			// highlight summernote paragraph
+			$('div.note-editable').find('p').text(this.article);
+		},
+		scrollTopAfterSpin: function scrollTopAfterSpin() {
+			// scroll window to div.Word__result
+			$('html, body').animate({
+				// scrollTop: $('div.Word__result').offset().top 
+				scrollTop: 260
+			}, 'slow', 'swing');
+		}
 	}
 });
 
@@ -25934,6 +26013,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.smArticle))]), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.responseSuccess) ? _c('copyscape-result', {
     attrs: {
       "copy": _vm.copyscape
+    },
+    on: {
+      "updateduplicates": _vm.updateDuplicates
     }
   }) : _vm._e(), _vm._v(" "), (_vm.isGrammarTrue) ? _c('textgear-result', {
     attrs: {
@@ -25957,6 +26039,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.processToCopyscape
     }
   }, [_vm._v("Copyscape")]), _vm._v(" "), _c('button', {
+    ref: "spinAndCsButton",
+    staticClass: "btn btn-danger",
+    attrs: {
+      "type": "button",
+      "disabled": _vm.isDisableSpinAndCs
+    },
+    on: {
+      "click": _vm.spinDuplicatesAndCopyscape
+    }
+  }, [_vm._v("Spin Duplicates And Run Copyscape")]), _vm._v(" "), _c('button', {
     ref: "tgButton",
     staticClass: "btn btn-info",
     attrs: {

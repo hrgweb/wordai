@@ -197,9 +197,6 @@ class WordsController extends Controller
 	{
 		include_once(app_path() . '/Functions/Copyscape.php');
 
-		$url = Config::get('copyscape.url');
-		$url .= '?f='.urlencode('html');
-		$text_search = $url.'?e=UTF-8';
 		$article = request('article');
 		$paragraph = request('paragraph');
 		$type = request('type');

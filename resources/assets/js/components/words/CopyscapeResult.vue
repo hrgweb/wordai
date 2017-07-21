@@ -15,7 +15,18 @@
 
 <script>
 	export default {
-		props: [ 'copy' ]
+		props: [ 'copy' ],
+		mounted() {
+			this.articleDuplicates();
+		},
+		methods: {
+			articleDuplicates() {
+				let article = $('div.note-editable').find('p').html();
+				let duplicates = article.match(/\<mark\>.+?\<\/mark\>/g);
+
+				this.$emit('updateduplicates', duplicates);
+			}
+		}
 	}
 </script>
 

@@ -16,6 +16,7 @@
 
 				<copyscape-result
 					:copy="copyscape"
+					@updateduplicates="updateDuplicates"
 					v-if="responseSuccess">
 	 			</copyscape-result>
 
@@ -26,6 +27,7 @@
 			
 				<button type="button" class="btn btn-success" @click="generateRespintax">Respin</button>
 				<button type="button" class="btn btn-warning" @click="processToCopyscape" ref="csButton">Copyscape</button>
+				<button type="button" class="btn btn-danger" :disabled="isDisableSpinAndCs" @click="spinDuplicatesAndCopyscape" ref="spinAndCsButton">Spin Duplicates And Run Copyscape</button>
 				<button type="button" class="btn btn-info" @click="processToTextGear" ref="tgButton">Check Grammar</button>
 				&nbsp;&nbsp;&nbsp;
 				<span v-if="isLoading">LOADING....</span>
@@ -48,17 +50,25 @@
 		mounted() {
 			this.smArticle = this.article;
 
-			// init summernote
-			$('div#editor').summernote();
+			this.summernoteSetup();
+			this.scrollTopAfterSpin();
+		},
+		methods: {
+			summernoteSetup() {
+				// init summernote
+				$('div#editor').summernote();
 
-			// highlight summernote paragraph
-			$('div.note-editable').find('p').text(this.article);
+				// highlight summernote paragraph
+				$('div.note-editable').find('p').text(this.article);
+			},
 
-			// scroll window to div.Word__result
-			$('html, body').animate({
-				// scrollTop: $('div.Word__result').offset().top 
-				scrollTop: 260
-			}, 'slow', 'swing');
+			scrollTopAfterSpin() {
+				// scroll window to div.Word__result
+				$('html, body').animate({
+					// scrollTop: $('div.Word__result').offset().top 
+					scrollTop: 260
+				}, 'slow', 'swing');
+			}
 		}
 	}
 </script>

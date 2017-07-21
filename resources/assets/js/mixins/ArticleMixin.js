@@ -8,7 +8,14 @@ export const ArticleMixin = {
 			duplicates: [],
 			smArticle: '', // sm - summernote,
 			textgear: {},
-			isGrammarTrue: false
+			isGrammarTrue: false,
+			articleDuplicates: [],
+			isDisableSpinAndCs: true
+		}
+	},
+	watch: {
+		articleDuplicates(data) {
+			this.isDisableSpinAndCs = data.length > 0 ? false : true;
 		}
 	},
 	methods: {
@@ -136,7 +143,7 @@ export const ArticleMixin = {
 			this.prependMarkTagToSearchSendtenceAndHighlight(finds);
 
 			// replace duplicates and color by red
-			Vue.nextTick(() => this.colorDuplicatesInRed(finds) );
+			Vue.nextTick(() => this.colorDuplicatesInRed(finds));
 
 			// store as result in vue data
 			this.duplicates = finds;
@@ -207,6 +214,57 @@ export const ArticleMixin = {
 					this.isGrammarTrue = false;
 				}
 			});
+		},
+
+		updateDuplicates(duplicates) {
+			this.articleDuplicates = duplicates;
+		},
+
+		spinDuplicatesAndCopyscape() {
+			this.isLoading = true;
+			this.$refs.spinAndCsButton.disabled = true;
+
+			// join the duplicates e.g ['a===b===c']
+			let joinDuplicates = this.articleDuplicates.join('===');
+
+			// data for spin
+			this.spin['article'] = joinDuplicates;
+			this.spin['type'] = 'article-duplicates';
+
+			console.log(this.spin);
+
+			// run spintax and spin
+			axios.post('/words', this.spin)
+				.then(response => {
+					let data = response.data;
+
+					this.isLoading = false;
+
+					// check if api response is success
+					if (data.status === 'Success') {
+						let text = data.text;
+
+						// this.spintaxResult = text;
+						console.log(text);
+						this.$refs.spinAndCsButton.disabled = false;
+
+						// article is now the spintax result
+						// display finish full article
+						// this.generateFullArticle(this.spin.article);
+					}
+					
+					// check if api response is fail
+					if (data.status === 'Failure') {
+						// this.isValidationFail = true;
+						this.errors = data.error;
+					}
+				});
+
+			// make new array of duplicates base on join results
+			// results of article duplicates
+			// search for the duplicates in the article
+			// if find then replace with the new array of join results
+			// run copyscape
 		}
 	}
 };
