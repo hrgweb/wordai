@@ -17,14 +17,13 @@
 
 		<!-- curated -->
 		<div class="Curated" v-else-if="articleType === 2">
-			<div class="Word__result" v-show="isSuccess">
+			<div class="Word__result" v-if="isSuccess">
 				<full-article
 					:token="token"
 					:spintaxResult="spintaxResult"
 					:spin="spin"
 					:article="article"
-					:type="spintaxType = 'article'"
-					v-if="isSuccess">
+					:type="spintaxType = 'article'">
 				</full-article><br>
 			</div>
 

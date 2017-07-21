@@ -61,6 +61,7 @@ export const ArticleActionMixin = {
 		spinTax() {
 			this.isLoading = true;
 			this.isValidationFail = false;
+			this.isSuccess = false;
 			this.$refs.spinButton.disabled = true;
 
 			axios.post('/words', this.spin)
