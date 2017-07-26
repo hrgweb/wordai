@@ -182,9 +182,6 @@ return [
          */
         App\Providers\ViewComposerServiceProvider::class,
         Ixudra\Curl\CurlServiceProvider::class,
-        // Barryvdh\Cors\ServiceProvider::class,
-        // XmlResponse\XmlResponseServiceProvider::class
-
     ],
 
     /*
