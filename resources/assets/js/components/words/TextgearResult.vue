@@ -7,7 +7,12 @@
 	            <tr v-for="worse in grammar.errors">
 	                <td><span class="red">{{ worse.bad }}</span></td>
 	                <td style="padding: 0 2em 0 1.5em;">→</td>
-	                <td><span class="green" v-for="good in worse.better">{{ good }}</span><br></td>
+	                <td>
+	                	<div v-for="good in worse.better">
+		                	<span class="green">{{ good }}</span>
+		                	<br>
+		                </div>
+	                </td>
 	            </tr>
 	        </tbody>
 	    </table>

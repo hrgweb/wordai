@@ -198,9 +198,9 @@ export const ArticleMixin = {
 			this.isError = false;
 			this.$refs.tgButton.disabled = true;
 
-			const data = { text: $('div.note-editable').text() };
+			const payload = { text: $('div.note-editable').text() };
 
-			axios.post('/words/processTextGrammar', data).then(response => {
+			axios.post('/words/processTextGrammar', payload).then(response => {
 				let data = response.data;
 
 				if (data.result) { // api result response success
@@ -208,6 +208,33 @@ export const ArticleMixin = {
 					this.textgear = data;
 					this.isGrammarTrue = true;
 					this.$refs.tgButton.disabled = false;
+
+					// add span tag on a bad words result in check grammar
+					let article = payload.text;
+					let result = '';
+					let off = 0; 
+
+					for (var i = 0; i < data.errors.length; i++) {
+						let val = data.errors[i];
+						let word = val.bad.trim();
+						let len = val.length;
+						off = val.offset;
+
+						result = article.replace(word, (match, p1, offset, string) => {
+							return `<span>${match}</span>`;
+						});
+
+						// let left = len + word.length;
+						// result = `${article.substr(off, len)} <span>${word}</span> ${article.substr(left)}`;
+						// // off +=
+						// console.log(result);
+
+					}
+
+					// new article base on check grammar result
+					// $('div.note-editable').text('').html(result);
+					console.log(result);
+
 				} else { // check if api response is fail
 					this.error = data.error;
 					this.isError = true;
@@ -222,8 +249,10 @@ export const ArticleMixin = {
 
 		generateNewArticle(article) {
 			axios.post('/words/generateFullArticle', { article: article }).then(response => {
-				this.article = response.data;
-				this.isSuccess = true;
+				// this.article = response.data;
+				// this.isSuccess = true;
+
+				console.log(response.data);
 			});
 		},
 

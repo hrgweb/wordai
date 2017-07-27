@@ -1081,9 +1081,9 @@ var ArticleMixin = {
 			this.isError = false;
 			this.$refs.tgButton.disabled = true;
 
-			var data = { text: $('div.note-editable').text() };
+			var payload = { text: $('div.note-editable').text() };
 
-			axios.post('/words/processTextGrammar', data).then(function (response) {
+			axios.post('/words/processTextGrammar', payload).then(function (response) {
 				var data = response.data;
 
 				if (data.result) {
@@ -1092,6 +1092,31 @@ var ArticleMixin = {
 					_this4.textgear = data;
 					_this4.isGrammarTrue = true;
 					_this4.$refs.tgButton.disabled = false;
+
+					// add span tag on a bad words result in check grammar
+					var article = payload.text;
+					var result = '';
+					var off = 0;
+
+					for (var i = 0; i < data.errors.length; i++) {
+						var val = data.errors[i];
+						var word = val.bad.trim();
+						var len = val.length;
+						off = val.offset;
+
+						result = article.replace(word, function (match, p1, offset, string) {
+							return '<span>' + match + '</span>';
+						});
+
+						// let left = len + word.length;
+						// result = `${article.substr(off, len)} <span>${word}</span> ${article.substr(left)}`;
+						// // off +=
+						// console.log(result);
+					}
+
+					// new article base on check grammar result
+					// $('div.note-editable').text('').html(result);
+					console.log(result);
 				} else {
 					// check if api response is fail
 					_this4.error = data.error;
@@ -1104,15 +1129,15 @@ var ArticleMixin = {
 			this.articleDuplicates = duplicates;
 		},
 		generateNewArticle: function generateNewArticle(article) {
-			var _this5 = this;
-
 			axios.post('/words/generateFullArticle', { article: article }).then(function (response) {
-				_this5.article = response.data;
-				_this5.isSuccess = true;
+				// this.article = response.data;
+				// this.isSuccess = true;
+
+				console.log(response.data);
 			});
 		},
 		spinDuplicatesAndCopyscape: function spinDuplicatesAndCopyscape() {
-			var _this6 = this;
+			var _this5 = this;
 
 			this.isLoading = true;
 			this.$refs.spinAndCsButton.disabled = true;
@@ -1128,8 +1153,8 @@ var ArticleMixin = {
 			axios.post('/words', this.spin).then(function (response) {
 				var data = response.data;
 
-				_this6.isLoading = false;
-				_this6.$refs.spinAndCsButton.disabled = false;
+				_this5.isLoading = false;
+				_this5.$refs.spinAndCsButton.disabled = false;
 
 				// check if api response is success
 				if (data.status === 'Success') {
@@ -1140,12 +1165,12 @@ var ArticleMixin = {
 
 					// article is now the spintax result
 					// display finish full article
-					_this6.generateNewArticle(_this6.spin.article);
+					_this5.generateNewArticle(_this5.spin.article);
 				}
 
 				// check if api response is fail
 				if (data.status === 'Failure') {
-					_this6.error = data.error;
+					_this5.error = data.error;
 				}
 			});
 
@@ -4014,6 +4039,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
 //
 //
 //
@@ -26221,11 +26251,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticStyle: {
         "padding": "0 2em 0 1.5em"
       }
-    }, [_vm._v("→")]), _vm._v(" "), _c('td', [_vm._l((worse.better), function(good) {
-      return _c('span', {
+    }, [_vm._v("→")]), _vm._v(" "), _c('td', _vm._l((worse.better), function(good) {
+      return _c('div', [_c('span', {
         staticClass: "green"
-      }, [_vm._v(_vm._s(good))])
-    }), _c('br')], 2)])
+      }, [_vm._v(_vm._s(good))]), _vm._v(" "), _c('br')])
+    }))])
   }))]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h5', [_vm._v("Score: "), _c('b', [_vm._v(_vm._s(_vm.grammar.score))])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
