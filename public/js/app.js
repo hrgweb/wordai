@@ -4773,6 +4773,7 @@ var ArticleActionMixin = {
 				} else {
 					_this.isValidationFail = false;
 					_this.isLoading = false;
+					_this.$refs.spinButton.disabled = false;
 
 					// check if api response is success
 					if (data.status === 'Success') {
@@ -4780,7 +4781,6 @@ var ArticleActionMixin = {
 						var paragraphs = text.split(/\n\n\n/); // regex expression finding new line
 
 						_this.spintaxResult = text;
-						_this.$refs.spinButton.disabled = false;
 
 						// article is now the spintax result
 						// display finish full article

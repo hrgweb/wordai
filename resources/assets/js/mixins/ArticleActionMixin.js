@@ -78,6 +78,7 @@ export const ArticleActionMixin = {
 				} else {
 					this.isValidationFail = false;
 					this.isLoading = false;
+					this.$refs.spinButton.disabled = false;
 
 					// check if api response is success
 					if (data.status === 'Success') {
@@ -85,7 +86,6 @@ export const ArticleActionMixin = {
 						let paragraphs = text.split(/\n\n\n/); // regex expression finding new line
 
 						this.spintaxResult = text;
-						this.$refs.spinButton.disabled = false;
 
 						// article is now the spintax result
 						// display finish full article
