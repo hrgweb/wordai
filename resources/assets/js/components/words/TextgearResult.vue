@@ -7,9 +7,7 @@
 	            <tr v-for="worse in grammar.errors">
 	                <td><span class="red">{{ worse.bad }}</span></td>
 	                <td style="padding: 0 2em 0 1.5em;">→</td>
-	                <td v-for="good in worse.better">
-	                	<span class="green">{{ good }}</span><br>
-	                </td>
+	                <td><span class="green" v-for="good in worse.better">{{ good }}</span><br></td>
 	            </tr>
 	        </tbody>
 	    </table>
@@ -34,7 +32,7 @@
 	}
 
 	table { 
-		width: 70%; 
+		width: 100%; 
 		font-family: tahoma;
 		font-weight: normal;
 		font-size: 1.1em;
@@ -43,6 +41,12 @@
 	}
 
 	table td { vertical-align: top; }
+	td:nth-child(3) { word-break: break-word; }
+	table td span.green { 
+		padding-right: .5em;  
+		white-space: pre-wrap;
+	}
+
 	.errorlist .red { color: #B52E47; }
 	.errorlist .green { color: #3FBD44; }
 

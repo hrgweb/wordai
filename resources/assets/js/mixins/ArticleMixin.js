@@ -220,6 +220,13 @@ export const ArticleMixin = {
 			this.articleDuplicates = duplicates;
 		},
 
+		generateNewArticle(article) {
+			axios.post('/words/generateFullArticle', { article: article }).then(response => {
+				this.article = response.data;
+				this.isSuccess = true;
+			});
+		},
+
 		spinDuplicatesAndCopyscape() {
 			this.isLoading = true;
 			this.$refs.spinAndCsButton.disabled = true;
@@ -231,14 +238,13 @@ export const ArticleMixin = {
 			this.spin['article'] = joinDuplicates;
 			this.spin['type'] = 'article-duplicates';
 
-			console.log(this.spin);
-
 			// run spintax and spin
 			axios.post('/words', this.spin)
 				.then(response => {
 					let data = response.data;
 
 					this.isLoading = false;
+					this.$refs.spinAndCsButton.disabled = false;
 
 					// check if api response is success
 					if (data.status === 'Success') {
@@ -246,17 +252,15 @@ export const ArticleMixin = {
 
 						// this.spintaxResult = text;
 						console.log(text);
-						this.$refs.spinAndCsButton.disabled = false;
 
 						// article is now the spintax result
 						// display finish full article
-						// this.generateFullArticle(this.spin.article);
+						this.generateNewArticle(this.spin.article);
 					}
 					
 					// check if api response is fail
 					if (data.status === 'Failure') {
-						// this.isValidationFail = true;
-						this.errors = data.error;
+						this.error = data.error;
 					}
 				});
 

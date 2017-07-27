@@ -1103,8 +1103,16 @@ var ArticleMixin = {
 		updateDuplicates: function updateDuplicates(duplicates) {
 			this.articleDuplicates = duplicates;
 		},
-		spinDuplicatesAndCopyscape: function spinDuplicatesAndCopyscape() {
+		generateNewArticle: function generateNewArticle(article) {
 			var _this5 = this;
+
+			axios.post('/words/generateFullArticle', { article: article }).then(function (response) {
+				_this5.article = response.data;
+				_this5.isSuccess = true;
+			});
+		},
+		spinDuplicatesAndCopyscape: function spinDuplicatesAndCopyscape() {
+			var _this6 = this;
 
 			this.isLoading = true;
 			this.$refs.spinAndCsButton.disabled = true;
@@ -1116,13 +1124,12 @@ var ArticleMixin = {
 			this.spin['article'] = joinDuplicates;
 			this.spin['type'] = 'article-duplicates';
 
-			console.log(this.spin);
-
 			// run spintax and spin
 			axios.post('/words', this.spin).then(function (response) {
 				var data = response.data;
 
-				_this5.isLoading = false;
+				_this6.isLoading = false;
+				_this6.$refs.spinAndCsButton.disabled = false;
 
 				// check if api response is success
 				if (data.status === 'Success') {
@@ -1130,17 +1137,15 @@ var ArticleMixin = {
 
 					// this.spintaxResult = text;
 					console.log(text);
-					_this5.$refs.spinAndCsButton.disabled = false;
 
 					// article is now the spintax result
 					// display finish full article
-					// this.generateFullArticle(this.spin.article);
+					_this6.generateNewArticle(_this6.spin.article);
 				}
 
 				// check if api response is fail
 				if (data.status === 'Failure') {
-					// this.isValidationFail = true;
-					_this5.errors = data.error;
+					_this6.error = data.error;
 				}
 			});
 
@@ -4009,8 +4014,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
 //
 //
 //
@@ -7268,7 +7271,7 @@ exports.push([module.i, "\n.Word[data-v-4f5dad12] {\n\tpadding: 0 20px;\n}\n.Wor
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n.errorlist[data-v-57f506a5] {\n\tbackground: #ffedf0;\n    padding: .5em 1em;\n    margin: 0 0 2em;\n    border: 1px solid #f9d8dd;\n}\ntable[data-v-57f506a5] { \n\twidth: 70%; \n\tfont-family: tahoma;\n\tfont-weight: normal;\n\tfont-size: 1.1em;\n\tline-height: 1.6em;\n\tcolor: #B52E47;\n}\ntable td[data-v-57f506a5] { vertical-align: top;\n}\n.errorlist .red[data-v-57f506a5] { color: #B52E47;\n}\n.errorlist .green[data-v-57f506a5] { color: #3FBD44;\n}\nhr[data-v-57f506a5] { border-top: 1px solid #c5c5c5;\n}\n", ""]);
+exports.push([module.i, "\n.errorlist[data-v-57f506a5] {\n\tbackground: #ffedf0;\n    padding: .5em 1em;\n    margin: 0 0 2em;\n    border: 1px solid #f9d8dd;\n}\ntable[data-v-57f506a5] { \n\twidth: 100%; \n\tfont-family: tahoma;\n\tfont-weight: normal;\n\tfont-size: 1.1em;\n\tline-height: 1.6em;\n\tcolor: #B52E47;\n}\ntable td[data-v-57f506a5] { vertical-align: top;\n}\ntd[data-v-57f506a5]:nth-child(3) { word-break: break-word;\n}\ntable td span.green[data-v-57f506a5] { \n\tpadding-right: .5em;  \n\twhite-space: pre-wrap;\n}\n.errorlist .red[data-v-57f506a5] { color: #B52E47;\n}\n.errorlist .green[data-v-57f506a5] { color: #3FBD44;\n}\nhr[data-v-57f506a5] { border-top: 1px solid #c5c5c5;\n}\n", ""]);
 
 /***/ }),
 /* 72 */
@@ -26218,11 +26221,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticStyle: {
         "padding": "0 2em 0 1.5em"
       }
-    }, [_vm._v("→")]), _vm._v(" "), _vm._l((worse.better), function(good) {
-      return _c('td', [_c('span', {
+    }, [_vm._v("→")]), _vm._v(" "), _c('td', [_vm._l((worse.better), function(good) {
+      return _c('span', {
         staticClass: "green"
-      }, [_vm._v(_vm._s(good))]), _c('br')])
-    })], 2)
+      }, [_vm._v(_vm._s(good))])
+    }), _c('br')], 2)])
   }))]), _vm._v(" "), _c('br'), _vm._v(" "), _c('h5', [_vm._v("Score: "), _c('b', [_vm._v(_vm._s(_vm.grammar.score))])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
