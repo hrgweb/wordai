@@ -21,6 +21,11 @@ class PagesController extends Controller
     	return view('admin.domain');
     }
 
+    public function domain_details()
+    {
+    	return view('admin.domain-detail');
+    }
+
     public function user()
     {
     	return view('users.index');
