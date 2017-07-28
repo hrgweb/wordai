@@ -27160,7 +27160,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "table table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.domains), function(url, index) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(url.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(url.domain))]), _vm._v(" "), _c('td', [_c('a', {
-      staticClass: "btn btn-warning",
+      staticClass: "btn btn-info",
       attrs: {
         "href": "#"
       },
@@ -27170,7 +27170,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
-      staticClass: "btn btn-danger",
+      staticClass: "btn btn-success",
       attrs: {
         "href": "#"
       },

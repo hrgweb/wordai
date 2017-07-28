@@ -40,8 +40,8 @@
 						<td>{{ url.id }}</td>
 						<td>{{ url.domain }}</td>
 						<td>
-							<a href="#" class="btn btn-warning" @click="displayDomainEdit(url, index)">Edit</a>
-							<a href="#" class="btn btn-danger" @click="removeDomain(url, index)">Remove</a>
+							<a href="#" class="btn btn-info" @click="displayDomainEdit(url, index)">Edit</a>
+							<a href="#" class="btn btn-success" @click="removeDomain(url, index)">Remove</a>
 						</td>
 					</tr>
 
