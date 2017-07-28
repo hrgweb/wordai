@@ -27170,7 +27170,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
-      staticClass: "btn btn-success",
+      staticClass: "btn btn-danger",
       attrs: {
         "href": "#"
       },
