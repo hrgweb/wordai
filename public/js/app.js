@@ -1074,6 +1074,19 @@ var ArticleMixin = {
 					break;
 			}
 		},
+		replaceAt: function replaceAt(offset, substr, replace) {
+			var data = this.textgear.errors;
+
+			for (var i = 0; i < data.length; i++) {
+				// find index/offset
+				var off = data[i].offset;
+
+				console.log(off);
+
+				// remove substr
+				// replace with '='
+			}
+		},
 		processToTextGear: function processToTextGear() {
 			var _this4 = this;
 
@@ -1099,14 +1112,25 @@ var ArticleMixin = {
 					var off = 0;
 
 					for (var i = 0; i < data.errors.length; i++) {
+						/*// find index/offset
+      off = data.errors[i].offset;
+      	// get substr
+      let sub = data.errors[i].bad;
+      	// remove substr
+      		// replace with '='*/
+
 						var val = data.errors[i];
 						var word = val.bad.trim();
 						var len = val.length;
 						off = val.offset;
 
-						result = article.replace(word, function (match, p1, offset, string) {
+						// if (i === 1) break;
+
+						result += article.replace(word, function (match, p1, offset, string) {
 							return '<span>' + match + '</span>';
 						});
+
+						// console.log(result);
 
 						// let left = len + word.length;
 						// result = `${article.substr(off, len)} <span>${word}</span> ${article.substr(left)}`;
@@ -4156,6 +4180,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FullArticle_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FullArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__FullArticle_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_CrudMixin_js__ = __webpack_require__(4);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -26862,7 +26891,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.spin.keyword = $event.target.value
       }
     }
-  })]), _vm._v(" "), _c('label', {
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c('label', {
     attrs: {
       "for": "lsi_terms"
     }
@@ -26886,7 +26919,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.spin.lsi_terms = $event.target.value
       }
     }
-  }), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c('label', {
+    attrs: {
+      "for": "synonyms"
+    }
+  }, [_vm._v("Synonyms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.synonyms),
+      expression: "spin.synonyms"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.spin.synonyms)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.synonyms = $event.target.value
+      }
+    }
+  })])]), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -26981,31 +27040,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "article"
     }
-  }, [_vm._v("Original Article")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('br'), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "synonyms"
-    }
-  }, [_vm._v("Synonyms")]), _vm._v(" "), _c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.spin.synonyms),
-      expression: "spin.synonyms"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "rows": "8"
-    },
-    domProps: {
-      "value": (_vm.spin.synonyms)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.spin.synonyms = $event.target.value
-      }
-    }
-  }), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.isValidationFail) ? _c('error', {
+  }, [_vm._v("Original Article")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.isValidationFail) ? _c('error', {
     attrs: {
       "type": _vm.errorType,
       "list": _vm.errors

@@ -193,6 +193,21 @@ export const ArticleMixin = {
 			}
 		},
 
+		replaceAt(offset, substr, replace) {
+			let data = this.textgear.errors;
+
+			for (var i = 0; i < data.length; i++) {
+				// find index/offset
+				let off = data[i].offset;
+
+
+				console.log(off);
+
+				// remove substr
+				// replace with '='
+			}
+		},
+
 		processToTextGear() {
 			this.isLoading = true;
 			this.isError = false;
@@ -214,15 +229,31 @@ export const ArticleMixin = {
 					let result = '';
 					let off = 0; 
 
-					for (var i = 0; i < data.errors.length; i++) {
+					for (let i = 0; i < data.errors.length; i++) {
+						/*// find index/offset
+						off = data.errors[i].offset;
+
+						// get substr
+						let sub = data.errors[i].bad;
+
+						// remove substr
+
+
+						// replace with '='*/
+
+
 						let val = data.errors[i];
 						let word = val.bad.trim();
 						let len = val.length;
 						off = val.offset;
 
-						result = article.replace(word, (match, p1, offset, string) => {
+						// if (i === 1) break;
+
+						result += article.replace(word, (match, p1, offset, string) => {
 							return `<span>${match}</span>`;
 						});
+
+						// console.log(result);
 
 						// let left = len + word.length;
 						// result = `${article.substr(off, len)} <span>${word}</span> ${article.substr(left)}`;

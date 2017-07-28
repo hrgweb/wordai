@@ -14,7 +14,7 @@ return [
     */
 
     // 'failed' => 'These credentials do not match our records.',
-    'failed' => 'These account is not created yet or not verified by admin.',
+    'failed' => 'Your account has not yet been approved. Please contact your Project Manager.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];

@@ -47,10 +47,19 @@
 				<input type="text" class="form-control" maxlength="255" v-model="spin.keyword">
 			</div>
 
-			<!-- LSI Terms -->
-			<label for="lsi_terms">LSI Terms</label>
-			<textarea class="form-control" rows="8" v-model="spin.lsi_terms"></textarea>
-			<br>
+			<div class="row">
+				<!-- LSI Terms -->
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<label for="lsi_terms">LSI Terms</label>
+					<textarea class="form-control" rows="8" v-model="spin.lsi_terms"></textarea>
+				</div>
+
+				<!-- Synonyms -->
+				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+					<label for="synonyms">Synonyms</label>
+					<textarea class="form-control" rows="8" v-model="spin.synonyms"></textarea>
+				</div>
+			</div><br>
 
 			<div class="form-group">
 				<label for="dom_name">Domain Name</label>
@@ -78,10 +87,6 @@
 			<textarea class="form-control" rows="40" v-once v-model="spin.article" @keyup="wordCount"></textarea>
 			<br>
 
-			<label for="synonyms">Synonyms</label>
-			<textarea class="form-control" rows="8" v-model="spin.synonyms"></textarea>
-
-			<br>
 			<!-- Erorr component -->
 			<error 
 				:type="errorType"
