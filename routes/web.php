@@ -41,6 +41,8 @@ Route::prefix('articleType')->group(function() {
 
 // Admin
 Route::prefix('admin')->group(function() {
+	// Dashboard
+	Route::delete('dissmissUser', 'AdminController@dissmissUser');
 	// Domain
 	Route::get('pendingUsers', 'AdminController@pendingUsers');
 	Route::get('domainList', 'AdminController@domainList');

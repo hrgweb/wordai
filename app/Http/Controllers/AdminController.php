@@ -62,4 +62,9 @@ class AdminController extends Controller
     	return response()->json($result);
     	
     }
+
+    public function dissmissUser()
+    {
+    	return User::where('id', request('id'))->delete();
+    }
 }

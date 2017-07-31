@@ -19,7 +19,7 @@
 
 						<div class="User__profile-controls pull-right">
 							<button type="submit" class="btn btn-success" @click.stop.prevent="verifySignup(user, index)">Confirm</button>
-							<button type="submit" class="btn btn-danger">Dismiss</button>
+							<button type="submit" class="btn btn-danger" @click.stop.prevent="dissmissUser(user, index)">Dismiss</button>
 						</div>
 					</form>
 				</a>
@@ -49,8 +49,20 @@
 			pendingUsers() {
 				axios.get('/admin/pendingUsers').then(response => this.users = response.data);
 			},
+
 			verifySignup(user, index) {
 				axios.patch('/user/verifySignup', user).then(response => {
+					let data = response.data;
+
+					if (data) {
+						this.users.splice(index, 1);
+						this.usersCount = this.users.length;
+					}
+				});
+			},
+
+			dissmissUser(user, index) {
+				axios.delete('/admin/dissmissUser', { params: { id: user.id  } }).then(response => {
 					let data = response.data;
 
 					if (data) {

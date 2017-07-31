@@ -2931,6 +2931,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					_this2.usersCount = _this2.users.length;
 				}
 			});
+		},
+		dissmissUser: function dissmissUser(user, index) {
+			var _this3 = this;
+
+			axios.delete('/admin/dissmissUser', { params: { id: user.id } }).then(function (response) {
+				var data = response.data;
+
+				if (data) {
+					_this3.users.splice(index, 1);
+					_this3.usersCount = _this3.users.length;
+				}
+			});
 		}
 	}
 });
@@ -27496,6 +27508,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "btn btn-danger",
       attrs: {
         "type": "submit"
+      },
+      on: {
+        "click": function($event) {
+          $event.stopPropagation();
+          $event.preventDefault();
+          _vm.dissmissUser(user, index)
+        }
       }
     }, [_vm._v("Dismiss")])])])])])
   })], 2)])
