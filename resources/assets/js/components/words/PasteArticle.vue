@@ -11,12 +11,14 @@
 		</div>
 
 		<!-- handwritten -->
-		<div class="Handwritten" v-if="articleType === 1">
+		<!-- <div class="Handwritten" v-if="articleType === 1"> -->
+		<!-- <div class="Handwritten">
 			<unique-handwritten></unique-handwritten>
-		</div>
+		</div> -->
 
 		<!-- curated -->
-		<div class="Curated" v-else-if="articleType === 2">
+		<!-- <div class="Curated" v-else-if="articleType === 2"> -->
+		<div class="Curated">
 			<div class="Word__result" v-if="isSuccess">
 				<full-article
 					:token="token"
@@ -29,6 +31,51 @@
 
 			<form method="POST" @submit.prevent="spinTax">
 				<input type="hidden" name="_token" :value="token">
+
+				<div class="form-group">
+					<label for="doc_title">Document Title</label>
+					<input type="text" class="form-control" v-model="spin.doc_title">
+				</div>
+
+				<div class="form-group">
+					<label for="keyword">Key Word/Phrase field</label>
+					<input type="text" class="form-control" maxlength="255" v-model="spin.keyword">
+				</div>
+
+				<div class="row">
+					<!-- LSI Terms -->
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<label for="lsi_terms">LSI Terms</label>
+						<textarea class="form-control" rows="8" v-model="spin.lsi_terms"></textarea>
+					</div>
+
+					<!-- Synonyms -->
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<label for="synonyms">Synonyms</label>
+						<textarea class="form-control" rows="8" v-model="spin.synonyms"></textarea>
+					</div>
+				</div><br>
+
+				<div class="form-group">
+					<label for="dom_name">Domain Name</label>
+					<select class="form-control" v-model="spin.dom_name">
+						<option value="http://www.google.com">http://www.google.com</option>
+						<option value="http://www.youtube.com">http://www.youtube.com</option>
+						<option value="http://www.cnn.com">http://www.cnn.com</option>
+					</select>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<label for="domain_protected">Domain Protected Terms</label>
+						<textarea class="form-control" rows="8" v-model="spin.domain_protected"></textarea>
+					</div>
+
+					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+						<label for="protected">Protected Terms</label>
+						<textarea class="form-control" rows="8" v-model="spin.protected"></textarea>
+					</div>
+				</div><br>
 
 				<!-- <textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea> -->
 				<label for="article">Original Article</label>

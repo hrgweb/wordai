@@ -64,6 +64,7 @@ export const ArticleActionMixin = {
 			this.isSuccess = false;
 			this.$refs.spinButton.disabled = true;
 
+			this.spin['article_type_id'] = this.articleType;
 			axios.post('/words', this.spin)
 			.then(response => {
 				let data = response.data;
