@@ -1,6 +1,7 @@
 <template>
 	<div class="User">
-		<div class="User__pending" v-if="usersCount">
+		<!-- <div class="User__pending" v-if="usersCount"> -->
+		<div class="User__pending">
 			<h2>
 				Pending User
 				<span class="badge">{{ usersCount }}</span>
@@ -12,13 +13,13 @@
 					<p class="list-group-item-text">{{ user.email }}</p>
 					<small>{{ user.created_at }}</small>
 
-					<form method="POST" @submit.stop.prevent="verifySignup(user, index)">
+					<form method="POST">
 						<input type="hidden" name="_token" :value="token">
 						<input type="hidden" name="_method" value="PATCH">
 
 						<div class="User__profile-controls pull-right">
-							<button type="submit" class="btn btn-success">Confirm</button>
-							<!-- <a href="#" class="btn btn-warning">Cancel</a> -->
+							<button type="submit" class="btn btn-success" @click.stop.prevent="verifySignup(user, index)">Confirm</button>
+							<button type="submit" class="btn btn-danger">Dismiss</button>
 						</div>
 					</form>
 				</a>

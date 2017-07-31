@@ -2893,6 +2893,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['token'],
@@ -27443,7 +27444,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "User"
-  }, [(_vm.usersCount) ? _c('div', {
+  }, [_c('div', {
     staticClass: "User__pending"
   }, [_c('h2', [_vm._v("\n\t\t\tPending User\n\t\t\t"), _c('span', {
     staticClass: "badge"
@@ -27462,13 +27463,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v(_vm._s(user.email))]), _vm._v(" "), _c('small', [_vm._v(_vm._s(user.created_at))]), _vm._v(" "), _c('form', {
       attrs: {
         "method": "POST"
-      },
-      on: {
-        "submit": function($event) {
-          $event.stopPropagation();
-          $event.preventDefault();
-          _vm.verifySignup(user, index)
-        }
       }
     }, [_c('input', {
       attrs: {
@@ -27484,18 +27478,28 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "name": "_method",
         "value": "PATCH"
       }
-    }), _vm._v(" "), _vm._m(0, true)])])])
-  })], 2) : _vm._e()])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "User__profile-controls pull-right"
-  }, [_c('button', {
-    staticClass: "btn btn-success",
-    attrs: {
-      "type": "submit"
-    }
-  }, [_vm._v("Confirm")])])
-}]}
+    }), _vm._v(" "), _c('div', {
+      staticClass: "User__profile-controls pull-right"
+    }, [_c('button', {
+      staticClass: "btn btn-success",
+      attrs: {
+        "type": "submit"
+      },
+      on: {
+        "click": function($event) {
+          $event.stopPropagation();
+          $event.preventDefault();
+          _vm.verifySignup(user, index)
+        }
+      }
+    }, [_vm._v("Confirm")]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-danger",
+      attrs: {
+        "type": "submit"
+      }
+    }, [_vm._v("Dismiss")])])])])])
+  })], 2)])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
