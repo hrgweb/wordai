@@ -1,6 +1,5 @@
 @extends('layouts.admin')
 
 @section ('content')
-	<domain token="{{ csrf_token() }}"></domain>
-	<protected-term token="{{ csrf_token() }}"></protected-term>
+	<domain token="{{ csrf_token() }}" user="{{ auth()->user() }}"></domain>
 @endsection

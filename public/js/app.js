@@ -2706,7 +2706,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['token'],
+	props: ['token', 'user'],
 	components: { DomainEdit: __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue___default.a, Notification: __WEBPACK_IMPORTED_MODULE_2__notify_Notification_vue___default.a },
 	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */]],
 	data: function data() {
@@ -2714,11 +2714,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			domain: '',
 			domainIndex: 0,
 			domains: [],
-			raw: {}
+			raw: {},
+			isAdmin: false
 		};
+	},
+
+	watch: {
+		authUser: function authUser(data) {
+			this.isAdmin = data.user_level_id === 2 ? true : false;
+		}
 	},
 	created: function created() {
 		this.domainList();
+	},
+	mounted: function mounted() {
+		this.authUser = JSON.parse(this.user);
 	},
 
 	methods: {
@@ -27426,7 +27436,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.displayDomainEdit(url, index)
         }
       }
-    }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
+    }, [_vm._v("Edit")]), _vm._v(" "), (_vm.isAdmin) ? _c('a', {
       staticClass: "btn btn-danger",
       attrs: {
         "href": "#"
@@ -27436,7 +27446,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.removeDomain(url, index)
         }
       }
-    }, [_vm._v("Remove")])])])
+    }, [_vm._v("Remove")]) : _vm._e()])])
   }))])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Domain Name")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])

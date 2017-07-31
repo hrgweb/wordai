@@ -41,7 +41,7 @@
 						<td>{{ url.domain }}</td>
 						<td>
 							<a href="#" class="btn btn-info" @click="displayDomainEdit(url, index)">Edit</a>
-							<a href="#" class="btn btn-danger" @click="removeDomain(url, index)">Remove</a>
+							<a href="#" class="btn btn-danger" v-if="isAdmin" @click="removeDomain(url, index)">Remove</a>
 						</td>
 					</tr>
 
@@ -58,7 +58,7 @@
 	import Notification from './../notify/Notification.vue';
 
 	export default {
-		props: ['token'],
+		props: ['token', 'user'],
 		components: { DomainEdit, Notification },
 		mixins: [ CrudMixin ],
 		data() {
@@ -67,10 +67,19 @@
 				domainIndex: 0,
 				domains: [],
 				raw: {},
+				isAdmin: false
+			}
+		},
+		watch: {
+			authUser(data) {
+				this.isAdmin = data.user_level_id === 2 ? true : false;
 			}
 		},
 		created() {
 			this.domainList();
+		},
+		mounted() {
+			this.authUser = JSON.parse(this.user);
 		},
 		methods: {
 			domainList() {
