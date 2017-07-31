@@ -10,6 +10,7 @@ import PendingUser from './components/admin/PendingUser.vue';
 import Domain from './components/admin/Domain.vue';
 import User from './components/admin/User.vue';
 import ProtectedTerm from './components/admin/ProtectedTerm.vue';
+import DomainDetail from './components/admin/DomainDetail.vue';
 import WordApi from './components/words/WordApi.vue';
 import WordApi2 from './components/words/WordApi2.vue';
 import CurationEdit from './components/words/CurationEdit.vue';
@@ -33,6 +34,7 @@ const app = new Vue({
     	PendingUser,
     	Domain,
     	ProtectedTerm,
+    	DomainDetail,
     	User,
     }
 });

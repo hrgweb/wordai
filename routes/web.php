@@ -47,6 +47,7 @@ Route::prefix('admin')->group(function() {
 	Route::get('pendingUsers', 'AdminController@pendingUsers');
 	Route::get('domainList', 'AdminController@domainList');
 	Route::post('postDomain', 'AdminController@postDomain');
+	Route::post('saveDetails', 'AdminController@saveDetails');
 	Route::patch('updateDomain', 'AdminController@updateDomain');
 	Route::delete('removeDomain', 'AdminController@removeDomain');
 	// Protected Terms

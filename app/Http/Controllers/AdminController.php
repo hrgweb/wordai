@@ -67,4 +67,9 @@ class AdminController extends Controller
     {
     	return User::where('id', request('id'))->delete();
     }
+
+    public function saveDetails()
+    {
+    	return request()->all();
+    }
 }
