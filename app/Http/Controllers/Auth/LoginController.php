@@ -50,7 +50,7 @@ class LoginController extends Controller
         	// login the user
         	Auth::login($request->user());
 
-        	return redirect()->intended('home');
+        	return redirect()->intended($this->redirectTo);
         }
     }
 }

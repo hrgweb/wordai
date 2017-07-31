@@ -8,7 +8,7 @@ class PagesController extends Controller
 {
 	function __construct() {
         $this->middleware('guest')->only('index');
-        $this->middleware('auth');
+        $this->middleware('auth')->except('verification');
 	}
 
     public function index()
@@ -54,5 +54,10 @@ class PagesController extends Controller
     public function curl()
     {
     	return view('words.curl');
+    }
+
+    public function verification()
+    {
+    	return view('auth.verification');
     }
 }
