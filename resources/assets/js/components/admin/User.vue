@@ -16,9 +16,10 @@
 					<th>#</th>
 					<th>Name</th>
 					<th>Email</th>
-					<th>Job</th>
+					<th>Role</th>
 					<th>Status</th>
 					<th>Date Registered</th>
+					<th>Actions</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -30,6 +31,10 @@
 					<td>{{ lev.level(user.user_level_id) }}</td>
 					<td>{{ stat.status(user.status_id) }}</td>
 					<td>{{ user.created_at }}</td>
+					<td>
+						<button type="button" class="btn btn-info">Change Role</button>
+						<button type="button" class="btn btn-danger">Suspend</button>
+					</td>
 				</tr>
 			</tbody>
 		</table>
@@ -70,4 +75,5 @@
 
 <style scoped>
 	/*table tr { cursor: pointer; }*/
+	table tbody tr:hover { background: #EAFFEA; }
 </style>
