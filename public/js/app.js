@@ -3003,7 +3003,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		pendingUsers: function pendingUsers() {
 			var _this = this;
 
-			axios.get('/admin/pendingUsers').then(function (response) {
+			axios.get('/user/pendingUsers').then(function (response) {
 				return _this.users = response.data;
 			});
 		},

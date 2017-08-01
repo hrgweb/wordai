@@ -44,7 +44,7 @@ class LoginController extends Controller
     	$this->validateLogin($request);
 
         // check if user account is not created yet or not verified by admin
-        if (! Auth::attempt(['email' => $request->email, 'password' => $request->password, 'isVerify' => 1])) {
+        if (! Auth::attempt(['email' => $request->email, 'password' => $request->password, 'status_id' => 1])) {
             return $this->sendFailedLoginResponse($request);
         } else {
         	// login the user

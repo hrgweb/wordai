@@ -47,7 +47,7 @@
 		},
 		methods: {
 			pendingUsers() {
-				axios.get('/admin/pendingUsers').then(response => this.users = response.data);
+				axios.get('/user/pendingUsers').then(response => this.users = response.data);
 			},
 
 			verifySignup(user, index) {

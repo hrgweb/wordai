@@ -13,13 +13,6 @@ class AdminController extends Controller
 		$this->middleware('auth');
 	}
 
-    public function pendingUsers()
-    {
-    	$users = User::where('status_id', 2)->get();
-
-    	return response()->json($users);
-    }
-
     public function postDomain()
     {
     	$result = auth()->user()->domains()->create(request()->all());

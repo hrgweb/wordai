@@ -42,7 +42,6 @@ Route::prefix('articleType')->group(function() {
 // Admin
 Route::prefix('admin')->group(function() {
 	// Domain
-	Route::get('pendingUsers', 'AdminController@pendingUsers');
 	Route::get('domainList', 'AdminController@domainList');
 	Route::post('postDomain', 'AdminController@postDomain');
 	Route::post('saveDetails', 'AdminController@saveDetails');
@@ -54,6 +53,7 @@ Route::prefix('admin')->group(function() {
 
 // User
 Route::prefix('user')->group(function() {
+	Route::get('pendingUsers', 'UserController@pendingUsers');
 	Route::get('userList', 'UserController@userList');
 	Route::patch('verifySignup', 'UserController@verifySignup');
 	Route::delete('dissmissUser', 'UserController@dissmissUser');

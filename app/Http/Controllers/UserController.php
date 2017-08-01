@@ -8,6 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class UserController extends Controller
 {
+	public function pendingUsers()
+    {
+    	$users = User::where('status_id', 2)->oldest()->get();
+
+    	return response()->json($users);
+    }
+    
     public function verifySignup()
     {
     	$verify = DB::table('users')->where('id', request('id'))->update(['status_id' => 1]);
