@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\UserLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -31,4 +32,15 @@ class UserController extends Controller
     {
     	return User::all();
     }
+
+    public function userLevelList()
+    {
+    	return UserLevel::all();
+    }
+
+    public function updateRole()
+    {
+    	return DB::table('users')->where('id', request('user_id'))->update(['user_level_id' => request('level')]);
+    }
+
 }

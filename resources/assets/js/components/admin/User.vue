@@ -1,14 +1,14 @@
 <template>
 	<div class="User">
-		<h2>User List</h2>
-
-		<!-- User Domain -->
-		<!-- <user-domain 
+		<!-- Change Role -->
+		<change-role
 			:user="user"
-			v-show="showDomain"
-			:token="token"
-			@isClose="showDomain = false">
-		 		</user-domain> -->
+			:levels="levels"
+			v-if="isShowRole"
+			@closeRoleComponent="updateDone">
+ 		</change-role>
+		
+		<h2>User List</h2>
 
 		<table class="table table-striped table-hover">
 			<thead>
@@ -19,12 +19,11 @@
 					<th>Role</th>
 					<th>Status</th>
 					<th>Date Registered</th>
-					<th>Actions</th>
+					<th class="text-center">Actions</th>
 				</tr>
 			</thead>
 			<tbody>
-				<!-- <tr v-for="user in users" @click="userClick(user)"> -->
-				<tr v-for="user in users">
+				<tr v-for="(user, index) in users">
 					<td>{{ user.id }}</td>
 					<td>{{ user.firstname }} {{ user.lastname }}</td>
 					<td>{{ user.email }}</td>
@@ -32,7 +31,7 @@
 					<td>{{ stat.status(user.status_id) }}</td>
 					<td>{{ user.created_at }}</td>
 					<td>
-						<button type="button" class="btn btn-info">Change Role</button>
+						<button type="button" class="btn btn-success" @click="changeRole(user, index)">Change Role</button>
 						<button type="button" class="btn btn-danger">Suspend</button>
 					</td>
 				</tr>
@@ -42,32 +41,50 @@
 </template>
 
 <script>
-	import UserDomain from './UserDomain.vue';
+	import ChangeRole from './ChangeRole.vue';
 	import UserStatus from './../../class/UserStatus.js';
 	import UserLevel from './../../class/UserLevel.js';
 
 	export default {
 		props: [ 'token' ],
-		components: { UserDomain },
+		components: { ChangeRole },
 		data() {
 			return {
 				users: [],
 				user: {},
 				showDomain: false,
+				isShowRole: false,
 				stat: new UserStatus(),
-				lev: new UserLevel()
+				lev: new UserLevel(),
+				levels: [],
+				index: 0
 			}
 		},
 		created() {
 			this.userList();
+			this.userLevelList();
 		},
 		methods: {
 			userList() {
 				axios.get('/user/userList').then(response => this.users = response.data);
 			},
-			userClick(user) {
+
+			changeRole(user, index) {
+				this.isShowRole = true;
 				this.user = user;
-				this.showDomain = true;
+				this.index = index;
+			},
+
+			userLevelList() {
+				axios.get('/user/userLevelList').then(response => this.levels = response.data);
+			},
+
+			updateDone(data) {
+				this.isShowRole = false;
+
+				if (data) {
+					this.users[this.index].user_level_id = data.level;
+				}
 			}
 		}
 	}

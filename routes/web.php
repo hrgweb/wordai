@@ -55,7 +55,9 @@ Route::prefix('admin')->group(function() {
 Route::prefix('user')->group(function() {
 	Route::get('pendingUsers', 'UserController@pendingUsers');
 	Route::get('userList', 'UserController@userList');
+	Route::get('userLevelList', 'UserController@userLevelList');
 	Route::patch('verifySignup', 'UserController@verifySignup');
+	Route::patch('updateRole', 'UserController@updateRole');
 	Route::delete('dissmissUser', 'UserController@dissmissUser');
 });
 
