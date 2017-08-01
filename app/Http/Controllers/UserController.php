@@ -17,6 +17,6 @@ class UserController extends Controller
 
     public function userList()
     {
-    	return User::whereRaw('user_level_id=3 OR user_level_id=4')->get();
+    	return User::all();
     }
 }

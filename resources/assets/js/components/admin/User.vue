@@ -3,12 +3,12 @@
 		<h2>User List</h2>
 
 		<!-- User Domain -->
-		<user-domain 
+		<!-- <user-domain 
 			:user="user"
 			v-show="showDomain"
 			:token="token"
 			@isClose="showDomain = false">
- 		</user-domain>
+		 		</user-domain> -->
 
 		<table class="table table-striped table-hover">
 			<thead>
@@ -16,14 +16,17 @@
 					<th>#</th>
 					<th>Name</th>
 					<th>Email</th>
+					<th>Status</th>
 					<th>Date Registered</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr v-for="user in users" @click="userClick(user)">
+				<!-- <tr v-for="user in users" @click="userClick(user)"> -->
+				<tr v-for="user in users">
 					<td>{{ user.id }}</td>
 					<td>{{ user.firstname }} {{ user.lastname }}</td>
 					<td>{{ user.email }}</td>
+					<!-- <td>{{ user }}</td> -->
 					<td>{{ user.created_at }}</td>
 				</tr>
 			</tbody>
@@ -60,5 +63,5 @@
 </script>
 
 <style scoped>
-	table tr { cursor: pointer; }
+	/*table tr { cursor: pointer; }*/
 </style>

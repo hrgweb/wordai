@@ -6,6 +6,7 @@ use App\Article;
 use App\ArticleType;
 use App\ProtectedTerm;
 use App\UserLevel;
+use App\UserStatus;
 use App\Word;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -85,5 +86,10 @@ class User extends Authenticatable
     public function level()
     {
     	return $this->hasOne(UserLevel::class);
+    }
+
+    public function status()
+    {
+    	return $this->hasOne(UserStatus::class);
     }
 }
