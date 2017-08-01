@@ -31,8 +31,8 @@
 					<td>{{ stat.status(user.status_id) }}</td>
 					<td>{{ user.created_at }}</td>
 					<td>
-						<button type="button" class="btn btn-success" @click="changeRole(user, index)">Change Role</button>
-						<button type="button" class="btn btn-danger">Suspend</button>
+						<button type="button" class="btn btn-info" @click="changeRole(user, index)">Change Role</button>
+						<button type="button" style="width: 70px;" class="btn btn-danger" ref="btnSuspend" @click="suspendUser(user, index)">{{ (user.status_id === 3) ? 'Active' : 'Suspend' }}</button>
 					</td>
 				</tr>
 			</tbody>
@@ -60,6 +60,14 @@
 				index: 0
 			}
 		},
+		watch: {
+			users() {
+				Vue.nextTick(() => {
+					$('button:contains(Suspend)').css('background', '#D9534F');
+					$('button:contains(Active)').css('background', '#5CB85C');
+				});
+			}
+		},
 		created() {
 			this.userList();
 			this.userLevelList();
@@ -85,6 +93,28 @@
 				if (data) {
 					this.users[this.index].user_level_id = data.level;
 				}
+			},
+
+			setUserStatus(url, userId, statusId) {
+				axios.patch(url, { user_id: userId }).then(response => {
+					if (response.data) {
+						this.users[this.index].status_id = statusId;
+					}
+				});
+			},
+
+			suspendUser(user, index) {
+				this.index = index;
+
+				if (this.$refs.btnSuspend[this.index].innerHTML === 'Suspend') {
+					this.$refs.btnSuspend[this.index].innerHTML = 'Active';
+					this.$refs.btnSuspend[this.index].style.background = '#5CB85C';
+					this.setUserStatus('/user/suspendUser', user.id, 3);
+				} else {
+					this.$refs.btnSuspend[this.index].innerHTML = 'Suspend';
+					this.$refs.btnSuspend[this.index].style.background = '#D9534F';
+					this.setUserStatus('/user/activateUser', user.id, 1);
+				}
 			}
 		}
 	}
@@ -93,4 +123,6 @@
 <style scoped>
 	/*table tr { cursor: pointer; }*/
 	table tbody tr:hover { background: #EAFFEA; }
+
+	button:hover { border: 1px solid transparent; }
 </style>

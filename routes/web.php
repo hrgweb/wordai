@@ -58,6 +58,8 @@ Route::prefix('user')->group(function() {
 	Route::get('userLevelList', 'UserController@userLevelList');
 	Route::patch('verifySignup', 'UserController@verifySignup');
 	Route::patch('updateRole', 'UserController@updateRole');
+	Route::patch('suspendUser', 'UserController@suspendUser');
+	Route::patch('activateUser', 'UserController@activateUser');
 	Route::delete('dissmissUser', 'UserController@dissmissUser');
 });
 

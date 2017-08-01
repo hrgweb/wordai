@@ -43,4 +43,13 @@ class UserController extends Controller
     	return DB::table('users')->where('id', request('user_id'))->update(['user_level_id' => request('level')]);
     }
 
+    public function suspendUser()
+    {
+    	return DB::table('users')->where('id', request('user_id'))->update(['status_id' => 3]);
+    }
+
+    public function activateUser()
+    {
+    	return DB::table('users')->where('id', request('user_id'))->update(['status_id' => 1]);
+    }
 }

@@ -3197,6 +3197,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			index: 0
 		};
 	},
+
+	watch: {
+		users: function users() {
+			Vue.nextTick(function () {
+				$('button:contains(Suspend)').css('background', '#D9534F');
+				$('button:contains(Active)').css('background', '#5CB85C');
+			});
+		}
+	},
 	created: function created() {
 		this.userList();
 		this.userLevelList();
@@ -3227,6 +3236,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			if (data) {
 				this.users[this.index].user_level_id = data.level;
+			}
+		},
+		setUserStatus: function setUserStatus(url, userId, statusId) {
+			var _this3 = this;
+
+			axios.patch(url, { user_id: userId }).then(function (response) {
+				if (response.data) {
+					_this3.users[_this3.index].status_id = statusId;
+				}
+			});
+		},
+		suspendUser: function suspendUser(user, index) {
+			this.index = index;
+
+			if (this.$refs.btnSuspend[this.index].innerHTML === 'Suspend') {
+				this.$refs.btnSuspend[this.index].innerHTML = 'Active';
+				this.$refs.btnSuspend[this.index].style.background = '#5CB85C';
+				this.setUserStatus('/user/suspendUser', user.id, 3);
+			} else {
+				this.$refs.btnSuspend[this.index].innerHTML = 'Suspend';
+				this.$refs.btnSuspend[this.index].style.background = '#D9534F';
+				this.setUserStatus('/user/activateUser', user.id, 1);
 			}
 		}
 	}
@@ -7458,7 +7489,7 @@ exports.push([module.i, "\nh2[data-v-48e391eb] { text-align: center;\n}\t\n", ""
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*table tr { cursor: pointer; }*/\ntable tbody tr[data-v-4a549d11]:hover { background: #EAFFEA;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*table tr { cursor: pointer; }*/\ntable tbody tr[data-v-4a549d11]:hover { background: #EAFFEA;\n}\nbutton[data-v-4a549d11]:hover { border: 1px solid transparent;\n}\n", ""]);
 
 /***/ }),
 /* 71 */
@@ -26492,7 +26523,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.users), function(user, index) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(user.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.firstname) + " " + _vm._s(user.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.lev.level(user.user_level_id)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.stat.status(user.status_id)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.created_at))]), _vm._v(" "), _c('td', [_c('button', {
-      staticClass: "btn btn-success",
+      staticClass: "btn btn-info",
       attrs: {
         "type": "button"
       },
@@ -26502,11 +26533,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("Change Role")]), _vm._v(" "), _c('button', {
+      ref: "btnSuspend",
+      refInFor: true,
       staticClass: "btn btn-danger",
+      staticStyle: {
+        "width": "70px"
+      },
       attrs: {
         "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.suspendUser(user, index)
+        }
       }
-    }, [_vm._v("Suspend")])])])
+    }, [_vm._v(_vm._s((user.status_id === 3) ? 'Active' : 'Suspend'))])])])
   }))])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Role")]), _vm._v(" "), _c('th', [_vm._v("Status")]), _vm._v(" "), _c('th', [_vm._v("Date Registered")]), _vm._v(" "), _c('th', {
