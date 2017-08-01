@@ -6,12 +6,12 @@
 
 			<b>{{ user.firstname }} {{ user.lastname }}</b> role: &nbsp;&nbsp;
 
-			<select v-model="data.level">
+			<select v-model="data.level" @change="roleNotChange">
 				<option :value="data.level">{{ role.level(data.level) }}</option>
 				<option v-for="lev in levels" :value="lev.id">{{ lev.user_level }}</option>
 			</select><br><br>
 
-			<button type="button" class="btn btn-success btn-block" @click="updateRole">Update Role</button>
+			<button type="button" class="btn btn-success btn-block" :disabled="roleNotChange()" @click="updateRole">Update Role</button>
 		</div>
 	</div>
 </template>
@@ -39,14 +39,14 @@
 		methods: {
 			updateRole() {
 				axios.patch('/user/updateRole', this.data).then(response => {
-					let data = response.data;
-
-					if (data) {
-						// update role in table
-
+					if (response.data) {
 						this.$emit('closeRoleComponent', { level: this.data.level });
 					}
 				});
+			},
+
+			roleNotChange() {
+				return this.user.user_level_id === this.data.level ? true : false;
 			}
 		}
 	}

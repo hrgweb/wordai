@@ -38387,14 +38387,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this = this;
 
 			axios.patch('/user/updateRole', this.data).then(function (response) {
-				var data = response.data;
-
-				if (data) {
-					// update role in table
-
+				if (response.data) {
 					_this.$emit('closeRoleComponent', { level: _this.data.level });
 				}
 			});
+		},
+		roleNotChange: function roleNotChange() {
+			return this.user.user_level_id === this.data.level ? true : false;
 		}
 	}
 });
@@ -38466,7 +38465,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "data.level"
     }],
     on: {
-      "change": function($event) {
+      "change": [function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
           return o.selected
         }).map(function(o) {
@@ -38474,7 +38473,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           return val
         });
         _vm.data.level = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
+      }, _vm.roleNotChange]
     }
   }, [_c('option', {
     domProps: {
@@ -38489,7 +38488,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })], 2), _c('br'), _c('br'), _vm._v(" "), _c('button', {
     staticClass: "btn btn-success btn-block",
     attrs: {
-      "type": "button"
+      "type": "button",
+      "disabled": _vm.roleNotChange()
     },
     on: {
       "click": _vm.updateRole
