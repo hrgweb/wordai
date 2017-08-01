@@ -15,7 +15,7 @@ class AdminController extends Controller
 
     public function pendingUsers()
     {
-    	$users = User::where('isVerify', 0)->get();
+    	$users = User::where('status_id', 2)->get();
 
     	return response()->json($users);
     }
@@ -61,11 +61,6 @@ class AdminController extends Controller
 
     	return response()->json($result);
     	
-    }
-
-    public function dissmissUser()
-    {
-    	return User::where('id', request('id'))->delete();
     }
 
     public function saveDetails()

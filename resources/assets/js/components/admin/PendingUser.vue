@@ -62,7 +62,7 @@
 			},
 
 			dissmissUser(user, index) {
-				axios.delete('/admin/dissmissUser', { params: { id: user.id  } }).then(response => {
+				axios.delete('/user/dissmissUser', { params: { id: user.id  } }).then(response => {
 					let data = response.data;
 
 					if (data) {

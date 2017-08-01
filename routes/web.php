@@ -41,8 +41,6 @@ Route::prefix('articleType')->group(function() {
 
 // Admin
 Route::prefix('admin')->group(function() {
-	// Dashboard
-	Route::delete('dissmissUser', 'AdminController@dissmissUser');
 	// Domain
 	Route::get('pendingUsers', 'AdminController@pendingUsers');
 	Route::get('domainList', 'AdminController@domainList');
@@ -58,6 +56,7 @@ Route::prefix('admin')->group(function() {
 Route::prefix('user')->group(function() {
 	Route::get('userList', 'UserController@userList');
 	Route::patch('verifySignup', 'UserController@verifySignup');
+	Route::delete('dissmissUser', 'UserController@dissmissUser');
 });
 
 Auth::routes();

@@ -3022,7 +3022,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		dissmissUser: function dissmissUser(user, index) {
 			var _this3 = this;
 
-			axios.delete('/admin/dissmissUser', { params: { id: user.id } }).then(function (response) {
+			axios.delete('/user/dissmissUser', { params: { id: user.id } }).then(function (response) {
 				var data = response.data;
 
 				if (data) {
