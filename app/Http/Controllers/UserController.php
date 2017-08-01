@@ -14,7 +14,7 @@ class UserController extends Controller
 
     	return response()->json($users);
     }
-    
+
     public function verifySignup()
     {
     	$verify = DB::table('users')->where('id', request('id'))->update(['status_id' => 1]);

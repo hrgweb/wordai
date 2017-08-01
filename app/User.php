@@ -85,11 +85,11 @@ class User extends Authenticatable
 
     public function level()
     {
-    	return $this->hasOne(UserLevel::class);
+    	return $this->belongsTo(UserLevel::class);
     }
 
     public function status()
     {
-    	return $this->hasOne(UserStatus::class);
+    	return $this->belongsTo(UserStatus::class);
     }
 }

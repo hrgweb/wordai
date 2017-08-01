@@ -16,6 +16,7 @@
 					<th>#</th>
 					<th>Name</th>
 					<th>Email</th>
+					<th>Job</th>
 					<th>Status</th>
 					<th>Date Registered</th>
 				</tr>
@@ -26,7 +27,8 @@
 					<td>{{ user.id }}</td>
 					<td>{{ user.firstname }} {{ user.lastname }}</td>
 					<td>{{ user.email }}</td>
-					<!-- <td>{{ user }}</td> -->
+					<td>{{ lev.level(user.user_level_id) }}</td>
+					<td>{{ stat.status(user.status_id) }}</td>
 					<td>{{ user.created_at }}</td>
 				</tr>
 			</tbody>
@@ -36,6 +38,8 @@
 
 <script>
 	import UserDomain from './UserDomain.vue';
+	import UserStatus from './../../class/UserStatus.js';
+	import UserLevel from './../../class/UserLevel.js';
 
 	export default {
 		props: [ 'token' ],
@@ -44,7 +48,9 @@
 			return {
 				users: [],
 				user: {},
-				showDomain: false
+				showDomain: false,
+				stat: new UserStatus(),
+				lev: new UserLevel()
 			}
 		},
 		created() {

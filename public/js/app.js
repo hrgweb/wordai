@@ -3133,6 +3133,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__UserDomain_vue__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__UserDomain_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__UserDomain_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__class_UserStatus_js__ = __webpack_require__(146);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__class_UserLevel_js__ = __webpack_require__(147);
 //
 //
 //
@@ -3169,6 +3171,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+
+
 
 
 
@@ -3179,7 +3185,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		return {
 			users: [],
 			user: {},
-			showDomain: false
+			showDomain: false,
+			stat: new __WEBPACK_IMPORTED_MODULE_1__class_UserStatus_js__["a" /* default */](),
+			lev: new __WEBPACK_IMPORTED_MODULE_2__class_UserLevel_js__["a" /* default */]()
 		};
 	},
 	created: function created() {
@@ -7467,7 +7475,7 @@ exports.push([module.i, "\nh2[data-v-48e391eb] { text-align: center;\n}\t\n", ""
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*table tr { cursor: pointer; }*/\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*table tr { cursor: pointer; }*/\n", ""]);
 
 /***/ }),
 /* 71 */
@@ -26535,10 +26543,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h2', [_vm._v("User List")]), _vm._v(" "), _c('table', {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.users), function(user) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(user.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.firstname) + " " + _vm._s(user.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.created_at))])])
+    return _c('tr', [_c('td', [_vm._v(_vm._s(user.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.firstname) + " " + _vm._s(user.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.email))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.lev.level(user.user_level_id)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.stat.status(user.status_id)))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.created_at))])])
   }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Status")]), _vm._v(" "), _c('th', [_vm._v("Date Registered")])])])
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Name")]), _vm._v(" "), _c('th', [_vm._v("Email")]), _vm._v(" "), _c('th', [_vm._v("Job")]), _vm._v(" "), _c('th', [_vm._v("Status")]), _vm._v(" "), _c('th', [_vm._v("Date Registered")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -38337,6 +38345,105 @@ module.exports = function(module) {
 __webpack_require__(19);
 module.exports = __webpack_require__(20);
 
+
+/***/ }),
+/* 139 */,
+/* 140 */,
+/* 141 */,
+/* 142 */,
+/* 143 */,
+/* 144 */,
+/* 145 */,
+/* 146 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var UserStatus = function () {
+	function UserStatus() {
+		_classCallCheck(this, UserStatus);
+	}
+
+	_createClass(UserStatus, [{
+		key: 'status',
+		value: function status(_status) {
+			var stats = '';
+
+			switch (_status) {
+				case 1:
+					stats = 'Active';
+					break;
+				case 2:
+					stats = 'Waiting Approval';
+					break;
+				case 3:
+					stats = 'Suspended';
+					break;
+			}
+
+			return stats;
+		}
+	}]);
+
+	return UserStatus;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (UserStatus);
+
+/***/ }),
+/* 147 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var UserLevel = function () {
+	function UserLevel() {
+		_classCallCheck(this, UserLevel);
+	}
+
+	_createClass(UserLevel, [{
+		key: 'level',
+		value: function level(_level) {
+			var lev = '';
+
+			switch (_level) {
+				case 1:
+					lev = 'Manager';
+					break;
+				case 2:
+					lev = 'Admin';
+					break;
+				case 3:
+					lev = 'Editor';
+					break;
+				case 4:
+					lev = 'Writer';
+					break;
+				case 5:
+					lev = 'Curator';
+					break;
+				case 6:
+					lev = 'Proofing';
+					break;
+				case 7:
+					lev = 'Poster';
+					break;
+			}
+
+			return lev;
+		}
+	}]);
+
+	return UserLevel;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (UserLevel);
 
 /***/ })
 /******/ ]);
