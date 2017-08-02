@@ -2764,6 +2764,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notify_Notification_vue__ = __webpack_require__(91);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notify_Notification_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__notify_Notification_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__errors_Error_vue__);
 //
 //
 //
@@ -2818,6 +2820,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2825,7 +2835,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['token', 'user'],
-	components: { DomainEdit: __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue___default.a, Notification: __WEBPACK_IMPORTED_MODULE_2__notify_Notification_vue___default.a },
+	components: { DomainEdit: __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue___default.a, Notification: __WEBPACK_IMPORTED_MODULE_2__notify_Notification_vue___default.a, Error: __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue___default.a },
 	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */]],
 	data: function data() {
 		return {
@@ -2833,7 +2843,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			domainIndex: 0,
 			domains: [],
 			raw: {},
-			isAdmin: false
+			isAdmin: false,
+			isError: false
 		};
 	},
 
@@ -2867,10 +2878,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				var data = response.data;
 
 				// response is 200 and return data
-				if (data) {
+				if (data.isSuccess === false) {
+					_this2.isError = true;
+					_this2.errors = data.result;
+				} else {
 					_this2.domains.push(data);
 					_this2.isSuccess = true;
 					_this2.domain = '';
+					_this2.isError = false;
 					_this2.notify = {
 						type: true,
 						message: 'Domain',
@@ -2908,6 +2923,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				if (data) {
 					_this3.isSuccess = true;
 					_this3.domains.splice(index, 1);
+					_this3.isError = false;
 					_this3.notify = {
 						type: false,
 						message: 'Domain',
@@ -3120,6 +3136,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__errors_Error_vue__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3143,11 +3167,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['token', 'raw'],
+	components: { Error: __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default.a },
 	data: function data() {
 		return {
-			domain: ''
+			domain: '',
+			isError: false,
+			errors: []
 		};
 	},
 	mounted: function mounted() {
@@ -3166,7 +3195,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.patch('/admin/updateDomain', data).then(function (response) {
 				var data = response.data;
 
-				if (data.result) {
+				if (data.isSuccess === false) {
+					_this.isError = true;
+					_this.errors = data.result;
+				} else {
 					var notify = {
 						type: true,
 						message: 'Domain',
@@ -3175,6 +3207,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					};
 
 					_this.$emit('closeDomainEdit', notify);
+					_this.isError = false;
 				}
 			});
 		}
@@ -26713,7 +26746,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.domain = $event.target.value
       }
     }
-  })])])])])
+  })]), _vm._v(" "), (_vm.isError) ? _c('error', {
+    attrs: {
+      "list": _vm.errors,
+      "type": 1
+    }
+  }) : _vm._e()], 1)])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -27816,11 +27854,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     domProps: {
       "value": _vm.token
     }
-  }), _vm._v(" "), (_vm.isSuccess) ? _c('notification', {
-    attrs: {
-      "data": _vm.notify
-    }
-  }) : _vm._e(), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -27847,7 +27881,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.domain = $event.target.value
       }
     }
-  })]), _vm._v(" "), _c('button', {
+  })]), _vm._v(" "), (_vm.isSuccess) ? _c('notification', {
+    attrs: {
+      "data": _vm.notify
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('error', {
+    attrs: {
+      "list": _vm.errors,
+      "type": 1
+    }
+  }) : _vm._e(), _vm._v(" "), _c('button', {
     staticClass: "btn btn-primary",
     attrs: {
       "type": "submit"

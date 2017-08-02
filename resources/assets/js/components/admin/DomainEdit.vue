@@ -2,7 +2,6 @@
 	<div class="overlay">
 		<div class="Domain-update">
 			<h2>Edit</h2>
-
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true" @click="$emit('closeDomainEdit')">&times;</button>
 
 			<form method="POST" @submit.prevent>
@@ -14,6 +13,13 @@
 					<input type="text" class="form-control" id="domain" v-model="domain" @keyup.enter="updateDomain">
 				</div>
 
+				<!-- Error -->
+				<error
+					:list="errors"
+					:type="1"
+					v-if="isError">
+				</error>
+
 				<!-- <button type="submit" class="btn btn-primary">Update</button> -->
 			</form>
 		</div>
@@ -21,11 +27,16 @@
 </template>
 
 <script>
+	import Error from './../errors/Error.vue';
+
 	export default {
 		props: ['token', 'raw'],
+		components: { Error },
 		data() {
 			return {
-				domain: ''
+				domain: '',
+				isError: false,
+				errors: []
 			}
 		},
 		mounted() {
@@ -41,7 +52,10 @@
 				axios.patch('/admin/updateDomain', data).then(response => {
 					let data = response.data;
 
-					if (data.result) {
+					if (data.isSuccess === false) {
+						this.isError = true;
+						this.errors = data.result;
+					} else {
 						const notify = {
 							type: true,
 							message: 'Domain',
@@ -50,6 +64,7 @@
 						};
 
 						this.$emit('closeDomainEdit', notify);
+						this.isError = false;
 					}
 				});
 			}

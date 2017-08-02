@@ -8,6 +8,7 @@ use App\User;
 use App\UserLevel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -17,9 +18,19 @@ class AdminController extends Controller
 
     public function postDomain()
     {
+    	// validate domain to avoid duplicate entry
+		$validator = Validator::make(request()->all(), [
+			'domain' => 'required|unique:domains'
+		]);
+
+		if ($validator->fails()) {
+			return response()->json(['isSuccess' => false, 'result' => $validator->errors()]);
+		}
+
     	$result = auth()->user()->domains()->create(request()->all());
 
-    	return response()->json($result);
+		return response()->json($result);
+
     }
 
     public function domainList()
@@ -31,6 +42,15 @@ class AdminController extends Controller
 
     public function updateDomain()
     {
+    	// validate domain to avoid duplicate entry
+		$validator = Validator::make(request()->all(), [
+			'domain' => 'required|unique:domains'
+		]);
+
+		if ($validator->fails()) {
+			return response()->json(['isSuccess' => false, 'result' => $validator->errors()]);
+		}
+
     	$domain = request('domain');
     	$result = DB::table('domains')->where('id', request('id'))->update(['domain' => $domain]);
 

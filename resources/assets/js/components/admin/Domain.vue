@@ -15,13 +15,20 @@
 				<form method="POST" @submit.prevent="postDomain">
 					<input type="hidden" name="_token" :value="token">
 
-					<!-- Notification -->
-					<notification :data="notify" v-if="isSuccess"></notification>
-
 					<div class="form-group">
 						<label for="domain">New Domain</label>
 						<input type="text" class="form-control" id="domain" v-model="domain">
 					</div>
+
+					<!-- Notification -->
+					<notification :data="notify" v-if="isSuccess"></notification>
+
+					<!-- Error -->
+					<error
+						:list="errors"
+						:type="1"
+						v-if="isError">
+					</error>
 
 					<button type="submit" class="btn btn-primary">Save</button>
 				</form>
@@ -56,10 +63,11 @@
 	import { CrudMixin } from './../../mixins/CrudMixin.js';
 	import DomainEdit from './DomainEdit.vue';
 	import Notification from './../notify/Notification.vue';
+	import Error from './../errors/Error.vue';
 
 	export default {
 		props: ['token', 'user'],
-		components: { DomainEdit, Notification },
+		components: { DomainEdit, Notification, Error },
 		mixins: [ CrudMixin ],
 		data() {
 			return {
@@ -67,7 +75,8 @@
 				domainIndex: 0,
 				domains: [],
 				raw: {},
-				isAdmin: false
+				isAdmin: false,
+				isError: false
 			}
 		},
 		watch: {
@@ -93,10 +102,14 @@
 					let data = response.data;
 
 					// response is 200 and return data
-					if (data) {
+					if (data.isSuccess === false) {
+						this.isError = true;
+						this.errors = data.result;
+					} else {
 						this.domains.push(data);
 						this.isSuccess = true;
 						this.domain = '';
+						this.isError = false;
 						this.notify = {
 							type: true,
 							message: 'Domain',
@@ -132,6 +145,7 @@
 					if (data) {
 						this.isSuccess = true;
 						this.domains.splice(index, 1);
+						this.isError = false;
 						this.notify = {
 							type: false,
 							message: 'Domain',
