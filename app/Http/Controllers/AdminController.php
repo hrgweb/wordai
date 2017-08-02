@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain;
+use App\DomainDetail;
 use App\User;
 use App\UserLevel;
 use Illuminate\Http\Request;
@@ -59,6 +60,6 @@ class AdminController extends Controller
 
     public function saveDetails()
     {
-    	return request()->all();
+    	return DomainDetail::create(request()->all());
     }
 }
