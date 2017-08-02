@@ -17,6 +17,7 @@ class CreateDomainsTable extends Migration
             $table->increments('id');
             $table->integer('user_id')->unsigned();
             $table->string('domain')->index();
+            $table->boolean('isSet')->default(0);
             $table->timestamps();
         });
     }

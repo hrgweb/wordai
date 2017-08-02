@@ -110,13 +110,13 @@
 				if (this.detail.domain_id !== 'select') {
 					this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
 
-					axios.post('/admin/saveDetails', this.detail).then(response => {
+					/*axios.post('/admin/saveDetails', this.detail).then(response => {
 						this.isError = false;
 
 						response.data['domain'] = $('select option[value='+this.detail.domain_id+']').text();
 						this.details.push(response.data);  	// push to details
 						this.clearInputs(); 				// clear inputs
-					});
+					});*/
 				} else {
 					this.errors = 'Please select a domain name.';
 					this.isError = true;

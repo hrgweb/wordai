@@ -3061,18 +3061,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			});
 		},
 		saveDetails: function saveDetails() {
-			var _this3 = this;
-
 			if (this.detail.domain_id !== 'select') {
 				this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
 
-				axios.post('/admin/saveDetails', this.detail).then(function (response) {
-					_this3.isError = false;
-
-					response.data['domain'] = $('select option[value=' + _this3.detail.domain_id + ']').text();
-					_this3.details.push(response.data); // push to details
-					_this3.clearInputs(); // clear inputs
-				});
+				/*axios.post('/admin/saveDetails', this.detail).then(response => {
+    	this.isError = false;
+    		response.data['domain'] = $('select option[value='+this.detail.domain_id+']').text();
+    	this.details.push(response.data);  	// push to details
+    	this.clearInputs(); 				// clear inputs
+    });*/
 			} else {
 				this.errors = 'Please select a domain name.';
 				this.isError = true;
@@ -3092,18 +3089,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			};
 		},
 		updateDetails: function updateDetails() {
-			var _this4 = this;
+			var _this3 = this;
 
 			Vue.nextTick(function () {
-				_this4.detail['domain'] = $('select option[value=' + _this4.detail.domain_id + ']').text();
+				_this3.detail['domain'] = $('select option[value=' + _this3.detail.domain_id + ']').text();
 			});
 
 			axios.patch('/admin/updateDetails', this.detail).then(function (response) {
 				// override details on specific index
-				Vue.set(_this4.details, _this4.index, _this4.detail);
+				Vue.set(_this3.details, _this3.index, _this3.detail);
 
 				// close buttons and clear inputs
-				_this4.cancelDetails();
+				_this3.cancelDetails();
 			});
 		},
 		clearInputs: function clearInputs() {
@@ -3118,13 +3115,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.clearInputs();
 		},
 		removeDetails: function removeDetails(data) {
-			var _this5 = this;
+			var _this4 = this;
 
 			this.index = data.index;
 
 			axios.delete('/admin/removeDetails', { params: { id: data.id } }).then(function (response) {
 				// remove item object in details on specific index
-				_this5.details.splice(_this5.index, 1);
+				_this4.details.splice(_this4.index, 1);
 			});
 		}
 	}

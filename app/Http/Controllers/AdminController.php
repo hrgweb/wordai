@@ -80,12 +80,28 @@ class AdminController extends Controller
 
     public function saveDetails()
     {
-    	return DomainDetail::create(request()->all());
+    	return request()->all();
+
+    	DB::beginTransaction();
+		try {
+			// update domain isSet
+			Domain::where('id', request('domain_id'))->update(['isSet' => 1]);
+
+	    	// save domain detail
+	    	DomainDetail::create(request()->all());
+
+	    	// save protected terms
+
+		} catch (ValidationException $e) {
+			DB::rollback();
+			throw $e;
+		}
+		DB::commit();
     }
 
     public function domainDetails()
     {
-    	return \App\DomainDetail::with('domain')->get();
+    	return DomainDetail::with('domain')->get();
     }
 
     public function updateDetails()
