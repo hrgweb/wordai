@@ -29,7 +29,7 @@
 				<textarea class="form-control" rows="8" v-model="detail.synonym"></textarea><br>
 			</div>
 
-			<button type="submit" class="btn btn-primary" v-if="! isEdit" @click.prevent="saveDetails">Save Details</button>
+			<button type="button" class="btn btn-primary" v-if="! isEdit" @click.prevent="saveDetails">Save Details</button>
 			<div class="buttons" v-if="isEdit">
 				<button type="button" class="btn btn-warning" @click="updateDetails">Update Details</button>
 				<button type="button" class="btn btn-danger" @click="cancelDetails">Cancel</button>
@@ -85,6 +85,26 @@
 				axios.get('/admin/domainList').then(response => this.domains = response.data);
 			},
 
+			mapResults(data) {
+				return data.map((item) => {
+					return {
+						id: item.id,
+						domain_id: item.domain_id,
+						domain: item.domain.domain,
+						protected: item.protected,
+						synonym: item.synonym,
+						created_at: item.created_at
+					};
+				});
+			},
+
+			domainDetails() {
+				axios.get('/admin/domainDetails').then(response => {
+					this.details = this.mapResults(response.data);
+					this.isTableShow = this.details.length > 0 ? true : false;
+				});
+			},
+
 			saveDetails() {
 				if (this.detail.domain_id !== 'select') {
 					this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
@@ -92,19 +112,14 @@
 					axios.post('/admin/saveDetails', this.detail).then(response => {
 						this.isError = false;
 
-						console.log(response.data)
+						response.data['domain'] = $('select option[value='+this.detail.domain_id+']').text();
+						this.details.push(response.data);  	// push to details
+						this.clearInputs(); 				// clear inputs
 					});
 				} else {
 					this.errors = 'Please select a domain name.';
 					this.isError = true;
 				}
-			},
-
-			domainDetails() {
-				axios.get('/admin/domainDetails').then(response => {
-					this.details = response.data;
-					this.isTableShow = this.details.length > 0 ? true : false;
-				});
 			},
 
 			setDetail(data) {
@@ -119,17 +134,21 @@
 			},
 
 			updateDetails() {
-				axios.patch('', data).then(response => console.log(response.data));
+				console.log(this.detail);
+				// axios.patch('', data).then(response => console.log(response.data));
 			},
 
-			cancelDetails() {
-				this.isEdit = false;
-
+			clearInputs() {
 				this.detail = {
 					domain_id: 'select',
 					protected: '',
 					synonym: ''
 				};
+			},
+
+			cancelDetails() {
+				this.isEdit = false;
+				this.clearInputs();
 			}
 		}
 	}

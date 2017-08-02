@@ -3023,29 +3023,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				return _this.domains = response.data;
 			});
 		},
-		saveDetails: function saveDetails() {
+		mapResults: function mapResults(data) {
+			return data.map(function (item) {
+				return {
+					id: item.id,
+					domain_id: item.domain_id,
+					domain: item.domain.domain,
+					protected: item.protected,
+					synonym: item.synonym,
+					created_at: item.created_at
+				};
+			});
+		},
+		domainDetails: function domainDetails() {
 			var _this2 = this;
+
+			axios.get('/admin/domainDetails').then(function (response) {
+				_this2.details = _this2.mapResults(response.data);
+				_this2.isTableShow = _this2.details.length > 0 ? true : false;
+			});
+		},
+		saveDetails: function saveDetails() {
+			var _this3 = this;
 
 			if (this.detail.domain_id !== 'select') {
 				this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
 
 				axios.post('/admin/saveDetails', this.detail).then(function (response) {
-					_this2.isError = false;
+					_this3.isError = false;
 
-					console.log(response.data);
+					response.data['domain'] = $('select option[value=' + _this3.detail.domain_id + ']').text();
+					_this3.details.push(response.data); // push to details
+					_this3.clearInputs(); // clear inputs
 				});
 			} else {
 				this.errors = 'Please select a domain name.';
 				this.isError = true;
 			}
-		},
-		domainDetails: function domainDetails() {
-			var _this3 = this;
-
-			axios.get('/admin/domainDetails').then(function (response) {
-				_this3.details = response.data;
-				_this3.isTableShow = _this3.details.length > 0 ? true : false;
-			});
 		},
 		setDetail: function setDetail(data) {
 			var item = data.detail;
@@ -3058,18 +3072,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			};
 		},
 		updateDetails: function updateDetails() {
-			axios.patch('', data).then(function (response) {
-				return console.log(response.data);
-			});
+			console.log(this.detail);
+			// axios.patch('', data).then(response => console.log(response.data));
 		},
-		cancelDetails: function cancelDetails() {
-			this.isEdit = false;
-
+		clearInputs: function clearInputs() {
 			this.detail = {
 				domain_id: 'select',
 				protected: '',
 				synonym: ''
 			};
+		},
+		cancelDetails: function cancelDetails() {
+			this.isEdit = false;
+			this.clearInputs();
 		}
 	}
 });
@@ -28033,7 +28048,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _c('br')]), _vm._v(" "), (!_vm.isEdit) ? _c('button', {
     staticClass: "btn btn-primary",
     attrs: {
-      "type": "submit"
+      "type": "button"
     },
     on: {
       "click": function($event) {
@@ -38811,7 +38826,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('table', {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.details), function(detail, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(detail.domain.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(detail.protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(detail.synonym))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(detail.created_at))]), _vm._v(" "), _c('td', [_c('button', {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(detail.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(detail.protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(detail.synonym))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(detail.created_at))]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-info",
       attrs: {
         "type": "button"

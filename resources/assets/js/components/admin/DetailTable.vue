@@ -12,7 +12,7 @@
 		    </thead>
 		    <tbody>
 		        <tr v-for="(detail, index) in details">
-		            <td>{{ detail.domain.domain }}</td>
+		            <td>{{ detail.domain }}</td>
 		            <td>{{ detail.protected }}</td>
 		            <td>{{ detail.synonym }}</td>
 		            <td>{{ detail.created_at }}</td>
