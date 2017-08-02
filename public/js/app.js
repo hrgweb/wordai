@@ -3065,15 +3065,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var item = data.detail;
 
 			this.isEdit = true;
+			this.index = data.index;
 			this.detail = {
+				id: item.id,
 				domain_id: item.domain_id,
 				protected: item.protected,
-				synonym: item.synonym
+				synonym: item.synonym,
+				created_at: item.created_at
 			};
 		},
 		updateDetails: function updateDetails() {
-			console.log(this.detail);
-			// axios.patch('', data).then(response => console.log(response.data));
+			var _this4 = this;
+
+			Vue.nextTick(function () {
+				_this4.detail['domain'] = $('select option[value=' + _this4.detail.domain_id + ']').text();
+			});
+
+			axios.patch('/admin/updateDetails', this.detail).then(function (response) {
+				// override details on specific index
+				Vue.set(_this4.details, _this4.index, _this4.detail);
+
+				// close buttons and clear inputs
+				_this4.cancelDetails();
+			});
 		},
 		clearInputs: function clearInputs() {
 			this.detail = {

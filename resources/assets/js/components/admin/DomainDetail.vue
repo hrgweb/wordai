@@ -126,16 +126,28 @@
 				let item = data.detail;
 
 				this.isEdit = true;
+				this.index = data.index;
 				this.detail = {
+					id: item.id,
 					domain_id: item.domain_id,
 					protected: item.protected,
-					synonym: item.synonym
+					synonym: item.synonym,
+					created_at: item.created_at
 				};
 			},
 
 			updateDetails() {
-				console.log(this.detail);
-				// axios.patch('', data).then(response => console.log(response.data));
+				Vue.nextTick(() => {
+					this.detail['domain'] = $('select option[value='+this.detail.domain_id+']').text();
+				});
+
+				axios.patch('/admin/updateDetails', this.detail).then(response => {
+					// override details on specific index
+					Vue.set(this.details, this.index, this.detail);
+
+					// close buttons and clear inputs
+					this.cancelDetails();
+				});
 			},
 
 			clearInputs() {

@@ -67,4 +67,11 @@ class AdminController extends Controller
     {
     	return \App\DomainDetail::with('domain')->get();
     }
+
+    public function updateDetails()
+    {
+    	// return request()->all();
+
+    	return DomainDetail::where('id', request('id'))->update(request()->except(['id', 'domain', 'created_at']));
+    }
 }
