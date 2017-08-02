@@ -2929,6 +2929,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__class_WordAi_js__ = __webpack_require__(148);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__errors_Error_vue__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__errors_Error_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DetailTable_vue__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DetailTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__DetailTable_vue__);
 //
 //
 //
@@ -2967,6 +2969,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2974,7 +2988,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */]],
-	components: { Error: __WEBPACK_IMPORTED_MODULE_2__errors_Error_vue___default.a },
+	components: { Error: __WEBPACK_IMPORTED_MODULE_2__errors_Error_vue___default.a, DetailTable: __WEBPACK_IMPORTED_MODULE_3__DetailTable_vue___default.a },
 	data: function data() {
 		return {
 			domains: [],
@@ -2984,7 +2998,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				synonym: ''
 			},
 			wordai: new __WEBPACK_IMPORTED_MODULE_1__class_WordAi_js__["a" /* default */](),
-			isError: false
+			isError: false,
+			isTableShow: false,
+			details: [],
+			index: 0
 		};
 	},
 
@@ -2995,6 +3012,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	created: function created() {
 		this.listOfDomains();
+		this.domainDetails();
 	},
 
 	methods: {
@@ -3020,6 +3038,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				this.errors = 'Please select a domain name.';
 				this.isError = true;
 			}
+		},
+		domainDetails: function domainDetails() {
+			var _this3 = this;
+
+			axios.get('/admin/domainDetails').then(function (response) {
+				_this3.details = response.data;
+				_this3.isTableShow = _this3.details.length > 0 ? true : false;
+			});
+		},
+		setDetail: function setDetail(data) {
+			var item = data.detail;
+
+			this.isEdit = true;
+			this.detail = {
+				domain_id: item.domain_id,
+				protected: item.protected,
+				synonym: item.synonym
+			};
+		},
+		updateDetails: function updateDetails() {
+			axios.patch('', data).then(function (response) {
+				return console.log(response.data);
+			});
+		},
+		cancelDetails: function cancelDetails() {
+			this.isEdit = false;
+
+			this.detail = {
+				domain_id: 'select',
+				protected: '',
+				synonym: ''
+			};
 		}
 	}
 });
@@ -27891,12 +27941,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }) : _vm._e(), _vm._v(" "), _c('form', {
     attrs: {
       "method": "POST"
-    },
-    on: {
-      "submit": function($event) {
-        $event.preventDefault();
-        _vm.saveDetails($event)
-      }
     }
   }, [_c('label', {
     attrs: {
@@ -27986,12 +28030,43 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.detail.synonym = $event.target.value
       }
     }
-  }), _c('br')]), _vm._v(" "), _c('button', {
+  }), _c('br')]), _vm._v(" "), (!_vm.isEdit) ? _c('button', {
     staticClass: "btn btn-primary",
     attrs: {
       "type": "submit"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.saveDetails($event)
+      }
     }
-  }, [_vm._v("Save")]), _vm._v("\n\t\t\t   \n\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')])], 1)
+  }, [_vm._v("Save Details")]) : _vm._e(), _vm._v(" "), (_vm.isEdit) ? _c('div', {
+    staticClass: "buttons"
+  }, [_c('button', {
+    staticClass: "btn btn-warning",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.updateDetails
+    }
+  }, [_vm._v("Update Details")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.cancelDetails
+    }
+  }, [_vm._v("Cancel")])]) : _vm._e(), _vm._v("\n\t\t\t   \n\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')]), _c('hr'), _vm._v(" "), (_vm.isTableShow) ? _c('detail-table', {
+    attrs: {
+      "details": _vm.details
+    },
+    on: {
+      "isEdited": _vm.setDetail
+    }
+  }) : _vm._e()], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -38644,6 +38719,127 @@ var WordAi = function () {
 }();
 
 /* harmony default export */ __webpack_exports__["a"] = (WordAi);
+
+/***/ }),
+/* 149 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(150),
+  /* template */
+  __webpack_require__(151),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\DetailTable.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] DetailTable.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5a66de27", Component.options)
+  } else {
+    hotAPI.reload("data-v-5a66de27", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 150 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['details'],
+	methods: {
+		editDetails: function editDetails(detail, index) {
+			this.$emit('isEdited', {
+				detail: detail,
+				index: index
+			});
+		}
+	}
+});
+
+/***/ }),
+/* 151 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "DetailTable"
+  }, [_c('table', {
+    staticClass: "table table-striped table-hover"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.details), function(detail, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(detail.domain.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(detail.protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(detail.synonym))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(detail.created_at))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-info",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.editDetails(detail, index)
+        }
+      }
+    }, [_vm._v("Edit")]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-danger",
+      attrs: {
+        "type": "button"
+      }
+    }, [_vm._v("Remove")])])])
+  }))])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Protected Terms")]), _vm._v(" "), _c('th', [_vm._v("Synonyms")]), _vm._v(" "), _c('th', [_vm._v("Date Added")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("Actions")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-5a66de27", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

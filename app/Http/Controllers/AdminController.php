@@ -62,4 +62,9 @@ class AdminController extends Controller
     {
     	return DomainDetail::create(request()->all());
     }
+
+    public function domainDetails()
+    {
+    	return \App\DomainDetail::with('domain')->get();
+    }
 }

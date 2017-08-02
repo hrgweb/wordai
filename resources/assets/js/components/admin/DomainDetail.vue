@@ -9,7 +9,7 @@
 			v-if="isError">
  		</error>
 
-		<form method="POST" @submit.prevent="saveDetails">
+		<form method="POST">
 			<!-- Domain -->
 			<label for="lsi_terms">Domain</label>
 			<select class="form-control" v-model="detail.domain_id">
@@ -29,10 +29,21 @@
 				<textarea class="form-control" rows="8" v-model="detail.synonym"></textarea><br>
 			</div>
 
-			<button type="submit" class="btn btn-primary">Save</button>
+			<button type="submit" class="btn btn-primary" v-if="! isEdit" @click.prevent="saveDetails">Save Details</button>
+			<div class="buttons" v-if="isEdit">
+				<button type="button" class="btn btn-warning" @click="updateDetails">Update Details</button>
+				<button type="button" class="btn btn-danger" @click="cancelDetails">Cancel</button>
+			</div>
 			&nbsp;&nbsp;&nbsp;
 			<span v-if="isLoading">LOADING....</span><br>
-		</form>
+		</form><hr>
+
+		<!-- DetailTable -->
+		<detail-table
+			:details="details"
+			v-if="isTableShow"
+			@isEdited="setDetail">
+		</detail-table>
 	</div>
 </template>
 
@@ -40,10 +51,11 @@
 	import { CrudMixin } from './../../mixins/CrudMixin.js';
 	import WordAi from './../../class/WordAi.js';
 	import Error from './../errors/Error.vue';
+	import DetailTable from './DetailTable.vue';
 
 	export default {
 		mixins: [ CrudMixin ],
-		components: { Error },
+		components: { Error, DetailTable },
 		data() {
 			return {
 				domains: [],
@@ -53,7 +65,10 @@
 					synonym: ''
 				},
 				wordai: new WordAi(),
-				isError: false
+				isError: false,
+				isTableShow: false,
+				details: [],
+				index: 0
 			}
 		},
 		watch: {
@@ -63,6 +78,7 @@
 		},
 		created() {
 			this.listOfDomains();
+			this.domainDetails();
 		},
 		methods: {
 			listOfDomains() {
@@ -75,13 +91,45 @@
 
 					axios.post('/admin/saveDetails', this.detail).then(response => {
 						this.isError = false;
-						
+
 						console.log(response.data)
 					});
 				} else {
 					this.errors = 'Please select a domain name.';
 					this.isError = true;
 				}
+			},
+
+			domainDetails() {
+				axios.get('/admin/domainDetails').then(response => {
+					this.details = response.data;
+					this.isTableShow = this.details.length > 0 ? true : false;
+				});
+			},
+
+			setDetail(data) {
+				let item = data.detail;
+
+				this.isEdit = true;
+				this.detail = {
+					domain_id: item.domain_id,
+					protected: item.protected,
+					synonym: item.synonym
+				};
+			},
+
+			updateDetails() {
+				axios.patch('', data).then(response => console.log(response.data));
+			},
+
+			cancelDetails() {
+				this.isEdit = false;
+
+				this.detail = {
+					domain_id: 'select',
+					protected: '',
+					synonym: ''
+				};
 			}
 		}
 	}
