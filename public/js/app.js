@@ -2980,6 +2980,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -3099,6 +3100,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		cancelDetails: function cancelDetails() {
 			this.isEdit = false;
 			this.clearInputs();
+		},
+		removeDetails: function removeDetails(data) {
+			var _this5 = this;
+
+			this.index = data.index;
+
+			axios.delete('/admin/removeDetails', { params: { id: data.id } }).then(function (response) {
+				// remove item object in details on specific index
+				_this5.details.splice(_this5.index, 1);
+			});
 		}
 	}
 });
@@ -28093,7 +28104,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "details": _vm.details
     },
     on: {
-      "isEdited": _vm.setDetail
+      "isEdited": _vm.setDetail,
+      "isRemoving": _vm.removeDetails
     }
   }) : _vm._e()], 1)
 },staticRenderFns: []}
@@ -38826,6 +38838,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				detail: detail,
 				index: index
 			});
+		},
+		removeDetails: function removeDetails(detail, index) {
+			this.$emit('isRemoving', {
+				id: detail.id,
+				index: index
+			});
 		}
 	}
 });
@@ -38854,6 +38872,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "btn btn-danger",
       attrs: {
         "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.removeDetails(detail, index)
+        }
       }
     }, [_vm._v("Remove")])])])
   }))])])

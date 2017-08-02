@@ -42,7 +42,8 @@
 		<detail-table
 			:details="details"
 			v-if="isTableShow"
-			@isEdited="setDetail">
+			@isEdited="setDetail"
+			@isRemoving="removeDetails">
 		</detail-table>
 	</div>
 </template>
@@ -161,6 +162,15 @@
 			cancelDetails() {
 				this.isEdit = false;
 				this.clearInputs();
+			},
+
+			removeDetails(data) {
+				this.index = data.index;
+
+				axios.delete('/admin/removeDetails', { params: { id: data.id }}).then(response => {
+					// remove item object in details on specific index
+					this.details.splice(this.index, 1);
+				});
 			}
 		}
 	}

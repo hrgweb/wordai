@@ -18,7 +18,7 @@
 		            <td>{{ detail.created_at }}</td>
 		            <td>
 		            	<button type="button" class="btn btn-info" @click="editDetails(detail, index)">Edit</button>
-		            	<button type="button" class="btn btn-danger">Remove</button>
+		            	<button type="button" class="btn btn-danger" @click="removeDetails(detail, index)">Remove</button>
 		            </td>
 		        </tr>
 		    </tbody>
@@ -33,6 +33,13 @@
 			editDetails(detail, index) {
 				this.$emit('isEdited', {
 					detail: detail,
+					index: index
+				});
+			},
+
+			removeDetails(detail, index) {
+				this.$emit('isRemoving', {
+					id: detail.id,
 					index: index
 				});
 			}

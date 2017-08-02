@@ -74,4 +74,9 @@ class AdminController extends Controller
 
     	return DomainDetail::where('id', request('id'))->update(request()->except(['id', 'domain', 'created_at']));
     }
+
+    public function removeDetails()
+    {
+    	return DomainDetail::where('id', request('id'))->delete();
+    }
 }

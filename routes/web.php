@@ -49,6 +49,7 @@ Route::prefix('admin')->group(function() {
 	Route::patch('updateDomain', 'AdminController@updateDomain');
 	Route::patch('updateDetails', 'AdminController@updateDetails');
 	Route::delete('removeDomain', 'AdminController@removeDomain');
+	Route::delete('removeDetails', 'AdminController@removeDetails');
 	// Protected Terms
 	Route::post('postProtectedTerms', 'AdminController@postProtectedTerms');
 });
