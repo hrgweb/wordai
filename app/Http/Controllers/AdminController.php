@@ -99,13 +99,13 @@ class AdminController extends Controller
 			Domain::where('id', $domain_id)->update(['isSet' => 1]);
 
 	    	// save protected terms
-	    	for ($i=0; $i < count($protected_terms); $i++) { 
+	    	// for ($i=0; $i < count($protected_terms); $i++) { 
 	    		ProtectedTerm::create([
 	    			'domain_id' => $domain_id,
 	    			'user_id' => auth()->user()->id,
-	    			'terms' => $protected_terms[$i]
+	    			'terms' => $protected_terms // $protected_terms[$i]
 	    		]);
-	    	}
+	    	// }
 
 	    	// save domain detail
 	    	$domain = DomainDetail::create([

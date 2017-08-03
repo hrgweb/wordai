@@ -19,7 +19,7 @@ class WordAi {
 		return result.join(',');
 	}
 
-	protectedTermsToUppercase(terms, uCase) {
+	protectedTermsToUppercaseAndLowercase(terms, uCase) {
 		let result = terms.split(/\,/g);
 
 		result = result.map(word => {
@@ -31,10 +31,6 @@ class WordAi {
 		});
 
 		return result.join(',');
-	}
-
-	protectedTermsToLowercase(terms, lCase) {
-		this.protectedTermsToUppercase(terms, lCase);
 	}
 
 	protectedTermsToSentenceCase(terms) {
@@ -59,6 +55,12 @@ class WordAi {
 		 vfinal = vfinal.substring(0, vfinal.length - 1);
 
 		 return vfinal;
+	}
+
+	protectedTermsToTitleCase(terms) {
+		return terms.replace(/\w\S*/g, function(txt) {
+    		return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    	});
 	}
 
 	domainSelectedIndex(options) {

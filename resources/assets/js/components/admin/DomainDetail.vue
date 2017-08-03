@@ -121,18 +121,24 @@
 				this.domains.splice(this.index, 1);
 			},
 
+			extractProtectedTerms() {
+				return [
+					this.wordai.protectedTermsToUppercaseAndLowercase(this.detail.protected, 'toUpperCase'),
+					this.wordai.protectedTermsToUppercaseAndLowercase(this.detail.protected, 'toLowerCase'),
+					this.wordai.protectedTermsToSentenceCase(this.detail.protected),
+					this.wordai.protectedTermsToTitleCase(this.detail.protected)
+				]
+			},
+
 			saveDetails() {
 				if (this.detail.domain_id !== 'select') {
 					this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
 					// this.detail['protected'] = 'the man,who cant,be moved,a test,sample';
 					
+
 					const data = {
 						detail: this.detail,
-						protectedTerms: [
-							this.wordai.protectedTermsToUppercase(this.detail.protected, 'toUpperCase'),
-							this.wordai.protectedTermsToUppercase(this.detail.protected, 'toLowerCase'),
-							this.wordai.protectedTermsToSentenceCase(this.detail.protected)
-						]
+						protectedTerms: this.extractProtectedTerms().join('|')
 					};
 
 					axios.post('/admin/saveDetails', data).then(response => {
@@ -178,8 +184,8 @@
 				const data = {
 					detail: this.detail,
 					protectedTerms: [
-						this.wordai.protectedTermsToUppercase(this.detail.protected, 'toUpperCase'),
-						this.wordai.protectedTermsToUppercase(this.detail.protected, 'toLowerCase'),
+						this.wordai.protectedTermsToUppercaseAndLowercase(this.detail.protected, 'toUpperCase'),
+						this.wordai.protectedTermsToUppercaseAndLowercase(this.detail.protected, 'toLowerCase'),
 						this.wordai.protectedTermsToSentenceCase(this.detail.protected)
 					]
 				};

@@ -3127,6 +3127,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			this.domains.splice(this.index, 1);
 		},
+		extractProtectedTerms: function extractProtectedTerms() {
+			return [this.wordai.protectedTermsToUppercaseAndLowercase(this.detail.protected, 'toUpperCase'), this.wordai.protectedTermsToUppercaseAndLowercase(this.detail.protected, 'toLowerCase'), this.wordai.protectedTermsToSentenceCase(this.detail.protected), this.wordai.protectedTermsToTitleCase(this.detail.protected)];
+		},
 		saveDetails: function saveDetails() {
 			var _this3 = this;
 
@@ -3134,9 +3137,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
 				// this.detail['protected'] = 'the man,who cant,be moved,a test,sample';
 
+
 				var data = {
 					detail: this.detail,
-					protectedTerms: [this.wordai.protectedTermsToUppercase(this.detail.protected, 'toUpperCase'), this.wordai.protectedTermsToUppercase(this.detail.protected, 'toLowerCase'), this.wordai.protectedTermsToSentenceCase(this.detail.protected)]
+					protectedTerms: this.extractProtectedTerms().join('|')
 				};
 
 				axios.post('/admin/saveDetails', data).then(function (response) {
@@ -3181,7 +3185,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			var data = {
 				detail: this.detail,
-				protectedTerms: [this.wordai.protectedTermsToUppercase(this.detail.protected, 'toUpperCase'), this.wordai.protectedTermsToUppercase(this.detail.protected, 'toLowerCase'), this.wordai.protectedTermsToSentenceCase(this.detail.protected)]
+				protectedTerms: [this.wordai.protectedTermsToUppercaseAndLowercase(this.detail.protected, 'toUpperCase'), this.wordai.protectedTermsToUppercaseAndLowercase(this.detail.protected, 'toLowerCase'), this.wordai.protectedTermsToSentenceCase(this.detail.protected)]
 			};
 
 			axios.patch('/admin/updateDetails', data).then(function (response) {
@@ -5341,8 +5345,8 @@ var WordAi = function () {
 			return result.join(',');
 		}
 	}, {
-		key: 'protectedTermsToUppercase',
-		value: function protectedTermsToUppercase(terms, uCase) {
+		key: 'protectedTermsToUppercaseAndLowercase',
+		value: function protectedTermsToUppercaseAndLowercase(terms, uCase) {
 			var result = terms.split(/\,/g);
 
 			result = result.map(function (word) {
@@ -5354,11 +5358,6 @@ var WordAi = function () {
 			});
 
 			return result.join(',');
-		}
-	}, {
-		key: 'protectedTermsToLowercase',
-		value: function protectedTermsToLowercase(terms, lCase) {
-			this.protectedTermsToUppercase(terms, lCase);
 		}
 	}, {
 		key: 'protectedTermsToSentenceCase',
@@ -5383,6 +5382,13 @@ var WordAi = function () {
 			vfinal = vfinal.substring(0, vfinal.length - 1);
 
 			return vfinal;
+		}
+	}, {
+		key: 'protectedTermsToTitleCase',
+		value: function protectedTermsToTitleCase(terms) {
+			return terms.replace(/\w\S*/g, function (txt) {
+				return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+			});
 		}
 	}, {
 		key: 'domainSelectedIndex',
