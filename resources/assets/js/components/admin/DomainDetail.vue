@@ -41,7 +41,7 @@
 		<!-- DetailTable -->
 		<detail-table
 			:details="details"
-			v-if="isTableShow"
+			v-if="isResultNotEmpty"
 			@isEdited="setDetail"
 			@isRemoving="removeDetails">
 		</detail-table>
@@ -67,7 +67,7 @@
 				},
 				wordai: new WordAi(),
 				isError: false,
-				isTableShow: false,
+				isResultNotEmpty: false,
 				details: [],
 				index: 0
 			}
@@ -75,6 +75,10 @@
 		watch: {
 			errors(list) {
 				this.isError = list.length > 0 ? true : false;
+			},
+
+			details(data) {
+				this.isResultNotEmpty = this.details.length > 0 ? true : false;
 			}
 		},
 		created() {
@@ -102,21 +106,30 @@
 			domainDetails() {
 				axios.get('/admin/domainDetails').then(response => {
 					this.details = this.mapResults(response.data);
-					this.isTableShow = this.details.length > 0 ? true : false;
 				});
 			},
 
 			saveDetails() {
 				if (this.detail.domain_id !== 'select') {
 					this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
+					// this.detail['protected'] = 'the man,who cant,be moved,a test,sample';
+					
+					const data = {
+						detail: this.detail,
+						protectedTerms: [
+							this.wordai.protectedTermsToUppercase(this.detail.protected, 'toUpperCase'),
+							this.wordai.protectedTermsToUppercase(this.detail.protected, 'toLowerCase'),
+							this.wordai.protectedTermsToSentenceCase(this.detail.protected)
+						]
+					};
 
-					/*axios.post('/admin/saveDetails', this.detail).then(response => {
+					axios.post('/admin/saveDetails', data).then(response => {
 						this.isError = false;
 
 						response.data['domain'] = $('select option[value='+this.detail.domain_id+']').text();
 						this.details.push(response.data);  	// push to details
 						this.clearInputs(); 				// clear inputs
-					});*/
+					});
 				} else {
 					this.errors = 'Please select a domain name.';
 					this.isError = true;

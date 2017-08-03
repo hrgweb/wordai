@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain;
 use App\DomainDetail;
+use App\ProtectedTerm;
 use App\User;
 use App\UserLevel;
 use Illuminate\Http\Request;
@@ -80,23 +81,39 @@ class AdminController extends Controller
 
     public function saveDetails()
     {
-    	return request()->all();
+    	$domain_id = request('detail.domain_id');
+    	$protected = request('detail.protected');
+    	$synonym = request('detail.synonym');
+    	$protected_terms = request('protectedTerms');
 
     	DB::beginTransaction();
 		try {
-			// update domain isSet
-			Domain::where('id', request('domain_id'))->update(['isSet' => 1]);
+			// update domain isSet to true
+			Domain::where('id', $domain_id)->update(['isSet' => 1]);
 
 	    	// save domain detail
-	    	DomainDetail::create(request()->all());
+	    	$domain = DomainDetail::create([
+	    		'domain_id' => $domain_id,
+	    		'protected' => $protected,
+	    		'synonym' => $synonym
+	    	]);
 
 	    	// save protected terms
+	    	for ($i=0; $i < count($protected_terms); $i++) { 
+	    		ProtectedTerm::create([
+	    			'domain_id' => $domain_id,
+	    			'user_id' => auth()->user()->id,
+	    			'terms' => $protected_terms[$i]
+	    		]);
+	    	}
 
 		} catch (ValidationException $e) {
 			DB::rollback();
 			throw $e;
 		}
 		DB::commit();
+
+		return response()->json($domain);
     }
 
     public function domainDetails()

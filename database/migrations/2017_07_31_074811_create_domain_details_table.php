@@ -15,7 +15,7 @@ class CreateDomainDetailsTable extends Migration
     {
         Schema::create('domain_details', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('domain_id')->unsigned()->index();
+            $table->integer('domain_id')->unsigned()->index()->unique();
             $table->string('protected')->nullable();
             $table->string('synonym')->nullable();
             $table->timestamps();
