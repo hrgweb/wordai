@@ -17,7 +17,7 @@
 		            <td>{{ detail.synonym }}</td>
 		            <td>{{ detail.created_at }}</td>
 		            <td>
-		            	<button type="button" class="btn btn-info" @click="editDetails(detail, index)">Edit</button>
+		            	<button type="button" class="btn btn-info" @click="editDetails(detail, index, $event)">Edit</button>
 		            	<button type="button" class="btn btn-danger" @click="removeDetails(detail, index)">Remove</button>
 		            </td>
 		        </tr>
@@ -30,10 +30,11 @@
 	export default {
 		props: ['details'],
 		methods: {
-			editDetails(detail, index) {
+			editDetails(detail, index, event) {
 				this.$emit('isEdited', {
 					detail: detail,
-					index: index
+					index: index,
+					e: event
 				});
 			},
 

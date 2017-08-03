@@ -2791,10 +2791,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['details'],
 	methods: {
-		editDetails: function editDetails(detail, index) {
+		editDetails: function editDetails(detail, index, event) {
 			this.$emit('isEdited', {
 				detail: detail,
-				index: index
+				index: index,
+				e: event
 			});
 		},
 		removeDetails: function removeDetails(detail, index) {
@@ -3050,6 +3051,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 
@@ -3149,11 +3155,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		setDetail: function setDetail(data) {
 			var item = data.detail;
 
+			$('select').hide(); // hide select
+
 			this.isEdit = true;
 			this.index = data.index;
 			this.detail = {
 				id: item.id,
 				domain_id: item.domain_id,
+				domain: data.e.currentTarget.offsetParent.parentNode.cells[0].innerText,
 				protected: item.protected,
 				synonym: item.synonym,
 				created_at: item.created_at
@@ -3163,7 +3172,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this4 = this;
 
 			Vue.nextTick(function () {
-				_this4.detail['domain'] = $('select option[value=' + _this4.detail.domain_id + ']').text();
+				// this.detail['domain'] = $('select option[value='+this.detail.domain_id+']').text();
+				_this4.detail['domain'] = $('b#domain').text();
 			});
 
 			axios.patch('/admin/updateDetails', this.detail).then(function (response) {
@@ -3182,6 +3192,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			};
 		},
 		cancelDetails: function cancelDetails() {
+			$('select').show(); // hide select
+
 			this.isEdit = false;
 			this.clearInputs();
 		},
@@ -27247,7 +27259,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       on: {
         "click": function($event) {
-          _vm.editDetails(detail, index)
+          _vm.editDetails(detail, index, $event)
         }
       }
     }, [_vm._v("Edit")]), _vm._v(" "), _c('button', {
@@ -28309,6 +28321,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_vm._v(_vm._s(domain.domain))])
   })], 2), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('b', {
+    staticStyle: {
+      "font-size": "1.5em"
+    },
+    attrs: {
+      "id": "domain"
+    }
+  }, [_vm._v(_vm._s(_vm.detail.domain))])]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6",
     staticStyle: {
       "padding-right": "1em"

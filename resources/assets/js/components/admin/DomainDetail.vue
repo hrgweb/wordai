@@ -17,6 +17,11 @@
 				<option id="domain" v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
 			</select><br>
 
+			<!-- Edit - domain name -->
+			<div class="form-group">
+				<b id="domain" style="font-size: 1.5em;">{{ detail.domain }}</b>
+			</div>
+
 			<!-- LSI Terms -->
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-right: 1em;">
 				<label for="lsi_terms">Protected Terms</label>
@@ -147,11 +152,14 @@
 			setDetail(data) {
 				let item = data.detail;
 
+				$('select').hide();	// hide select
+
 				this.isEdit = true;
 				this.index = data.index;
 				this.detail = {
 					id: item.id,
 					domain_id: item.domain_id,
+					domain: data.e.currentTarget.offsetParent.parentNode.cells[0].innerText,
 					protected: item.protected,
 					synonym: item.synonym,
 					created_at: item.created_at
@@ -160,7 +168,8 @@
 
 			updateDetails() {
 				Vue.nextTick(() => {
-					this.detail['domain'] = $('select option[value='+this.detail.domain_id+']').text();
+					// this.detail['domain'] = $('select option[value='+this.detail.domain_id+']').text();
+					this.detail['domain'] = $('b#domain').text();
 				});
 
 				axios.patch('/admin/updateDetails', this.detail).then(response => {
@@ -181,6 +190,8 @@
 			},
 
 			cancelDetails() {
+				$('select').show();	// hide select
+
 				this.isEdit = false;
 				this.clearInputs();
 			},

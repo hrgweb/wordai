@@ -36,7 +36,7 @@ class AdminController extends Controller
 
     public function domainList()
     {
-    	$domains = Domain::all();
+    	$domains = Domain::orderBy('domain', 'asc')->get();
 
     	return response()->json($domains);
     }
@@ -132,7 +132,7 @@ class AdminController extends Controller
     {
     	// return request()->all();
 
-    	return DomainDetail::where('id', request('id'))->update(request()->except(['id', 'domain', 'created_at']));
+    	return DomainDetail::where('id', request('id'))->update(request()->only(['protected', 'synonym']));
     }
 
     public function removeDetails()
