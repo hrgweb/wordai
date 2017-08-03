@@ -183,11 +183,7 @@
 
 				const data = {
 					detail: this.detail,
-					protectedTerms: [
-						this.wordai.protectedTermsToUppercaseAndLowercase(this.detail.protected, 'toUpperCase'),
-						this.wordai.protectedTermsToUppercaseAndLowercase(this.detail.protected, 'toLowerCase'),
-						this.wordai.protectedTermsToSentenceCase(this.detail.protected)
-					]
+					protectedTerms: this.extractProtectedTerms().join('|')
 				};
 
 				axios.patch('/admin/updateDetails', data).then(response => {

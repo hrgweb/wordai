@@ -143,13 +143,13 @@ class AdminController extends Controller
 	    	ProtectedTerm::where('domain_id', $domain_id)->delete();
 	    	
 			// save protected terms
-	    	for ($i=0; $i < count($protected_terms); $i++) { 
+	    	// for ($i=0; $i < count($protected_terms); $i++) { 
 	    		ProtectedTerm::create([
 	    			'domain_id' => $domain_id,
 	    			'user_id' => auth()->user()->id,
-	    			'terms' => $protected_terms[$i]
+	    			'terms' => $protected_terms // $protected_terms[$i]
 	    		]);
-	    	}
+	    	// }
 
 	    	// update domain_details protected terms
 	    	$domain = DomainDetail::where('id', $id)->update([

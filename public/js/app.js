@@ -3185,7 +3185,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			var data = {
 				detail: this.detail,
-				protectedTerms: [this.wordai.protectedTermsToUppercaseAndLowercase(this.detail.protected, 'toUpperCase'), this.wordai.protectedTermsToUppercaseAndLowercase(this.detail.protected, 'toLowerCase'), this.wordai.protectedTermsToSentenceCase(this.detail.protected)]
+				protectedTerms: this.extractProtectedTerms().join('|')
 			};
 
 			axios.patch('/admin/updateDetails', data).then(function (response) {
