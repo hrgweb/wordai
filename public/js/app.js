@@ -2800,7 +2800,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		removeDetails: function removeDetails(detail, index) {
 			this.$emit('isRemoving', {
-				id: detail.id,
+				detail: detail,
 				index: index
 			});
 		}
@@ -3176,7 +3176,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				_this4.detail['domain'] = $('b#domain').text();
 			});
 
-			axios.patch('/admin/updateDetails', this.detail).then(function (response) {
+			// clean protected terms
+			this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
+
+			var data = {
+				detail: this.detail,
+				protectedTerms: [this.wordai.protectedTermsToUppercase(this.detail.protected, 'toUpperCase'), this.wordai.protectedTermsToUppercase(this.detail.protected, 'toLowerCase'), this.wordai.protectedTermsToSentenceCase(this.detail.protected)]
+			};
+
+			axios.patch('/admin/updateDetails', data).then(function (response) {
 				// override details on specific index
 				Vue.set(_this4.details, _this4.index, _this4.detail);
 
@@ -3202,7 +3210,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			this.index = data.index;
 
-			axios.delete('/admin/removeDetails', { params: { id: data.id } }).then(function (response) {
+			var output = {
+				params: {
+					id: data.detail.id,
+					domain_id: data.detail.domain_id
+				}
+			};
+
+			axios.delete('/admin/removeDetails', output).then(function (response) {
 				// remove item object in details on specific index
 				_this5.details.splice(_this5.index, 1);
 			});

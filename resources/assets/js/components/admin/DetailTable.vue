@@ -40,7 +40,7 @@
 
 			removeDetails(detail, index) {
 				this.$emit('isRemoving', {
-					id: detail.id,
+					detail: detail,
 					index: index
 				});
 			}

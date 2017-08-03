@@ -98,13 +98,6 @@ class AdminController extends Controller
 			// update domain isSet to true
 			Domain::where('id', $domain_id)->update(['isSet' => 1]);
 
-	    	// save domain detail
-	    	$domain = DomainDetail::create([
-	    		'domain_id' => $domain_id,
-	    		'protected' => $protected,
-	    		'synonym' => $synonym
-	    	]);
-
 	    	// save protected terms
 	    	for ($i=0; $i < count($protected_terms); $i++) { 
 	    		ProtectedTerm::create([
@@ -114,6 +107,12 @@ class AdminController extends Controller
 	    		]);
 	    	}
 
+	    	// save domain detail
+	    	$domain = DomainDetail::create([
+	    		'domain_id' => $domain_id,
+	    		'protected' => $protected,
+	    		'synonym' => $synonym
+	    	]);
 		} catch (ValidationException $e) {
 			DB::rollback();
 			throw $e;
@@ -132,11 +131,62 @@ class AdminController extends Controller
     {
     	// return request()->all();
 
-    	return DomainDetail::where('id', request('id'))->update(request()->only(['protected', 'synonym']));
+    	$id = request('detail.id');
+    	$domain_id = request('detail.domain_id');
+    	$protected = request('detail.protected');
+    	$synonym = request('detail.synonym');
+    	$protected_terms = request('protectedTerms');
+
+    	DB::beginTransaction();
+		try {
+			// remove old protected terms
+	    	ProtectedTerm::where('domain_id', $domain_id)->delete();
+	    	
+			// save protected terms
+	    	for ($i=0; $i < count($protected_terms); $i++) { 
+	    		ProtectedTerm::create([
+	    			'domain_id' => $domain_id,
+	    			'user_id' => auth()->user()->id,
+	    			'terms' => $protected_terms[$i]
+	    		]);
+	    	}
+
+	    	// update domain_details protected terms
+	    	$domain = DomainDetail::where('id', $id)->update([
+    			'protected' => $protected,
+    			'synonym' => $synonym
+    		]);
+		} catch (ValidationException $e) {
+			DB::rollback();
+			throw $e;
+		}
+		DB::commit();
+
+    	return $domain;
     }
 
     public function removeDetails()
     {
-    	return DomainDetail::where('id', request('id'))->delete();
+    	// return request()->all();
+
+    	$domain_id = request('domain_id');
+
+    	DB::beginTransaction();
+		try {
+			// remove old protected terms
+	    	ProtectedTerm::where('domain_id', $domain_id)->delete();
+
+	    	// update domain isSet to true
+			Domain::where('id', $domain_id)->update(['isSet' => 0]);
+
+			// remove domain_details data
+			$detail = DomainDetail::where('id', request('id'))->delete();
+		} catch (ValidationException $e) {
+			DB::rollback();
+			throw $e;
+		}
+		DB::commit();
+
+    	return $detail;
     }
 }

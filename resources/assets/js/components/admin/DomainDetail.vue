@@ -172,7 +172,19 @@
 					this.detail['domain'] = $('b#domain').text();
 				});
 
-				axios.patch('/admin/updateDetails', this.detail).then(response => {
+				// clean protected terms
+				this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
+
+				const data = {
+					detail: this.detail,
+					protectedTerms: [
+						this.wordai.protectedTermsToUppercase(this.detail.protected, 'toUpperCase'),
+						this.wordai.protectedTermsToUppercase(this.detail.protected, 'toLowerCase'),
+						this.wordai.protectedTermsToSentenceCase(this.detail.protected)
+					]
+				};
+
+				axios.patch('/admin/updateDetails', data).then(response => {
 					// override details on specific index
 					Vue.set(this.details, this.index, this.detail);
 
@@ -199,7 +211,14 @@
 			removeDetails(data) {
 				this.index = data.index;
 
-				axios.delete('/admin/removeDetails', { params: { id: data.id }}).then(response => {
+				const output = { 
+					params: { 
+						id: data.detail.id,
+						domain_id: data.detail.domain_id
+					}
+				};
+
+				axios.delete('/admin/removeDetails', output).then(response => {
 					// remove item object in details on specific index
 					this.details.splice(this.index, 1);
 				});
