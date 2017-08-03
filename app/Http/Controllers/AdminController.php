@@ -41,6 +41,13 @@ class AdminController extends Controller
     	return response()->json($domains);
     }
 
+    public function domainListNotSet()
+    {
+    	$domains = Domain::where('isSet', 0)->orderBy('domain', 'asc')->get();
+
+    	return response()->json($domains);
+    }
+
     public function updateDomain()
     {
     	// validate domain to avoid duplicate entry

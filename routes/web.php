@@ -43,6 +43,7 @@ Route::prefix('articleType')->group(function() {
 Route::prefix('admin')->group(function() {
 	// Domain
 	Route::get('domainList', 'AdminController@domainList');
+	Route::get('domainListNotSet', 'AdminController@domainListNotSet');
 	Route::get('domainDetails', 'AdminController@domainDetails');
 	Route::post('postDomain', 'AdminController@postDomain');
 	Route::post('saveDetails', 'AdminController@saveDetails');

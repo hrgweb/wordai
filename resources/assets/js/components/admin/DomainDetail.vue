@@ -13,8 +13,8 @@
 			<!-- Domain -->
 			<label for="lsi_terms">Domain</label>
 			<select class="form-control" v-model="detail.domain_id">
-				<option value="select">Select a domain</option>
-				<option v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
+				<option id="domain" value="select">Select a domain</option>
+				<option id="domain" v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
 			</select><br>
 
 			<!-- LSI Terms -->
@@ -87,7 +87,7 @@
 		},
 		methods: {
 			listOfDomains() {
-				axios.get('/admin/domainList').then(response => this.domains = response.data);
+				axios.get('/admin/domainListNotSet').then(response => this.domains = response.data);
 			},
 
 			mapResults(data) {
@@ -107,6 +107,13 @@
 				axios.get('/admin/domainDetails').then(response => {
 					this.details = this.mapResults(response.data);
 				});
+			},
+
+			removeDomain() {
+				let options = document.getElementsByTagName('select')[0].options;
+				this.index = parseInt(this.wordai.domainSelectedIndex(options), 10) - 1;
+
+				this.domains.splice(this.index, 1);
 			},
 
 			saveDetails() {
@@ -129,6 +136,7 @@
 						response.data['domain'] = $('select option[value='+this.detail.domain_id+']').text();
 						this.details.push(response.data);  	// push to details
 						this.clearInputs(); 				// clear inputs
+						this.removeDomain();				// remove selected domain
 					});
 				} else {
 					this.errors = 'Please select a domain name.';

@@ -3092,7 +3092,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		listOfDomains: function listOfDomains() {
 			var _this = this;
 
-			axios.get('/admin/domainList').then(function (response) {
+			axios.get('/admin/domainListNotSet').then(function (response) {
 				return _this.domains = response.data;
 			});
 		},
@@ -3115,6 +3115,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				_this2.details = _this2.mapResults(response.data);
 			});
 		},
+		removeDomain: function removeDomain() {
+			var options = document.getElementsByTagName('select')[0].options;
+			this.index = parseInt(this.wordai.domainSelectedIndex(options), 10) - 1;
+
+			this.domains.splice(this.index, 1);
+		},
 		saveDetails: function saveDetails() {
 			var _this3 = this;
 
@@ -3133,6 +3139,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					response.data['domain'] = $('select option[value=' + _this3.detail.domain_id + ']').text();
 					_this3.details.push(response.data); // push to details
 					_this3.clearInputs(); // clear inputs
+					_this3.removeDomain(); // remove selected domain
 				});
 			} else {
 				this.errors = 'Please select a domain name.';
@@ -5349,6 +5356,20 @@ var WordAi = function () {
 			vfinal = vfinal.substring(0, vfinal.length - 1);
 
 			return vfinal;
+		}
+	}, {
+		key: 'domainSelectedIndex',
+		value: function domainSelectedIndex(options) {
+			var selectedIndex = 0;
+
+			for (var i = 0; i < options.length; i++) {
+				if (options[i].selected === true) {
+					selectedIndex = options[i].index;
+					break;
+				}
+			}
+
+			return selectedIndex;
 		}
 	}]);
 
@@ -28275,10 +28296,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('option', {
     attrs: {
+      "id": "domain",
       "value": "select"
     }
   }, [_vm._v("Select a domain")]), _vm._v(" "), _vm._l((_vm.domains), function(domain) {
     return _c('option', {
+      attrs: {
+        "id": "domain"
+      },
       domProps: {
         "value": domain.id
       }

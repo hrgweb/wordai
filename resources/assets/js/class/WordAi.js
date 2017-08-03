@@ -60,6 +60,19 @@ class WordAi {
 
 		 return vfinal;
 	}
+
+	domainSelectedIndex(options) {
+		let selectedIndex = 0;
+
+		for (let i=0; i<options.length; i++) {
+			if (options[i].selected === true) {
+				selectedIndex = options[i].index;
+				break;
+		    }
+		}
+
+		return selectedIndex;
+	}
 }
 
 export default WordAi;
