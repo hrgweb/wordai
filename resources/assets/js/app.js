@@ -18,6 +18,7 @@ import PasteArticle from './components/words/PasteArticle.vue';
 import CopyscapeApiResult from './components/words/CopyscapeApiResult.vue';
 import CurlPage from './components/words/CurlPage.vue';
 import GenerateArticle from './components/words/GenerateArticle.vue';
+import Editor from './components/editor/Editor.vue';
 
 const app = new Vue({
 	name: 'WordAI',
@@ -36,5 +37,6 @@ const app = new Vue({
     	ProtectedTerm,
     	DomainDetail,
     	User,
+    	Editor
     }
 });

@@ -60,4 +60,9 @@ class PagesController extends Controller
     {
     	return view('auth.verification');
     }
+
+    public function editor()
+    {
+    	return view('editor.index');
+    }
 }

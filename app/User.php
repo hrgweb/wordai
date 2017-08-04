@@ -53,10 +53,19 @@ class User extends Authenticatable
     			echo 'Admin';
     			break;
     		case 3:
-    			echo 'Editor';
+    			echo 'Writer';
     			break;
     		case 4:
-    			echo 'Writer';
+    			echo 'Editor';
+    			break;
+    		case 5:
+    			echo 'Curator';
+    			break;
+    		case 6:
+    			echo 'Proofing';
+    			break;
+    		case 7:
+    			echo 'Poster';
     			break;
     	}
     }
