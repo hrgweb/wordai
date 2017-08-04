@@ -24,7 +24,7 @@ class CreateWordsTable extends Migration
             $table->text('article');
             $table->string('dom_name')->nullable();
             $table->string('protected')->nullable();
-            $table->string('synonyms')->nullable();
+            $table->string('synonym')->nullable();
             $table->timestamps();
         });
     }

@@ -103,6 +103,7 @@ export const ArticleActionMixin = {
 					
 					// check if api response is fail
 					if (data.status === 'Failure') {
+						this.errorType = 0;
 						this.isValidationFail = true;
 						this.errors = data.error;
 					}

@@ -5530,6 +5530,7 @@ var ArticleActionMixin = {
 
 					// check if api response is fail
 					if (data.status === 'Failure') {
+						_this.errorType = 0;
 						_this.isValidationFail = true;
 						_this.errors = data.error;
 					}

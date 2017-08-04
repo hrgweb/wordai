@@ -53,7 +53,7 @@ class WordsController extends Controller
 		$email = 'accounting@connexionsolutions.com';
 		$pass = 'fastredsportscar';
 		$protected = $request['protected'];
-		$synonyms = $request['synonyms'];
+		$synonyms = $request['synonym'];
 
 		$quality = 'readable';
 		$nonested = 'off';
@@ -132,7 +132,7 @@ class WordsController extends Controller
 
 	public function postSpinTax()
 	{
-		// dd(request()->all());
+		dd(request()->all());
 
 		$result = auth()->user()->words()->create(request()->all());
 

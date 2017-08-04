@@ -17,7 +17,7 @@ class Word extends Model
     	'article',
     	'dom_name', 
     	'protected',
-    	'synonyms'
+    	'synonym'
     ];
 
     public function writer()
