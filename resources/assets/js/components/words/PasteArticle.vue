@@ -1,14 +1,6 @@
 <template>
 	<div class="Word">
-		<div class="form-group">
-			<h1>Article</h1><hr>
-
-			<label for="articleType">Article Type</label>
-			<select class="form-control" v-model="spin.articleType" v-if="isArticleTypesLoaded">
-				<option value="select">Please select an article type</option>
-				<option v-for="type in articleTypes" :value="type.id">{{ type.article_type }}</option>
-			</select>
-		</div>
+		<h1>Article</h1><hr>
 
 		<!-- handwritten -->
 		<!-- <div class="Handwritten" v-if="articleType === 1"> -->
@@ -33,6 +25,14 @@
 				<input type="hidden" name="_token" :value="token">
 
 				<div class="form-group">
+					<label for="articleType">Article Type</label>
+					<select class="form-control" v-model="spin.article_type_id" v-if="isArticleTypesLoaded">
+						<option value="select">Please select an article type</option>
+						<option v-for="type in articleTypes" :value="type.id">{{ type.article_type }}</option>
+					</select>
+				</div>
+
+				<div class="form-group">
 					<label for="doc_title">Document Title</label>
 					<input type="text" class="form-control" v-model="spin.doc_title">
 				</div>
@@ -40,6 +40,14 @@
 				<div class="form-group">
 					<label for="keyword">Key Word/Phrase field</label>
 					<input type="text" class="form-control" maxlength="255" v-model="spin.keyword">
+				</div>
+
+				<div class="form-group">
+					<label for="dom_name">Domain Name</label> &nbsp; <span style="color: red;" v-if="isDomainNotSet">This domain not set yet.</span>
+					<select class="form-control" v-model="spin.domain_id" @change="domainChange">
+						<option value="select">Select a domain</option>						
+						<option v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
+					</select>
 				</div>
 
 				<div class="row">
@@ -55,14 +63,6 @@
 						<textarea class="form-control" rows="8" v-model="spin.synonym"></textarea>
 					</div>
 				</div><br>
-
-				<div class="form-group">
-					<label for="dom_name">Domain Name</label> &nbsp; <span style="color: red;" v-if="isDomainNotSet">This domain not set yet.</span>
-					<select class="form-control" v-model="spin.domain_id" @change="domainChange">
-						<option value="select">Select a domain</option>						
-						<option v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
-					</select>
-				</div>
 
 				<div class="row">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">

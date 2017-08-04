@@ -5444,7 +5444,7 @@ var ArticleActionMixin = {
 			errorType: 1, // legend: 1-input validation, 0-fail response result from server
 			spintaxType: 'article',
 			spin: {
-				articleType: 'select',
+				article_type_id: 'select',
 				doc_title: '',
 				domain_id: 'select',
 				keyword: '',
@@ -5471,6 +5471,10 @@ var ArticleActionMixin = {
 	watch: {
 		articleTypes: function articleTypes(data) {
 			this.isArticleTypesLoaded = data.length > 0 ? true : false;
+		},
+		article: function article(data) {
+			this.spin['spin'] = data;
+			this.postSpinTax(this.spin); // post article
 		}
 	},
 	methods: {
@@ -5496,7 +5500,6 @@ var ArticleActionMixin = {
 			this.isSuccess = false;
 			this.$refs.spinButton.disabled = true;
 
-			this.spin['article_type_id'] = this.articleType;
 			axios.post('/words', this.spin).then(function (response) {
 				var data = response.data;
 
@@ -5524,8 +5527,8 @@ var ArticleActionMixin = {
 						_this.generateFullArticle(_this.spin.article);
 
 						// post article
-						_this.spin['article'] = data.text;
-						_this.postSpinTax(_this.spin);
+						_this.spin['article'] = _this.spin.article;
+						_this.spin['spintax'] = text;
 					}
 
 					// check if api response is fail
@@ -26133,42 +26136,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Word"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('h1', [_vm._v("Article")]), _c('hr'), _vm._v(" "), _c('label', {
-    attrs: {
-      "for": "articleType"
-    }
-  }, [_vm._v("Article Type")]), _vm._v(" "), (_vm.isArticleTypesLoaded) ? _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.spin.articleType),
-      expression: "spin.articleType"
-    }],
-    staticClass: "form-control",
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.spin.articleType = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', {
-    attrs: {
-      "value": "select"
-    }
-  }, [_vm._v("Please select an article type")]), _vm._v(" "), _vm._l((_vm.articleTypes), function(type) {
-    return _c('option', {
-      domProps: {
-        "value": type.id
-      }
-    }, [_vm._v(_vm._s(type.article_type))])
-  })], 2) : _vm._e()]), _vm._v(" "), _c('div', {
+  }, [_c('h1', [_vm._v("Article")]), _c('hr'), _vm._v(" "), _c('div', {
     staticClass: "Curated"
   }, [(_vm.isSuccess) ? _c('div', {
     staticClass: "Word__result"
@@ -26199,6 +26167,41 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "value": _vm.token
     }
   }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "articleType"
+    }
+  }, [_vm._v("Article Type")]), _vm._v(" "), (_vm.isArticleTypesLoaded) ? _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.article_type_id),
+      expression: "spin.article_type_id"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.spin.article_type_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "select"
+    }
+  }, [_vm._v("Please select an article type")]), _vm._v(" "), _vm._l((_vm.articleTypes), function(type) {
+    return _c('option', {
+      domProps: {
+        "value": type.id
+      }
+    }, [_vm._v(_vm._s(type.article_type))])
+  })], 2) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -26252,6 +26255,45 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "dom_name"
+    }
+  }, [_vm._v("Domain Name")]), _vm._v("   "), (_vm.isDomainNotSet) ? _c('span', {
+    staticStyle: {
+      "color": "red"
+    }
+  }, [_vm._v("This domain not set yet.")]) : _vm._e(), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.domain_id),
+      expression: "spin.domain_id"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": [function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.spin.domain_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.domainChange]
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "select"
+    }
+  }, [_vm._v("Select a domain")]), _vm._v(" "), _vm._l((_vm.domains), function(domain) {
+    return _c('option', {
+      domProps: {
+        "value": domain.id
+      }
+    }, [_vm._v(_vm._s(domain.domain))])
+  })], 2)]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
@@ -26306,45 +26348,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })])]), _c('br'), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "dom_name"
-    }
-  }, [_vm._v("Domain Name")]), _vm._v("   "), (_vm.isDomainNotSet) ? _c('span', {
-    staticStyle: {
-      "color": "red"
-    }
-  }, [_vm._v("This domain not set yet.")]) : _vm._e(), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.spin.domain_id),
-      expression: "spin.domain_id"
-    }],
-    staticClass: "form-control",
-    on: {
-      "change": [function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.spin.domain_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }, _vm.domainChange]
-    }
-  }, [_c('option', {
-    attrs: {
-      "value": "select"
-    }
-  }, [_vm._v("Select a domain")]), _vm._v(" "), _vm._l((_vm.domains), function(domain) {
-    return _c('option', {
-      domProps: {
-        "value": domain.id
-      }
-    }, [_vm._v(_vm._s(domain.domain))])
-  })], 2)]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"

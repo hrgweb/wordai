@@ -117,6 +117,8 @@ class WordsController extends Controller
             return response()->json(['isError' => true, 'errors' => $validator->errors()]);
         }*/
 
+        // return request()->all();
+
         return $this->generateSpintax($request->all(), $request->article);
 	}
 
@@ -132,7 +134,7 @@ class WordsController extends Controller
 
 	public function postSpinTax()
 	{
-		dd(request()->all());
+		// dd(request()->all());
 
 		$result = auth()->user()->words()->create(request()->all());
 

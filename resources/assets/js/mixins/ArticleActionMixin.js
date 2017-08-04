@@ -18,7 +18,7 @@ export const ArticleActionMixin = {
 			errorType: 1, // legend: 1-input validation, 0-fail response result from server
 			spintaxType: 'article',
 			spin: { 
-				articleType: 'select',
+				article_type_id: 'select',
 				doc_title: '',
 				domain_id: 'select',
 				keyword: '',
@@ -44,6 +44,11 @@ export const ArticleActionMixin = {
 	watch: {
 		articleTypes(data) {
 			this.isArticleTypesLoaded = data.length > 0 ? true : false;
+		},
+
+		article(data) {
+			this.spin['spin'] = data;
+			this.postSpinTax(this.spin); // post article
 		}
 	},
 	methods: {
@@ -68,9 +73,7 @@ export const ArticleActionMixin = {
 			this.isSuccess = false;
 			this.$refs.spinButton.disabled = true;
 
-			this.spin['article_type_id'] = this.articleType;
-			axios.post('/words', this.spin)
-			.then(response => {
+			axios.post('/words', this.spin).then(response => {
 				let data = response.data;
 
 				this.isValidationFail = data.isError;
@@ -97,8 +100,8 @@ export const ArticleActionMixin = {
 						this.generateFullArticle(this.spin.article);
 
 						// post article
-						this.spin['article'] = data.text;
-						this.postSpinTax(this.spin);
+						this.spin['article'] = this.spin.article;
+						this.spin['spintax'] = text;
 					}
 					
 					// check if api response is fail

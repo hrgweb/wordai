@@ -16,6 +16,8 @@ class Word extends Model
     	'lsi_terms',
     	'domain_protected',
     	'article',
+    	'spintax',
+    	'spin',
     	'protected',
     	'synonym'
     ];
