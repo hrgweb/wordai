@@ -10,12 +10,12 @@ class Word extends Model
 {
     protected $fillable = [
     	'article_type_id',
+    	'domain_id',
     	'doc_title', 
     	'keyword',
     	'lsi_terms',
     	'domain_protected',
     	'article',
-    	'dom_name', 
     	'protected',
     	'synonym'
     ];
