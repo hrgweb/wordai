@@ -24,6 +24,9 @@ class EditorsController extends Controller
     			'keyword',
 				'lsi_terms',
 				'domain_protected',
+				'article',
+				'spintax',
+				'spin',
 				'protected',
 				'synonym',
 				'words.created_at'

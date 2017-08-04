@@ -38,6 +38,14 @@
 
 <script>
 	export default {
-		props: ['articles']
+		props: ['articles'],
+		methods: {
+			editArticle(article, index) {
+				this.$emit('isEditing', {
+					article: article,
+					index: index
+				});
+			}
+		}
 	}
 </script>

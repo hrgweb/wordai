@@ -39114,6 +39114,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -39121,6 +39133,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	data: function data() {
 		return {
 			articles: [],
+			article: {},
+			index: 0,
 			isArticlesNotEmpty: false
 		};
 	},
@@ -39133,6 +39147,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	created: function created() {
 		this.articleList();
 	},
+	mounted: function mounted() {
+		$('div#editor').summernote();
+	},
 
 	methods: {
 		articleList: function articleList() {
@@ -39142,8 +39159,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				return _this.articles = response.data;
 			});
 		},
-		editArticle: function editArticle(article, index) {
-			console.log(article, index);
+		updateArticle: function updateArticle(data) {
+			this.article = data.article;
+			this.index = data.index;
 		}
 	}
 });
@@ -39193,9 +39211,18 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Editor"
-  }, [_c('h2', [_vm._v("Editor")]), _vm._v(" "), (_vm.isArticlesNotEmpty) ? _c('article-result', {
+  }, [_c('div', {
+    staticClass: "ArticleDetail"
+  }, [_c('h3', [_vm._v("Spintax Result")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.article.spintax))]), _vm._v(" "), _c('h3', [_vm._v("Processed Article")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.article.spin))]), _vm._v(" "), _c('div', {
+    attrs: {
+      "id": "editor"
+    }
+  }, [_vm._v(_vm._s(_vm.article.spin))])]), _vm._v(" "), _c('h2', [_vm._v("Editor")]), _vm._v(" "), (_vm.isArticlesNotEmpty) ? _c('article-result', {
     attrs: {
       "articles": _vm.articles
+    },
+    on: {
+      "isEditing": _vm.updateArticle
     }
   }) : _vm._e()], 1)
 },staticRenderFns: []}
@@ -39212,7 +39239,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)();
-exports.push([module.i, "\n.Editor[data-v-c27ca10e] { padding: 0 7em;\n}\n", ""]);
+exports.push([module.i, "\n.Editor[data-v-c27ca10e] { padding: 0 7em;\n}\nh3[data-v-c27ca10e] { text-align: center;\n}\np[data-v-c27ca10e] { white-space: pre-wrap;\n}\n", ""]);
 
 /***/ }),
 /* 156 */
@@ -39320,7 +39347,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['articles']
+	props: ['articles'],
+	methods: {
+		editArticle: function editArticle(article, index) {
+			this.$emit('isEditing', {
+				article: article,
+				index: index
+			});
+		}
+	}
 });
 
 /***/ }),
