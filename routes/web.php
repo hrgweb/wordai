@@ -19,6 +19,7 @@ Route::get('verification', 'PagesController@verification');
 Route::prefix('words')->group(function() {
 	Route::get('generate', 'WordsController@article');
 	Route::get('rawArticles', 'WordsController@getRawArticles');
+	Route::get('domainChange', 'WordsController@domainChange');
 	Route::post('/', 'WordsController@store');
 	Route::post('generateArticle', 'WordsController@generateArticle');
 	Route::post('generateParagraph', 'WordsController@generateParagraph');

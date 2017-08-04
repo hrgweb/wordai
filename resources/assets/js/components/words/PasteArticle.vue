@@ -4,7 +4,7 @@
 			<h1>Article</h1><hr>
 
 			<label for="articleType">Article Type</label>
-			<select class="form-control" v-model="articleType" v-if="isArticleTypesLoaded">
+			<select class="form-control" v-model="spin.articleType" v-if="isArticleTypesLoaded">
 				<option value="select">Please select an article type</option>
 				<option v-for="type in articleTypes" :value="type.id">{{ type.article_type }}</option>
 			</select>
@@ -52,16 +52,15 @@
 					<!-- Synonyms -->
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 						<label for="synonyms">Synonyms</label>
-						<textarea class="form-control" rows="8" v-model="spin.synonyms"></textarea>
+						<textarea class="form-control" rows="8" v-model="spin.synonym"></textarea>
 					</div>
 				</div><br>
 
 				<div class="form-group">
-					<label for="dom_name">Domain Name</label>
-					<select class="form-control" v-model="spin.dom_name">
-						<option value="http://www.google.com">http://www.google.com</option>
-						<option value="http://www.youtube.com">http://www.youtube.com</option>
-						<option value="http://www.cnn.com">http://www.cnn.com</option>
+					<label for="dom_name">Domain Name</label> &nbsp; <span style="color: red;" v-if="isDomainNotSet">This domain not set yet.</span>
+					<select class="form-control" v-model="spin.domain_id" @change="domainChange">
+						<option value="select">Select a domain</option>						
+						<option v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
 					</select>
 				</div>
 

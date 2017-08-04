@@ -4527,7 +4527,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -5445,24 +5444,28 @@ var ArticleActionMixin = {
 			errorType: 1, // legend: 1-input validation, 0-fail response result from server
 			spintaxType: 'article',
 			spin: {
+				articleType: 'select',
 				doc_title: '',
-				dom_name: 'http://www.cnn.com',
+				domain_id: 'select',
 				keyword: '',
 				lsi_terms: '',
 				domain_protected: '',
 				article: '',
 				protected: '',
-				synonyms: ''
+				synonym: ''
 			},
-			articleType: 'select',
 			articleTypes: [],
 			isCurated: false,
-			isArticleTypesLoaded: false
+			isArticleTypesLoaded: false,
+			domains: [],
+			isDomainNotSet: false
 		};
 	},
 	created: function created() {
 		this.authUser = JSON.parse(this.user);
+
 		this.listOfArticleType();
+		this.domainList();
 	},
 
 	watch: {
@@ -5562,6 +5565,33 @@ var ArticleActionMixin = {
 
 			axios.get('/articleType/listOfArticleType').then(function (response) {
 				return _this4.articleTypes = response.data;
+			});
+		},
+		domainList: function domainList() {
+			var _this5 = this;
+
+			axios.get('/admin/domainList').then(function (response) {
+				return _this5.domains = response.data;
+			});
+		},
+		domainFillIn: function domainFillIn(isSet, term, synonym) {
+			this.isDomainNotSet = isSet;
+			this.spin['protected'] = term;
+			this.spin['synonym'] = synonym;
+		},
+		domainChange: function domainChange() {
+			var _this6 = this;
+
+			var url = '/words/domainChange?domain_id=' + this.spin.domain_id;
+
+			if (this.spin.domain_id > 0) axios.get(url).then(function (response) {
+				var data = response.data;
+
+				if (data) {
+					_this6.domainFillIn(false, data.protected, data.synonym);
+				} else {
+					_this6.domainFillIn(true, '', '');
+				}
 			});
 		}
 	}
@@ -26112,8 +26142,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.articleType),
-      expression: "articleType"
+      value: (_vm.spin.articleType),
+      expression: "spin.articleType"
     }],
     staticClass: "form-control",
     on: {
@@ -26124,7 +26154,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.articleType = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.spin.articleType = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', {
@@ -26258,20 +26288,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.spin.synonyms),
-      expression: "spin.synonyms"
+      value: (_vm.spin.synonym),
+      expression: "spin.synonym"
     }],
     staticClass: "form-control",
     attrs: {
       "rows": "8"
     },
     domProps: {
-      "value": (_vm.spin.synonyms)
+      "value": (_vm.spin.synonym)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.spin.synonyms = $event.target.value
+        _vm.spin.synonym = $event.target.value
       }
     }
   })])]), _c('br'), _vm._v(" "), _c('div', {
@@ -26280,38 +26310,40 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "dom_name"
     }
-  }, [_vm._v("Domain Name")]), _vm._v(" "), _c('select', {
+  }, [_vm._v("Domain Name")]), _vm._v("   "), (_vm.isDomainNotSet) ? _c('span', {
+    staticStyle: {
+      "color": "red"
+    }
+  }, [_vm._v("This domain not set yet.")]) : _vm._e(), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.spin.dom_name),
-      expression: "spin.dom_name"
+      value: (_vm.spin.domain_id),
+      expression: "spin.domain_id"
     }],
     staticClass: "form-control",
     on: {
-      "change": function($event) {
+      "change": [function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
           return o.selected
         }).map(function(o) {
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.spin.dom_name = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
+        _vm.spin.domain_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.domainChange]
     }
   }, [_c('option', {
     attrs: {
-      "value": "http://www.google.com"
+      "value": "select"
     }
-  }, [_vm._v("http://www.google.com")]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "http://www.youtube.com"
-    }
-  }, [_vm._v("http://www.youtube.com")]), _vm._v(" "), _c('option', {
-    attrs: {
-      "value": "http://www.cnn.com"
-    }
-  }, [_vm._v("http://www.cnn.com")])])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Select a domain")]), _vm._v(" "), _vm._l((_vm.domains), function(domain) {
+    return _c('option', {
+      domProps: {
+        "value": domain.id
+      }
+    }, [_vm._v(_vm._s(domain.domain))])
+  })], 2)]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"

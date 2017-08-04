@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Article;
+use App\DomainDetail;
 use App\Repositories\Copyscape;
 use App\Repositories\Spintax;
 use App\Repositories\WordRepository;
@@ -259,5 +260,10 @@ class WordsController extends Controller
 	        ->post();
 
 		return $result;
+	}
+
+	public function domainChange()
+	{
+		return DomainDetail::where('domain_id', request('domain_id'))->first();
 	}
 }

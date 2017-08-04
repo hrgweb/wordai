@@ -18,24 +18,28 @@ export const ArticleActionMixin = {
 			errorType: 1, // legend: 1-input validation, 0-fail response result from server
 			spintaxType: 'article',
 			spin: { 
+				articleType: 'select',
 				doc_title: '',
-				dom_name: 'http://www.cnn.com',
+				domain_id: 'select',
 				keyword: '',
 				lsi_terms: '',
 				domain_protected: '',
 				article: '',
 				protected: '',
-				synonyms: ''
+				synonym: ''
 			},
-			articleType: 'select',
 			articleTypes: [],
 			isCurated: false,
-			isArticleTypesLoaded: false
+			isArticleTypesLoaded: false,
+			domains: [],
+			isDomainNotSet: false
 		}
 	},
 	created() {
 		this.authUser = JSON.parse(this.user);
+
 		this.listOfArticleType();
+		this.domainList();
 	},
 	watch: {
 		articleTypes(data) {
@@ -128,6 +132,30 @@ export const ArticleActionMixin = {
 
 		listOfArticleType() {
 			axios.get('/articleType/listOfArticleType').then(response => this.articleTypes = response.data);
+		},
+
+		domainList() {
+			axios.get('/admin/domainList').then(response => this.domains = response.data);
+		},
+
+		domainFillIn(isSet, term, synonym) {
+			this.isDomainNotSet = isSet;
+			this.spin['protected'] = term;
+			this.spin['synonym'] = synonym;
+		},
+
+		domainChange() {
+			let url = '/words/domainChange?domain_id=' + this.spin.domain_id;
+
+			if (this.spin.domain_id > 0) axios.get(url).then(response => {
+				let data = response.data;
+
+				if (data) {
+					this.domainFillIn(false, data.protected, data.synonym);
+				} else {
+					this.domainFillIn(true, '', '');
+				}
+			});
 		}
 	}
 
