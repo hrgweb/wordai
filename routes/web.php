@@ -69,6 +69,11 @@ Route::prefix('user')->group(function() {
 	Route::delete('dissmissUser', 'UserController@dissmissUser');
 });
 
+// Editor
+Route::prefix('editor')->group(function() {
+	Route::get('articleList', 'EditorsController@articleList');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

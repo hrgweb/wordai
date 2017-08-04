@@ -39101,6 +39101,13 @@ module.exports = __webpack_require__(21);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue__ = __webpack_require__(157);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue__);
+//
+//
+//
+//
+//
 //
 //
 //
@@ -39108,12 +39115,36 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+	components: { ArticleResult: __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default.a },
 	data: function data() {
-		return {};
+		return {
+			articles: [],
+			isArticlesNotEmpty: false
+		};
 	},
-	mounted: function mounted() {
-		console.log('ready');
+
+	watch: {
+		articles: function articles(data) {
+			this.isArticlesNotEmpty = data.length > 0 ? true : false;
+		}
+	},
+	created: function created() {
+		this.articleList();
+	},
+
+	methods: {
+		articleList: function articleList() {
+			var _this = this;
+
+			axios.get('/editor/articleList').then(function (response) {
+				return _this.articles = response.data;
+			});
+		},
+		editArticle: function editArticle(article, index) {
+			console.log(article, index);
+		}
 	}
 });
 
@@ -39160,12 +39191,14 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Editor"
-  }, [_c('h2', [_vm._v("Editor")])])
-}]}
+  }, [_c('h2', [_vm._v("Editor")]), _vm._v(" "), (_vm.isArticlesNotEmpty) ? _c('article-result', {
+    attrs: {
+      "articles": _vm.articles
+    }
+  }) : _vm._e()], 1)
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -39205,6 +39238,124 @@ if(false) {
  }
  // When the module is disposed, remove the <style> tags
  module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 157 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(0)(
+  /* script */
+  __webpack_require__(158),
+  /* template */
+  __webpack_require__(159),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\editor\\ArticleResult.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ArticleResult.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-54f9dd57", Component.options)
+  } else {
+    hotAPI.reload("data-v-54f9dd57", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 158 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['articles']
+});
+
+/***/ }),
+/* 159 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "ArticleResult"
+  }, [_c('table', {
+    staticClass: "table table-striped table-hover"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(article.firstname) + " " + _vm._s(article.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.article_type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.lsi_terms))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain_protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.synonym))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-info",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.editArticle(article, index)
+        }
+      }
+    }, [_vm._v("Edit")])])])
+  }))])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("User")]), _vm._v(" "), _c('th', [_vm._v("Article Type")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("LSI Terms")]), _vm._v(" "), _c('th', [_vm._v("Domain Protected")]), _vm._v(" "), _c('th', [_vm._v("Protected")]), _vm._v(" "), _c('th', [_vm._v("Synonym")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("Actions")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-54f9dd57", module.exports)
+  }
 }
 
 /***/ })
