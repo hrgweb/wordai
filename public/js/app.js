@@ -39571,18 +39571,66 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['articles'],
 	data: function data() {
 		return {
+			articleList: [],
 			search: '',
-			searchType: ['Title', 'Keyword'],
+			type: 'doc_title',
+			sort: 'a-z',
 			sortBy: ['A-Z', 'Z-A']
 		};
 	},
+
+	computed: {
+		/*orderArticles() {
+  	return this.filterArticles.sort((a, b) => {
+  		let result = [];
+  			if (this.sort === 'a-z') {
+  			result = a[this.type] < b[this.type];
+  		} else {
+  			result = a[this.type] > b[this.type];
+  		}
+  			return result;
+  	});
+  },*/
+
+		filterArticles: function filterArticles() {
+			var _this = this;
+
+			return this.articleList.filter(function (article) {
+				return article[_this.type].match(new RegExp(_this.search, 'i'));
+			});
+		}
+	},
 	mounted: function mounted() {
-		console.log('ready');
+		this.articleList = this.articles;
+	},
+
+	methods: {
+		orderArticles: function orderArticles() {
+			var _this2 = this;
+
+			if (this.search.length > 0) {
+				this.articleList = this.filterArticles.sort(function (a, b) {
+					return _this2.sort === 'a-z' ? a[_this2.type] > b[_this2.type] : a[_this2.type] < b[_this2.type];
+				});
+			} else {
+				this.articleList = this.articleList.sort(function (a, b) {
+					return _this2.sort === 'a-z' ? a[_this2.type] > b[_this2.type] : a[_this2.type] < b[_this2.type];
+				});
+			}
+		},
+		goSearch: function goSearch() {
+			if (this.search.length > 0) {
+				return this.filterArticles;
+			} else {
+				this.articleList = this.articles;
+			}
+		}
 	}
 });
 
@@ -39634,16 +39682,35 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": "searchType"
     }
   }, [_vm._v("Search for")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.type),
+      expression: "type"
+    }],
     attrs: {
       "id": "searchType"
-    }
-  }, _vm._l((_vm.searchType), function(type) {
-    return _c('option', {
-      domProps: {
-        "value": type.toLowerCase()
+    },
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.type = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
-    }, [_vm._v(_vm._s(type))])
-  })), _vm._v(" "), _c('input', {
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "doc_title"
+    }
+  }, [_vm._v("Title")]), _vm._v(" "), _c('option', {
+    attrs: {
+      "value": "keyword"
+    }
+  }, [_vm._v("Keyword")])]), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -39652,12 +39719,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     attrs: {
       "type": "text",
-      "placeholder": "Type your search here"
+      "placeholder": "Search here"
     },
     domProps: {
       "value": (_vm.search)
     },
     on: {
+      "keyup": _vm.goSearch,
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.search = $event.target.value
@@ -39668,8 +39736,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "for": "sortBy"
     }
   }, [_vm._v("Sort by")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.sort),
+      expression: "sort"
+    }],
     attrs: {
       "id": "sortBy"
+    },
+    on: {
+      "change": [function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.sort = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.orderArticles]
     }
   }, _vm._l((_vm.sortBy), function(sort) {
     return _c('option', {
@@ -39681,7 +39766,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "Result"
   }, [_c('table', {
     staticClass: "table table-striped table-hover"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article) {
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.filterArticles), function(article) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(article.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td')])
   }))])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;

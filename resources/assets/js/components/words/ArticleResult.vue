@@ -3,16 +3,17 @@
 		<div class="Input">
 			<!-- Search for -->
 			<label for="searchType">Search for</label>
-			<select id="searchType">
-				<option v-for="type in searchType" :value="type.toLowerCase()">{{ type }}</option>
+			<select id="searchType" v-model="type">
+				<option value="doc_title">Title</option>
+				<option value="keyword">Keyword</option>
 			</select>
 
 			<!-- Search input -->
-			<input type="text" v-model="search" placeholder="Type your search here">
+			<input type="text" placeholder="Search here" v-model="search" @keyup="goSearch">
 
 			<!-- Sort by -->
 			<label for="sortBy">Sort by</label>
-			<select id="sortBy">
+			<select id="sortBy" v-model="sort" @change="orderArticles">
 				<option v-for="sort in sortBy" :value="sort.toLowerCase()">{{ sort }}</option>
 			</select>
 		</div>
@@ -29,7 +30,7 @@
 			        </tr>
 			    </thead>
 			    <tbody>
-					<tr v-for="article in articles">
+					<tr v-for="article in filterArticles">
 						<td>{{ article.created_at }}</td>
 						<td>{{ article.doc_title }}</td>
 						<td>{{ article.keyword }}</td>
@@ -47,13 +48,57 @@
 		props: ['articles'],
 		data() {
 			return {
+				articleList: [],
 				search: '',
-				searchType: ['Title', 'Keyword'],
+				type: 'doc_title',
+				sort: 'a-z',
 				sortBy: ['A-Z', 'Z-A']
 			}
 		},
+		computed: {
+			/*orderArticles() {
+				return this.filterArticles.sort((a, b) => {
+					let result = [];
+
+					if (this.sort === 'a-z') {
+						result = a[this.type] < b[this.type];
+					} else {
+						result = a[this.type] > b[this.type];
+					}
+
+					return result;
+				});
+			},*/
+
+			filterArticles() {
+				return this.articleList.filter((article) => {
+					return article[this.type].match(new RegExp(this.search, 'i'));
+				});
+			},
+		},
 		mounted() {
-			console.log('ready');
+			this.articleList = this.articles;
+		},
+		methods: {
+			orderArticles() {
+				if (this.search.length > 0) {
+					this.articleList = this.filterArticles.sort((a, b) => {
+						return (this.sort === 'a-z') ? a[this.type] > b[this.type] : a[this.type] < b[this.type];
+					});
+				} else {
+					this.articleList = this.articleList.sort((a, b) => {
+						return (this.sort === 'a-z') ? a[this.type] > b[this.type] : a[this.type] < b[this.type];
+					});
+				}
+			},
+
+			goSearch() {
+				if (this.search.length > 0) {
+					return this.filterArticles;
+				} else {
+					this.articleList = this.articles;
+				}
+			}
 		}
 	}
 </script>

@@ -22,6 +22,16 @@ class Word extends Model
     	'synonym'
     ];
 
+    public function setDocTitleAttribute($title)
+    {
+    	$this->attributes['doc_title'] = ucwords($title);
+    }
+
+    public function setKeywordAttribute($keyword)
+    {
+    	$this->attributes['keyword'] = ucwords($keyword);
+    }
+
     public function writer()
     {
     	return $this->belongsTo(User::class);

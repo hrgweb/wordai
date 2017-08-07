@@ -60,6 +60,7 @@ class UserController extends Controller
     		->join('article_types', 'article_types.id', '=', 'words.article_type_id')
     		->join('domains', 'domains.id', '=', 'words.domain_id')
     		->where('words.user_id', auth()->user()->id)
+    		->orderBy('words.doc_title', 'asc')
     		->get([
     			'words.id',
     			'users.firstname', 
