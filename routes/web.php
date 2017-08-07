@@ -15,6 +15,7 @@ Route::get('copyscape', 'PagesController@copyscape');
 Route::get('curl', 'PagesController@curl');
 Route::get('verification', 'PagesController@verification');
 Route::get('editor', 'PagesController@editor');
+Route::get('articles', 'PagesController@articles');
 
 // WordAI
 Route::prefix('words')->group(function() {
@@ -62,6 +63,7 @@ Route::prefix('user')->group(function() {
 	Route::get('pendingUsers', 'UserController@pendingUsers');
 	Route::get('userList', 'UserController@userList');
 	Route::get('userLevelList', 'UserController@userLevelList');
+	Route::get('userArticles', 'UserController@userArticles');
 	Route::patch('verifySignup', 'UserController@verifySignup');
 	Route::patch('updateRole', 'UserController@updateRole');
 	Route::patch('suspendUser', 'UserController@suspendUser');

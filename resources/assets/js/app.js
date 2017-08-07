@@ -16,8 +16,9 @@ import WordApi2 from './components/words/WordApi2.vue';
 import CurationEdit from './components/words/CurationEdit.vue';
 import PasteArticle from './components/words/PasteArticle.vue';
 import CopyscapeApiResult from './components/words/CopyscapeApiResult.vue';
-import CurlPage from './components/words/CurlPage.vue';
+// import CurlPage from './components/words/CurlPage.vue';
 import GenerateArticle from './components/words/GenerateArticle.vue';
+import UserArticle from './components/words/UserArticle.vue';
 import Editor from './components/editor/Editor.vue';
 
 const app = new Vue({
@@ -25,18 +26,19 @@ const app = new Vue({
     el: '#app',
     components: {
     	Admin,
+    	PendingUser,
+    	Domain,
+    	User,
+    	ProtectedTerm,
+    	DomainDetail,
     	WordApi,
     	WordApi2,
     	CurationEdit,
     	PasteArticle,
     	CopyscapeApiResult,
-    	CurlPage,
+    	// CurlPage,
     	GenerateArticle,
-    	PendingUser,
-    	Domain,
-    	ProtectedTerm,
-    	DomainDetail,
-    	User,
+    	UserArticle,
     	Editor
     }
 });

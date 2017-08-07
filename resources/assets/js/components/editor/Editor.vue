@@ -20,28 +20,18 @@
 <script>
 	import ArticleResult from './ArticleResult.vue';
 	import ArticleEditor from './ArticleEditor.vue';
+	import { UserArticleMixin } from './../../mixins/UserArticleMixin.js';
 
 	export default {
 		components: { ArticleResult, ArticleEditor },
+		mixins: [ UserArticleMixin ],
 		data() {
 			return {
-				articles: [],
-				article: {},
-				index: 0,
-				isArticlesNotEmpty: false,
 				isEdit: false
-			}
-		},
-		watch: {
-			articles(data) {
-				this.isArticlesNotEmpty = (data.length > 0) ? true : false;
 			}
 		},
 		created() {
 			this.articleList();
-		},
-		mounted() {
-			$('div#editor').summernote();
 		},
 		methods: {
 			articleList() {

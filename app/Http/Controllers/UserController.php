@@ -52,4 +52,30 @@ class UserController extends Controller
     {
     	return DB::table('users')->where('id', request('user_id'))->update(['status_id' => 1]);
     }
+
+    public function userArticles()
+    {
+    	return DB::table('words')
+    		->join('users', 'users.id', '=', 'words.user_id')
+    		->join('article_types', 'article_types.id', '=', 'words.article_type_id')
+    		->join('domains', 'domains.id', '=', 'words.domain_id')
+    		->where('words.user_id', auth()->user()->id)
+    		->get([
+    			'words.id',
+    			'users.firstname', 
+    			'users.lastname',
+    			'article_types.article_type',
+    			'domains.domain',
+    			'doc_title',
+    			'keyword',
+				'lsi_terms',
+				'domain_protected',
+				'article',
+				'spintax',
+				'spin',
+				'protected',
+				'synonym',
+				'words.created_at'
+    		]);
+    }
 }

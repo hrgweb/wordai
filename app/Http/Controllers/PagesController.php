@@ -65,4 +65,9 @@ class PagesController extends Controller
     {
     	return view('editor.index');
     }
+
+    public function articles()
+    {
+    	return view('users.articles');
+    }
 }

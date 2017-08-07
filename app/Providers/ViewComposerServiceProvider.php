@@ -18,7 +18,8 @@ class ViewComposerServiceProvider extends ServiceProvider
         	'layouts.*', 
         	'home', 
         	'words.*',
-        	'editor.*'
+        	'editor.*',
+        	'users.articles'
         ], function($view) {
         	$view->with('user', auth()->user());
         });
