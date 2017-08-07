@@ -1,14 +1,10 @@
 <template>
 	<div class="Editor">
-		<!-- Article Detail -->
-		<div class="ArticleDetail">
-			<h3>Spintax Result</h3>
-			<p>{{ article.spintax }}</p>
-
-			<h3>Processed Article</h3>
-			<p>{{ article.spin }}</p>
-			<div id="editor">{{ article.spin }}</div>
-		</div>
+		<!-- Article Editor -->
+		<article-editor
+			:article="article"
+			v-if="isEdit">
+		</article-editor>
 
 		<h2>Editor</h2>
 
@@ -23,14 +19,17 @@
 
 <script>
 	import ArticleResult from './ArticleResult.vue';
+	import ArticleEditor from './ArticleEditor.vue';
+
 	export default {
-		components: { ArticleResult },
+		components: { ArticleResult, ArticleEditor },
 		data() {
 			return {
 				articles: [],
 				article: {},
 				index: 0,
 				isArticlesNotEmpty: false,
+				isEdit: false
 			}
 		},
 		watch: {
@@ -52,6 +51,7 @@
 			updateArticle(data) {
 				this.article = data.article;
 				this.index = data.index;
+				this.isEdit = true;
 			}
 		}
 	}
@@ -59,6 +59,4 @@
 
 <style scoped>
 	.Editor { padding: 0 7em; }
-	h3 { text-align: center; }
-	p { white-space: pre-wrap; }
 </style>
