@@ -2,14 +2,15 @@
 	<div class="ArticleResult">
 		<div class="Input">
 			<!-- Search for -->
-			<label for="searchType">Search for</label>
+			<label for="searchType">Search for</label>&nbsp;
 			<select id="searchType" v-model="type">
 				<option value="doc_title">Title</option>
 				<option value="keyword">Keyword</option>
 			</select>
 
 			<!-- Search input -->
-			<input type="text" placeholder="Search here" v-model="search" @keyup="goSearch">
+			<input type="text" placeholder="Type text here" v-model="search" @keyup="goSearch">
+			&nbsp;&nbsp;
 
 			<!-- Sort by -->
 			<label for="sortBy">Sort by</label>
@@ -26,7 +27,7 @@
 			            <th>Title</th>
 			            <th>Keyword</th>
 			            <th>Domain</th>
-			            <th class="text-center">Actions</th>
+			            <!-- <th class="text-center">Actions</th> -->
 			        </tr>
 			    </thead>
 			    <tbody>
@@ -35,7 +36,7 @@
 						<td>{{ article.doc_title }}</td>
 						<td>{{ article.keyword }}</td>
 						<td>{{ article.domain }}</td>
-						<td></td>
+						<!-- <td></td> -->
 					</tr>
 			    </tbody>
 			</table>
@@ -56,20 +57,6 @@
 			}
 		},
 		computed: {
-			/*orderArticles() {
-				return this.filterArticles.sort((a, b) => {
-					let result = [];
-
-					if (this.sort === 'a-z') {
-						result = a[this.type] < b[this.type];
-					} else {
-						result = a[this.type] > b[this.type];
-					}
-
-					return result;
-				});
-			},*/
-
 			filterArticles() {
 				return this.articleList.filter((article) => {
 					return article[this.type].match(new RegExp(this.search, 'i'));
@@ -102,3 +89,11 @@
 		}
 	}
 </script>
+
+<style scoped>
+	input, select {
+	    height: 2em;
+	    padding: 0 0.5em 0 1em;
+	    border: 1px solid silver;
+	}
+</style>

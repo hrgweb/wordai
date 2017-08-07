@@ -39572,6 +39572,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['articles'],
@@ -39586,18 +39587,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 
 	computed: {
-		/*orderArticles() {
-  	return this.filterArticles.sort((a, b) => {
-  		let result = [];
-  			if (this.sort === 'a-z') {
-  			result = a[this.type] < b[this.type];
-  		} else {
-  			result = a[this.type] > b[this.type];
-  		}
-  			return result;
-  	});
-  },*/
-
 		filterArticles: function filterArticles() {
 			var _this = this;
 
@@ -39638,13 +39627,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 169 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(174)
+
 var Component = __webpack_require__(0)(
   /* script */
   __webpack_require__(168),
   /* template */
   __webpack_require__(170),
   /* scopeId */
-  null,
+  "data-v-1a643e37",
   /* cssModules */
   null
 )
@@ -39681,7 +39674,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "searchType"
     }
-  }, [_vm._v("Search for")]), _vm._v(" "), _c('select', {
+  }, [_vm._v("Search for")]), _vm._v(" \n\t\t"), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -39719,7 +39712,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     attrs: {
       "type": "text",
-      "placeholder": "Search here"
+      "placeholder": "Type text here"
     },
     domProps: {
       "value": (_vm.search)
@@ -39731,7 +39724,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.search = $event.target.value
       }
     }
-  }), _vm._v(" "), _c('label', {
+  }), _vm._v("\n\t\t  \n\n\t\t"), _vm._v(" "), _c('label', {
     attrs: {
       "for": "sortBy"
     }
@@ -39767,12 +39760,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('table', {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.filterArticles), function(article) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(article.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td')])
+    return _c('tr', [_c('td', [_vm._v(_vm._s(article.created_at))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))])])
   }))])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', {
-    staticClass: "text-center"
-  }, [_vm._v("Actions")])])])
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Domain")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -39804,6 +39795,40 @@ var UserArticleMixin = {
 		}
 	}
 };
+
+/***/ }),
+/* 172 */,
+/* 173 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)();
+exports.push([module.i, "\ninput[data-v-1a643e37], select[data-v-1a643e37] {\n    height: 2em;\n    padding: 0 0.5em 0 1em;\n    border: 1px solid silver;\n}\n", ""]);
+
+/***/ }),
+/* 174 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(173);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("2ade4e05", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1a643e37\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleResult.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1a643e37\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleResult.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);
