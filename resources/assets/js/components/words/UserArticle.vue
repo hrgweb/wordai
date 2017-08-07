@@ -1,6 +1,6 @@
 <template>
 	<div class="UserArticle">
-		<h2>{{ fullName }}'s Articles</h2>
+		<h2>{{ fullName }}'s Articles</h2><hr>
 
 		<!-- Article Result -->
 		<article-result

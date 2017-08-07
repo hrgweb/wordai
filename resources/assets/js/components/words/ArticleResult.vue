@@ -25,18 +25,20 @@
 			        <tr>
 			            <th>Date</th>
 			            <th>Title</th>
-			            <th>Keyword</th>
 			            <th>Domain</th>
-			            <!-- <th class="text-center">Actions</th> -->
+			            <th>Keyword</th>
+			            <th>Status</th>
 			        </tr>
 			    </thead>
 			    <tbody>
 					<tr v-for="article in filterArticles">
-						<td>{{ article.created_at }}</td>
+						<td>{{ dateTime(article.created_at).format('MMMM D, YYYY, h:mm:ss ') }}</td>
 						<td>{{ article.doc_title }}</td>
-						<td>{{ article.keyword }}</td>
 						<td>{{ article.domain }}</td>
-						<!-- <td></td> -->
+						<td>{{ article.keyword }}</td>
+						<td>
+							<button type="button" class="btn btn-success">Edit</button>
+						</td>
 					</tr>
 			    </tbody>
 			</table>
@@ -53,7 +55,8 @@
 				search: '',
 				type: 'doc_title',
 				sort: 'a-z',
-				sortBy: ['A-Z', 'Z-A']
+				sortBy: ['A-Z', 'Z-A'],
+				dateTime: moment
 			}
 		},
 		computed: {
@@ -65,6 +68,8 @@
 		},
 		mounted() {
 			this.articleList = this.articles;
+
+			console.log(moment());
 		},
 		methods: {
 			orderArticles() {
