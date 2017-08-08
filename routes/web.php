@@ -74,6 +74,7 @@ Route::prefix('user')->group(function() {
 // Editor
 Route::prefix('editor')->group(function() {
 	Route::get('articleList', 'EditorsController@articleList');
+	Route::patch('updateArticle', 'EditorsController@updateArticle');
 });
 
 Auth::routes();

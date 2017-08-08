@@ -27,7 +27,7 @@
 		        	<td>{{ article.protected }}</td>
 		        	<td>{{ article.synonym }}</td>
 		        	<td>
-		        		<button type="button" class="btn btn-info" @click="editArticle(article, index)">Edit</button>
+		        		<button type="button" class="btn btn-info" @click="editArticle(article, index)">Edit Article</button>
 		        		<!-- <button type="button" class="btn btn-default">button</button> -->
 		        	</td>
 		        </tr>

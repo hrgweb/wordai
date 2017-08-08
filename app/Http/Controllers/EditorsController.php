@@ -32,4 +32,26 @@ class EditorsController extends Controller
 				'words.created_at'
     		]);
     }
+
+    public function updateArticle()
+    {
+    	$editor_id = request()->user()->id;
+    	$article = request('article');
+
+    	DB::beginTransaction();
+		try {
+			// update words table set isEdit to true, editor_id to the editor & spin to new article
+			$result = Word::where('id', request('id'))->update([
+				'spin' => $article,
+				'isEdit' => true,
+				'editor_id' => $editor_id
+			]);
+		} catch (ValidationException $e) {
+			DB::rollback();
+			throw $e;
+		}
+		DB::commit();
+
+    	return response()->json(['isSuccess' => true, 'result' => $article]);
+    }
 }

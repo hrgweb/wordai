@@ -3,7 +3,8 @@
 		<!-- Article Editor -->
 		<article-editor
 			:article="article"
-			v-if="isEdit">
+			v-if="isEdit"
+			@isUpdated="updateRecord">
 		</article-editor>
 
 		<h2>Editor</h2>
@@ -21,6 +22,7 @@
 	import ArticleResult from './ArticleResult.vue';
 	import ArticleEditor from './ArticleEditor.vue';
 	import { UserArticleMixin } from './../../mixins/UserArticleMixin.js';
+	// import { EventBus } from './../../eventbus/EventBus.js';
 
 	export default {
 		components: { ArticleResult, ArticleEditor },
@@ -43,6 +45,13 @@
 				this.article = data.article;
 				this.index = data.index;
 				Vue.nextTick(() => this.isEdit = true );
+			},
+
+			updateRecord(data) {
+				if (data) {
+					this.isEdit = false;
+					this.articles[this.index].spin = data.article;
+				}
 			}
 		}
 	}

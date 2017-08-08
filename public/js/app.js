@@ -19259,11 +19259,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['article'],
 	mounted: function mounted() {
 		$('div#editor').summernote('editor.insertText', this.article.spin);
+	},
+
+	methods: {
+		updateArticle: function updateArticle() {
+			var _this = this;
+
+			var data = {
+				id: this.article.id,
+				article: $('div.note-editable').html()
+			};
+
+			axios.patch('/editor/updateArticle', data).then(function (response) {
+				var data = response.data;
+
+				if (data.isSuccess) {
+					_this.$emit('isUpdated', { article: data.result });
+				}
+			});
+		}
 	}
 });
 
@@ -19354,10 +19377,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
 
+// import { EventBus } from './../../eventbus/EventBus.js';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	components: { ArticleResult: __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default.a, ArticleEditor: __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue___default.a },
@@ -19388,6 +19413,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			Vue.nextTick(function () {
 				return _this2.isEdit = true;
 			});
+		},
+		updateRecord: function updateRecord(data) {
+			if (data) {
+				this.isEdit = false;
+				this.articles[this.index].spin = data.article;
+			}
 		}
 	}
 });
@@ -42334,8 +42365,6 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _vm._m(0)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "ArticleEditor"
   }, [_c('div', {
@@ -42344,8 +42373,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "editor"
     }
-  })])])
-}]}
+  }), _vm._v(" "), _c('div', {
+    staticClass: "Actions"
+  }, [_c('button', {
+    staticClass: "btn btn-danger",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.updateArticle
+    }
+  }, [_vm._v("Update Article")])])])])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -43708,7 +43747,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.editArticle(article, index)
         }
       }
-    }, [_vm._v("Edit")])])])
+    }, [_vm._v("Edit Article")])])])
   }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("User")]), _vm._v(" "), _c('th', [_vm._v("Article Type")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("LSI Terms")]), _vm._v(" "), _c('th', [_vm._v("Domain Protected")]), _vm._v(" "), _c('th', [_vm._v("Protected")]), _vm._v(" "), _c('th', [_vm._v("Synonym")]), _vm._v(" "), _c('th', {
@@ -44616,6 +44655,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [(_vm.isEdit) ? _c('article-editor', {
     attrs: {
       "article": _vm.article
+    },
+    on: {
+      "isUpdated": _vm.updateRecord
     }
   }) : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("Editor")]), _vm._v(" "), (_vm.isArticlesNotEmpty) ? _c('article-result', {
     attrs: {
