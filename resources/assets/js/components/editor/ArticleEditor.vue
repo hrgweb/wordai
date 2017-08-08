@@ -1,9 +1,9 @@
 <template>
 	<div class="ArticleEditor">
-		<div class="Spintax__result">
+		<!-- <div class="Spintax__result">
 			<h3>Spintax Result</h3>
 			<p>{{ article.spintax }}</p>
-		</div>
+		</div> -->
 
 		<div class="Process__article">
 			<h3>Processed Article</h3>

@@ -19380,9 +19380,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			});
 		},
 		updateArticle: function updateArticle(data) {
+			var _this2 = this;
+
+			this.isEdit = false;
 			this.article = data.article;
 			this.index = data.index;
-			this.isEdit = true;
+			Vue.nextTick(function () {
+				return _this2.isEdit = true;
+			});
 		}
 	}
 });
@@ -42329,19 +42334,17 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _vm._m(0)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "ArticleEditor"
   }, [_c('div', {
-    staticClass: "Spintax__result"
-  }, [_c('h3', [_vm._v("Spintax Result")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.article.spintax))])]), _vm._v(" "), _vm._m(0)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
     staticClass: "Process__article"
   }, [_c('h3', [_vm._v("Processed Article")]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "editor"
     }
-  })])
+  })])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

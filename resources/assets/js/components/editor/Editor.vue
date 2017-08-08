@@ -39,9 +39,10 @@
 			},
 
 			updateArticle(data) {
+				this.isEdit = false;
 				this.article = data.article;
 				this.index = data.index;
-				this.isEdit = true;
+				Vue.nextTick(() => this.isEdit = true );
 			}
 		}
 	}
