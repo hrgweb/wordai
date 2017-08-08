@@ -32,7 +32,7 @@
 			    </thead>
 			    <tbody>
 					<tr v-for="article in filterArticles">
-						<td>{{ dateTime(article.created_at).format('MMMM D, YYYY, h:mm:ss ') }}</td>
+						<td>{{ dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a') }}</td>
 						<td>{{ article.doc_title }}</td>
 						<td>{{ article.domain }}</td>
 						<td>{{ article.keyword }}</td>
@@ -68,8 +68,6 @@
 		},
 		mounted() {
 			this.articleList = this.articles;
-
-			console.log(moment());
 		},
 		methods: {
 			orderArticles() {
