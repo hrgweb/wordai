@@ -37,7 +37,7 @@
 						<td>{{ article.domain }}</td>
 						<td>{{ article.keyword }}</td>
 						<td>
-							<button type="button" class="btn btn-success">Edit</button>
+							<button type="button" class="btn btn-warning" disabled="">Waiting For Editing</button>
 						</td>
 					</tr>
 			    </tbody>
@@ -96,7 +96,7 @@
 <style scoped>
 	input, select {
 	    height: 2em;
-	    padding: 0 0.5em 0 1em;
+	    padding: 0 0.5em;
 	    border: 1px solid silver;
 	}
 </style>

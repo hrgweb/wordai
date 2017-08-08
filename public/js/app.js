@@ -23883,7 +23883,7 @@ exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\ninput[data-v-1a643e37], select[data-v-1a643e37] {\n    height: 2em;\n    padding: 0 0.5em 0 1em;\n    border: 1px solid silver;\n}\n", ""]);
+exports.push([module.i, "\ninput[data-v-1a643e37], select[data-v-1a643e37] {\n    height: 2em;\n    padding: 0 0.5em;\n    border: 1px solid silver;\n}\n", ""]);
 
 /***/ }),
 /* 193 */
@@ -42456,11 +42456,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Status")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('td', [_c('button', {
-    staticClass: "btn btn-success",
+    staticClass: "btn btn-warning",
     attrs: {
-      "type": "button"
+      "type": "button",
+      "disabled": ""
     }
-  }, [_vm._v("Edit")])])
+  }, [_vm._v("Waiting For Editing")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
