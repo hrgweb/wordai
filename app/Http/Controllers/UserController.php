@@ -76,6 +76,8 @@ class UserController extends Controller
 				'spin',
 				'protected',
 				'synonym',
+				'words.isEdit',
+				'words.editor_id',
 				'words.created_at'
     		]);
     }

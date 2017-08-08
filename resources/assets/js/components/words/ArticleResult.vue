@@ -37,7 +37,8 @@
 						<td>{{ article.domain }}</td>
 						<td>{{ article.keyword }}</td>
 						<td>
-							<button type="button" class="btn btn-warning" disabled="">Waiting For Editing</button>
+							<button type="button" class="btn btn-warning" v-if="! article.isEdit" disabled>Waiting For Editing</button>
+							<button type="button" class="btn btn-info" v-else disabled>Edited</button>
 						</td>
 					</tr>
 			    </tbody>
@@ -99,4 +100,6 @@
 	    padding: 0 0.5em;
 	    border: 1px solid silver;
 	}
+	
+	button { width: 150px; }
 </style>

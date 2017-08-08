@@ -19276,7 +19276,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			var data = {
 				id: this.article.id,
-				article: $('div.note-editable').html()
+				article: $('div.note-editable').text()
 			};
 
 			axios.patch('/editor/updateArticle', data).then(function (response) {
@@ -19479,6 +19479,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -23919,7 +23920,7 @@ exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\ninput[data-v-1a643e37], select[data-v-1a643e37] {\n    height: 2em;\n    padding: 0 0.5em;\n    border: 1px solid silver;\n}\n", ""]);
+exports.push([module.i, "\ninput[data-v-1a643e37], select[data-v-1a643e37] {\n    height: 2em;\n    padding: 0 0.5em;\n    border: 1px solid silver;\n}\nbutton[data-v-1a643e37] { width: 150px;\n}\n", ""]);
 
 /***/ }),
 /* 193 */
@@ -42492,18 +42493,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('table', {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.filterArticles), function(article) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _vm._m(1, true)])
+    return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [(!article.isEdit) ? _c('button', {
+      staticClass: "btn btn-warning",
+      attrs: {
+        "type": "button",
+        "disabled": ""
+      }
+    }, [_vm._v("Waiting For Editing")]) : _c('button', {
+      staticClass: "btn btn-info",
+      attrs: {
+        "type": "button",
+        "disabled": ""
+      }
+    }, [_vm._v("Edited")])])])
   }))])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Status")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('td', [_c('button', {
-    staticClass: "btn btn-warning",
-    attrs: {
-      "type": "button",
-      "disabled": ""
-    }
-  }, [_vm._v("Waiting For Editing")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

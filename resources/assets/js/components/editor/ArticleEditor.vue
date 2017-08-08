@@ -26,7 +26,7 @@
 			updateArticle() {
 				const data = { 
 					id: this.article.id,
-					article: $('div.note-editable').html() 
+					article: $('div.note-editable').text() 
 				};
 
 				axios.patch('/editor/updateArticle', data).then(response => {
