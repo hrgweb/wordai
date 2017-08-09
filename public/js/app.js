@@ -5517,13 +5517,16 @@ var ArticleMixin = {
 				_this3.$refs.csButton.disabled = false;
 
 				// find all duplicate occurences
-				_this3.copyScapeData(data.result);
+				// this.copyScapeData(data.result);
 
 				// check if api response is fail
 				if (data.error) {
 					_this3.error = data.error;
 					_this3.isError = true;
 					_this3.responseSuccess = false;
+				} else {
+					// find all duplicate occurences
+					_this3.copyScapeData(data.result);
 				}
 			});
 		},
@@ -5540,6 +5543,10 @@ var ArticleMixin = {
 					break;
 				case 'paragraph':
 					this.spin['paragraph'] = this.paragraph;
+					this.copyScapeSetup(url, this.spin);
+					break;
+				case 'edit-article':
+					this.spin['article'] = $('div.note-editable').text();
 					this.copyScapeSetup(url, this.spin);
 					break;
 			}
@@ -19246,6 +19253,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__words_CopyscapeResult_vue__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__words_CopyscapeResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__words_CopyscapeResult_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleMixin_js__ = __webpack_require__(10);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -19266,8 +19287,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['article'],
+	components: { CopyscapeResult: __WEBPACK_IMPORTED_MODULE_0__words_CopyscapeResult_vue___default.a },
+	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleMixin_js__["a" /* ArticleMixin */]],
+	data: function data() {
+		return {
+			type: 'edit-article',
+			spin: {
+				article: '',
+				type: 'edit-article'
+			}
+		};
+	},
 	mounted: function mounted() {
 		$('div#editor').summernote('editor.insertText', this.article.spin);
 	},
@@ -42394,9 +42430,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "editor"
     }
-  }), _vm._v(" "), _c('div', {
+  }), _vm._v(" "), (_vm.responseSuccess) ? _c('copyscape-result', {
+    attrs: {
+      "copy": _vm.copyscape
+    },
+    on: {
+      "updateduplicates": _vm.updateDuplicates
+    }
+  }) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "Actions"
   }, [_c('button', {
+    ref: "csButton",
+    staticClass: "btn btn-warning",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.processToCopyscape
+    }
+  }, [_vm._v("Copyscape")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-info",
     attrs: {
       "type": "button"
@@ -42412,7 +42464,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.dissmissArticle
     }
-  }, [_vm._v("Dismiss")])])])])
+  }, [_vm._v("Dismiss")]), _vm._v("\n\t\t           \n\t\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
+    staticStyle: {
+      "color": "red"
+    }
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br')])], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

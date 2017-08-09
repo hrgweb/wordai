@@ -213,6 +213,9 @@ class WordsController extends Controller
 			case 'paragraph':
 				$articleType = $paragraph;
 				break;
+			case 'edit-article':
+				$articleType = $article;
+				break;
 		}
 
 		$result = copyscape_api_text_search_internet($articleType, 'UTF-8');

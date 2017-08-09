@@ -164,13 +164,16 @@ export const ArticleMixin = {
 				this.$refs.csButton.disabled = false;
 
 				// find all duplicate occurences
-				this.copyScapeData(data.result);
+				// this.copyScapeData(data.result);
 
 				// check if api response is fail
 				if (data.error) {
 					this.error = data.error;
 					this.isError = true;
 					this.responseSuccess = false;
+				} else {
+					// find all duplicate occurences
+					this.copyScapeData(data.result);
 				}
 			});
 		},
@@ -188,6 +191,10 @@ export const ArticleMixin = {
 					break;
 				case 'paragraph':
 					this.spin['paragraph'] = this.paragraph;
+					this.copyScapeSetup(url, this.spin);
+					break;
+				case 'edit-article':
+					this.spin['article'] = $('div.note-editable').text();
 					this.copyScapeSetup(url, this.spin);
 					break;
 			}
