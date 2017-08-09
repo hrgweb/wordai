@@ -19263,6 +19263,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['article'],
@@ -19286,6 +19287,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					_this.$emit('isUpdated', { article: data.result });
 				}
 			});
+		},
+		dissmissArticle: function dissmissArticle() {
+			this.$emit('isDismiss');
 		}
 	}
 });
@@ -19296,7 +19300,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
 //
 //
 //
@@ -19378,6 +19381,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -19419,6 +19425,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				this.isEdit = false;
 				this.articles[this.index].spin = data.article;
 			}
+		},
+		dismissUpdate: function dismissUpdate() {
+			this.isEdit = false;
 		}
 	}
 });
@@ -19479,6 +19488,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -42377,14 +42387,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('div', {
     staticClass: "Actions"
   }, [_c('button', {
-    staticClass: "btn btn-danger",
+    staticClass: "btn btn-info",
     attrs: {
       "type": "button"
     },
     on: {
       "click": _vm.updateArticle
     }
-  }, [_vm._v("Update Article")])])])])
+  }, [_vm._v("Update Article")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.dissmissArticle
+    }
+  }, [_vm._v("Dismiss")])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -42493,22 +42511,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('table', {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.filterArticles), function(article) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [(!article.isEdit) ? _c('button', {
-      staticClass: "btn btn-warning",
-      attrs: {
-        "type": "button",
-        "disabled": ""
-      }
-    }, [_vm._v("Waiting For Editing")]) : _c('button', {
-      staticClass: "btn btn-info",
-      attrs: {
-        "type": "button",
-        "disabled": ""
-      }
-    }, [_vm._v("Edited")])])])
+    return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _vm._m(1, true)])
   }))])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Status")])])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('td', [_c('button', {
+    staticClass: "btn btn-warning",
+    attrs: {
+      "type": "button",
+      "disabled": ""
+    }
+  }, [_vm._v("Edit")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
@@ -44662,16 +44676,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "article": _vm.article
     },
     on: {
-      "isUpdated": _vm.updateRecord
+      "isUpdated": _vm.updateRecord,
+      "isDismiss": _vm.dismissUpdate
     }
-  }) : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("Editor")]), _vm._v(" "), (_vm.isArticlesNotEmpty) ? _c('article-result', {
+  }) : _vm._e(), _vm._v(" "), (!_vm.isEdit) ? _c('div', {
+    staticClass: "Editor__table"
+  }, [_c('h2', [_vm._v("Editor")]), _vm._v(" "), (_vm.isArticlesNotEmpty) ? _c('article-result', {
     attrs: {
       "articles": _vm.articles
     },
     on: {
       "isEditing": _vm.updateArticle
     }
-  }) : _vm._e()], 1)
+  }) : _vm._e()], 1) : _vm._e()], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

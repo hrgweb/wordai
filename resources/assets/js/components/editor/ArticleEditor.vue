@@ -10,7 +10,8 @@
 			<div id="editor"></div>
 
 			<div class="Actions">
-			    <button type="button" class="btn btn-danger" @click="updateArticle">Update Article</button>
+			    <button type="button" class="btn btn-info" @click="updateArticle">Update Article</button>
+		        <button type="button" class="btn btn-danger" @click="dissmissArticle">Dismiss</button>
 			</div>
 		</div>
 	</div>
@@ -36,6 +37,10 @@
 						this.$emit('isUpdated', { article: data.result });
 					}
 				});
+			},
+
+			dissmissArticle() {
+				this.$emit('isDismiss');
 			}
 		}
 	}

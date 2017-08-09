@@ -4,17 +4,20 @@
 		<article-editor
 			:article="article"
 			v-if="isEdit"
-			@isUpdated="updateRecord">
+			@isUpdated="updateRecord"
+			@isDismiss="dismissUpdate">
 		</article-editor>
 
-		<h2>Editor</h2>
+		<div class="Editor__table" v-if="! isEdit">
+			<h2>Editor</h2>
 
-		<!-- Article Result -->
-		<article-result
-			:articles="articles"
-			v-if="isArticlesNotEmpty"
-			@isEditing="updateArticle">
- 		</article-result>
+			<!-- Article Result -->
+			<article-result
+				:articles="articles"
+				v-if="isArticlesNotEmpty"
+				@isEditing="updateArticle">
+	 		</article-result>
+		</div>
 	</div>
 </template>
 
@@ -52,6 +55,10 @@
 					this.isEdit = false;
 					this.articles[this.index].spin = data.article;
 				}
+			},
+
+			dismissUpdate() {
+				this.isEdit = false;
 			}
 		}
 	}
