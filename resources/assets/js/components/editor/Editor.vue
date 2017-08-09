@@ -54,6 +54,15 @@
 				if (data) {
 					this.isEdit = false;
 					this.articles[this.index].spin = data.article;
+					let articleTitle = this.article.doc_title;
+
+					// successfully updated
+					new Noty({
+						type: 'info',
+						text: `<b>${articleTitle}</b> article successfully updated.`,
+						layout: 'bottomLeft',
+						timeout: 5000
+					}).show();
 				}
 			},
 

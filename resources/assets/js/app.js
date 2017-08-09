@@ -3,6 +3,7 @@ require('./bootstrap');
 window.$ = $;
 window.Vue = require('vue');
 window.moment = require('moment');
+window.Noty = require('noty');
 
 /*=============== Components ===============*/  
 
