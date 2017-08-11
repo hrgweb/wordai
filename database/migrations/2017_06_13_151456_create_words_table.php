@@ -29,6 +29,7 @@ class CreateWordsTable extends Migration
             $table->string('synonym')->nullable();
             $table->boolean('isEdit')->default(0);
             $table->integer('editor_id')->unsigned();
+            $table->boolean('isProcess')->default(0);
             $table->timestamps();
         });
     }
