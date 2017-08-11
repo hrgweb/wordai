@@ -37,9 +37,9 @@
 						<td>{{ article.domain }}</td>
 						<td>{{ article.keyword }}</td>
 						<td>
-							<button type="button" class="btn btn-warning" disabled>Edit</button>
-							<!-- <button type="button" class="btn btn-warning" v-if="! article.isEdit" disabled>Waiting For Editing</button> -->
-							<!-- <button type="button" class="btn btn-info" v-else disabled>Edited</button> -->
+							<button type="button" class="btn btn-info" v-if="! article.isProcess" @click="editArticle(article)">Edit</button>
+							<button type="button" class="btn btn-warning" disabled v-else>Waiting For Editing</button>
+							<!-- <button type="button" class="btn warning" v-else disabled>Edited</button> -->
 						</td>
 					</tr>
 			    </tbody>
@@ -58,7 +58,9 @@
 				type: 'doc_title',
 				sort: 'a-z',
 				sortBy: ['A-Z', 'Z-A'],
-				dateTime: moment
+				dateTime: moment,
+				hasSpintax: false,
+				isProcess: false,
 			}
 		},
 		computed: {
@@ -90,6 +92,19 @@
 				} else {
 					this.articleList = this.articles;
 				}
+			},
+
+			editArticle(article) {
+				axios.get('/user/editArticle?wordId='+article.id).then(response => {
+					let data = response.data;
+
+					// check if there has spintax in db
+					if (data.spintax.length > 0) {
+						this.hasSpintax = true;
+					} else {
+						this.hasSpintax = false;
+					}
+				});
 			}
 		}
 	}

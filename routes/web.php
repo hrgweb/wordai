@@ -23,6 +23,7 @@ Route::prefix('words')->group(function() {
 	Route::get('generate', 'WordsController@article');
 	Route::get('rawArticles', 'WordsController@getRawArticles');
 	Route::get('domainChange', 'WordsController@domainChange');
+	Route::get('unprocessArticles', 'WordsController@unprocessArticles');
 	Route::post('/', 'WordsController@store');
 	Route::post('generateArticle', 'WordsController@generateArticle');
 	Route::post('generateParagraph', 'WordsController@generateParagraph');
@@ -65,6 +66,7 @@ Route::prefix('user')->group(function() {
 	Route::get('userList', 'UserController@userList');
 	Route::get('userLevelList', 'UserController@userLevelList');
 	Route::get('userArticles', 'UserController@userArticles');
+	Route::get('editArticle', 'UserController@editArticle');
 	Route::patch('verifySignup', 'UserController@verifySignup');
 	Route::patch('updateRole', 'UserController@updateRole');
 	Route::patch('suspendUser', 'UserController@suspendUser');

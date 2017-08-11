@@ -27,7 +27,8 @@ class CreateWordsTable extends Migration
             $table->text('spin')->nullable();
             $table->string('protected')->nullable();
             $table->string('synonym')->nullable();
-            $table->boolean('isEdit')->default(0);
+            $table->boolean('isUserEdit')->default(0);
+            $table->boolean('isEditorEdit')->default(0);
             $table->integer('editor_id')->unsigned();
             $table->boolean('isProcess')->default(0);
             $table->timestamps();

@@ -273,4 +273,11 @@ class WordsController extends Controller
 	{
 		return DomainDetail::where('domain_id', request('domain_id'))->first();
 	}
+
+	public function unprocessArticles()
+	{
+		$isUnprocess = Word::where('isProcess', 0)->first();
+
+		return $isUnprocess;
+	}
 }

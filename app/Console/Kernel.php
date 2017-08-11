@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Console\Commands\Greet;
+use App\Console\Commands\Wordai;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        Greet::class,
+        Wordai::class,
     ];
 
     /**
@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command(Greet::class)->everyMinute();
+        // $schedule->command(Wordai::class)->everyMinute();
     }
 
     /**

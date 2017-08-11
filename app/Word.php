@@ -19,6 +19,8 @@ class Word extends Model
     	'spintax',
     	'spin',
     	'protected',
+    	'isUserEdit',
+    	'isEditorEdit',
     	'synonym'
     ];
 

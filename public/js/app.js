@@ -19598,7 +19598,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			type: 'doc_title',
 			sort: 'a-z',
 			sortBy: ['A-Z', 'Z-A'],
-			dateTime: moment
+			dateTime: moment,
+			hasSpintax: false,
+			isProcess: false
 		};
 	},
 
@@ -19635,6 +19637,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			} else {
 				this.articleList = this.articles;
 			}
+		},
+		editArticle: function editArticle(article) {
+			var _this3 = this;
+
+			axios.get('/user/editArticle?wordId=' + article.id).then(function (response) {
+				var data = response.data;
+
+				// check if there has spintax in db
+				if (data.spintax.length > 0) {
+					_this3.hasSpintax = true;
+				} else {
+					_this3.hasSpintax = false;
+				}
+			});
 		}
 	}
 });
@@ -45659,18 +45675,26 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('table', {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.filterArticles), function(article) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _vm._m(1, true)])
+    return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [(!article.isProcess) ? _c('button', {
+      staticClass: "btn btn-info",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.editArticle(article)
+        }
+      }
+    }, [_vm._v("Edit")]) : _c('button', {
+      staticClass: "btn btn-warning",
+      attrs: {
+        "type": "button",
+        "disabled": ""
+      }
+    }, [_vm._v("Waiting For Editing")])])])
   }))])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Status")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('td', [_c('button', {
-    staticClass: "btn btn-warning",
-    attrs: {
-      "type": "button",
-      "disabled": ""
-    }
-  }, [_vm._v("Edit")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

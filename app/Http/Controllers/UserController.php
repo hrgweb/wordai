@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\UserLevel;
+use App\Word;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -60,7 +61,7 @@ class UserController extends Controller
     		->join('article_types', 'article_types.id', '=', 'words.article_type_id')
     		->join('domains', 'domains.id', '=', 'words.domain_id')
     		->where('words.user_id', auth()->user()->id)
-    		->orderBy('words.doc_title', 'asc')
+    		->oldest()
     		->get([
     			'words.id',
     			'users.firstname', 
@@ -76,9 +77,15 @@ class UserController extends Controller
 				'spin',
 				'protected',
 				'synonym',
-				'words.isEdit',
+				'words.isUserEdit',
+				'words.isEditorEdit',
 				'words.editor_id',
 				'words.created_at'
     		]);
+    }
+
+    public function editArticle()
+    {
+    	return Word::findOrFail(request('wordId'));
     }
 }
