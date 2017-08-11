@@ -11,6 +11,7 @@ Route::get('user', 'PagesController@user');
 Route::get('home2', 'PagesController@home2');
 Route::get('home3', 'PagesController@home3');
 Route::get('home4', 'PagesController@home4');
+Route::get('create-article', 'PagesController@createArticle');
 Route::get('copyscape', 'PagesController@copyscape');
 Route::get('curl', 'PagesController@curl');
 Route::get('verification', 'PagesController@verification');

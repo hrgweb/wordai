@@ -46,6 +46,11 @@ class PagesController extends Controller
     	return view('words.home4');
     }
 
+    public function createArticle()
+    {
+    	return view('words.create-article');
+    }
+
     public function copyscape()
     {
     	return view('words.copyscape-api-result');

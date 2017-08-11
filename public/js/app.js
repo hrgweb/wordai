@@ -17361,14 +17361,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_words_CurationEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_words_CurationEdit_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_words_PasteArticle_vue__ = __webpack_require__(229);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_words_PasteArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_words_PasteArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_CopyscapeApiResult_vue__ = __webpack_require__(226);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_CopyscapeApiResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_words_CopyscapeApiResult_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_GenerateArticle_vue__ = __webpack_require__(228);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_GenerateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_words_GenerateArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_UserArticle_vue__ = __webpack_require__(231);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_UserArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_words_UserArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_editor_Editor_vue__ = __webpack_require__(223);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_editor_Editor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_editor_Editor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_CreateArticle_vue__ = __webpack_require__(290);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_CreateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_words_CreateArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_CopyscapeApiResult_vue__ = __webpack_require__(226);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_CopyscapeApiResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_words_CopyscapeApiResult_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_GenerateArticle_vue__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_GenerateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_words_GenerateArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_UserArticle_vue__ = __webpack_require__(231);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_UserArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_words_UserArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_editor_Editor_vue__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_editor_Editor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_editor_Editor_vue__);
 __webpack_require__(186);
 
 window.$ = $;
@@ -17377,6 +17379,7 @@ window.moment = __webpack_require__(0);
 window.Noty = __webpack_require__(210);
 
 /*=============== Components ===============*/
+
 
 
 
@@ -17408,11 +17411,12 @@ var app = new Vue({
       WordApi2: __WEBPACK_IMPORTED_MODULE_7__components_words_WordApi2_vue___default.a,
       CurationEdit: __WEBPACK_IMPORTED_MODULE_8__components_words_CurationEdit_vue___default.a,
       PasteArticle: __WEBPACK_IMPORTED_MODULE_9__components_words_PasteArticle_vue___default.a,
-      CopyscapeApiResult: __WEBPACK_IMPORTED_MODULE_10__components_words_CopyscapeApiResult_vue___default.a,
+      CreateArticle: __WEBPACK_IMPORTED_MODULE_10__components_words_CreateArticle_vue___default.a,
+      CopyscapeApiResult: __WEBPACK_IMPORTED_MODULE_11__components_words_CopyscapeApiResult_vue___default.a,
       // CurlPage,
-      GenerateArticle: __WEBPACK_IMPORTED_MODULE_11__components_words_GenerateArticle_vue___default.a,
-      UserArticle: __WEBPACK_IMPORTED_MODULE_12__components_words_UserArticle_vue___default.a,
-      Editor: __WEBPACK_IMPORTED_MODULE_13__components_editor_Editor_vue___default.a
+      GenerateArticle: __WEBPACK_IMPORTED_MODULE_12__components_words_GenerateArticle_vue___default.a,
+      UserArticle: __WEBPACK_IMPORTED_MODULE_13__components_words_UserArticle_vue___default.a,
+      Editor: __WEBPACK_IMPORTED_MODULE_14__components_editor_Editor_vue___default.a
    }
 });
 
@@ -58843,6 +58847,496 @@ module.exports = Vue$3;
 __webpack_require__(138);
 module.exports = __webpack_require__(139);
 
+
+/***/ }),
+/* 282 */,
+/* 283 */,
+/* 284 */,
+/* 285 */,
+/* 286 */,
+/* 287 */,
+/* 288 */,
+/* 289 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__UniqueHandwritten_vue__ = __webpack_require__(230);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__UniqueHandwritten_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__UniqueHandwritten_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleActionMixin_js__ = __webpack_require__(189);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	components: { UniqueHandwritten: __WEBPACK_IMPORTED_MODULE_0__UniqueHandwritten_vue___default.a },
+	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleActionMixin_js__["a" /* ArticleActionMixin */]],
+	methods: {
+		saveArticle: function saveArticle() {
+			var _this = this;
+
+			this.isLoading = true;
+			this.isValidationFail = false;
+			this.$refs.spinButton.disabled = true;
+
+			axios.post('/words', this.spin).then(function (response) {
+				var data = response.data;
+
+				_this.isLoading = false;
+				_this.$refs.spinButton.disabled = false;
+
+				if (data.isError) {
+					// validation fails
+					_this.isValidationFail = true;
+					_this.errorType = 1;
+					_this.errors = data.errors;
+				} else {
+					// validation success
+					_this.isValidationFail = false;
+
+					// notify user article posted successfully
+					var articleTitle = _this.spin.doc_title;
+					new Noty({
+						type: 'success',
+						text: '<b>' + articleTitle + '</b> article successfully saved.',
+						layout: 'bottomLeft',
+						timeout: 5000
+					}).show();
+				}
+			});
+		}
+	}
+});
+
+/***/ }),
+/* 290 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(289),
+  /* template */
+  __webpack_require__(291),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\words\\CreateArticle.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] CreateArticle.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-ea02db44", Component.options)
+  } else {
+    hotAPI.reload("data-v-ea02db44", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 291 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Word"
+  }, [_c('h1', [_vm._v("Create Article")]), _c('hr'), _vm._v(" "), _c('form', {
+    attrs: {
+      "method": "POST"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+        _vm.saveArticle($event)
+      }
+    }
+  }, [_c('input', {
+    attrs: {
+      "type": "hidden",
+      "name": "_token"
+    },
+    domProps: {
+      "value": _vm.token
+    }
+  }), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "articleType"
+    }
+  }, [_vm._v("Article Type")]), _vm._v(" "), (_vm.isArticleTypesLoaded) ? _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.article_type_id),
+      expression: "spin.article_type_id"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.spin.article_type_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "select"
+    }
+  }, [_vm._v("Please select an article type")]), _vm._v(" "), _vm._l((_vm.articleTypes), function(type) {
+    return _c('option', {
+      domProps: {
+        "value": type.id
+      }
+    }, [_vm._v(_vm._s(type.article_type))])
+  })], 2) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "doc_title"
+    }
+  }, [_vm._v("Document Title")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.doc_title),
+      expression: "spin.doc_title"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.spin.doc_title)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.doc_title = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "keyword"
+    }
+  }, [_vm._v("Key Word/Phrase field")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.keyword),
+      expression: "spin.keyword"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "maxlength": "255"
+    },
+    domProps: {
+      "value": (_vm.spin.keyword)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.keyword = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "dom_name"
+    }
+  }, [_vm._v("Domain Name")]), _vm._v("   "), (_vm.isDomainNotSet) ? _c('span', {
+    staticStyle: {
+      "color": "red"
+    }
+  }, [_vm._v("This domain not set yet.")]) : _vm._e(), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.domain_id),
+      expression: "spin.domain_id"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": [function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.spin.domain_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.domainChange]
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "select"
+    }
+  }, [_vm._v("Select a domain")]), _vm._v(" "), _vm._l((_vm.domains), function(domain) {
+    return _c('option', {
+      domProps: {
+        "value": domain.id
+      }
+    }, [_vm._v(_vm._s(domain.domain))])
+  })], 2)]), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c('label', {
+    attrs: {
+      "for": "lsi_terms"
+    }
+  }, [_vm._v("LSI Terms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.lsi_terms),
+      expression: "spin.lsi_terms"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.spin.lsi_terms)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.lsi_terms = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c('label', {
+    attrs: {
+      "for": "synonyms"
+    }
+  }, [_vm._v("Synonyms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.synonym),
+      expression: "spin.synonym"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.spin.synonym)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.synonym = $event.target.value
+      }
+    }
+  })])]), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c('label', {
+    attrs: {
+      "for": "domain_protected"
+    }
+  }, [_vm._v("Domain Protected Terms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.domain_protected),
+      expression: "spin.domain_protected"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.spin.domain_protected)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.domain_protected = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c('label', {
+    attrs: {
+      "for": "protected"
+    }
+  }, [_vm._v("Protected Terms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.protected),
+      expression: "spin.protected"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.spin.protected)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.protected = $event.target.value
+      }
+    }
+  })])]), _c('br'), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "article"
+    }
+  }, [_vm._v("Original Article")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.isValidationFail) ? _c('error', {
+    attrs: {
+      "type": _vm.errorType,
+      "list": _vm.errors
+    }
+  }) : _vm._e(), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('span', [_vm._v("Words count: "), _c('b', [_vm._v(_vm._s(_vm.count))])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
+    ref: "spinButton",
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    }
+  }, [_vm._v("Save Article")]), _vm._v("\n\t\t   \n\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')], 1)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.article),
+      expression: "spin.article"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "40"
+    },
+    domProps: {
+      "value": (_vm.spin.article)
+    },
+    on: {
+      "keyup": _vm.wordCount,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.article = $event.target.value
+      }
+    }
+  })
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-ea02db44", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

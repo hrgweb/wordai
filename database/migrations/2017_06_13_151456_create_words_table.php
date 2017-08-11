@@ -23,8 +23,8 @@ class CreateWordsTable extends Migration
             $table->string('lsi_terms')->nullable();
             $table->string('domain_protected')->nullable();
             $table->text('article');
-            $table->text('spintax');
-            $table->text('spin');
+            $table->text('spintax')->nullable();
+            $table->text('spin')->nullable();
             $table->string('protected')->nullable();
             $table->string('synonym')->nullable();
             $table->boolean('isEdit')->default(0);

@@ -102,24 +102,26 @@ class WordsController extends Controller
 
 	public function store(Request $request)
 	{
-		/*$validator = Validator::make($request->all(), [
+		$validator = Validator::make($request->all(), [
             'doc_title' => 'required', 
 	    	'keyword' => 'required',
 	    	'lsi_terms' => 'required',
 	    	// 'domain_protected' => 'required',
 	    	'article' => 'required',
-	    	'dom_name' => 'required', 
 	    	'protected' => 'required',
 	    	// 'synonyms' => 'required'
         ]);
 
+		// if validation fails
         if ($validator->fails()) {
             return response()->json(['isError' => true, 'errors' => $validator->errors()]);
-        }*/
+        }
 
-        // return request()->all();
+        // if validation success the post article
+        $result = $this->postSpinTax();
 
-        return $this->generateSpintax($request->all(), $request->article);
+        return response()->json(['isError' => false, 'result' => $result]);
+        // return $this->generateSpintax($request->all(), $request->article);
 	}
 
 	private function generateSpintaxParagraph(array $request, $paragraph)
@@ -134,11 +136,11 @@ class WordsController extends Controller
 
 	public function postSpinTax()
 	{
-		// dd(request()->all());
+		// return request()->all();
 
 		$result = auth()->user()->words()->create(request()->all());
 
-		return response()->json($result);
+		return $result;
 	}
 
 	private function api($text, $quality, $email, $pass, $protected, $synonyms, $nonested, $sentence, $paragraph, $title, $nooriginal)
