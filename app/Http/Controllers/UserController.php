@@ -87,10 +87,25 @@ class UserController extends Controller
 
     public function editArticle()
     {
-    	return Word::findOrFail(request('wordId'));
+    	$word_id = request('wordId');
+
+    	DB::beginTransaction();
+		try {
+	    	Word::where('id', $word_id)->update(['isUserEdit' => 1]);
+
+	    	// retrieve word obj
+	    	$result = Word::findOrFail($word_id);
+		} catch (ValidationException $e) {
+			DB::rollback();
+			throw $e;
+		}
+		DB::commit();
+
+    	return $result;
     }
 
-    public function updateArticle() {
-    	return Word::where('id', request('word_id'))->update(['article' => request('article'), 'isUserEdit' => 1]);
+    public function updateArticle() 
+    {
+    	return Word::where('id', request('word_id'))->update(['article' => request('article'), 'isUserEdit' => 0]);
     }
 }
