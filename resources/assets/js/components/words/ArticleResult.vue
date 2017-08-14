@@ -37,7 +37,7 @@
 						<td>{{ article.domain }}</td>
 						<td>{{ article.keyword }}</td>
 						<td>
-							<button type="button" class="btn btn-info" ref="editArticle" v-if="article.isProcess === 0 || article.isProcess === 2" @click="editArticle(article, index)">Edit</button>
+							<button type="button" class="btn btn-info" ref="editArticle" v-if="! article.isProcess" @click="editArticle(article, index)">Edit</button>
 							<button type="button" class="btn" ref="editArticle" disabled v-else-if="article.isEditorEdit === 1 && article.isProcess === 1">Edited</button>
 							<button type="button" class="btn btn-warning" ref="editArticle" disabled v-else-if="article.isProcess === 1">Waiting For Editing</button>
 						</td>
@@ -106,12 +106,8 @@
 				axios.get('/user/editArticle?wordId='+article.id).then(response => {
 					let data = response.data;
 
-					/**
-			    	 * Legend: 0=not spin, 1=spin, 2=edit article
-			    	 */
-
 					// check if spintax is empty & isProcess is 0
-					if (data.isProcess === 2) {
+					if (data.isProcess === 0) {
 						this.isProcess = false;
 						this.$emit('isEdit', {
 							data: data,

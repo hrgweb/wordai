@@ -87,45 +87,10 @@ class UserController extends Controller
 
     public function editArticle()
     {
-    	$word_id = request('wordId');
-
-    	/**
-    	 * Legend: 0=not spin, 1=spin, 2=edit article
-    	 */
-    	
-    	DB::beginTransaction();
-		try {
-			// set isProcess=2, means user is editing article
-	    	Word::where('id', $word_id)->update(['isProcess' => 2]);
-
-	    	// retrieve word obj
-	    	$result = Word::findOrFail($word_id);
-		} catch (ValidationException $e) {
-			DB::rollback();
-			throw $e;
-		}
-		DB::commit();
-
-    	return $result;
+    	return Word::findOrFail(request('wordId'));
     }
 
     public function updateArticle() {
-    	$word_id = request('word_id');
-
-    	/**
-    	 * Legend: 0=not spin, 1=spin, 2=edit article
-    	 */
-
-    	DB::beginTransaction();
-		try {
-			// set isProcess=0, means ready for task scheduler
-    		$result = Word::where('id', $word_id)->update(['article' => request('article'), 'isUserEdit' => 1, 'isProcess' => 0]);
-		} catch (ValidationException $e) {
-			DB::rollback();
-			throw $e;
-		}
-		DB::commit();
-
-		return $result;
+    	return Word::where('id', request('word_id'))->update(['article' => request('article'), 'isUserEdit' => 1]);
     }
 }
