@@ -19886,7 +19886,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				var data = response.data;
 
 				// check if spintax is empty & isProcess is 0
-				if (data.spintax.length <= 0 && data.isProcess === 0) {
+				if (data.isProcess === 0) {
 					_this3.isProcess = false;
 					_this3.$emit('isEdit', {
 						data: data,

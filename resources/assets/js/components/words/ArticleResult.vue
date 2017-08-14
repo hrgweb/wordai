@@ -107,7 +107,7 @@
 					let data = response.data;
 
 					// check if spintax is empty & isProcess is 0
-					if (data.spintax.length <= 0 && data.isProcess === 0) {
+					if (data.isProcess === 0) {
 						this.isProcess = false;
 						this.$emit('isEdit', {
 							data: data,
