@@ -300,18 +300,18 @@
 
 .noty_theme__metroui.noty_type__success {
   background-color: #60A917;
-  color: #fff; }
+  color: #fff; 
+  /*start - custom*/
+	background: #22e01e;
+	color: #292222;
+	/*end -custom*/}
 
 .noty_theme__mint.noty_bar {
   margin: 4px 0;
   overflow: hidden;
   border-radius: 2px;
   position: relative; }
-  .noty_theme__mint.noty_bar .noty_body {
-  	/*start - custom*/
-  	background: #22e01e;
-    color: #292222;
-    /*end -custom*/
+  .noty_theme__mint.noty_bar .noty_body {  	
     padding: 10px;
     font-size: 14px; }
   .noty_theme__mint.noty_bar .noty_buttons {
