@@ -91,6 +91,6 @@ class UserController extends Controller
     }
 
     public function updateArticle() {
-    	return Word::where('id', request('word_id'))->update(['isUserEdit' => 1]);
+    	return Word::where('id', request('word_id'))->update(['article' => request('article'), 'isUserEdit' => 1]);
     }
 }

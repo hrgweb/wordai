@@ -38,8 +38,8 @@
 						<td>{{ article.keyword }}</td>
 						<td>
 							<button type="button" class="btn btn-info" ref="editArticle" v-if="! article.isProcess" @click="editArticle(article, index)">Edit</button>
-							<button type="button" class="btn btn-warning" ref="editArticle" disabled v-else>Waiting For Editing</button>
-							<!-- <button type="button" class="btn warning" v-else disabled>Edited</button> -->
+							<button type="button" class="btn" disabled v-else-if="article.isEditorEdit === 1 && article.isProcess === 1">Edited</button>
+							<button type="button" class="btn btn-warning" ref="editArticle" disabled v-else-if="article.isProcess === 1">Waiting For Editing</button>
 						</td>
 					</tr>
 			    </tbody>
@@ -109,7 +109,10 @@
 					// check if spintax is empty & isProcess is 0
 					if (data.spintax.length <= 0 && data.isProcess === 0) {
 						this.isProcess = false;
-						this.$emit('isEdit', data); 	// emit isEdit event
+						this.$emit('isEdit', {
+							data: data,
+							index: index
+						}); 	
 					} else {
 						this.isProcess = true;
 

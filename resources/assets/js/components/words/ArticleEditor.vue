@@ -33,7 +33,13 @@
 					article: $('div.note-editable').text()
 				};
 
-				axios.patch('/user/updateArticle', data).then(response => console.log(response.data));
+				axios.patch('/user/updateArticle', data).then(response => {
+					if (response.data) {
+						this.$emit('isUpdated', {
+							article: data.article
+						});
+					}
+				});
 			},
 
 			dissmissArticle() {

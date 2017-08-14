@@ -3,7 +3,8 @@
 		<div class="User__editor" v-if="isEdit">
 			<article-editor
 				:data="wordObj"
-				@cancelEdit="dismissEdit">
+				@cancelEdit="dismissEdit"
+				@isUpdated="updateRecord">
 			</article-editor>			
 		</div>
 
@@ -34,6 +35,7 @@
 				authUser: {},
 				wordObj: {},
 				isEdit: false,
+				index: 0
 			}
 		},
 		computed: {
@@ -54,16 +56,33 @@
 				axios.get('/user/userArticles').then(response => this.articles = response.data);
 			},
 
-			updateArticle(data) {
-				if (data) {
+			updateArticle(payload) {
+				if (payload) {
 					this.isEdit = false;
-					this.wordObj = data;
+					this.index = payload.index;
+					this.wordObj = payload.data;
 					if (this.isEdit === false) Vue.nextTick(() => this.isEdit = true);
 				}
 			},
 
 			dismissEdit() {
 				this.isEdit = false;
+			},
+
+			updateRecord(data) {
+				if (data) {
+					this.isEdit = false;
+					this.articles[this.index].spin = data.article;
+					let articleTitle = this.wordObj.doc_title;
+
+					// successfully updated
+					new Noty({
+						type: 'info',
+						text: `<b>${articleTitle}</b> article successfully updated.`,
+						layout: 'bottomLeft',
+						timeout: 5000
+					}).show();
+				}
 			}
 		}
 	}

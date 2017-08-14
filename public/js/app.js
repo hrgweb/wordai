@@ -19884,7 +19884,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				// check if spintax is empty & isProcess is 0
 				if (data.spintax.length <= 0 && data.isProcess === 0) {
 					_this3.isProcess = false;
-					_this3.$emit('isEdit', data); // emit isEdit event
+					_this3.$emit('isEdit', {
+						data: data,
+						index: index
+					});
 				} else {
 					_this3.isProcess = true;
 
@@ -21060,6 +21063,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -21073,7 +21077,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		return {
 			authUser: {},
 			wordObj: {},
-			isEdit: false
+			isEdit: false,
+			index: 0
 		};
 	},
 
@@ -21099,12 +21104,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				return _this.articles = response.data;
 			});
 		},
-		updateArticle: function updateArticle(data) {
+		updateArticle: function updateArticle(payload) {
 			var _this2 = this;
 
-			if (data) {
+			if (payload) {
 				this.isEdit = false;
-				this.wordObj = data;
+				this.index = payload.index;
+				this.wordObj = payload.data;
 				if (this.isEdit === false) Vue.nextTick(function () {
 					return _this2.isEdit = true;
 				});
@@ -21112,6 +21118,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		dismissEdit: function dismissEdit() {
 			this.isEdit = false;
+		},
+		updateRecord: function updateRecord(data) {
+			if (data) {
+				this.isEdit = false;
+				this.articles[this.index].spin = data.article;
+				var articleTitle = this.wordObj.doc_title;
+
+				// successfully updated
+				new Noty({
+					type: 'info',
+					text: '<b>' + articleTitle + '</b> article successfully updated.',
+					layout: 'bottomLeft',
+					timeout: 5000
+				}).show();
+			}
 		}
 	}
 });
@@ -45911,7 +45932,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.editArticle(article, index)
         }
       }
-    }, [_vm._v("Edit")]) : _c('button', {
+    }, [_vm._v("Edit")]) : (article.isEditorEdit === 1 && article.isProcess === 1) ? _c('button', {
+      staticClass: "btn",
+      attrs: {
+        "type": "button",
+        "disabled": ""
+      }
+    }, [_vm._v("Edited")]) : (article.isProcess === 1) ? _c('button', {
       ref: "editArticle",
       refInFor: true,
       staticClass: "btn btn-warning",
@@ -45919,7 +45946,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "type": "button",
         "disabled": ""
       }
-    }, [_vm._v("Waiting For Editing")])])])
+    }, [_vm._v("Waiting For Editing")]) : _vm._e()])])
   }))])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Status")])])])
@@ -47424,7 +47451,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "data": _vm.wordObj
     },
     on: {
-      "cancelEdit": _vm.dismissEdit
+      "cancelEdit": _vm.dismissEdit,
+      "isUpdated": _vm.updateRecord
     }
   })], 1) : _c('div', {
     staticClass: "User__articles"
@@ -59466,13 +59494,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	methods: {
 		updateArticle: function updateArticle() {
+			var _this = this;
+
 			var data = {
 				word_id: this.data.id,
 				article: $('div.note-editable').text()
 			};
 
 			axios.patch('/user/updateArticle', data).then(function (response) {
-				return console.log(response.data);
+				if (response.data) {
+					_this.$emit('isUpdated', {
+						article: data.article
+					});
+				}
 			});
 		},
 		dissmissArticle: function dissmissArticle() {
