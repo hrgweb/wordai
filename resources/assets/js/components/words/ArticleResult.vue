@@ -123,10 +123,10 @@
 							
 							let articleTitle = data.doc_title;
 							new Noty({
-								type: 'danger',
+								type: 'error',
 								text: `<b>${articleTitle}</b> article already processed. You can't process and article that is done already.`,
 								layout: 'bottomLeft',
-								// timeout: 5000
+								timeout: 5000
 							}).show();
 						}
 					}
