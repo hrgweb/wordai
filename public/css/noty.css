@@ -254,7 +254,7 @@
     border-color: #0B90C4; }
 
 .noty_theme__relax.noty_type__success {
-  background-color: #BCF5BC;
+  background-color: #1FED1F; /*#BCF5BC*/
   border: 1px solid #7cdd77;
   color: darkgreen; }
   .noty_theme__relax.noty_type__success .noty_buttons {
@@ -308,6 +308,10 @@
   border-radius: 2px;
   position: relative; }
   .noty_theme__mint.noty_bar .noty_body {
+  	/*start - custom*/
+  	background: #22e01e;
+    color: #292222;
+    /*end -custom*/
     padding: 10px;
     font-size: 14px; }
   .noty_theme__mint.noty_bar .noty_buttons {
