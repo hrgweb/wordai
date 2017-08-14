@@ -14,6 +14,8 @@ class EditorsController extends Controller
     		->join('users', 'users.id', '=', 'words.user_id')
     		->join('article_types', 'article_types.id', '=', 'words.article_type_id')
     		->join('domains', 'domains.id', '=', 'words.domain_id')
+    		->where('words.isProcess', 1)
+    		->oldest()
     		->get([
     			'words.id',
     			'users.firstname', 
@@ -43,7 +45,7 @@ class EditorsController extends Controller
 			// update words table set isEdit to true, editor_id to the editor & spin to new article
 			$result = Word::where('id', request('id'))->update([
 				'spin' => $article,
-				'isEdit' => true,
+				'isEditorEdit' => 1,
 				'editor_id' => $editor_id
 			]);
 		} catch (ValidationException $e) {
