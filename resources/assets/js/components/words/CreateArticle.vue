@@ -92,33 +92,43 @@
 		mixins: [ CrudMixin, ArticleActionMixin ],
 		methods: {
 			saveArticle() {
-				this.isLoading = true;
-				this.isValidationFail = false;
-				this.$refs.spinButton.disabled = true;
+				// check if domain_id is set
+				if (this.spin.domain_id !== 'select') {
+					this.isLoading = true;
+					this.isValidationFail = false;
+					this.$refs.spinButton.disabled = true;
 
-				axios.post('/words', this.spin).then(response => {
-					let data = response.data;
+					axios.post('/words', this.spin).then(response => {
+						let data = response.data;
 
-					this.isLoading = false;
-					this.$refs.spinButton.disabled = false;
+						this.isLoading = false;
+						this.$refs.spinButton.disabled = false;
 
-					if (data.isError) { // validation fails
-						this.isValidationFail = true;
-						this.errorType = 1;
-						this.errors = data.errors;
-					} else { // validation success
-						this.isValidationFail = false;
+						if (data.isError) { // validation fails
+							this.isValidationFail = true;
+							this.errorType = 1;
+							this.errors = data.errors;
+						} else { // validation success
+							this.isValidationFail = false;
 
-						// notify user article posted successfully
-						let articleTitle = this.spin.doc_title;
-						new Noty({
-							type: 'success',
-							text: `<b>${articleTitle}</b> article successfully saved.`,
-							layout: 'bottomLeft',
-							timeout: 5000
-						}).show();
-					}
-				});
+							// notify user article posted successfully
+							let articleTitle = this.spin.doc_title;
+							new Noty({
+								type: 'success',
+								text: `<b>${articleTitle}</b> article successfully saved.`,
+								layout: 'bottomLeft',
+								timeout: 5000
+							}).show();
+						}
+					});
+				} else {
+					new Noty({
+						type: 'warning',
+						text: `Please select domain name.`,
+						layout: 'bottomLeft',
+						timeout: 5000
+					}).show();
+				}
 			},
 		}
 	}

@@ -20315,35 +20315,45 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		saveArticle: function saveArticle() {
 			var _this = this;
 
-			this.isLoading = true;
-			this.isValidationFail = false;
-			this.$refs.spinButton.disabled = true;
+			// check if domain_id is set
+			if (this.spin.domain_id !== 'select') {
+				this.isLoading = true;
+				this.isValidationFail = false;
+				this.$refs.spinButton.disabled = true;
 
-			axios.post('/words', this.spin).then(function (response) {
-				var data = response.data;
+				axios.post('/words', this.spin).then(function (response) {
+					var data = response.data;
 
-				_this.isLoading = false;
-				_this.$refs.spinButton.disabled = false;
+					_this.isLoading = false;
+					_this.$refs.spinButton.disabled = false;
 
-				if (data.isError) {
-					// validation fails
-					_this.isValidationFail = true;
-					_this.errorType = 1;
-					_this.errors = data.errors;
-				} else {
-					// validation success
-					_this.isValidationFail = false;
+					if (data.isError) {
+						// validation fails
+						_this.isValidationFail = true;
+						_this.errorType = 1;
+						_this.errors = data.errors;
+					} else {
+						// validation success
+						_this.isValidationFail = false;
 
-					// notify user article posted successfully
-					var articleTitle = _this.spin.doc_title;
-					new Noty({
-						type: 'success',
-						text: '<b>' + articleTitle + '</b> article successfully saved.',
-						layout: 'bottomLeft',
-						timeout: 5000
-					}).show();
-				}
-			});
+						// notify user article posted successfully
+						var articleTitle = _this.spin.doc_title;
+						new Noty({
+							type: 'success',
+							text: '<b>' + articleTitle + '</b> article successfully saved.',
+							layout: 'bottomLeft',
+							timeout: 5000
+						}).show();
+					}
+				});
+			} else {
+				new Noty({
+					type: 'warning',
+					text: 'Please select domain name.',
+					layout: 'bottomLeft',
+					timeout: 5000
+				}).show();
+			}
 		}
 	}
 });
@@ -59730,6 +59740,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	data: function data() {
@@ -59841,6 +59855,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "Copyscape"
   }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c('div', {
     staticClass: "Params"
   }, [_c('h3', [_vm._v("Custom Parameters")]), _vm._v(" "), _c('form', {
     attrs: {
@@ -59852,7 +59868,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "o"
     }
-  }, [_vm._v("o")]), _vm._v("  \n\t\t\t\t"), _c('select', {
+  }, [_vm._v("o")]), _vm._v("  \n\t\t\t\t\t"), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -59882,7 +59898,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "e"
     }
-  }, [_vm._v("e")]), _vm._v("  \n\t\t\t\t"), _c('select', {
+  }, [_vm._v("e")]), _vm._v("  \n\t\t\t\t\t"), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -59912,7 +59928,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "c"
     }
-  }, [_vm._v("c")]), _vm._v("  \n\t\t\t\t"), _c('select', {
+  }, [_vm._v("c")]), _vm._v("  \n\t\t\t\t\t"), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -59946,7 +59962,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "i"
     }
-  }, [_vm._v("i")]), _vm._v("  \n\t\t\t\t"), _vm._m(1), _vm._v(" "), _c('textarea', {
+  }, [_vm._v("i")]), _vm._v("  \n\t\t\t\t\t"), _vm._m(1), _vm._v(" "), _c('textarea', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -59974,7 +59990,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "x"
     }
-  }, [_vm._v("x")]), _vm._v("  \n\t\t\t\t"), _c('select', {
+  }, [_vm._v("x")]), _vm._v("  \n\t\t\t\t\t"), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -60009,7 +60025,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.setCsSetting($event)
       }
     }
-  }, [_vm._v("Save New Settings")])])]), _vm._v(" "), _vm._m(2)])
+  }, [_vm._v("Save New Settings")])])])]), _vm._v(" "), _vm._m(2)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Table"
@@ -60032,16 +60048,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("   "), _c('b', [_vm._v("Reminder")]), _vm._v(": seperate with comma \",\" e.g www.site1.com, www.site2.com")])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c('div', {
     staticClass: "Docs"
   }, [_c('h3', [_vm._v("Documentation")]), _vm._v(" "), _c('p', [_c('small', [_vm._v("API operation ("), _c('b', [_vm._v("o")]), _vm._v("): Use "), _c('b', [_vm._v("csearch")]), _vm._v(" to search against the public Internet or "), _c('b', [_vm._v("psearch")]), _vm._v(" to search against your private index. You can also use "), _c('b', [_vm._v("cpsearch")]), _vm._v(" to search against both the Internet and your private index, for the cost of two search credits.")])]), _vm._v(" "), _c('p', [_c('small', [_vm._v("Text encoding ("), _c('b', [_vm._v("e")]), _vm._v("): Use an "), _c('a', {
     attrs: {
       "href": "http://www.iana.org/assignments/character-sets"
     }
-  }, [_vm._v("IANA name")]), _vm._v(", such as "), _c('b', [_vm._v("UTF-8")]), _vm._v(" (Unicode), "), _c('b', [_vm._v("ISO-8859-1")]), _vm._v(" (Latin-1) or "), _c('b', [_vm._v("WINDOWS-1251")]), _vm._v(" (Cyrillic).")])]), _vm._v(" "), _c('p', [_c('small', [_vm._v("\n\t\t\tFull comparisons ("), _c('b', [_vm._v("c")]), _vm._v("): Set to a value between "), _c('b', [_vm._v("1")]), _vm._v(" and "), _c('b', [_vm._v("10")]), _vm._v(" to request a full text-on-text comparison (with an exact count of matching words) between the query text and the top (one to ten) results found. Note that full comparisons may add a delay of a few seconds.\n\t\t")])]), _vm._v(" "), _c('p', [_c('small', [_vm._v("\n\t\t\tIgnore sites ("), _c('b', [_vm._v("i")]), _vm._v("): Subdomains are also omitted from the results. For example, if set to "), _c('b', [_vm._v("site1.com,site2.com")]), _vm._v(" then "), _c('b', [_vm._v("www.site1.com")]), _vm._v(" and "), _c('b', [_vm._v("blog.site2.com")]), _vm._v(" would also be ignored. Ignore sites listed in your user settings are always applied. \n\t\t")])]), _vm._v(" "), _c('p', [_c('small', [_vm._v("\n\t\t\tExample test ("), _c('b', [_vm._v("x")]), _vm._v("): If set to "), _c('b', [_vm._v("1")]), _vm._v(", the API will search the Internet for copies of the text on "), _c('a', {
+  }, [_vm._v("IANA name")]), _vm._v(", such as "), _c('b', [_vm._v("UTF-8")]), _vm._v(" (Unicode), "), _c('b', [_vm._v("ISO-8859-1")]), _vm._v(" (Latin-1) or "), _c('b', [_vm._v("WINDOWS-1251")]), _vm._v(" (Cyrillic).")])]), _vm._v(" "), _c('p', [_c('small', [_vm._v("\n\t\t\t\tFull comparisons ("), _c('b', [_vm._v("c")]), _vm._v("): Set to a value between "), _c('b', [_vm._v("1")]), _vm._v(" and "), _c('b', [_vm._v("10")]), _vm._v(" to request a full text-on-text comparison (with an exact count of matching words) between the query text and the top (one to ten) results found. Note that full comparisons may add a delay of a few seconds.\n\t\t\t")])]), _vm._v(" "), _c('p', [_c('small', [_vm._v("\n\t\t\t\tIgnore sites ("), _c('b', [_vm._v("i")]), _vm._v("): Subdomains are also omitted from the results. For example, if set to "), _c('b', [_vm._v("site1.com,site2.com")]), _vm._v(" then "), _c('b', [_vm._v("www.site1.com")]), _vm._v(" and "), _c('b', [_vm._v("blog.site2.com")]), _vm._v(" would also be ignored. Ignore sites listed in your user settings are always applied. \n\t\t\t")])]), _vm._v(" "), _c('p', [_c('small', [_vm._v("\n\t\t\t\tExample test ("), _c('b', [_vm._v("x")]), _vm._v("): If set to "), _c('b', [_vm._v("1")]), _vm._v(", the API will search the Internet for copies of the text on "), _c('a', {
     attrs: {
       "href": "http://www.copyscape.com/example.html"
     }
-  }, [_vm._v("this page")]), _vm._v(" and you will not be charged.\n\t\t")])])])
+  }, [_vm._v("this page")]), _vm._v(" and you will not be charged.\n\t\t\t")])])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

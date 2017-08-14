@@ -51,73 +51,77 @@
 			</table><br>
 		</div>
 
-		<div class="Params">
-			<h3>Custom Parameters</h3>
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			<div class="Params">
+				<h3>Custom Parameters</h3>
 
-			<form method="POST">
-				<div class="form-group">
-					<label for="o">o</label> &nbsp;
-					<select v-model="copyscape.o">
-						<option v-for="o in o" :value="o">{{ o }}</option>
-					</select>
-				</div>
-			
-				<div class="form-group">
-					<label for="e">e</label> &nbsp;
-					<select v-model="copyscape.e">
-						<option v-for="e in e" :value="e">{{ e }}</option>
-					</select>
-				</div>
-
-				<div class="form-group">
-					<label for="c">c</label> &nbsp;
-					<select v-model="copyscape.c">
-						<option :value="0">0</option>
-						<option v-for="n in 10" :value="n">{{ n }}</option>
-					</select>
-				</div>
-
-				<div class="form-group">
-					<label for="i">i</label> &nbsp;
-					<span style="color: red;"> &nbsp; <b>Reminder</b>: seperate with comma "," e.g www.site1.com, www.site2.com</span>
-					<textarea class="form-control" rows="6" v-model="copyscape.i"></textarea><br>
-
-					<div class="ignored-sites" v-if="! isIgnoreSitesEmpty">
-						<b>Ignored Sites:</b>
-						<pre>{{ listIgnoreSites }}</pre>
+				<form method="POST">
+					<div class="form-group">
+						<label for="o">o</label> &nbsp;
+						<select v-model="copyscape.o">
+							<option v-for="o in o" :value="o">{{ o }}</option>
+						</select>
 					</div>
-				</div>
+				
+					<div class="form-group">
+						<label for="e">e</label> &nbsp;
+						<select v-model="copyscape.e">
+							<option v-for="e in e" :value="e">{{ e }}</option>
+						</select>
+					</div>
 
-				<div class="form-group">
-					<label for="x">x</label> &nbsp;
-					<select v-model="copyscape.x">
-						<option v-for="x in x" :value="x">{{ x }}</option>
-					</select>
-				</div>
-			
-				<button type="submit" class="btn btn-primary" @click.prevent="setCsSetting">Save New Settings</button>
-			</form>
+					<div class="form-group">
+						<label for="c">c</label> &nbsp;
+						<select v-model="copyscape.c">
+							<option :value="0">0</option>
+							<option v-for="n in 10" :value="n">{{ n }}</option>
+						</select>
+					</div>
+
+					<div class="form-group">
+						<label for="i">i</label> &nbsp;
+						<span style="color: red;"> &nbsp; <b>Reminder</b>: seperate with comma "," e.g www.site1.com, www.site2.com</span>
+						<textarea class="form-control" rows="6" v-model="copyscape.i"></textarea><br>
+
+						<div class="ignored-sites" v-if="! isIgnoreSitesEmpty">
+							<b>Ignored Sites:</b>
+							<pre>{{ listIgnoreSites }}</pre>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label for="x">x</label> &nbsp;
+						<select v-model="copyscape.x">
+							<option v-for="x in x" :value="x">{{ x }}</option>
+						</select>
+					</div>
+				
+					<button type="submit" class="btn btn-primary" @click.prevent="setCsSetting">Save New Settings</button>
+				</form>
+			</div>
 		</div>
 
-		<div class="Docs">
-			<h3>Documentation</h3>
+		<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+			<div class="Docs">
+				<h3>Documentation</h3>
 
-			<p>
-			    <small>API operation (<b>o</b>): Use <b>csearch</b> to search against the public Internet or <b>psearch</b> to search against your private index. You can also use <b>cpsearch</b> to search against both the Internet and your private index, for the cost of two search credits.</small>
-			</p>
-			<p>
-			    <small>Text encoding (<b>e</b>): Use an <a href="http://www.iana.org/assignments/character-sets">IANA name</a>, such as <b>UTF-8</b> (Unicode), <b>ISO-8859-1</b> (Latin-1) or <b>WINDOWS-1251</b> (Cyrillic).</small>
-			</p>
-			<p><small>
-				Full comparisons (<b>c</b>): Set to a value between <b>1</b> and <b>10</b> to request a full text-on-text comparison (with an exact count of matching words) between the query text and the top (one to ten) results found. Note that full comparisons may add a delay of a few seconds.
-			</small></p>
-			<p><small>
-				Ignore sites (<b>i</b>): Subdomains are also omitted from the results. For example, if set to <b>site1.com,site2.com</b> then <b>www.site1.com</b> and <b>blog.site2.com</b> would also be ignored. Ignore sites listed in your user settings are always applied. 
-			</small></p>
-			<p><small>
-				Example test (<b>x</b>): If set to <b>1</b>, the API will search the Internet for copies of the text on <a href="http://www.copyscape.com/example.html">this page</a> and you will not be charged.
-			</small>
-			</p>
+				<p>
+				    <small>API operation (<b>o</b>): Use <b>csearch</b> to search against the public Internet or <b>psearch</b> to search against your private index. You can also use <b>cpsearch</b> to search against both the Internet and your private index, for the cost of two search credits.</small>
+				</p>
+				<p>
+				    <small>Text encoding (<b>e</b>): Use an <a href="http://www.iana.org/assignments/character-sets">IANA name</a>, such as <b>UTF-8</b> (Unicode), <b>ISO-8859-1</b> (Latin-1) or <b>WINDOWS-1251</b> (Cyrillic).</small>
+				</p>
+				<p><small>
+					Full comparisons (<b>c</b>): Set to a value between <b>1</b> and <b>10</b> to request a full text-on-text comparison (with an exact count of matching words) between the query text and the top (one to ten) results found. Note that full comparisons may add a delay of a few seconds.
+				</small></p>
+				<p><small>
+					Ignore sites (<b>i</b>): Subdomains are also omitted from the results. For example, if set to <b>site1.com,site2.com</b> then <b>www.site1.com</b> and <b>blog.site2.com</b> would also be ignored. Ignore sites listed in your user settings are always applied. 
+				</small></p>
+				<p><small>
+					Example test (<b>x</b>): If set to <b>1</b>, the API will search the Internet for copies of the text on <a href="http://www.copyscape.com/example.html">this page</a> and you will not be charged.
+				</small>
+				</p>
+			</div>
 		</div>
 	</div>
 </template>
