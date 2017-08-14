@@ -220,7 +220,17 @@ class WordsController extends Controller
 				break;
 		}
 
-		$result = copyscape_api_text_search_internet($articleType, 'UTF-8');
+		// retrieve copyscape settings
+		$settings = \App\Copyscape::first(['o', 'e', 'c', 'i', 'x']);
+
+		// return $settings;
+
+		$result = copyscape_api_text_search_internet(
+			$articleType, 
+			$settings->e, 
+			$settings->c,
+			$settings->o
+		);
 
 		return response()->json($result);
 	}

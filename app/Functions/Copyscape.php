@@ -54,9 +54,10 @@
 		return copyscape_api_url_search($url, $full, 'csearch');
 	}
 	
-	function copyscape_api_text_search_internet($text, $encoding, $full=null)
+	function copyscape_api_text_search_internet($text, $encoding, $full=null, $search)
 	{
-		return copyscape_api_text_search($text, $encoding, $full, 'csearch');
+		// dd($search);
+		return copyscape_api_text_search($text, $encoding, $full, $search);
 	}
 	
 	function copyscape_api_check_balance()
@@ -226,6 +227,8 @@
 		foreach ($params as $name => $value)
 			$url.='&'.urlencode($name).'='.urlencode($value);
 		
+		// dd($url);
+
 		$curl=curl_init();
 		
 		curl_setopt($curl, CURLOPT_URL, $url);
