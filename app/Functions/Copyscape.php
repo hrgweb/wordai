@@ -56,7 +56,7 @@
 	
 	function copyscape_api_text_search_internet($text, $encoding, $full=null, $search)
 	{
-		// dd($search);
+		// dd('im here');
 		return copyscape_api_text_search($text, $encoding, $full, $search);
 	}
 	
@@ -227,7 +227,7 @@
 		foreach ($params as $name => $value)
 			$url.='&'.urlencode($name).'='.urlencode($value);
 		
-		// dd($url);
+		// dd($url); // look at this
 
 		$curl=curl_init();
 		

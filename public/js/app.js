@@ -17603,6 +17603,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_words_UserArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_words_UserArticle_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_editor_Editor_vue__ = __webpack_require__(225);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_editor_Editor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_editor_Editor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_editor_SuperEditor_vue__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_editor_SuperEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_editor_SuperEditor_vue__);
 __webpack_require__(189);
 
 window.$ = $;
@@ -17630,6 +17632,7 @@ window.Noty = __webpack_require__(212);
 
 
 
+
 var app = new Vue({
    name: 'WordAI',
    el: '#app',
@@ -17650,7 +17653,8 @@ var app = new Vue({
       // CurlPage,
       GenerateArticle: __WEBPACK_IMPORTED_MODULE_13__components_words_GenerateArticle_vue___default.a,
       UserArticle: __WEBPACK_IMPORTED_MODULE_14__components_words_UserArticle_vue___default.a,
-      Editor: __WEBPACK_IMPORTED_MODULE_15__components_editor_Editor_vue___default.a
+      Editor: __WEBPACK_IMPORTED_MODULE_15__components_editor_Editor_vue___default.a,
+      SuperEditor: __WEBPACK_IMPORTED_MODULE_16__components_editor_SuperEditor_vue___default.a
    }
 });
 
@@ -19495,6 +19499,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__words_CopyscapeResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__words_CopyscapeResult_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleMixin_js__ = __webpack_require__(7);
+//
+//
 //
 //
 //
@@ -45781,7 +45787,11 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "ArticleEditor"
-  }, [_c('div', {
+  }, [_c('h2', {
+    staticClass: "text-center"
+  }, [_vm._v(_vm._s(_vm.article.doc_title))]), _c('hr'), _vm._v(" "), _c('div', {
+    staticClass: "Spintax__result"
+  }, [_c('h3', [_vm._v("Spintax Result")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.article.spintax))])]), _vm._v(" "), _c('div', {
     staticClass: "Process__article"
   }, [_c('h3', [_vm._v("Processed Article")]), _vm._v(" "), _c('div', {
     attrs: {
@@ -60096,6 +60106,202 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-770ade1b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Copyscape.vue", function() {
      var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-770ade1b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Copyscape.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 302 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(306)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(303),
+  /* template */
+  __webpack_require__(305),
+  /* scopeId */
+  "data-v-e6bcfc28",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\editor\\SuperEditor.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] SuperEditor.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-e6bcfc28", Component.options)
+  } else {
+    hotAPI.reload("data-v-e6bcfc28", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 303 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue__ = __webpack_require__(223);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_UserArticleMixin_js__ = __webpack_require__(20);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+
+// import { EventBus } from './../../eventbus/EventBus.js';
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	components: { ArticleResult: __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default.a, ArticleEditor: __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue___default.a },
+	mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_UserArticleMixin_js__["a" /* UserArticleMixin */]],
+	data: function data() {
+		return {
+			isEdit: false
+		};
+	},
+	created: function created() {
+		this.articleList();
+	},
+
+	methods: {
+		articleList: function articleList() {
+			var _this = this;
+
+			axios.get('/editor/articleList').then(function (response) {
+				return _this.articles = response.data;
+			});
+		},
+		updateArticle: function updateArticle(data) {
+			var _this2 = this;
+
+			this.isEdit = false;
+			this.article = data.article;
+			this.index = data.index;
+			Vue.nextTick(function () {
+				return _this2.isEdit = true;
+			});
+		},
+		updateRecord: function updateRecord(data) {
+			if (data) {
+				this.isEdit = false;
+				this.articles[this.index].spin = data.article;
+				var articleTitle = this.article.doc_title;
+
+				// successfully updated
+				new Noty({
+					type: 'info',
+					text: '<b>' + articleTitle + '</b> article successfully updated.',
+					layout: 'bottomLeft',
+					timeout: 5000
+				}).show();
+			}
+		},
+		dismissUpdate: function dismissUpdate() {
+			this.isEdit = false;
+		}
+	}
+});
+
+/***/ }),
+/* 304 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.Editor[data-v-e6bcfc28] { padding: 0 7em;\n}\n", ""]);
+
+/***/ }),
+/* 305 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Editor"
+  }, [(_vm.isEdit) ? _c('article-editor', {
+    attrs: {
+      "article": _vm.article
+    },
+    on: {
+      "isUpdated": _vm.updateRecord,
+      "isDismiss": _vm.dismissUpdate
+    }
+  }) : _vm._e(), _vm._v(" "), (!_vm.isEdit) ? _c('div', {
+    staticClass: "Editor__table"
+  }, [_c('h2', [_vm._v("Editor")]), _vm._v(" "), (_vm.isArticlesNotEmpty) ? _c('article-result', {
+    attrs: {
+      "articles": _vm.articles
+    },
+    on: {
+      "isEditing": _vm.updateArticle
+    }
+  }) : _vm._e()], 1) : _vm._e()], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-e6bcfc28", module.exports)
+  }
+}
+
+/***/ }),
+/* 306 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(304);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("47e823fe", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-e6bcfc28\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SuperEditor.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-e6bcfc28\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./SuperEditor.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

@@ -18,6 +18,7 @@ Route::get('verification', 'PagesController@verification');
 Route::get('editor', 'PagesController@editor');
 Route::get('articles', 'PagesController@articles');
 Route::get('copyscape-page', 'PagesController@copyscapePage');
+Route::get('super-editor', 'PagesController@superEditor');
 
 // WordAI
 Route::prefix('words')->group(function() {

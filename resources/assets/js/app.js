@@ -24,6 +24,7 @@ import CopyscapeApiResult from './components/words/CopyscapeApiResult.vue';
 import GenerateArticle from './components/words/GenerateArticle.vue';
 import UserArticle from './components/words/UserArticle.vue';
 import Editor from './components/editor/Editor.vue';
+import SuperEditor from './components/editor/SuperEditor.vue';
 
 const app = new Vue({
 	name: 'WordAI',
@@ -45,6 +46,7 @@ const app = new Vue({
     	// CurlPage,
     	GenerateArticle,
     	UserArticle,
-    	Editor
+    	Editor,
+    	SuperEditor
     }
 });

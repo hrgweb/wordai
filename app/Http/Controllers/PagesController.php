@@ -79,4 +79,8 @@ class PagesController extends Controller
     public function copyscapePage() {
     	return view('copyscape.index');
     }
+
+    public function superEditor() {
+    	return view('editor.super-editor');
+    }
 }
