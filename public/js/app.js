@@ -19885,8 +19885,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.get('/user/editArticle?wordId=' + article.id).then(function (response) {
 				var data = response.data;
 
+				/**
+      	 * Legend: 0=not spin, 1=spin, 2=edit article
+      	 */
+
 				// check if spintax is empty & isProcess is 0
-				if (data.isProcess === 0) {
+				if (data.isProcess === 2) {
 					_this3.isProcess = false;
 					_this3.$emit('isEdit', {
 						data: data,
@@ -45934,7 +45938,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('table', {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.filterArticles), function(article, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [(!article.isProcess) ? _c('button', {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [(article.isProcess === 0 || article.isProcess === 2) ? _c('button', {
       ref: "editArticle",
       refInFor: true,
       staticClass: "btn btn-info",
