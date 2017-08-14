@@ -88,4 +88,8 @@ class UserController extends Controller
     {
     	return Word::findOrFail(request('wordId'));
     }
+
+    public function updateArticle() {
+    	return request()->all();
+    }
 }

@@ -59,7 +59,6 @@
 				sort: 'a-z',
 				sortBy: ['A-Z', 'Z-A'],
 				dateTime: moment,
-				hasSpintax: false,
 				isProcess: false,
 			}
 		},
@@ -98,12 +97,15 @@
 				axios.get('/user/editArticle?wordId='+article.id).then(response => {
 					let data = response.data;
 
-					// check if there has spintax in db
-					if (data.spintax.length > 0) {
-						this.hasSpintax = true;
+					// check if spintax is empty & isProcess is 0
+					if (data.spintax.length <= 0 && data.isProcess === 0) {
+						this.isProcess = false;
 					} else {
-						this.hasSpintax = false;
+						this.isProcess = true;
 					}
+
+					// emit isEdit event
+					this.$emit('isEdit', data);
 				});
 			}
 		}
