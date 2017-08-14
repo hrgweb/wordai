@@ -19871,7 +19871,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		btnStateIfArticleIsProcess: function btnStateIfArticleIsProcess() {
 			this.$refs.editArticle[this.index].disabled = true;
 			this.$refs.editArticle[this.index].innerHTML = 'Waiting For Editing';
-			this.$refs.editArticle[this.index].style.backgroundColor = '#EC971F';
+			this.$refs.editArticle[this.index].style.backgroundColor = '#f0ad4e';
 		},
 		editArticle: function editArticle(article, index) {
 			var _this3 = this;
@@ -45933,6 +45933,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("Edit")]) : (article.isEditorEdit === 1 && article.isProcess === 1) ? _c('button', {
+      ref: "editArticle",
+      refInFor: true,
       staticClass: "btn",
       attrs: {
         "type": "button",

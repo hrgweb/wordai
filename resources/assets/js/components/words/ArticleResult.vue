@@ -38,7 +38,7 @@
 						<td>{{ article.keyword }}</td>
 						<td>
 							<button type="button" class="btn btn-info" ref="editArticle" v-if="! article.isProcess" @click="editArticle(article, index)">Edit</button>
-							<button type="button" class="btn" disabled v-else-if="article.isEditorEdit === 1 && article.isProcess === 1">Edited</button>
+							<button type="button" class="btn" ref="editArticle" disabled v-else-if="article.isEditorEdit === 1 && article.isProcess === 1">Edited</button>
 							<button type="button" class="btn btn-warning" ref="editArticle" disabled v-else-if="article.isProcess === 1">Waiting For Editing</button>
 						</td>
 					</tr>
@@ -97,7 +97,7 @@
 			btnStateIfArticleIsProcess() {
 				this.$refs.editArticle[this.index].disabled = true;
 				this.$refs.editArticle[this.index].innerHTML = 'Waiting For Editing';
-				this.$refs.editArticle[this.index].style.backgroundColor = '#EC971F';
+				this.$refs.editArticle[this.index].style.backgroundColor = '#f0ad4e';
 			},
 
 			editArticle(article, index) {
