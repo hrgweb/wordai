@@ -82,7 +82,7 @@
 					<span style="color: red;"> &nbsp; <b>Reminder</b>: seperate with comma "," e.g www.site1.com, www.site2.com</span>
 					<textarea class="form-control" rows="6" v-model="copyscape.i"></textarea><br>
 
-					<div class="ignored-sites">
+					<div class="ignored-sites" v-if="! isIgnoreSitesEmpty">
 						<b>Ignored Sites:</b>
 						<pre>{{ listIgnoreSites }}</pre>
 					</div>
@@ -131,7 +131,13 @@
 				i: '',
 				x: ['', 1],
 				copyscape: {},
-				listIgnoreSites: []
+				listIgnoreSites: [],
+				isIgnoreSitesEmpty: true
+			}
+		},
+		watch: {
+			listIgnoreSites(data) {
+				this.isIgnoreSitesEmpty = data.length <= 0 ? true : false;
 			}
 		},
 		created() {
@@ -153,6 +159,8 @@
 			setCsSetting() {
 				axios.patch('/admin/updateCopyscapeSetting', this.copyscape).then(response => {
 					if (response.data) {
+						this.listIgnoreSites = this.ignoreSites();
+						
 						// notify user new settings updates successfully
 						new Noty({
 							type: 'success',
@@ -166,8 +174,10 @@
 
 			retrieveCopyscapeSetting() {
 				axios.get('/admin/retrieveCopyscapeSetting').then(response => {
-					this.copyscape = response.data;
-					this.listIgnoreSites = this.ignoreSites();
+					let data = response.data;
+
+					this.copyscape = data;
+					if (data.i.length > 0) this.listIgnoreSites = this.ignoreSites();
 				});
 			}
 		}

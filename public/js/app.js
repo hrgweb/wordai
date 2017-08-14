@@ -59739,8 +59739,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			i: '',
 			x: ['', 1],
 			copyscape: {},
-			listIgnoreSites: []
+			listIgnoreSites: [],
+			isIgnoreSitesEmpty: true
 		};
+	},
+
+	watch: {
+		listIgnoreSites: function listIgnoreSites(data) {
+			this.isIgnoreSitesEmpty = data.length <= 0 ? true : false;
+		}
 	},
 	created: function created() {
 		this.retrieveCopyscapeSetting();
@@ -59759,8 +59766,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			});
 		},
 		setCsSetting: function setCsSetting() {
+			var _this = this;
+
 			axios.patch('/admin/updateCopyscapeSetting', this.copyscape).then(function (response) {
 				if (response.data) {
+					_this.listIgnoreSites = _this.ignoreSites();
+
 					// notify user new settings updates successfully
 					new Noty({
 						type: 'success',
@@ -59772,11 +59783,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			});
 		},
 		retrieveCopyscapeSetting: function retrieveCopyscapeSetting() {
-			var _this = this;
+			var _this2 = this;
 
 			axios.get('/admin/retrieveCopyscapeSetting').then(function (response) {
-				_this.copyscape = response.data;
-				_this.listIgnoreSites = _this.ignoreSites();
+				var data = response.data;
+
+				_this2.copyscape = data;
+				if (data.i.length > 0) _this2.listIgnoreSites = _this2.ignoreSites();
 			});
 		}
 	}
@@ -59953,9 +59966,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.copyscape.i = $event.target.value
       }
     }
-  }), _c('br'), _vm._v(" "), _c('div', {
+  }), _c('br'), _vm._v(" "), (!_vm.isIgnoreSitesEmpty) ? _c('div', {
     staticClass: "ignored-sites"
-  }, [_c('b', [_vm._v("Ignored Sites:")]), _vm._v(" "), _c('pre', [_vm._v(_vm._s(_vm.listIgnoreSites))])])]), _vm._v(" "), _c('div', {
+  }, [_c('b', [_vm._v("Ignored Sites:")]), _vm._v(" "), _c('pre', [_vm._v(_vm._s(_vm.listIgnoreSites))])]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
