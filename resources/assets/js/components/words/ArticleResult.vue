@@ -31,14 +31,14 @@
 			        </tr>
 			    </thead>
 			    <tbody>
-					<tr v-for="article in filterArticles">
+					<tr v-for="(article, index) in filterArticles">
 						<td>{{ dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a') }}</td>
 						<td>{{ article.doc_title }}</td>
 						<td>{{ article.domain }}</td>
 						<td>{{ article.keyword }}</td>
 						<td>
-							<button type="button" class="btn btn-info" v-if="! article.isProcess" @click="editArticle(article)">Edit</button>
-							<button type="button" class="btn btn-warning" disabled v-else>Waiting For Editing</button>
+							<button type="button" class="btn btn-info" ref="editArticle" v-if="! article.isProcess" @click="editArticle(article, index)">Edit</button>
+							<button type="button" class="btn btn-warning" ref="editArticle" disabled v-else>Waiting For Editing</button>
 							<!-- <button type="button" class="btn warning" v-else disabled>Edited</button> -->
 						</td>
 					</tr>
@@ -60,6 +60,7 @@
 				sortBy: ['A-Z', 'Z-A'],
 				dateTime: moment,
 				isProcess: false,
+				index: 0
 			}
 		},
 		computed: {
@@ -93,19 +94,39 @@
 				}
 			},
 
-			editArticle(article) {
+			btnStateIfArticleIsProcess() {
+				this.$refs.editArticle[this.index].disabled = true;
+				this.$refs.editArticle[this.index].innerHTML = 'Waiting For Editing';
+				this.$refs.editArticle[this.index].style.backgroundColor = '#EC971F';
+			},
+
+			editArticle(article, index) {
+				this.index = index;
+
 				axios.get('/user/editArticle?wordId='+article.id).then(response => {
 					let data = response.data;
 
 					// check if spintax is empty & isProcess is 0
 					if (data.spintax.length <= 0 && data.isProcess === 0) {
 						this.isProcess = false;
+						this.$emit('isEdit', data); 	// emit isEdit event
 					} else {
 						this.isProcess = true;
-					}
 
-					// emit isEdit event
-					this.$emit('isEdit', data);
+						// notify user that article has already process e.g isProcess=1
+						if (this.isProcess) {
+							// show waiting for edit button
+							this.btnStateIfArticleIsProcess();
+							
+							let articleTitle = data.doc_title;
+							new Noty({
+								type: 'info',
+								text: `<b>${articleTitle}</b> article already processed. You can't process and article that is done already.`,
+								layout: 'bottomLeft',
+								timeout: 5000
+							}).show();
+						}
+					}
 				});
 			}
 		}

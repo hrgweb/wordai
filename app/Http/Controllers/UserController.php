@@ -80,6 +80,7 @@ class UserController extends Controller
 				'words.isUserEdit',
 				'words.isEditorEdit',
 				'words.editor_id',
+				'isProcess',
 				'words.created_at'
     		]);
     }
@@ -90,6 +91,6 @@ class UserController extends Controller
     }
 
     public function updateArticle() {
-    	return request()->all();
+    	return Word::where('id', request('word_id'))->update(['isUserEdit' => 1]);
     }
 }

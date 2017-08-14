@@ -19829,7 +19829,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			sort: 'a-z',
 			sortBy: ['A-Z', 'Z-A'],
 			dateTime: moment,
-			isProcess: false
+			isProcess: false,
+			index: 0
 		};
 	},
 
@@ -19867,8 +19868,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				this.articleList = this.articles;
 			}
 		},
-		editArticle: function editArticle(article) {
+		btnStateIfArticleIsProcess: function btnStateIfArticleIsProcess() {
+			this.$refs.editArticle[this.index].disabled = true;
+			this.$refs.editArticle[this.index].innerHTML = 'Waiting For Editing';
+			this.$refs.editArticle[this.index].style.backgroundColor = '#EC971F';
+		},
+		editArticle: function editArticle(article, index) {
 			var _this3 = this;
+
+			this.index = index;
 
 			axios.get('/user/editArticle?wordId=' + article.id).then(function (response) {
 				var data = response.data;
@@ -19876,12 +19884,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				// check if spintax is empty & isProcess is 0
 				if (data.spintax.length <= 0 && data.isProcess === 0) {
 					_this3.isProcess = false;
+					_this3.$emit('isEdit', data); // emit isEdit event
 				} else {
 					_this3.isProcess = true;
-				}
 
-				// emit isEdit event
-				_this3.$emit('isEdit', data);
+					// notify user that article has already process e.g isProcess=1
+					if (_this3.isProcess) {
+						// show waiting for edit button
+						_this3.btnStateIfArticleIsProcess();
+
+						var articleTitle = data.doc_title;
+						new Noty({
+							type: 'info',
+							text: '<b>' + articleTitle + '</b> article already processed. You can\'t process and article that is done already.',
+							layout: 'bottomLeft',
+							timeout: 5000
+						}).show();
+					}
+				}
 			});
 		}
 	}
@@ -45878,18 +45898,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "Result"
   }, [_c('table', {
     staticClass: "table table-striped table-hover"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.filterArticles), function(article) {
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.filterArticles), function(article, index) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [(!article.isProcess) ? _c('button', {
+      ref: "editArticle",
+      refInFor: true,
       staticClass: "btn btn-info",
       attrs: {
         "type": "button"
       },
       on: {
         "click": function($event) {
-          _vm.editArticle(article)
+          _vm.editArticle(article, index)
         }
       }
     }, [_vm._v("Edit")]) : _c('button', {
+      ref: "editArticle",
+      refInFor: true,
       staticClass: "btn btn-warning",
       attrs: {
         "type": "button",
