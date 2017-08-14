@@ -65,8 +65,11 @@
 								<em class="fa fa-user" aria-hidden="true"></em> User
 							</a>
 						</li>
-						{{-- <li><a href="#">Link004</a></li> --}}
-						{{-- <li><a href="#">Link005</a></li> --}}
+						<li>
+							<a href="{{ url('copyscape-page') }}">
+								<em class="fa fa-cc" aria-hidden="true"></em> Copyscape
+							</a>
+						</li>
 					</ul>
 				</nav>
 

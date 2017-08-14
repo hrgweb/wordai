@@ -75,4 +75,8 @@ class PagesController extends Controller
     {
     	return view('users.articles');
     }
+
+    public function copyscapePage() {
+    	return view('copyscape.index');
+    }
 }

@@ -17583,24 +17583,26 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_admin_ProtectedTerm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_admin_ProtectedTerm_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_admin_DomainDetail_vue__ = __webpack_require__(218);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_admin_DomainDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_admin_DomainDetail_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_words_WordApi_vue__ = __webpack_require__(234);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_words_WordApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_words_WordApi_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_words_WordApi2_vue__ = __webpack_require__(235);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_words_WordApi2_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_words_WordApi2_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_words_CurationEdit_vue__ = __webpack_require__(230);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_words_CurationEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_words_CurationEdit_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_words_PasteArticle_vue__ = __webpack_require__(232);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_words_PasteArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_words_PasteArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_CreateArticle_vue__ = __webpack_require__(229);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_CreateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_words_CreateArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_CopyscapeApiResult_vue__ = __webpack_require__(228);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_CopyscapeApiResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_words_CopyscapeApiResult_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_GenerateArticle_vue__ = __webpack_require__(231);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_GenerateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_words_GenerateArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_UserArticle_vue__ = __webpack_require__(233);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_UserArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_words_UserArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_editor_Editor_vue__ = __webpack_require__(225);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_editor_Editor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_editor_Editor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_admin_Copyscape_vue__ = __webpack_require__(296);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_admin_Copyscape_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_admin_Copyscape_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_words_WordApi_vue__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_words_WordApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_words_WordApi_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_words_WordApi2_vue__ = __webpack_require__(235);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_words_WordApi2_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_words_WordApi2_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_words_CurationEdit_vue__ = __webpack_require__(230);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_words_CurationEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_words_CurationEdit_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_PasteArticle_vue__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_PasteArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_words_PasteArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_CreateArticle_vue__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_CreateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_words_CreateArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_CopyscapeApiResult_vue__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_CopyscapeApiResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_words_CopyscapeApiResult_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_GenerateArticle_vue__ = __webpack_require__(231);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_GenerateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_words_GenerateArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_words_UserArticle_vue__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_words_UserArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_words_UserArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_editor_Editor_vue__ = __webpack_require__(225);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_editor_Editor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_editor_Editor_vue__);
 __webpack_require__(189);
 
 window.$ = $;
@@ -17609,6 +17611,7 @@ window.moment = __webpack_require__(0);
 window.Noty = __webpack_require__(212);
 
 /*=============== Components ===============*/
+
 
 
 
@@ -17637,16 +17640,17 @@ var app = new Vue({
       User: __WEBPACK_IMPORTED_MODULE_3__components_admin_User_vue___default.a,
       ProtectedTerm: __WEBPACK_IMPORTED_MODULE_4__components_admin_ProtectedTerm_vue___default.a,
       DomainDetail: __WEBPACK_IMPORTED_MODULE_5__components_admin_DomainDetail_vue___default.a,
-      WordApi: __WEBPACK_IMPORTED_MODULE_6__components_words_WordApi_vue___default.a,
-      WordApi2: __WEBPACK_IMPORTED_MODULE_7__components_words_WordApi2_vue___default.a,
-      CurationEdit: __WEBPACK_IMPORTED_MODULE_8__components_words_CurationEdit_vue___default.a,
-      PasteArticle: __WEBPACK_IMPORTED_MODULE_9__components_words_PasteArticle_vue___default.a,
-      CreateArticle: __WEBPACK_IMPORTED_MODULE_10__components_words_CreateArticle_vue___default.a,
-      CopyscapeApiResult: __WEBPACK_IMPORTED_MODULE_11__components_words_CopyscapeApiResult_vue___default.a,
+      Copyscape: __WEBPACK_IMPORTED_MODULE_6__components_admin_Copyscape_vue___default.a,
+      WordApi: __WEBPACK_IMPORTED_MODULE_7__components_words_WordApi_vue___default.a,
+      WordApi2: __WEBPACK_IMPORTED_MODULE_8__components_words_WordApi2_vue___default.a,
+      CurationEdit: __WEBPACK_IMPORTED_MODULE_9__components_words_CurationEdit_vue___default.a,
+      PasteArticle: __WEBPACK_IMPORTED_MODULE_10__components_words_PasteArticle_vue___default.a,
+      CreateArticle: __WEBPACK_IMPORTED_MODULE_11__components_words_CreateArticle_vue___default.a,
+      CopyscapeApiResult: __WEBPACK_IMPORTED_MODULE_12__components_words_CopyscapeApiResult_vue___default.a,
       // CurlPage,
-      GenerateArticle: __WEBPACK_IMPORTED_MODULE_12__components_words_GenerateArticle_vue___default.a,
-      UserArticle: __WEBPACK_IMPORTED_MODULE_13__components_words_UserArticle_vue___default.a,
-      Editor: __WEBPACK_IMPORTED_MODULE_14__components_editor_Editor_vue___default.a
+      GenerateArticle: __WEBPACK_IMPORTED_MODULE_13__components_words_GenerateArticle_vue___default.a,
+      UserArticle: __WEBPACK_IMPORTED_MODULE_14__components_words_UserArticle_vue___default.a,
+      Editor: __WEBPACK_IMPORTED_MODULE_15__components_editor_Editor_vue___default.a
    }
 });
 
@@ -59594,6 +59598,479 @@ if (false) {
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-409520f2", module.exports)
   }
+}
+
+/***/ }),
+/* 295 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	data: function data() {
+		return {
+			o: ['csearch', 'psearch'],
+			e: ['UTF-8', 'ISO-8859-1', 'WINDOWS-1251'],
+			i: '',
+			x: ['', 1],
+			copyscape: {},
+			listIgnoreSites: []
+		};
+	},
+	created: function created() {
+		this.retrieveCopyscapeSetting();
+	},
+
+	methods: {
+		ignoreSites: function ignoreSites() {
+			var result = this.copyscape.i.split(/\,/g);
+
+			return result.map(function (item) {
+				var newArr = '';
+
+				newArr += item.toLowerCase().trim();
+
+				return newArr;
+			});
+		},
+		setCsSetting: function setCsSetting() {
+			axios.patch('/admin/updateCopyscapeSetting', this.copyscape).then(function (response) {
+				if (response.data) {
+					// notify user new settings updates successfully
+					new Noty({
+						type: 'success',
+						text: 'New settings for copyscape updated successfully.',
+						layout: 'bottomLeft',
+						timeout: 5000
+					}).show();
+				}
+			});
+		},
+		retrieveCopyscapeSetting: function retrieveCopyscapeSetting() {
+			var _this = this;
+
+			axios.get('/admin/retrieveCopyscapeSetting').then(function (response) {
+				_this.copyscape = response.data;
+				_this.listIgnoreSites = _this.ignoreSites();
+			});
+		}
+	}
+});
+
+/***/ }),
+/* 296 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(301)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(295),
+  /* template */
+  __webpack_require__(297),
+  /* scopeId */
+  "data-v-770ade1b",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\Copyscape.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] Copyscape.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-770ade1b", Component.options)
+  } else {
+    hotAPI.reload("data-v-770ade1b", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 297 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Copyscape"
+  }, [_vm._m(0), _vm._v(" "), _c('div', {
+    staticClass: "Params"
+  }, [_c('h3', [_vm._v("Custom Parameters")]), _vm._v(" "), _c('form', {
+    attrs: {
+      "method": "POST"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "o"
+    }
+  }, [_vm._v("o")]), _vm._v("  \n\t\t\t\t"), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.copyscape.o),
+      expression: "copyscape.o"
+    }],
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.copyscape.o = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.o), function(o) {
+    return _c('option', {
+      domProps: {
+        "value": o
+      }
+    }, [_vm._v(_vm._s(o))])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "e"
+    }
+  }, [_vm._v("e")]), _vm._v("  \n\t\t\t\t"), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.copyscape.e),
+      expression: "copyscape.e"
+    }],
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.copyscape.e = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.e), function(e) {
+    return _c('option', {
+      domProps: {
+        "value": e
+      }
+    }, [_vm._v(_vm._s(e))])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "c"
+    }
+  }, [_vm._v("c")]), _vm._v("  \n\t\t\t\t"), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.copyscape.c),
+      expression: "copyscape.c"
+    }],
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.copyscape.c = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    domProps: {
+      "value": 0
+    }
+  }, [_vm._v("0")]), _vm._v(" "), _vm._l((10), function(n) {
+    return _c('option', {
+      domProps: {
+        "value": n
+      }
+    }, [_vm._v(_vm._s(n))])
+  })], 2)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "i"
+    }
+  }, [_vm._v("i")]), _vm._v("  \n\t\t\t\t"), _vm._m(1), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.copyscape.i),
+      expression: "copyscape.i"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "6"
+    },
+    domProps: {
+      "value": (_vm.copyscape.i)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.copyscape.i = $event.target.value
+      }
+    }
+  }), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "ignored-sites"
+  }, [_c('b', [_vm._v("Ignored Sites:")]), _vm._v(" "), _c('pre', [_vm._v(_vm._s(_vm.listIgnoreSites))])])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "x"
+    }
+  }, [_vm._v("x")]), _vm._v("  \n\t\t\t\t"), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.copyscape.x),
+      expression: "copyscape.x"
+    }],
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.copyscape.x = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, _vm._l((_vm.x), function(x) {
+    return _c('option', {
+      domProps: {
+        "value": x
+      }
+    }, [_vm._v(_vm._s(x))])
+  }))]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.setCsSetting($event)
+      }
+    }
+  }, [_vm._v("Save New Settings")])])]), _vm._v(" "), _vm._m(2)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Table"
+  }, [_c('h3', [_vm._v("Copyscape Table")]), _vm._v(" "), _c('table', {
+    attrs: {
+      "cellpadding": "6",
+      "border": "0",
+      "width": "100%"
+    }
+  }, [_c('tbody', [_c('tr', {
+    attrs: {
+      "bgcolor": "#DDDDDD"
+    }
+  }, [_c('td', [_c('b', [_vm._v("Parameter")])]), _vm._v(" "), _c('td', [_c('b', [_vm._v("Explanation")])]), _vm._v(" "), _c('td', [_c('b', [_vm._v("Value")])]), _vm._v(" "), _c('td', [_c('b', [_vm._v("Required?")])]), _vm._v(" "), _c('td', [_c('b', [_vm._v("Default")])])]), _vm._v(" "), _c('tr', [_c('td', [_c('b', [_vm._v("o")])]), _vm._v(" "), _c('td', [_vm._v("API operation")]), _vm._v(" "), _c('td', [_c('b', [_vm._v("csearch")]), _vm._v(" (or "), _c('b', [_vm._v("psearch")]), _vm._v(" or "), _c('b', [_vm._v("cpsearch")]), _c('br'), _vm._v("if you create a private index)")]), _vm._v(" "), _c('td', [_vm._v("Yes")]), _vm._v(" "), _c('td', [_vm._v("-")])]), _vm._v(" "), _c('tr', [_c('td', [_c('b', [_vm._v("e")])]), _vm._v(" "), _c('td', [_vm._v("Text encoding")]), _vm._v(" "), _c('td', [_c('i', [_vm._v("[encoding name]")])]), _vm._v(" "), _c('td', [_vm._v("Yes")]), _vm._v(" "), _c('td', [_vm._v("-")])]), _vm._v(" "), _c('tr', [_c('td', [_c('b', [_vm._v("c")])]), _vm._v(" "), _c('td', [_vm._v("Full comparisons")]), _vm._v(" "), _c('td', [_c('b', [_vm._v("0")]), _vm._v(" to "), _c('b', [_vm._v("10")])]), _vm._v(" "), _c('td', [_vm._v("No")]), _vm._v(" "), _c('td', [_c('b', [_vm._v("0")])])]), _vm._v(" "), _c('tr', [_c('td', [_c('b', [_vm._v("i")])]), _vm._v(" "), _c('td', [_vm._v("Ignore sites")]), _vm._v(" "), _c('td', [_c('i', [_vm._v("[comma-delimited domains to ignore]")])]), _vm._v(" "), _c('td', [_vm._v("No")]), _vm._v(" "), _c('td', [_vm._v("-")])]), _vm._v(" "), _c('tr', [_c('td', [_c('b', [_vm._v("x")])]), _vm._v(" "), _c('td', [_vm._v("Example test")]), _vm._v(" "), _c('td', [_c('b', [_vm._v("1")]), _vm._v(" or omitted")]), _vm._v(" "), _c('td', [_vm._v("No")]), _vm._v(" "), _c('td', [_vm._v("-")])])])]), _c('br')])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('span', {
+    staticStyle: {
+      "color": "red"
+    }
+  }, [_vm._v("   "), _c('b', [_vm._v("Reminder")]), _vm._v(": seperate with comma \",\" e.g www.site1.com, www.site2.com")])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Docs"
+  }, [_c('h3', [_vm._v("Documentation")]), _vm._v(" "), _c('p', [_c('small', [_vm._v("API operation ("), _c('b', [_vm._v("o")]), _vm._v("): Use "), _c('b', [_vm._v("csearch")]), _vm._v(" to search against the public Internet or "), _c('b', [_vm._v("psearch")]), _vm._v(" to search against your private index. You can also use "), _c('b', [_vm._v("cpsearch")]), _vm._v(" to search against both the Internet and your private index, for the cost of two search credits.")])]), _vm._v(" "), _c('p', [_c('small', [_vm._v("Text encoding ("), _c('b', [_vm._v("e")]), _vm._v("): Use an "), _c('a', {
+    attrs: {
+      "href": "http://www.iana.org/assignments/character-sets"
+    }
+  }, [_vm._v("IANA name")]), _vm._v(", such as "), _c('b', [_vm._v("UTF-8")]), _vm._v(" (Unicode), "), _c('b', [_vm._v("ISO-8859-1")]), _vm._v(" (Latin-1) or "), _c('b', [_vm._v("WINDOWS-1251")]), _vm._v(" (Cyrillic).")])]), _vm._v(" "), _c('p', [_c('small', [_vm._v("\n\t\t\tFull comparisons ("), _c('b', [_vm._v("c")]), _vm._v("): Set to a value between "), _c('b', [_vm._v("1")]), _vm._v(" and "), _c('b', [_vm._v("10")]), _vm._v(" to request a full text-on-text comparison (with an exact count of matching words) between the query text and the top (one to ten) results found. Note that full comparisons may add a delay of a few seconds.\n\t\t")])]), _vm._v(" "), _c('p', [_c('small', [_vm._v("\n\t\t\tIgnore sites ("), _c('b', [_vm._v("i")]), _vm._v("): Subdomains are also omitted from the results. For example, if set to "), _c('b', [_vm._v("site1.com,site2.com")]), _vm._v(" then "), _c('b', [_vm._v("www.site1.com")]), _vm._v(" and "), _c('b', [_vm._v("blog.site2.com")]), _vm._v(" would also be ignored. Ignore sites listed in your user settings are always applied. \n\t\t")])]), _vm._v(" "), _c('p', [_c('small', [_vm._v("\n\t\t\tExample test ("), _c('b', [_vm._v("x")]), _vm._v("): If set to "), _c('b', [_vm._v("1")]), _vm._v(", the API will search the Internet for copies of the text on "), _c('a', {
+    attrs: {
+      "href": "http://www.copyscape.com/example.html"
+    }
+  }, [_vm._v("this page")]), _vm._v(" and you will not be charged.\n\t\t")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-770ade1b", module.exports)
+  }
+}
+
+/***/ }),
+/* 298 */,
+/* 299 */,
+/* 300 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\ntable td[data-v-770ade1b] { padding: .5em 1em;\n}\n.Table[data-v-770ade1b], .Params[data-v-770ade1b] { margin-bottom: 3em;\n}\n", ""]);
+
+/***/ }),
+/* 301 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(300);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("42340aa6", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-770ade1b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Copyscape.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-770ade1b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Copyscape.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
 }
 
 /***/ })

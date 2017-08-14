@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Copyscape;
 use App\Domain;
 use App\DomainDetail;
 use App\ProtectedTerm;
@@ -188,5 +189,13 @@ class AdminController extends Controller
 		DB::commit();
 
     	return $detail;
+    }
+
+    public function updateCopyscapeSetting() {
+    	return Copyscape::where('id', 1)->update(request()->all());
+    }
+
+    public function retrieveCopyscapeSetting() {
+    	return Copyscape::first(['o', 'e', 'c', 'i', 'x']);
     }
 }

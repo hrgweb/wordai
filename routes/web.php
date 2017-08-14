@@ -17,6 +17,7 @@ Route::get('curl', 'PagesController@curl');
 Route::get('verification', 'PagesController@verification');
 Route::get('editor', 'PagesController@editor');
 Route::get('articles', 'PagesController@articles');
+Route::get('copyscape-page', 'PagesController@copyscapePage');
 
 // WordAI
 Route::prefix('words')->group(function() {
@@ -50,10 +51,12 @@ Route::prefix('admin')->group(function() {
 	Route::get('domainList', 'AdminController@domainList');
 	Route::get('domainListNotSet', 'AdminController@domainListNotSet');
 	Route::get('domainDetails', 'AdminController@domainDetails');
+	Route::get('retrieveCopyscapeSetting', 'AdminController@retrieveCopyscapeSetting');
 	Route::post('postDomain', 'AdminController@postDomain');
 	Route::post('saveDetails', 'AdminController@saveDetails');
 	Route::patch('updateDomain', 'AdminController@updateDomain');
 	Route::patch('updateDetails', 'AdminController@updateDetails');
+	Route::patch('updateCopyscapeSetting', 'AdminController@updateCopyscapeSetting');
 	Route::delete('removeDomain', 'AdminController@removeDomain');
 	Route::delete('removeDetails', 'AdminController@removeDetails');
 	// Protected Terms

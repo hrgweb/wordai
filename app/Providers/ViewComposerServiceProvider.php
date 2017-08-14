@@ -19,7 +19,8 @@ class ViewComposerServiceProvider extends ServiceProvider
         	'home', 
         	'words.*',
         	'editor.*',
-        	'users.articles'
+        	'users.articles',
+        	'copyscape.*'
         ], function($view) {
         	$view->with('user', auth()->user());
         });

@@ -13,6 +13,7 @@ import Domain from './components/admin/Domain.vue';
 import User from './components/admin/User.vue';
 import ProtectedTerm from './components/admin/ProtectedTerm.vue';
 import DomainDetail from './components/admin/DomainDetail.vue';
+import Copyscape from './components/admin/Copyscape.vue';
 import WordApi from './components/words/WordApi.vue';
 import WordApi2 from './components/words/WordApi2.vue';
 import CurationEdit from './components/words/CurationEdit.vue';
@@ -34,6 +35,7 @@ const app = new Vue({
     	User,
     	ProtectedTerm,
     	DomainDetail,
+    	Copyscape,
     	WordApi,
     	WordApi2,
     	CurationEdit,
