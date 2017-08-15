@@ -28,6 +28,7 @@
 
 	            {{-- show if logged in as user --}}
 				@if (! $user->isAdmin)
+	              <li><a href="{{ url('create-article') }}">Create Article</a></li>
 	              <li><a href="{{ url('articles') }}">Article List</a></li>
 	              <li><a href="{{ url('words/generate') }}">Generate Article</a></li>
 				@endif
