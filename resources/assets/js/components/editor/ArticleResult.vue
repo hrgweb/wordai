@@ -28,7 +28,7 @@
 		        	<td>{{ article.synonym }}</td>
 		        	<td>
 		        		<button type="button" class="btn btn-info" @click="editArticle(article, index)">Edit Article</button>
-		        		<button type="button" class="btn btn-danger" @click="publishArticle(article, index)">Publish</button>
+		        		<button type="button" class="btn btn-danger" ref="btnPublish" @click="publishArticle(article, index)">Publish</button>
 		        	</td>
 		        </tr>
 		    </tbody>
@@ -39,6 +39,9 @@
 <script>
 	export default {
 		props: ['articles'],
+		data() {
+			return { index: 0 };
+		},
 		methods: {
 			editArticle(article, index) {
 				this.$emit('isEditing', {
@@ -47,14 +50,29 @@
 				});
 			},
 
-			publishArticle(article, index) {
-				var url = 'https://hooks.zapier.com/hooks/catch/2462016/ryantm/';
-					url += '?folder=my folder' 		// +this.folder;
-					url += '&file= my file' 		// +this.file;
-					url += '&content= sample content' 		// +this.content;
+			publishBtnState(text, state) {
+				this.$refs.btnPublish[this.index].innerText = text;
+				this.$refs.btnPublish[this.index].disabled = state;
+			},
 
-				axios.get(url).then(function(response) {
-					console.log(response.data);
+			publishArticle(article, index) {
+				this.index = index;
+				this.publishBtnState('Publishing...', true);
+
+				const payload = {
+					domain: article.domain,
+					title: article.doc_title,
+					keyword: article.keyword,
+					article: article.spin
+				};
+
+				let vm = this;
+				axios.post('/editor/publishArticle', payload).then(function(response) {
+					let data = response.data;
+
+					if (data.status === 'success') {
+						vm.publishBtnState('Publish', false);
+					}
 				});
 			}
 		}
@@ -63,7 +81,9 @@
 
 <style scoped>
 	table tbody tr:first-child > td:last-child {
-	    width: 180px;
-	    max-width: 180px;
+	    width: 200px;
+	    max-width: 200px;
 	}
+
+	button { width: 90px; }
 </style>

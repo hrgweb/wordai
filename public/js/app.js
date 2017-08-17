@@ -19897,6 +19897,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['articles'],
+	data: function data() {
+		return { index: 0 };
+	},
+
 	methods: {
 		editArticle: function editArticle(article, index) {
 			this.$emit('isEditing', {
@@ -19904,14 +19908,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				index: index
 			});
 		},
+		publishBtnState: function publishBtnState(text, state) {
+			this.$refs.btnPublish[this.index].innerText = text;
+			this.$refs.btnPublish[this.index].disabled = state;
+		},
 		publishArticle: function publishArticle(article, index) {
-			var url = 'https://hooks.zapier.com/hooks/catch/2462016/ryantm/';
-			url += '?folder=my folder'; // +this.folder;
-			url += '&file= my file'; // +this.file;
-			url += '&content= sample content'; // +this.content;
+			this.index = index;
+			this.publishBtnState('Publishing...', true);
 
-			axios.get(url).then(function (response) {
-				console.log(response.data);
+			var payload = {
+				domain: article.domain,
+				title: article.doc_title,
+				keyword: article.keyword,
+				article: article.spin
+			};
+
+			var vm = this;
+			axios.post('/editor/publishArticle', payload).then(function (response) {
+				var data = response.data;
+
+				if (data.status === 'success') {
+					vm.publishBtnState('Publish', false);
+				}
 			});
 		}
 	}
@@ -47750,6 +47768,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("Edit Article")]), _vm._v(" "), _c('button', {
+      ref: "btnPublish",
+      refInFor: true,
       staticClass: "btn btn-danger",
       attrs: {
         "type": "button"
@@ -60338,7 +60358,7 @@ module.exports = __webpack_require__(143);
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\ntable tbody tr:first-child > td[data-v-54f9dd57]:last-child {\n    width: 180px;\n    max-width: 180px;\n}\n", ""]);
+exports.push([module.i, "\ntable tbody tr:first-child > td[data-v-54f9dd57]:last-child {\n    width: 200px;\n    max-width: 200px;\n}\nbutton[data-v-54f9dd57] { width: 90px;\n}\n", ""]);
 
 /***/ }),
 /* 306 */

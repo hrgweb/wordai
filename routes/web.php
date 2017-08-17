@@ -82,6 +82,7 @@ Route::prefix('user')->group(function() {
 // Editor
 Route::prefix('editor')->group(function() {
 	Route::get('articleList', 'EditorsController@articleList');
+	Route::post('publishArticle', 'EditorsController@publishArticle');
 	Route::patch('updateArticle', 'EditorsController@updateArticle');
 });
 
