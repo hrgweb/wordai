@@ -28,6 +28,7 @@
 		        	<td>{{ article.synonym }}</td>
 		        	<td>
 		        		<button type="button" class="btn btn-info" @click="editArticle(article, index)">Edit Article</button>
+		        		<button type="button" class="btn btn-danger" @click="publishArticle(article, index)">Publish</button>
 		        	</td>
 		        </tr>
 		    </tbody>
@@ -44,7 +45,25 @@
 					article: article,
 					index: index
 				});
+			},
+
+			publishArticle(article, index) {
+				var url = 'https://hooks.zapier.com/hooks/catch/2462016/ryantm/';
+					url += '?folder=my folder' 		// +this.folder;
+					url += '&file= my file' 		// +this.file;
+					url += '&content= sample content' 		// +this.content;
+
+				axios.get(url).then(function(response) {
+					console.log(response.data);
+				});
 			}
 		}
 	}
 </script>
+
+<style scoped>
+	table tbody tr:first-child > td:last-child {
+	    width: 180px;
+	    max-width: 180px;
+	}
+</style>
