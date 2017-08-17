@@ -65,7 +65,7 @@ class EditorsController extends Controller
 		// file name = title-keyword-domain-com.txt
 
 		$folderName = request('domain');
-		$fileName = request('title') . '-' . request('keyword') . '-' . request('domain');
+		$fileName = request('domain') . '-' . request('title') . '-' . request('keyword');
 		$fileContent = request('article');
 
     	return Curl::to($url)

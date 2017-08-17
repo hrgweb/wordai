@@ -19928,6 +19928,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				var data = response.data;
 
 				if (data.status === 'success') {
+					// notify user successfully uploade to dropbox
+					var articleTitle = payload.title;
+					new Noty({
+						type: 'success',
+						text: '<b>' + articleTitle + '</b> article successfully uploaded to dropbox.',
+						layout: 'bottomLeft',
+						timeout: 5000
+					}).show();
+
 					vm.publishBtnState('Publish', false);
 				}
 			});
