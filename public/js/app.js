@@ -19920,12 +19920,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				domain: article.domain,
 				title: article.doc_title,
 				keyword: article.keyword,
-				article: article.spin
+				article: article.spin,
+				spintax: article.spintax
 			};
 
 			var vm = this;
 			axios.post('/editor/publishArticle', payload).then(function (response) {
 				var data = response.data;
+
+				// publish button state
+				vm.publishBtnState('Publish', false);
 
 				if (data.status === 'success') {
 					// notify user successfully uploade to dropbox
@@ -19936,8 +19940,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 						layout: 'bottomLeft',
 						timeout: 5000
 					}).show();
-
-					vm.publishBtnState('Publish', false);
 				}
 			});
 		}

@@ -66,13 +66,15 @@ class EditorsController extends Controller
 
 		$folderName = request('domain');
 		$fileName = request('domain') . '-' . request('title') . '-' . request('keyword');
-		$fileContent = request('article');
+		$fileArticleContent = request('article');
+		$fileSpintaxContent = request('spintax');
 
     	return Curl::to($url)
     		->withData([
     			'folderName' => $folderName, 
     			'fileName' => strtolower($fileName), 
-    			'fileContent' => $fileContent
+    			'fileArticleContent' => $fileArticleContent,
+    			'fileSpintaxContent' => $fileSpintaxContent
     		])
     		->get();
     }

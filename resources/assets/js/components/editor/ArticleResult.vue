@@ -63,12 +63,16 @@
 					domain: article.domain,
 					title: article.doc_title,
 					keyword: article.keyword,
-					article: article.spin
+					article: article.spin,
+					spintax: article.spintax
 				};
 
 				let vm = this;
 				axios.post('/editor/publishArticle', payload).then(function(response) {
 					let data = response.data;
+
+					// publish button state
+					vm.publishBtnState('Publish', false);
 
 					if (data.status === 'success') {
 						// notify user successfully uploade to dropbox
@@ -80,7 +84,6 @@
 							timeout: 5000
 						}).show();
 
-						vm.publishBtnState('Publish', false);
 					}
 				});
 			}
