@@ -20828,6 +20828,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					var data = response.data;
 
 					_this.isLoading = false;
+					_this.isDomainNotSet = false;
 					_this.$refs.spinButton.disabled = false;
 
 					if (data.isError) {
@@ -20838,6 +20839,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					} else {
 						// validation success
 						_this.isValidationFail = false;
+
+						// reset spin values
+						_this.spin = {
+							article: $('textarea#article').val(''),
+							article_type_id: 'select',
+							doc_title: '',
+							domain_id: 'select',
+							keyword: '',
+							lsi_terms: '',
+							domain_protected: '',
+							protected: '',
+							synonym: ''
+						};
 
 						// notify user article posted successfully
 						var articleTitle = _this.spin.doc_title;
@@ -49719,6 +49733,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "id": "article",
       "rows": "40"
     },
     domProps: {

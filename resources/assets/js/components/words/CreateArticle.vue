@@ -59,7 +59,7 @@
 
 			<!-- <textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea> -->
 			<label for="article">Original Article</label>
-			<textarea class="form-control" rows="40" v-once v-model="spin.article" @keyup="wordCount"></textarea>
+			<textarea class="form-control" id="article" rows="40" v-once v-model="spin.article" @keyup="wordCount"></textarea>
 			<br>
 
 			<!-- Erorr component -->
@@ -102,6 +102,7 @@
 						let data = response.data;
 
 						this.isLoading = false;
+						this.isDomainNotSet = false;
 						this.$refs.spinButton.disabled = false;
 
 						if (data.isError) { // validation fails
@@ -110,6 +111,19 @@
 							this.errors = data.errors;
 						} else { // validation success
 							this.isValidationFail = false;
+
+							// reset spin values
+							this.spin = {
+								article: $('textarea#article').val(''),
+								article_type_id: 'select',
+								doc_title: '',
+								domain_id: 'select',
+								keyword: '',
+								lsi_terms: '',
+								domain_protected: '',
+								protected: '',
+								synonym: ''
+							};
 
 							// notify user article posted successfully
 							let articleTitle = this.spin.doc_title;
