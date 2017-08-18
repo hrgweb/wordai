@@ -20,7 +20,7 @@ class CreateDomainDetailsTable extends Migration
             $table->string('protected')->nullable();
             $table->string('synonym')->nullable();
             $table->index(['user_id', 'domain_id']);
-            $table->unique(['user_id', 'domain_id']);
+            $table->unique(['domain_id']);
             $table->timestamps();
         });
     }

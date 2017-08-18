@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\DomainDetail;
 use App\User;
 use App\UserLevel;
 use App\Word;
@@ -107,5 +108,19 @@ class UserController extends Controller
     public function updateArticle() 
     {
     	return Word::where('id', request('word_id'))->update(['article' => request('article'), 'isUserEdit' => 0]);
+    }
+
+    public function userDomainSetup() {
+    	return DB::table('domain_details as dd')
+    		->join('users', 'users.id', '=', 'dd.user_id')
+    		->join('domains', 'domains.id', '=', 'dd.domain_id')
+    		->where('dd.user_id', auth()->user()->id)
+    		->get([
+    			'dd.id AS domain_detail_id',
+    			'dd.domain_id',
+    			'domains.domain',
+    			'dd.protected',
+    			'dd.synonym'
+    		]);
     }
 }

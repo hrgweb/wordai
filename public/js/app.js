@@ -6198,7 +6198,8 @@ var ArticleActionMixin = {
 			spin: {
 				article_type_id: 'select',
 				doc_title: '',
-				domain_id: 'select',
+				domain_id: 0,
+				domain: '',
 				keyword: '',
 				lsi_terms: '',
 				domain_protected: '',
@@ -6218,6 +6219,7 @@ var ArticleActionMixin = {
 
 		this.listOfArticleType();
 		this.domainList();
+		this.userDomainSetup();
 	},
 
 	watch: {
@@ -6347,6 +6349,21 @@ var ArticleActionMixin = {
 					_this6.domainFillIn(false, data.protected, data.synonym);
 				} else {
 					_this6.domainFillIn(true, '', '');
+				}
+			});
+		},
+		userDomainSetup: function userDomainSetup() {
+			var _this7 = this;
+
+			axios.get('/user/userDomainSetup').then(function (response) {
+				var data = _.head(response.data);
+
+				if (data) {
+					_this7.spin = {
+						domain: data.domain,
+						protected: data.protected,
+						synonym: data.synonym
+					};
 				}
 			});
 		}
@@ -20806,6 +20823,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -20845,12 +20866,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 							article: $('textarea#article').val(''),
 							article_type_id: 'select',
 							doc_title: '',
-							domain_id: 'select',
 							keyword: '',
 							lsi_terms: '',
-							domain_protected: '',
-							protected: '',
-							synonym: ''
+							domain_protected: ''
 						};
 
 						// notify user article posted successfully
@@ -49568,36 +49586,42 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "color": "red"
     }
-  }, [_vm._v("This domain not set yet.")]) : _vm._e(), _vm._v(" "), _c('select', {
+  }, [_vm._v("This domain not set yet.")]) : _vm._e(), _vm._v(" "), _c('input', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.spin.domain_id),
-      expression: "spin.domain_id"
+      value: (_vm.spin.domain),
+      expression: "spin.domain"
     }],
     staticClass: "form-control",
-    on: {
-      "change": [function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.spin.domain_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }, _vm.domainChange]
-    }
-  }, [_c('option', {
     attrs: {
-      "value": "select"
-    }
-  }, [_vm._v("Select a domain")]), _vm._v(" "), _vm._l((_vm.domains), function(domain) {
-    return _c('option', {
-      domProps: {
-        "value": domain.id
+      "type": "text",
+      "list": "domains"
+    },
+    domProps: {
+      "value": (_vm.spin.domain)
+    },
+    on: {
+      "blur": _vm.domainChange,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.domain = $event.target.value
       }
-    }, [_vm._v(_vm._s(domain.domain))])
-  })], 2)]), _vm._v(" "), _c('div', {
+    }
+  }), _vm._v(" "), _c('datalist', {
+    attrs: {
+      "id": "domains"
+    }
+  }, _vm._l((_vm.domains), function(domain) {
+    return _c('option', {
+      attrs: {
+        "data-domain-id": domain.id
+      },
+      domProps: {
+        "value": domain.domain
+      }
+    })
+  }))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"

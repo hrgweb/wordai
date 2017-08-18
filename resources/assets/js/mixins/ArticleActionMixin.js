@@ -20,7 +20,8 @@ export const ArticleActionMixin = {
 			spin: { 
 				article_type_id: 'select',
 				doc_title: '',
-				domain_id: 'select',
+				domain_id: 0,
+				domain: '',
 				keyword: '',
 				lsi_terms: '',
 				domain_protected: '',
@@ -40,6 +41,7 @@ export const ArticleActionMixin = {
 
 		this.listOfArticleType();
 		this.domainList();
+		this.userDomainSetup();
 	},
 	watch: {
 		articleTypes(data) {
@@ -158,6 +160,20 @@ export const ArticleActionMixin = {
 					this.domainFillIn(false, data.protected, data.synonym);
 				} else {
 					this.domainFillIn(true, '', '');
+				}
+			});
+		},
+
+		userDomainSetup() {
+			axios.get('/user/userDomainSetup').then(response => {
+				let data = _.head(response.data);
+
+				if (data) {
+					this.spin = {
+						domain: data.domain,
+						protected: data.protected,
+						synonym: data.synonym
+					};
 				}
 			});
 		}

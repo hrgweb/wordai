@@ -25,10 +25,14 @@
 
 			<div class="form-group">
 				<label for="dom_name">Domain Name</label> &nbsp; <span style="color: red;" v-if="isDomainNotSet">This domain not set yet.</span>
-				<select class="form-control" v-model="spin.domain_id" @change="domainChange">
+				<input type="text" class="form-control" list="domains" v-model="spin.domain" @blur="domainChange">
+				<!-- <select class="form-control" v-model="spin.domain_id" @change="domainChange">
 					<option value="select">Select a domain</option>						
 					<option v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
-				</select>
+				</select> -->
+				<datalist id="domains">
+					<option v-for="domain in domains" :value="domain.domain" :data-domain-id="domain.id"></option>
+				</datalist>
 			</div>
 
 			<div class="row">
@@ -117,12 +121,9 @@
 								article: $('textarea#article').val(''),
 								article_type_id: 'select',
 								doc_title: '',
-								domain_id: 'select',
 								keyword: '',
 								lsi_terms: '',
-								domain_protected: '',
-								protected: '',
-								synonym: ''
+								domain_protected: ''
 							};
 
 							// notify user article posted successfully
