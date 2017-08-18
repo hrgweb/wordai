@@ -17,6 +17,15 @@
 				<option id="domain" v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
 			</select><br>
 
+			<!-- Users -->
+			<div class="form-user" v-if="hasUser">
+				<label for="user">Search for user</label>
+				<input type="text" class="form-control" list="users">
+				<datalist id="users">
+					<option v-for="user in users" :value="user.firstname + ' ' + user.lastname"></option>
+				</datalist>
+			</div>
+
 			<!-- Edit - domain name -->
 			<div class="form-group">
 				<b id="domain" style="font-size: 1.5em;">{{ detail.domain }}</b>
@@ -24,7 +33,7 @@
 
 			<!-- LSI Terms -->
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-right: 1em;">
-				<label for="lsi_terms">Protected Terms</label>
+				<label for="protected">Protected Terms</label>
 				<textarea class="form-control" rows="8" v-model="detail.protected"></textarea><br>
 			</div>
 
@@ -74,7 +83,9 @@
 				isError: false,
 				isResultNotEmpty: false,
 				details: [],
-				index: 0
+				index: 0,
+				users: [],
+				hasUser: false
 			}
 		},
 		watch: {
@@ -84,11 +95,16 @@
 
 			details(data) {
 				this.isResultNotEmpty = this.details.length > 0 ? true : false;
+			},
+
+			users(data) {
+				this.hasUser = data.length > 0 ? true : false;
 			}
 		},
 		created() {
 			this.listOfDomains();
 			this.domainDetails();
+			this.userList();
 		},
 		methods: {
 			listOfDomains() {
@@ -223,6 +239,12 @@
 				axios.delete('/admin/removeDetails', output).then(response => {
 					// remove item object in details on specific index
 					this.details.splice(this.index, 1);
+				});
+			},
+
+			userList() {
+				axios.get('/user/userList').then(response => {
+					this.users = response.data;
 				});
 			}
 		}
