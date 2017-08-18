@@ -2,6 +2,7 @@ import Error from './../components/errors/Error.vue';
 import SeparateParagraph from './../components/words/SeparateParagraph.vue';
 import CopyscapeApi from './../components/words/CopyscapeApi.vue';
 import FullArticle from './../components/words/FullArticle.vue';
+import User from './../class/User.js';
 
 export const ArticleActionMixin = {
 	props: [ 'user', 'token' ],
@@ -33,13 +34,14 @@ export const ArticleActionMixin = {
 			isCurated: false,
 			isArticleTypesLoaded: false,
 			domains: [],
-			isDomainNotSet: false
+			isDomainNotSet: false,
+			userObj: new User()
 		}
 	},
 	created() {
 		this.authUser = JSON.parse(this.user);
 
-		this.listOfArticleType();
+		// this.listOfArticleType();
 		this.domainList();
 		this.userDomainSetup();
 	},
@@ -151,17 +153,26 @@ export const ArticleActionMixin = {
 		},
 
 		domainChange() {
+			let vm = this;
+			let options = $('datalist#domains').find('option');
+			let domain_id = this.userObj.getUserId(vm, options, vm.spin.domain);
+			this.spin.domain_id = domain_id.attributes[0].value;
 			let url = '/words/domainChange?domain_id=' + this.spin.domain_id;
 
-			if (this.spin.domain_id > 0) axios.get(url).then(response => {
-				let data = response.data;
+			if (this.spin.domain_id > 0) {
+				axios.get(url).then(response => {
+					let data = response.data;
 
-				if (data) {
-					this.domainFillIn(false, data.protected, data.synonym);
-				} else {
-					this.domainFillIn(true, '', '');
-				}
-			});
+					if (data) {
+						this.domainFillIn(false, data.protected, data.synonym);
+					} else {
+						this.domainFillIn(true, '', '');
+					}
+				});
+			} else {
+				this.spin['protected'] = '';
+				this.spin['synonym'] = '';
+			}
 		},
 
 		userDomainSetup() {
@@ -169,11 +180,9 @@ export const ArticleActionMixin = {
 				let data = _.head(response.data);
 
 				if (data) {
-					this.spin = {
-						domain: data.domain,
-						protected: data.protected,
-						synonym: data.synonym
-					};
+					this.spin['domain'] = data.domain;
+					this.spin['protected'] = data.protected;
+					this.spin['synonym'] = data.synonym;
 				}
 			});
 		}

@@ -6175,7 +6175,9 @@ var UserLevel = function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_words_CopyscapeApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_words_CopyscapeApi_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_words_FullArticle_vue__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_words_FullArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_words_FullArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__class_User_js__ = __webpack_require__(307);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleActionMixin; });
+
 
 
 
@@ -6211,13 +6213,14 @@ var ArticleActionMixin = {
 			isCurated: false,
 			isArticleTypesLoaded: false,
 			domains: [],
-			isDomainNotSet: false
+			isDomainNotSet: false,
+			userObj: new __WEBPACK_IMPORTED_MODULE_4__class_User_js__["a" /* default */]()
 		};
 	},
 	created: function created() {
 		this.authUser = JSON.parse(this.user);
 
-		this.listOfArticleType();
+		// this.listOfArticleType();
 		this.domainList();
 		this.userDomainSetup();
 	},
@@ -6340,17 +6343,26 @@ var ArticleActionMixin = {
 		domainChange: function domainChange() {
 			var _this6 = this;
 
+			var vm = this;
+			var options = $('datalist#domains').find('option');
+			var domain_id = this.userObj.getUserId(vm, options, vm.spin.domain);
+			this.spin.domain_id = domain_id.attributes[0].value;
 			var url = '/words/domainChange?domain_id=' + this.spin.domain_id;
 
-			if (this.spin.domain_id > 0) axios.get(url).then(function (response) {
-				var data = response.data;
+			if (this.spin.domain_id > 0) {
+				axios.get(url).then(function (response) {
+					var data = response.data;
 
-				if (data) {
-					_this6.domainFillIn(false, data.protected, data.synonym);
-				} else {
-					_this6.domainFillIn(true, '', '');
-				}
-			});
+					if (data) {
+						_this6.domainFillIn(false, data.protected, data.synonym);
+					} else {
+						_this6.domainFillIn(true, '', '');
+					}
+				});
+			} else {
+				this.spin['protected'] = '';
+				this.spin['synonym'] = '';
+			}
 		},
 		userDomainSetup: function userDomainSetup() {
 			var _this7 = this;
@@ -6359,11 +6371,9 @@ var ArticleActionMixin = {
 				var data = _.head(response.data);
 
 				if (data) {
-					_this7.spin = {
-						domain: data.domain,
-						protected: data.protected,
-						synonym: data.synonym
-					};
+					_this7.spin['domain'] = data.domain;
+					_this7.spin['protected'] = data.protected;
+					_this7.spin['synonym'] = data.synonym;
 				}
 			});
 		}
@@ -60503,6 +60513,45 @@ module.exports = Vue$3;
 __webpack_require__(142);
 module.exports = __webpack_require__(143);
 
+
+/***/ }),
+/* 300 */,
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var User = function () {
+	function User() {
+		_classCallCheck(this, User);
+	}
+
+	_createClass(User, [{
+		key: "getUserId",
+		value: function getUserId(vm, options, searchText) {
+			var result = $.grep(options, function (item, index) {
+				var optionVal = options[index].value;
+
+				return optionVal === searchText;
+			});
+
+			return result[0];
+		}
+	}]);
+
+	return User;
+}();
+
+/* harmony default export */ __webpack_exports__["a"] = (User);
 
 /***/ })
 /******/ ]);
