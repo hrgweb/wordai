@@ -76,6 +76,6 @@ class EditorsController extends Controller
     			'fileArticleContent' => $fileArticleContent,
     			'fileSpintaxContent' => $fileSpintaxContent
     		])
-    		->get();
+    		->post();
     }
 }
