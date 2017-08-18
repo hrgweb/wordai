@@ -19213,7 +19213,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			detail: {
 				domain_id: 'select',
 				protected: '',
-				synonym: ''
+				synonym: '',
+				user: ''
 			},
 			wordai: new __WEBPACK_IMPORTED_MODULE_1__class_WordAi_js__["a" /* default */](),
 			isError: false,
@@ -19282,13 +19283,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this3 = this;
 
 			if (this.detail.domain_id !== 'select') {
-				this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
+				this.detail['protected'] = this.detail.protected.length > 0 ? this.wordai.protectedTermsSetup(this.detail.protected) : '';
 				// this.detail['protected'] = 'the man,who cant,be moved,a test,sample';
-
 
 				var data = {
 					detail: this.detail,
-					protectedTerms: this.extractProtectedTerms().join('|')
+					user_id: this.getUserId(),
+					protectedTerms: this.detail.protected.length > 0 ? this.extractProtectedTerms().join('|') : ''
 				};
 
 				axios.post('/admin/saveDetails', data).then(function (response) {
@@ -19373,6 +19374,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				// remove item object in details on specific index
 				_this5.details.splice(_this5.index, 1);
 			});
+		},
+		getUserId: function getUserId() {
+			var vm = this;
+			var options = $('datalist option');
+
+			var result = $.grep(options, function (item, index) {
+				var optionVal = options[index].value;
+
+				return optionVal === vm.detail.user;
+			});
+
+			return result[0].attributes[1].value;
 		},
 		userList: function userList() {
 			var _this6 = this;
@@ -49233,29 +49246,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": domain.id
       }
     }, [_vm._v(_vm._s(domain.domain))])
-  })], 2), _c('br'), _vm._v(" "), (_vm.hasUser) ? _c('div', {
-    staticClass: "form-user"
-  }, [_c('label', {
-    attrs: {
-      "for": "user"
-    }
-  }, [_vm._v("Search for user")]), _vm._v(" "), _c('input', {
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "list": "users"
-    }
-  }), _vm._v(" "), _c('datalist', {
-    attrs: {
-      "id": "users"
-    }
-  }, _vm._l((_vm.users), function(user) {
-    return _c('option', {
-      domProps: {
-        "value": user.firstname + ' ' + user.lastname
-      }
-    })
-  }))]) : _vm._e(), _vm._v(" "), _c('div', {
+  })], 2), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('b', {
     staticStyle: {
@@ -49264,7 +49255,47 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "domain"
     }
-  }, [_vm._v(_vm._s(_vm.detail.domain))])]), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.detail.domain))])]), _vm._v(" "), (_vm.hasUser) ? _c('div', {
+    staticClass: "form-user"
+  }, [_c('label', {
+    attrs: {
+      "for": "user"
+    }
+  }, [_vm._v("Search for user")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.detail.user),
+      expression: "detail.user"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "list": "users"
+    },
+    domProps: {
+      "value": (_vm.detail.user)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.detail.user = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('datalist', {
+    attrs: {
+      "id": "users"
+    }
+  }, _vm._l((_vm.users), function(user) {
+    return _c('option', {
+      attrs: {
+        "data-user-id": user.id
+      },
+      domProps: {
+        "value": user.firstname + ' ' + user.lastname
+      }
+    })
+  }))]) : _vm._e(), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6",
     staticStyle: {
       "padding-right": "1em"

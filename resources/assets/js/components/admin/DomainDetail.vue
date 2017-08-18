@@ -15,21 +15,21 @@
 			<select class="form-control" v-model="detail.domain_id">
 				<option id="domain" value="select">Select a domain</option>
 				<option id="domain" v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
-			</select><br>
-
-			<!-- Users -->
-			<div class="form-user" v-if="hasUser">
-				<label for="user">Search for user</label>
-				<input type="text" class="form-control" list="users">
-				<datalist id="users">
-					<option v-for="user in users" :value="user.firstname + ' ' + user.lastname"></option>
-				</datalist>
-			</div>
+			</select>
 
 			<!-- Edit - domain name -->
 			<div class="form-group">
 				<b id="domain" style="font-size: 1.5em;">{{ detail.domain }}</b>
 			</div>
+
+			<!-- Users -->
+			<div class="form-user" v-if="hasUser">
+				<label for="user">Search for user</label>
+				<input type="text" class="form-control" list="users" v-model="detail.user">
+				<datalist id="users">
+					<option v-for="user in users" :value="user.firstname + ' ' + user.lastname" :data-user-id="user.id"></option>
+				</datalist>
+			</div><br>
 
 			<!-- LSI Terms -->
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-right: 1em;">
@@ -77,7 +77,8 @@
 				detail: {
 					domain_id: 'select',
 					protected: '',
-					synonym: ''
+					synonym: '',
+					user: ''
 				},
 				wordai: new WordAi(),
 				isError: false,
@@ -85,7 +86,7 @@
 				details: [],
 				index: 0,
 				users: [],
-				hasUser: false
+				hasUser: false,
 			}
 		},
 		watch: {
@@ -148,13 +149,13 @@
 
 			saveDetails() {
 				if (this.detail.domain_id !== 'select') {
-					this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
+					this.detail['protected'] = (this.detail.protected.length > 0) ? this.wordai.protectedTermsSetup(this.detail.protected) : '';
 					// this.detail['protected'] = 'the man,who cant,be moved,a test,sample';
 					
-
 					const data = {
 						detail: this.detail,
-						protectedTerms: this.extractProtectedTerms().join('|')
+						user_id: this.getUserId(),
+						protectedTerms: (this.detail.protected.length > 0) ? this.extractProtectedTerms().join('|'): ''
 					};
 
 					axios.post('/admin/saveDetails', data).then(response => {
@@ -240,6 +241,19 @@
 					// remove item object in details on specific index
 					this.details.splice(this.index, 1);
 				});
+			},
+
+			getUserId() {
+				let vm = this;
+				let options = $('datalist option');
+
+				let result = $.grep(options, function(item, index) {
+					let optionVal = options[index].value;
+
+					return (optionVal === vm.detail.user);
+				});
+
+				return result[0].attributes[1].value;
 			},
 
 			userList() {

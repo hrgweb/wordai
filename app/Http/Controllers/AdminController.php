@@ -89,6 +89,7 @@ class AdminController extends Controller
 
     public function saveDetails()
     {
+    	$user_id = request('user_id');
     	$domain_id = request('detail.domain_id');
     	$protected = request('detail.protected');
     	$synonym = request('detail.synonym');
@@ -110,6 +111,7 @@ class AdminController extends Controller
 
 	    	// save domain detail
 	    	$domain = DomainDetail::create([
+	    		'user_id' => $user_id,
 	    		'domain_id' => $domain_id,
 	    		'protected' => $protected,
 	    		'synonym' => $synonym
