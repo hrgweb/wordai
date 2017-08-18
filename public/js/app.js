@@ -19162,6 +19162,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__errors_Error_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DetailTable_vue__ = __webpack_require__(225);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DetailTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__DetailTable_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__class_User_js__ = __webpack_require__(307);
 //
 //
 //
@@ -19237,6 +19238,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
@@ -19261,7 +19263,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			details: [],
 			index: 0,
 			users: [],
-			hasUser: false
+			hasUser: false,
+			userObj: new __WEBPACK_IMPORTED_MODULE_4__class_User_js__["a" /* default */]()
 		};
 	},
 
@@ -19321,13 +19324,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		saveDetails: function saveDetails() {
 			var _this3 = this;
 
-			if (this.detail.domain_id !== 'select') {
+			if (this.detail.domain_id !== 'select' && this.detail.user.length > 0) {
 				this.detail['protected'] = this.detail.protected.length > 0 ? this.wordai.protectedTermsSetup(this.detail.protected) : '';
 				// this.detail['protected'] = 'the man,who cant,be moved,a test,sample';
 
+				var vm = this;
+				var options = $('datalist option');
+
 				var data = {
 					detail: this.detail,
-					user_id: this.getUserId(),
+					user_id: this.userObj.getUserId(vm, options, vm.detail.user).attributes[1].value,
 					protectedTerms: this.detail.protected.length > 0 ? this.extractProtectedTerms().join('|') : ''
 				};
 
@@ -19340,7 +19346,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					_this3.removeDomain(); // remove selected domain
 				});
 			} else {
-				this.errors = 'Please select a domain name.';
+				this.errors = 'Please select a domain name and user.';
 				this.isError = true;
 			}
 		},
@@ -19413,18 +19419,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				// remove item object in details on specific index
 				_this5.details.splice(_this5.index, 1);
 			});
-		},
-		getUserId: function getUserId() {
-			var vm = this;
-			var options = $('datalist option');
-
-			var result = $.grep(options, function (item, index) {
-				var optionVal = options[index].value;
-
-				return optionVal === vm.detail.user;
-			});
-
-			return result[0].attributes[1].value;
 		},
 		userList: function userList() {
 			var _this6 = this;

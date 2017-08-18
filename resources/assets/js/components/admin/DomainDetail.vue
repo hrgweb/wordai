@@ -78,6 +78,7 @@
 	import WordAi from './../../class/WordAi.js';
 	import Error from './../errors/Error.vue';
 	import DetailTable from './DetailTable.vue';
+	import User from './../../class/User.js';
 
 	export default {
 		mixins: [ CrudMixin ],
@@ -98,6 +99,7 @@
 				index: 0,
 				users: [],
 				hasUser: false,
+				userObj: new User()
 			}
 		},
 		watch: {
@@ -159,13 +161,16 @@
 			},
 
 			saveDetails() {
-				if (this.detail.domain_id !== 'select') {
+				if (this.detail.domain_id !== 'select' && this.detail.user.length > 0) {
 					this.detail['protected'] = (this.detail.protected.length > 0) ? this.wordai.protectedTermsSetup(this.detail.protected) : '';
 					// this.detail['protected'] = 'the man,who cant,be moved,a test,sample';
 					
+					let vm = this;
+					let options = $('datalist option');
+
 					const data = {
 						detail: this.detail,
-						user_id: this.getUserId(),
+						user_id: this.userObj.getUserId(vm, options, vm.detail.user).attributes[1].value,
 						protectedTerms: (this.detail.protected.length > 0) ? this.extractProtectedTerms().join('|'): ''
 					};
 
@@ -178,7 +183,7 @@
 						this.removeDomain();				// remove selected domain
 					});
 				} else {
-					this.errors = 'Please select a domain name.';
+					this.errors = 'Please select a domain name and user.';
 					this.isError = true;
 				}
 			},
@@ -252,19 +257,6 @@
 					// remove item object in details on specific index
 					this.details.splice(this.index, 1);
 				});
-			},
-
-			getUserId() {
-				let vm = this;
-				let options = $('datalist option');
-
-				let result = $.grep(options, function(item, index) {
-					let optionVal = options[index].value;
-
-					return (optionVal === vm.detail.user);
-				});
-
-				return result[0].attributes[1].value;
 			},
 
 			userList() {
