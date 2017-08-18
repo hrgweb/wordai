@@ -41,7 +41,7 @@ export const ArticleActionMixin = {
 	created() {
 		this.authUser = JSON.parse(this.user);
 
-		// this.listOfArticleType();
+		this.listOfArticleType();
 		this.domainList();
 		this.userDomainSetup();
 	},

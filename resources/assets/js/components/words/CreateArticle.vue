@@ -117,14 +117,12 @@
 							this.isValidationFail = false;
 
 							// reset spin values
-							this.spin = {
-								article: $('textarea#article').val(''),
-								article_type_id: 'select',
-								doc_title: '',
-								keyword: '',
-								lsi_terms: '',
-								domain_protected: ''
-							};
+							this.spin['article'] = $('textarea#article').val('');
+							this.spin['article_type_id'] = 'select';
+							this.spin['doc_title'] = '';
+							this.spin['keyword'] = '';
+							this.spin['lsi_terms'] = '';
+							this.spin['domain_protected'] = '';
 
 							// notify user article posted successfully
 							let articleTitle = this.spin.doc_title;

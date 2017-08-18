@@ -6220,7 +6220,7 @@ var ArticleActionMixin = {
 	created: function created() {
 		this.authUser = JSON.parse(this.user);
 
-		// this.listOfArticleType();
+		this.listOfArticleType();
 		this.domainList();
 		this.userDomainSetup();
 	},
@@ -20872,14 +20872,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 						_this.isValidationFail = false;
 
 						// reset spin values
-						_this.spin = {
-							article: $('textarea#article').val(''),
-							article_type_id: 'select',
-							doc_title: '',
-							keyword: '',
-							lsi_terms: '',
-							domain_protected: ''
-						};
+						_this.spin['article'] = $('textarea#article').val('');
+						_this.spin['article_type_id'] = 'select';
+						_this.spin['doc_title'] = '';
+						_this.spin['keyword'] = '';
+						_this.spin['lsi_terms'] = '';
+						_this.spin['domain_protected'] = '';
 
 						// notify user article posted successfully
 						var articleTitle = _this.spin.doc_title;
