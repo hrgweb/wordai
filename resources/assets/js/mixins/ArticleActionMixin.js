@@ -181,6 +181,7 @@ export const ArticleActionMixin = {
 
 				if (data) {
 					this.spin['domain'] = data.domain;
+					this.spin['domain_id'] = data.domain_id;
 					this.spin['protected'] = data.protected;
 					this.spin['synonym'] = data.synonym;
 				}

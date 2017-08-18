@@ -6372,6 +6372,7 @@ var ArticleActionMixin = {
 
 				if (data) {
 					_this7.spin['domain'] = data.domain;
+					_this7.spin['domain_id'] = data.domain_id;
 					_this7.spin['protected'] = data.protected;
 					_this7.spin['synonym'] = data.synonym;
 				}
