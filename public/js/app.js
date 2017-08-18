@@ -19226,6 +19226,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -49250,6 +49261,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "method": "POST"
     }
+  }, [_c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
   }, [_c('label', {
     attrs: {
       "for": "lsi_terms"
@@ -49287,7 +49300,49 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": domain.id
       }
     }, [_vm._v(_vm._s(domain.domain))])
-  })], 2), _vm._v(" "), _c('div', {
+  })], 2)]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+    staticStyle: {
+      "padding-left": "1em"
+    }
+  }, [_c('label', {
+    attrs: {
+      "for": "portfolio"
+    }
+  }, [_vm._v("Portfolio")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.detail.domain_id),
+      expression: "detail.domain_id"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.detail.domain_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "id": "domain",
+      "value": "select"
+    }
+  }, [_vm._v("Select a domain")]), _vm._v(" "), _vm._l((_vm.domains), function(domain) {
+    return _c('option', {
+      attrs: {
+        "id": "domain"
+      },
+      domProps: {
+        "value": domain.id
+      }
+    }, [_vm._v(_vm._s(domain.domain))])
+  })], 2)]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('b', {
     staticStyle: {
@@ -49299,6 +49354,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.detail.domain))])]), _vm._v(" "), (_vm.hasUser) ? _c('div', {
     staticClass: "form-user"
   }, [_c('label', {
+    staticStyle: {
+      "margin-top": "1em"
+    },
     attrs: {
       "for": "user"
     }

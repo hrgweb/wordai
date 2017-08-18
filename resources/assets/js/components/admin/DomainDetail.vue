@@ -11,11 +11,22 @@
 
 		<form method="POST">
 			<!-- Domain -->
-			<label for="lsi_terms">Domain</label>
-			<select class="form-control" v-model="detail.domain_id">
-				<option id="domain" value="select">Select a domain</option>
-				<option id="domain" v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
-			</select>
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+				<label for="lsi_terms">Domain</label>
+				<select class="form-control" v-model="detail.domain_id">
+					<option id="domain" value="select">Select a domain</option>
+					<option id="domain" v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
+				</select>
+			</div>
+			
+			<!-- Portfolio -->
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-left: 1em;">
+				<label for="portfolio">Portfolio</label>
+				<select class="form-control" v-model="detail.domain_id">
+					<option id="domain" value="select">Select a domain</option>
+					<option id="domain" v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
+				</select>
+			</div>
 
 			<!-- Edit - domain name -->
 			<div class="form-group">
@@ -24,7 +35,7 @@
 
 			<!-- Users -->
 			<div class="form-user" v-if="hasUser">
-				<label for="user">Search for user</label>
+				<label for="user" style="margin-top: 1em;">Search for user</label>
 				<input type="text" class="form-control" list="users" v-model="detail.user">
 				<datalist id="users">
 					<option v-for="user in users" :value="user.firstname + ' ' + user.lastname" :data-user-id="user.id"></option>
