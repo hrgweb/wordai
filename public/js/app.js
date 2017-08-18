@@ -20839,10 +20839,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -49553,6 +49549,51 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
+      "for": "dom_name"
+    }
+  }, [_vm._v("Domain Name")]), _vm._v("   "), (_vm.isDomainNotSet) ? _c('span', {
+    staticStyle: {
+      "color": "red"
+    }
+  }, [_vm._v("This domain not set yet.")]) : _vm._e(), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.domain),
+      expression: "spin.domain"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "list": "domains"
+    },
+    domProps: {
+      "value": (_vm.spin.domain)
+    },
+    on: {
+      "blur": _vm.domainChange,
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.domain = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('datalist', {
+    attrs: {
+      "id": "domains"
+    }
+  }, _vm._l((_vm.domains), function(domain) {
+    return _c('option', {
+      attrs: {
+        "data-domain-id": domain.id
+      },
+      domProps: {
+        "value": domain.domain
+      }
+    })
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
       "for": "articleType"
     }
   }, [_vm._v("Article Type")]), _vm._v(" "), (_vm.isArticleTypesLoaded) ? _c('select', {
@@ -49638,51 +49679,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   })]), _vm._v(" "), _c('div', {
-    staticClass: "form-group"
-  }, [_c('label', {
-    attrs: {
-      "for": "dom_name"
-    }
-  }, [_vm._v("Domain Name")]), _vm._v("   "), (_vm.isDomainNotSet) ? _c('span', {
-    staticStyle: {
-      "color": "red"
-    }
-  }, [_vm._v("This domain not set yet.")]) : _vm._e(), _vm._v(" "), _c('input', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.spin.domain),
-      expression: "spin.domain"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "list": "domains"
-    },
-    domProps: {
-      "value": (_vm.spin.domain)
-    },
-    on: {
-      "blur": _vm.domainChange,
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.spin.domain = $event.target.value
-      }
-    }
-  }), _vm._v(" "), _c('datalist', {
-    attrs: {
-      "id": "domains"
-    }
-  }, _vm._l((_vm.domains), function(domain) {
-    return _c('option', {
-      attrs: {
-        "data-domain-id": domain.id
-      },
-      domProps: {
-        "value": domain.domain
-      }
-    })
-  }))]), _vm._v(" "), _c('div', {
     staticClass: "row"
   }, [_c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
@@ -49742,9 +49738,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
   }, [_c('label', {
     attrs: {
-      "for": "domain_protected"
+      "for": "protected"
     }
-  }, [_vm._v("Domain Protected Terms")]), _vm._v(" "), _c('textarea', {
+  }, [_vm._v("Protected Terms")]), _vm._v(" "), _c('textarea', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -49768,9 +49764,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
   }, [_c('label', {
     attrs: {
-      "for": "protected"
+      "for": "domain_protected"
     }
-  }, [_vm._v("Protected Terms")]), _vm._v(" "), _c('textarea', {
+  }, [_vm._v("Domain Protected Terms")]), _vm._v(" "), _c('textarea', {
     directives: [{
       name: "model",
       rawName: "v-model",
