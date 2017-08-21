@@ -20095,6 +20095,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue__ = __webpack_require__(137);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_UserArticleMixin_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__errors_Error_vue__);
 //
 //
 //
@@ -20118,6 +20120,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -20125,15 +20137,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 // import { EventBus } from './../../eventbus/EventBus.js';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	components: { ArticleResult: __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default.a, ArticleEditor: __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue___default.a },
+	props: ['user'],
+	components: { ArticleResult: __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default.a, ArticleEditor: __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue___default.a, Error: __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue___default.a },
 	mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_UserArticleMixin_js__["a" /* UserArticleMixin */]],
 	data: function data() {
 		return {
-			isEdit: false
+			isEdit: false,
+			articlesCount: 0,
+			error: '',
+			authUser: {},
+			hasPeditorAccess: false
 		};
+	},
+
+	watch: {
+		articles: function articles(data) {
+			this.articlesCount = data.length;
+		},
+		authUser: function authUser(data) {
+			// has power editor access
+			if (data.has_peditor_access === 0) {
+				this.hasPeditorAccess = false;
+				this.error = 'You have no access to power editor feature.';
+			} else {
+				this.hasPeditorAccess = true;
+			}
+		}
 	},
 	created: function created() {
 		this.articleList();
+	},
+	mounted: function mounted() {
+		this.authUser = JSON.parse(this.user);
 	},
 
 	methods: {
@@ -20272,6 +20307,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -24881,7 +24918,7 @@ exports.push([module.i, "\ninput[data-v-1a643e37], select[data-v-1a643e37] {\n  
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\nul[data-v-1cb57eac] { padding-left: 2em;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.EditorPage { position: relative; }*/\nul[data-v-1cb57eac] { padding-left: 2em;\n}\nul.alert.alert-danger[data-v-1cb57eac] {\n    position: absolute;\n    right: 7em;\n    /*top: 0;*/\n}\n", ""]);
 
 /***/ }),
 /* 202 */
@@ -46658,11 +46695,13 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ul', {
+  return (_vm.errorType === true) ? _c('ul', {
     staticClass: "alert alert-danger"
-  }, [_vm._l((_vm.list), function(error) {
-    return (_vm.errorType === true) ? _c('li', [_vm._v(_vm._s(error[0]))]) : _vm._e()
-  }), _vm._v(" "), (_vm.errorType === false) ? _c('li', [_vm._v(_vm._s(_vm.list))]) : _vm._e()], 2)
+  }, _vm._l((_vm.list), function(error) {
+    return _c('li', [_vm._v(_vm._s(error[0]))])
+  })) : _c('ul', {
+    staticClass: "alert alert-danger"
+  }, [_c('li', [_vm._v(_vm._s(_vm.list))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -49086,7 +49125,14 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Editor"
-  }, [(_vm.isEdit) ? _c('article-editor', {
+  }, [_c('div', {
+    staticClass: "Permission"
+  }, [(!_vm.hasPeditorAccess) ? _c('error', {
+    attrs: {
+      "list": _vm.error,
+      "type": false
+    }
+  }) : _vm._e()], 1), _vm._v(" "), (_vm.isEdit) ? _c('article-editor', {
     attrs: {
       "article": _vm.article
     },
@@ -49096,7 +49142,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }) : _vm._e(), _vm._v(" "), (!_vm.isEdit) ? _c('div', {
     staticClass: "Editor__table"
-  }, [_c('h2', [_vm._v("Editor")]), _vm._v(" "), (_vm.isArticlesNotEmpty) ? _c('article-result', {
+  }, [_c('h2', [_vm._v("Editor "), _c('span', {
+    staticClass: "badge"
+  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), (_vm.isArticlesNotEmpty) ? _c('article-result', {
     attrs: {
       "articles": _vm.articles
     },
@@ -49958,7 +50006,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": lev.id
       }
     }, [_vm._v(_vm._s(lev.user_level))])
-  })], 2), _vm._v(" "), _c('button', {
+  })], 2), _c('br'), _c('br'), _vm._v(" "), _c('button', {
     staticClass: "btn btn-success btn-block",
     attrs: {
       "type": "button",
@@ -49993,7 +50041,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": val
       }
     }, [_vm._v(_vm._s(val))])
-  })), _vm._v(" "), _c('button', {
+  })), _c('br'), _c('br'), _vm._v(" "), _c('button', {
     staticClass: "btn btn-success btn-block",
     attrs: {
       "type": "button",

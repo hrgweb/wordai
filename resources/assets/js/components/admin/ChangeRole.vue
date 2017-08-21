@@ -10,7 +10,7 @@
 				<select v-model="data.level" @change="roleNotChange">
 					<option :value="data.level">{{ role.level(data.level) }}</option>
 					<option v-for="lev in levels" :value="lev.id">{{ lev.user_level }}</option>
-				</select>
+				</select><br><br>
 
 				<button type="button" class="btn btn-success btn-block" :disabled="roleNotChange()" @click="updateRole">Update Role</button>
 			</div>
@@ -22,7 +22,7 @@
 
 				<select v-model="data.peditor">
 					<option v-for="val in peditorValues" :value="val">{{ val }}</option>
-				</select>
+				</select><br><br>
 
 				<button type="button" class="btn btn-success btn-block" :disabled="pEditorNotChange()" @click="updatePeditor">Update Access</button>
 			</div>

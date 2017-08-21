@@ -1,7 +1,9 @@
 <template>
-	<ul class="alert alert-danger">
-		<li v-if="errorType === true" v-for="error in list">{{ error[0] }}</li>
-		<li v-if="errorType === false">{{ list }}</li>
+	<ul class="alert alert-danger" v-if="errorType === true">
+		<li v-for="error in list">{{ error[0] }}</li>
+	</ul>
+	<ul class="alert alert-danger" v-else>
+		<li>{{ list }}</li>
 	</ul>
 </template>
 
@@ -17,5 +19,12 @@
 </script>
 
 <style scoped>
+	/*.EditorPage { position: relative; }*/
 	ul { padding-left: 2em; }
+
+	ul.alert.alert-danger {
+	    position: absolute;
+	    right: 7em;
+	    /*top: 0;*/
+	}
 </style>

@@ -1,5 +1,14 @@
 <template>
 	<div class="Editor">
+		<!-- Permission Details -->
+		<div class="Permission">
+			<error
+				:list="error"
+				:type="false"
+				v-if="! hasPeditorAccess">
+ 			</error>
+		</div>
+
 		<!-- Article Editor -->
 		<article-editor
 			:article="article"
@@ -9,7 +18,7 @@
 		</article-editor>
 
 		<div class="Editor__table" v-if="! isEdit">
-			<h2>Editor</h2>
+			<h2>Editor <span class="badge">{{ articlesCount }}</span></h2>
 
 			<!-- Article Result -->
 			<article-result
@@ -25,18 +34,42 @@
 	import ArticleResult from './ArticleResult.vue';
 	import ArticleEditor from './ArticleEditor.vue';
 	import { UserArticleMixin } from './../../mixins/UserArticleMixin.js';
+	import Error from './../errors/Error.vue';
 	// import { EventBus } from './../../eventbus/EventBus.js';
 
 	export default {
-		components: { ArticleResult, ArticleEditor },
+		props: ['user'],
+		components: { ArticleResult, ArticleEditor, Error },
 		mixins: [ UserArticleMixin ],
 		data() {
 			return {
-				isEdit: false
+				isEdit: false,
+				articlesCount: 0,
+				error: '',
+				authUser: {},
+				hasPeditorAccess: false
+			}
+		},
+		watch: {
+			articles(data) {
+				this.articlesCount = data.length;
+			},
+
+			authUser(data) {
+				// has power editor access
+				if (data.has_peditor_access === 0) {
+					this.hasPeditorAccess = false;
+					this.error = 'You have no access to power editor feature.';
+				} else {
+					this.hasPeditorAccess = true;
+				}
 			}
 		},
 		created() {
 			this.articleList();
+		},
+		mounted() {
+			this.authUser = JSON.parse(this.user);
 		},
 		methods: {
 			articleList() {

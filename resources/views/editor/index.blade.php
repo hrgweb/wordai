@@ -10,6 +10,6 @@
 	<div class="EditorPage">
 		@include('partials._content')
 
-		<editor></editor>
+		<editor user="{{ $user }}"></editor>
 	</div>
 @endsection
