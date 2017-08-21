@@ -75,8 +75,10 @@
 
 			updatePeditor() {
 				axios.patch('/user/updatePeditor', this.data).then(response => {
-					if (response.data) {
-						this.$emit('closeRoleComponent', { level: this.data.level });
+					let data = response.data;
+
+					if (data) {
+						this.$emit('closeAccessComponent', { peditor: data });
 					}
 				});
 			},

@@ -5,7 +5,8 @@
 			:user="user"
 			:levels="levels"
 			v-if="isShowRole"
-			@closeRoleComponent="updateDone">
+			@closeRoleComponent="updateRoleDone"
+			@closeAccessComponent="updateAccessDone">
  		</change-role>
 		
 		<h2>User List</h2>
@@ -92,7 +93,7 @@
 				axios.get('/user/userLevelList').then(response => this.levels = response.data);
 			},
 
-			updateDone(data) {
+			updateRoleDone(data) {
 				this.isShowRole = false;
 
 				if (data) {
@@ -119,6 +120,15 @@
 					this.$refs.btnSuspend[this.index].innerHTML = 'Suspend';
 					this.$refs.btnSuspend[this.index].style.background = '#D9534F';
 					this.setUserStatus('/user/activateUser', user.id, 1);
+				}
+			},
+
+			updateAccessDone(data) {
+				this.isShowRole = false;
+
+				if (data) {
+					let hasAccess = (data.peditor === 'no') ? 0 : 1;
+					this.users[this.index].has_peditor_access = hasAccess;
 				}
 			}
 		}

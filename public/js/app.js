@@ -18777,8 +18777,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this2 = this;
 
 			axios.patch('/user/updatePeditor', this.data).then(function (response) {
-				if (response.data) {
-					_this2.$emit('closeRoleComponent', { level: _this2.data.level });
+				var data = response.data;
+
+				if (data) {
+					_this2.$emit('closeAccessComponent', { peditor: data });
 				}
 			});
 		}
@@ -19821,6 +19823,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -19875,7 +19878,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				return _this2.levels = response.data;
 			});
 		},
-		updateDone: function updateDone(data) {
+		updateRoleDone: function updateRoleDone(data) {
 			this.isShowRole = false;
 
 			if (data) {
@@ -19902,6 +19905,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				this.$refs.btnSuspend[this.index].innerHTML = 'Suspend';
 				this.$refs.btnSuspend[this.index].style.background = '#D9534F';
 				this.setUserStatus('/user/activateUser', user.id, 1);
+			}
+		},
+		updateAccessDone: function updateAccessDone(data) {
+			this.isShowRole = false;
+
+			if (data) {
+				var hasAccess = data.peditor === 'no' ? 0 : 1;
+				this.users[this.index].has_peditor_access = hasAccess;
 			}
 		}
 	}
@@ -25005,7 +25016,7 @@ exports.push([module.i, "\nh2[data-v-48e391eb] { text-align: center;\n}\t\n", ""
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*table tr { cursor: pointer; }*/\ntable tbody tr[data-v-4a549d11]:hover { background: #EAFFEA;\n}\ntable tbody td[data-v-4a549d11] { background: #fff;\n}\nbutton[data-v-4a549d11]:hover { border: 1px solid transparent;\n}\n.icon-pe[data-v-4a549d11] {\n\tposition: absolute;\n    width: 35px;\n    top: 5px;\n    right: 5px;\n}\n.icon-pe img[data-v-4a549d11] { width: 100%;\n} \n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*table tr { cursor: pointer; }*/\ntable tbody tr[data-v-4a549d11]:hover { background: #EAFFEA;\n}\ntable tbody td[data-v-4a549d11] { background: #fff;\n}\nbutton[data-v-4a549d11]:hover { border: 1px solid transparent;\n}\n.icon-pe[data-v-4a549d11] {\n\tposition: absolute;\n    width: 35px;\n    top: 5px;\n    right: 5px;\n}\n.icon-pe img[data-v-4a549d11] { width: 100%;\n} \n", ""]);
 
 /***/ }),
 /* 207 */
@@ -47901,7 +47912,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "levels": _vm.levels
     },
     on: {
-      "closeRoleComponent": _vm.updateDone
+      "closeRoleComponent": _vm.updateRoleDone,
+      "closeAccessComponent": _vm.updateAccessDone
     }
   }) : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("User List")]), _vm._v(" "), _c('table', {
     staticClass: "table table-striped table-hover"
@@ -48070,7 +48082,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.editArticle(article, index)
         }
       }
-    }, [_vm._v("Edit Article")])])])
+    }, [_vm._v("Edit Article")]), _vm._v(" "), _c('button', {
+      ref: "btnPublish",
+      refInFor: true,
+      staticClass: "btn btn-danger",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.publishArticle(article, index)
+        }
+      }
+    }, [_vm._v("Publish")])])])
   }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("User")]), _vm._v(" "), _c('th', [_vm._v("Article Type")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("LSI Terms")]), _vm._v(" "), _c('th', [_vm._v("Domain Protected")]), _vm._v(" "), _c('th', [_vm._v("Protected")]), _vm._v(" "), _c('th', [_vm._v("Synonym")]), _vm._v(" "), _c('th', {

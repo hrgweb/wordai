@@ -127,6 +127,8 @@ class UserController extends Controller
     public function updatePeditor() {
     	$peditor_val = request('peditor') === 'no' ? false : true;
     	
-    	return DB::table('users')->where('id', request('user_id'))->update(['has_peditor_access' => $peditor_val]);
+    	DB::table('users')->where('id', request('user_id'))->update(['has_peditor_access' => $peditor_val]);
+
+    	return request('peditor');
     }
 }
