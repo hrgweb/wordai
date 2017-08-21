@@ -27,7 +27,12 @@
 					<td>{{ user.id }}</td>
 					<td>{{ user.firstname }} {{ user.lastname }}</td>
 					<td>{{ user.email }}</td>
-					<td>{{ lev.level(user.user_level_id) }}</td>
+					<td style="position: relative; width: 90px;">
+						<span style="float: left;">{{ lev.level(user.user_level_id) }}</span>
+						<div class="icon-pe" v-if="user.has_peditor_access === 1">
+							<img src="/img/superman-icon.png" alt="icon">
+						</div>
+					</td>
 					<td>{{ stat.status(user.status_id) }}</td>
 					<td>{{ user.created_at }}</td>
 					<td>
@@ -123,6 +128,16 @@
 <style scoped>
 	/*table tr { cursor: pointer; }*/
 	table tbody tr:hover { background: #EAFFEA; }
+	table tbody td { background: #fff; }
 
 	button:hover { border: 1px solid transparent; }
+
+	 .icon-pe {
+		position: absolute;
+	    width: 35px;
+	    top: 5px;
+	    right: 5px;
+	}
+	
+	.icon-pe img { width: 100%; } 
 </style>
