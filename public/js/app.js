@@ -5266,31 +5266,34 @@ var ArticleMixin = {
 	},
 	methods: {
 		generateRespintax: function generateRespintax() {
+			var _this = this;
+
 			var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			this.isLoading = true;
 			this.isError = false;
 
 			this.spin['paragraph'] = this.paragraph;
-			/*axios.post('/words/generateRespintax', this.spin).then(response => {
-   	let data = response.data;
-   	let text = data.text;
-   		if (data.status === 'Success') {
-   		this.isLoading = false;
-   		this.newParagraph = text;
-   			this.$emit('updateparagraph', {
-   			index: this.index,
-   			paragraph: text
-   		});
-   	}
-   		// check if api response is fail
-   	if (data.status === 'Failure') {
-   		this.error = data.error;
-   		this.isError = true;
-   	}
-   });*/
+			axios.post('/words/generateRespintax', this.spin).then(function (response) {
+				var data = response.data;
+				var text = data.text;
 
-			console.log(this.spin);
+				if (data.status === 'Success') {
+					_this.isLoading = false;
+					_this.newParagraph = text;
+
+					_this.$emit('updateparagraph', {
+						index: _this.index,
+						paragraph: text
+					});
+				}
+
+				// check if api response is fail
+				if (data.status === 'Failure') {
+					_this.error = data.error;
+					_this.isError = true;
+				}
+			});
 		},
 		splitResultBySentence: function splitResultBySentence(results) {
 			var duplicates = [];
@@ -5368,7 +5371,7 @@ var ArticleMixin = {
 			});
 		},
 		copyScapeData: function copyScapeData(data) {
-			var _this = this;
+			var _this2 = this;
 
 			var results = data;
 			var duplicates = [];
@@ -5385,14 +5388,14 @@ var ArticleMixin = {
 
 			// replace duplicates and color by red
 			Vue.nextTick(function () {
-				return _this.colorDuplicatesInRed(finds);
+				return _this2.colorDuplicatesInRed(finds);
 			});
 
 			// store as result in vue data
 			this.duplicates = finds;
 		},
 		copyScapeSetup: function copyScapeSetup(url, data) {
-			var _this2 = this;
+			var _this3 = this;
 
 			this.isLoading = true;
 			this.isError = false;
@@ -5402,22 +5405,22 @@ var ArticleMixin = {
 				var data = response.data;
 
 				// api result response success
-				_this2.isLoading = false;
-				_this2.copyscape = data;
-				_this2.responseSuccess = true;
-				_this2.$refs.csButton.disabled = false;
+				_this3.isLoading = false;
+				_this3.copyscape = data;
+				_this3.responseSuccess = true;
+				_this3.$refs.csButton.disabled = false;
 
 				// find all duplicate occurences
 				// this.copyScapeData(data.result);
 
 				// check if api response is fail
 				if (data.error) {
-					_this2.error = data.error;
-					_this2.isError = true;
-					_this2.responseSuccess = false;
+					_this3.error = data.error;
+					_this3.isError = true;
+					_this3.responseSuccess = false;
 				} else {
 					// find all duplicate occurences
-					_this2.copyScapeData(data.result);
+					_this3.copyScapeData(data.result);
 				}
 			});
 		},
@@ -5456,7 +5459,7 @@ var ArticleMixin = {
 			}
 		},
 		processToTextGear: function processToTextGear() {
-			var _this3 = this;
+			var _this4 = this;
 
 			this.isLoading = true;
 			this.isError = false;
@@ -5469,10 +5472,10 @@ var ArticleMixin = {
 
 				if (data.result) {
 					// api result response success
-					_this3.isLoading = false;
-					_this3.textgear = data;
-					_this3.isGrammarTrue = true;
-					_this3.$refs.tgButton.disabled = false;
+					_this4.isLoading = false;
+					_this4.textgear = data;
+					_this4.isGrammarTrue = true;
+					_this4.$refs.tgButton.disabled = false;
 
 					// add span tag on a bad words result in check grammar
 					var article = payload.text;
@@ -5511,9 +5514,9 @@ var ArticleMixin = {
 					console.log(result);
 				} else {
 					// check if api response is fail
-					_this3.error = data.error;
-					_this3.isError = true;
-					_this3.isGrammarTrue = false;
+					_this4.error = data.error;
+					_this4.isError = true;
+					_this4.isGrammarTrue = false;
 				}
 			});
 		},
@@ -5529,7 +5532,7 @@ var ArticleMixin = {
 			});
 		},
 		spinDuplicatesAndCopyscape: function spinDuplicatesAndCopyscape() {
-			var _this4 = this;
+			var _this5 = this;
 
 			this.isLoading = true;
 			this.$refs.spinAndCsButton.disabled = true;
@@ -5545,8 +5548,8 @@ var ArticleMixin = {
 			axios.post('/words', this.spin).then(function (response) {
 				var data = response.data;
 
-				_this4.isLoading = false;
-				_this4.$refs.spinAndCsButton.disabled = false;
+				_this5.isLoading = false;
+				_this5.$refs.spinAndCsButton.disabled = false;
 
 				// check if api response is success
 				if (data.status === 'Success') {
@@ -5557,12 +5560,12 @@ var ArticleMixin = {
 
 					// article is now the spintax result
 					// display finish full article
-					_this4.generateNewArticle(_this4.spin.article);
+					_this5.generateNewArticle(_this5.spin.article);
 				}
 
 				// check if api response is fail
 				if (data.status === 'Failure') {
-					_this4.error = data.error;
+					_this5.error = data.error;
 				}
 			});
 
@@ -19969,14 +19972,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	data: function data() {
 		return {
 			type: 'edit-article',
-			spin: {
-				paragraph: '',
-				type: 'edit-article'
-			},
+			spin: {},
 			pEditorAccess: false
 		};
 	},
 	mounted: function mounted() {
+		this.spin = this.article;
+
 		$('div#editor').summernote('editor.insertText', this.article.spin);
 	},
 
@@ -20005,6 +20007,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		dissmissSpintaxArticle: function dissmissSpintaxArticle() {
 			this.pEditorAccess = false;
+		},
+		respinArticle: function respinArticle() {
+			var _this2 = this;
+
+			this.isLoading = true;
+			this.isError = false;
+
+			// vars
+			this.spin['article'] = $('div.note-editable').html();
+			this.spin['type'] = 'edit-article';
+
+			axios.post('/words/respinArticle', this.spin).then(function (response) {
+				var data = response.data;
+
+				_this2.isLoading = false;
+				$('div.note-editable').html(data);
+
+				// check if api response is fail
+				if (data.status === 'Failure') {
+					_this2.error = data.error;
+					_this2.isError = true;
+				}
+			});
 		}
 	}
 });
@@ -46516,11 +46541,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "ArticleEditor"
   }, [_c('h2', {
     staticClass: "text-center"
-  }, [_vm._v(_vm._s(_vm.article.doc_title))]), _c('hr'), _vm._v(" "), _c('div', {
+  }, [_vm._v(_vm._s(_vm.article.doc_title))]), _c('hr'), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
     staticClass: "Spintax__result"
   }, [(!_vm.pEditorAccess) ? _c('div', {
     staticClass: "Peditor"
-  }, [_c('h3', [_vm._v("Spintax Result")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.article.spintax))]), _vm._v(" "), (_vm.peditoraccess) ? _c('button', {
+  }, [_c('h3', [_vm._v("Spintax Result")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.article.spintax))]), _c('br'), _vm._v(" "), _c('button', {
     ref: "pEditorBtn",
     staticClass: "btn btn-default power-editor",
     attrs: {
@@ -46529,7 +46554,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.onPowerEditor
     }
-  }, [_vm._v("Power Editor")]) : _vm._e()]) : _vm._e(), _vm._v(" "), (_vm.pEditorAccess) ? _c('power-editor', {
+  }, [_vm._v("Power Editor")])]) : _vm._e(), _vm._v(" "), (_vm.pEditorAccess) ? _c('power-editor', {
     attrs: {
       "article": _vm.article
     },
@@ -46538,7 +46563,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.pEditorAccess = false
       }
     }
-  }) : _vm._e()], 1), _vm._v(" "), _c('div', {
+  }) : _vm._e()], 1) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "Process__article"
   }, [_c('h3', [_vm._v("Processed Article")]), _vm._v(" "), _c('div', {
     staticClass: "Editor"
@@ -46579,7 +46604,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "button"
     },
     on: {
-      "click": _vm.generateRespintax
+      "click": _vm.respinArticle
     }
   }, [_vm._v("Respin Article")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-danger",

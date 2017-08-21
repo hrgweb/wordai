@@ -290,4 +290,25 @@ class WordsController extends Controller
 
 		return $isUnprocess;
 	}
+
+	public function respinArticle() {
+		$vars = request()->only([
+			'article', 
+			'keyword', 
+			'lsi_terms', 
+			'domain_protected', 
+			'protected', 
+			'synonym',
+			'type'
+		]);
+
+		$spintax = $this->generateSpintax($vars, request('article'));
+		$spintax = json_decode($spintax);
+
+		if ($spintax->status === 'Success') {
+			return $this->generateFullArticle();
+		} else {
+			return json_encode($spintax);
+		}
+	}
 }

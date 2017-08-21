@@ -36,6 +36,7 @@ Route::prefix('words')->group(function() {
 	Route::post('processToCopyscape', 'WordsController@processToCopyscape');
 
 	Route::post('processTextGrammar', 'WordsController@processTextGrammar');
+	Route::post('respinArticle', 'WordsController@respinArticle');
 	// tmp
 	Route::post('runCurl', 'WordsController@runCurl');
 });

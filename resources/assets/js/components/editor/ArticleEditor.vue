@@ -2,12 +2,12 @@
 	<div class="ArticleEditor">
 		<h2 class="text-center">{{ article.doc_title }}</h2><hr>
 
-		<div class="Spintax__result">
+		<div class="Spintax__result" v-if="peditoraccess">
 			<div class="Peditor" v-if="! pEditorAccess">
 				<h3>Spintax Result</h3>
-				<p>{{ article.spintax }}</p>
+				<p>{{ article.spintax }}</p><br>
 
-				<button type="button" class="btn btn-default power-editor" v-if="peditoraccess" @click="onPowerEditor" ref="pEditorBtn">Power Editor</button>
+				<button type="button" class="btn btn-default power-editor" @click="onPowerEditor" ref="pEditorBtn">Power Editor</button>
 			</div>
 
 			<!-- Power Editor -->
@@ -33,7 +33,7 @@
 
 			<div class="Actions">
 				<button type="button" class="btn btn-warning" @click="processToCopyscape" ref="csButton">Copyscape</button>
-			    <button type="button" class="btn btn-info" @click="generateRespintax">Respin Article</button>
+			    <button type="button" class="btn btn-info" @click="respinArticle">Respin Article</button>
 		        <button type="button" class="btn btn-danger" @click="dissmissArticle">Dismiss</button>
 		        &nbsp;&nbsp;&nbsp;
 				<span v-if="isLoading">LOADING....</span>
@@ -56,14 +56,13 @@
 		data() {
 			return {
 				type: 'edit-article',
-				spin: {
-					paragraph: '',
-					type: 'edit-article'
-				},
+				spin: {},
 				pEditorAccess: false
 			}
 		},
 		mounted() {
+			this.spin = this.article;
+
 			$('div#editor').summernote('editor.insertText', this.article.spin);
 		},
 		methods: {
@@ -92,6 +91,28 @@
 
 			dissmissSpintaxArticle() {
 				this.pEditorAccess = false;
+			},
+
+			respinArticle() {
+				this.isLoading = true;
+				this.isError = false;
+
+				// vars
+				this.spin['article'] = $('div.note-editable').html();
+				this.spin['type'] = 'edit-article';
+
+				axios.post('/words/respinArticle', this.spin).then(response => {
+					let data = response.data;
+
+					this.isLoading = false;
+					$('div.note-editable').html(data);
+
+					// check if api response is fail
+					if (data.status === 'Failure') {
+						this.error = data.error;
+						this.isError = true;
+					}
+				});
 			}
 		}
 	}
