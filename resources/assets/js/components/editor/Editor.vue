@@ -12,6 +12,7 @@
 		<!-- Article Editor -->
 		<article-editor
 			:article="article"
+			:peditoraccess="hasPeditorAccess"
 			v-if="isEdit"
 			@isUpdated="updateRecord"
 			@isDismiss="dismissUpdate">
@@ -108,4 +109,5 @@
 
 <style scoped>
 	.Editor { padding: 0 7em; }
+	.Copyscape { margin-top: 5em; }
 </style>

@@ -24,7 +24,7 @@ export const ArticleMixin = {
 			this.isError = false;
 
 			this.spin['paragraph'] = this.paragraph;
-			axios.post('/words/generateRespintax', this.spin).then(response => {
+			/*axios.post('/words/generateRespintax', this.spin).then(response => {
 				let data = response.data;
 				let text = data.text;
 
@@ -43,7 +43,9 @@ export const ArticleMixin = {
 					this.error = data.error;
 					this.isError = true;
 				}
-			});
+			});*/
+
+			console.log(this.spin)
 		},
 
 		splitResultBySentence(results) {

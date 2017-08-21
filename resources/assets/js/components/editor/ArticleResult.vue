@@ -28,7 +28,7 @@
 		        	<td>{{ article.synonym }}</td>
 		        	<td>
 		        		<button type="button" class="btn btn-info" @click="editArticle(article, index)">Edit Article</button>
-		        		<button type="button" class="btn btn-danger" ref="btnPublish" @click="publishArticle(article, index)">Publish</button>
+		        		<!-- <button type="button" class="btn btn-danger" ref="btnPublish" @click="publishArticle(article, index)">Publish</button> -->
 		        	</td>
 		        </tr>
 		    </tbody>

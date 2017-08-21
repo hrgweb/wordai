@@ -5266,34 +5266,31 @@ var ArticleMixin = {
 	},
 	methods: {
 		generateRespintax: function generateRespintax() {
-			var _this = this;
-
 			var index = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
 
 			this.isLoading = true;
 			this.isError = false;
 
 			this.spin['paragraph'] = this.paragraph;
-			axios.post('/words/generateRespintax', this.spin).then(function (response) {
-				var data = response.data;
-				var text = data.text;
+			/*axios.post('/words/generateRespintax', this.spin).then(response => {
+   	let data = response.data;
+   	let text = data.text;
+   		if (data.status === 'Success') {
+   		this.isLoading = false;
+   		this.newParagraph = text;
+   			this.$emit('updateparagraph', {
+   			index: this.index,
+   			paragraph: text
+   		});
+   	}
+   		// check if api response is fail
+   	if (data.status === 'Failure') {
+   		this.error = data.error;
+   		this.isError = true;
+   	}
+   });*/
 
-				if (data.status === 'Success') {
-					_this.isLoading = false;
-					_this.newParagraph = text;
-
-					_this.$emit('updateparagraph', {
-						index: _this.index,
-						paragraph: text
-					});
-				}
-
-				// check if api response is fail
-				if (data.status === 'Failure') {
-					_this.error = data.error;
-					_this.isError = true;
-				}
-			});
+			console.log(this.spin);
 		},
 		splitResultBySentence: function splitResultBySentence(results) {
 			var duplicates = [];
@@ -5371,7 +5368,7 @@ var ArticleMixin = {
 			});
 		},
 		copyScapeData: function copyScapeData(data) {
-			var _this2 = this;
+			var _this = this;
 
 			var results = data;
 			var duplicates = [];
@@ -5388,14 +5385,14 @@ var ArticleMixin = {
 
 			// replace duplicates and color by red
 			Vue.nextTick(function () {
-				return _this2.colorDuplicatesInRed(finds);
+				return _this.colorDuplicatesInRed(finds);
 			});
 
 			// store as result in vue data
 			this.duplicates = finds;
 		},
 		copyScapeSetup: function copyScapeSetup(url, data) {
-			var _this3 = this;
+			var _this2 = this;
 
 			this.isLoading = true;
 			this.isError = false;
@@ -5405,22 +5402,22 @@ var ArticleMixin = {
 				var data = response.data;
 
 				// api result response success
-				_this3.isLoading = false;
-				_this3.copyscape = data;
-				_this3.responseSuccess = true;
-				_this3.$refs.csButton.disabled = false;
+				_this2.isLoading = false;
+				_this2.copyscape = data;
+				_this2.responseSuccess = true;
+				_this2.$refs.csButton.disabled = false;
 
 				// find all duplicate occurences
 				// this.copyScapeData(data.result);
 
 				// check if api response is fail
 				if (data.error) {
-					_this3.error = data.error;
-					_this3.isError = true;
-					_this3.responseSuccess = false;
+					_this2.error = data.error;
+					_this2.isError = true;
+					_this2.responseSuccess = false;
 				} else {
 					// find all duplicate occurences
-					_this3.copyScapeData(data.result);
+					_this2.copyScapeData(data.result);
 				}
 			});
 		},
@@ -5459,7 +5456,7 @@ var ArticleMixin = {
 			}
 		},
 		processToTextGear: function processToTextGear() {
-			var _this4 = this;
+			var _this3 = this;
 
 			this.isLoading = true;
 			this.isError = false;
@@ -5472,10 +5469,10 @@ var ArticleMixin = {
 
 				if (data.result) {
 					// api result response success
-					_this4.isLoading = false;
-					_this4.textgear = data;
-					_this4.isGrammarTrue = true;
-					_this4.$refs.tgButton.disabled = false;
+					_this3.isLoading = false;
+					_this3.textgear = data;
+					_this3.isGrammarTrue = true;
+					_this3.$refs.tgButton.disabled = false;
 
 					// add span tag on a bad words result in check grammar
 					var article = payload.text;
@@ -5514,9 +5511,9 @@ var ArticleMixin = {
 					console.log(result);
 				} else {
 					// check if api response is fail
-					_this4.error = data.error;
-					_this4.isError = true;
-					_this4.isGrammarTrue = false;
+					_this3.error = data.error;
+					_this3.isError = true;
+					_this3.isGrammarTrue = false;
 				}
 			});
 		},
@@ -5532,7 +5529,7 @@ var ArticleMixin = {
 			});
 		},
 		spinDuplicatesAndCopyscape: function spinDuplicatesAndCopyscape() {
-			var _this5 = this;
+			var _this4 = this;
 
 			this.isLoading = true;
 			this.$refs.spinAndCsButton.disabled = true;
@@ -5548,8 +5545,8 @@ var ArticleMixin = {
 			axios.post('/words', this.spin).then(function (response) {
 				var data = response.data;
 
-				_this5.isLoading = false;
-				_this5.$refs.spinAndCsButton.disabled = false;
+				_this4.isLoading = false;
+				_this4.$refs.spinAndCsButton.disabled = false;
 
 				// check if api response is success
 				if (data.status === 'Success') {
@@ -5560,12 +5557,12 @@ var ArticleMixin = {
 
 					// article is now the spintax result
 					// display finish full article
-					_this5.generateNewArticle(_this5.spin.article);
+					_this4.generateNewArticle(_this4.spin.article);
 				}
 
 				// check if api response is fail
 				if (data.status === 'Failure') {
-					_this5.error = data.error;
+					_this4.error = data.error;
 				}
 			});
 
@@ -19908,10 +19905,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__words_CopyscapeResult_vue__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__words_CopyscapeResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__words_CopyscapeResult_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleMixin_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PowerEditor_vue__ = __webpack_require__(309);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PowerEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__PowerEditor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_ArticleMixin_js__ = __webpack_require__(7);
 //
 //
 //
@@ -19943,22 +19942,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['article'],
-	components: { CopyscapeResult: __WEBPACK_IMPORTED_MODULE_0__words_CopyscapeResult_vue___default.a },
-	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleMixin_js__["a" /* ArticleMixin */]],
+	props: ['article', 'peditoraccess'],
+	components: { PowerEditor: __WEBPACK_IMPORTED_MODULE_0__PowerEditor_vue___default.a, CopyscapeResult: __WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue___default.a },
+	mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_3__mixins_ArticleMixin_js__["a" /* ArticleMixin */]],
 	data: function data() {
 		return {
 			type: 'edit-article',
 			spin: {
-				article: '',
+				paragraph: '',
 				type: 'edit-article'
-			}
+			},
+			pEditorAccess: false
 		};
 	},
 	mounted: function mounted() {
@@ -19984,6 +19999,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		dissmissArticle: function dissmissArticle() {
 			this.$emit('isDismiss');
+		},
+		onPowerEditor: function onPowerEditor() {
+			this.pEditorAccess = true;
+		},
+		dissmissSpintaxArticle: function dissmissSpintaxArticle() {
+			this.pEditorAccess = false;
 		}
 	}
 });
@@ -20097,6 +20118,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_UserArticleMixin_js__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__errors_Error_vue__);
+//
 //
 //
 //
@@ -24904,7 +24926,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;\n}\nh3[data-v-1a4b0ea7] { text-align: center;\n}\np[data-v-1a4b0ea7] { white-space: pre-wrap;\n}\n", ""]);
+exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;\n}\nh3[data-v-1a4b0ea7] { text-align: center;\n}\np[data-v-1a4b0ea7] { white-space: pre-wrap;\n}\n.Editor[data-v-1a4b0ea7] { position: relative;\n}\nbutton.right-side[data-v-1a4b0ea7] {\n\tposition: absolute;\n\tright: 0;\n}\nbutton.power-editor[data-v-1a4b0ea7] {\n\tbackground: #D13DD1;\n\tcolor: #fff;\n\tborder: #8c3f8c;\n}\nbutton.power-editor[data-v-1a4b0ea7]:hover { background: #BC2EBC;\n}\n.Copyscape[data-v-1a4b0ea7] { margin-top: 5em;\n}\n", ""]);
 
 /***/ }),
 /* 200 */
@@ -25009,7 +25031,7 @@ exports.push([module.i, "\n.Word[data-v-be4ea298] {\n\tpadding: 0 20px;\n}\n.Wor
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.Editor[data-v-c27ca10e] { padding: 0 7em;\n}\n", ""]);
+exports.push([module.i, "\n.Editor[data-v-c27ca10e] { padding: 0 7em;\n}\n.Copyscape[data-v-c27ca10e] { margin-top: 5em;\n}\n", ""]);
 
 /***/ }),
 /* 215 */
@@ -46496,13 +46518,44 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "text-center"
   }, [_vm._v(_vm._s(_vm.article.doc_title))]), _c('hr'), _vm._v(" "), _c('div', {
     staticClass: "Spintax__result"
-  }, [_c('h3', [_vm._v("Spintax Result")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.article.spintax))])]), _vm._v(" "), _c('div', {
+  }, [(!_vm.pEditorAccess) ? _c('div', {
+    staticClass: "Peditor"
+  }, [_c('h3', [_vm._v("Spintax Result")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.article.spintax))]), _vm._v(" "), (_vm.peditoraccess) ? _c('button', {
+    ref: "pEditorBtn",
+    staticClass: "btn btn-default power-editor",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.onPowerEditor
+    }
+  }, [_vm._v("Power Editor")]) : _vm._e()]) : _vm._e(), _vm._v(" "), (_vm.pEditorAccess) ? _c('power-editor', {
+    attrs: {
+      "article": _vm.article
+    },
+    on: {
+      "isPowerEditorDismiss": function($event) {
+        _vm.pEditorAccess = false
+      }
+    }
+  }) : _vm._e()], 1), _vm._v(" "), _c('div', {
     staticClass: "Process__article"
   }, [_c('h3', [_vm._v("Processed Article")]), _vm._v(" "), _c('div', {
+    staticClass: "Editor"
+  }, [_c('div', {
     attrs: {
       "id": "editor"
     }
-  }), _vm._v(" "), (_vm.responseSuccess) ? _c('copyscape-result', {
+  }), _vm._v(" "), _c('button', {
+    ref: "saveChangeBtn",
+    staticClass: "btn btn-success right-side",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.updateArticle
+    }
+  }, [_vm._v("Save Article Changes")])]), _vm._v(" "), (_vm.responseSuccess) ? _c('copyscape-result', {
     attrs: {
       "copy": _vm.copyscape
     },
@@ -46526,9 +46579,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "type": "button"
     },
     on: {
-      "click": _vm.updateArticle
+      "click": _vm.generateRespintax
     }
-  }, [_vm._v("Update Article")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Respin Article")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-danger",
     attrs: {
       "type": "button"
@@ -47971,19 +48024,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.editArticle(article, index)
         }
       }
-    }, [_vm._v("Edit Article")]), _vm._v(" "), _c('button', {
-      ref: "btnPublish",
-      refInFor: true,
-      staticClass: "btn btn-danger",
-      attrs: {
-        "type": "button"
-      },
-      on: {
-        "click": function($event) {
-          _vm.publishArticle(article, index)
-        }
-      }
-    }, [_vm._v("Publish")])])])
+    }, [_vm._v("Edit Article")])])])
   }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("User")]), _vm._v(" "), _c('th', [_vm._v("Article Type")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("LSI Terms")]), _vm._v(" "), _c('th', [_vm._v("Domain Protected")]), _vm._v(" "), _c('th', [_vm._v("Protected")]), _vm._v(" "), _c('th', [_vm._v("Synonym")]), _vm._v(" "), _c('th', {
@@ -49134,7 +49175,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }) : _vm._e()], 1), _vm._v(" "), (_vm.isEdit) ? _c('article-editor', {
     attrs: {
-      "article": _vm.article
+      "article": _vm.article,
+      "peditoraccess": _vm.hasPeditorAccess
     },
     on: {
       "isUpdated": _vm.updateRecord,
@@ -60715,6 +60757,107 @@ module.exports = Vue$3;
 __webpack_require__(143);
 module.exports = __webpack_require__(144);
 
+
+/***/ }),
+/* 301 */,
+/* 302 */,
+/* 303 */,
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['article'],
+	data: function data() {
+		return {};
+	},
+	mounted: function mounted() {
+		$('div#peditor').summernote('editor.insertText', this.article.spintax);
+	},
+
+	methods: {
+		dissmissSpintaxArticle: function dissmissSpintaxArticle() {
+			this.$emit('isPowerEditorDismiss');
+		}
+	}
+});
+
+/***/ }),
+/* 309 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(308),
+  /* template */
+  __webpack_require__(310),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\editor\\PowerEditor.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] PowerEditor.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-8d1c9214", Component.options)
+  } else {
+    hotAPI.reload("data-v-8d1c9214", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 310 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Peditor"
+  }, [_c('div', {
+    attrs: {
+      "id": "peditor"
+    }
+  }), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.dissmissSpintaxArticle
+    }
+  }, [_vm._v("Dismiss")])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-8d1c9214", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
