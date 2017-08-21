@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->integer('status_id')->default(2);
+            $table->boolean('has_peditor_access')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });

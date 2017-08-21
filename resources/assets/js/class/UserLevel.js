@@ -29,6 +29,10 @@ class UserLevel {
 
 		return lev;
 	}
+
+	hasPeditorAccess(hasAccess) {
+		return (hasAccess === false) ? false : true;
+	}
 }	
 
 export default UserLevel;

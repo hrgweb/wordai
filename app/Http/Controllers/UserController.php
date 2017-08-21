@@ -123,4 +123,10 @@ class UserController extends Controller
     			'dd.synonym'
     		]);
     }
+
+    public function updatePeditor() {
+    	$peditor_val = request('peditor') === 'no' ? false : true;
+    	
+    	return DB::table('users')->where('id', request('user_id'))->update(['has_peditor_access' => $peditor_val]);
+    }
 }

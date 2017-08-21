@@ -77,6 +77,7 @@ Route::prefix('user')->group(function() {
 	Route::patch('suspendUser', 'UserController@suspendUser');
 	Route::patch('activateUser', 'UserController@activateUser');
 	Route::patch('updateArticle', 'UserController@updateArticle');
+	Route::patch('updatePeditor', 'UserController@updatePeditor');
 	Route::delete('dissmissUser', 'UserController@dissmissUser');
 });
 

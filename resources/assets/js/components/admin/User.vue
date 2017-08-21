@@ -31,7 +31,7 @@
 					<td>{{ stat.status(user.status_id) }}</td>
 					<td>{{ user.created_at }}</td>
 					<td>
-						<button type="button" class="btn btn-info" @click="changeRole(user, index)">Change Role</button>
+						<button type="button" class="btn btn-info" @click="changeRole(user, index)">Permissions</button>
 						<button type="button" style="width: 70px;" class="btn btn-danger" ref="btnSuspend" @click="suspendUser(user, index)">{{ (user.status_id === 3) ? 'Active' : 'Suspend' }}</button>
 					</td>
 				</tr>
