@@ -5401,6 +5401,11 @@ var ArticleMixin = {
 			this.isError = false;
 			this.$refs.csButton.disabled = true;
 
+			// check if type is 'edit-article'
+			if (this.type === 'edit-article') {
+				this.csCounter++; // track cs checks counter
+			}
+
 			axios.post(url, data).then(function (response) {
 				var data = response.data;
 
@@ -5421,6 +5426,11 @@ var ArticleMixin = {
 				} else {
 					// find all duplicate occurences
 					_this3.copyScapeData(data.result);
+				}
+
+				// check if counter = 5
+				if (_this3.type == 'edit-article' && _this3.csCounter == 5) {
+					_this3.updateCsCheckHitMax();
 				}
 			});
 		},
@@ -19983,6 +19993,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -19997,8 +20028,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		return {
 			type: 'edit-article',
 			spin: {},
-			pEditorAccess: false
+			pEditorAccess: false,
+			csCounter: 0,
+			csBusinessRuleShow: false,
+			respinBusinessRuleShow: false
 		};
+	},
+
+	watch: {
+		spin: function spin(data) {
+			this.csBusinessRuleShow = data.isCsCheckHitMax === 1 ? true : false;
+		}
 	},
 	mounted: function mounted() {
 		this.spin = this.article;
@@ -20058,6 +20098,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				if (data.status === 'Failure') {
 					_this2.error = data.error;
 					_this2.isError = true;
+				}
+			});
+		},
+		updateCsCheckHitMax: function updateCsCheckHitMax() {
+			var _this3 = this;
+
+			var data = { word_id: this.article.id };
+
+			axios.patch('/words/updateCsCheckHitMax', data).then(function (response) {
+				if (response.data) {
+					_this3.csBusinessRuleShow = true;
 				}
 			});
 		}
@@ -25044,7 +25095,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;\n}\nh3[data-v-1a4b0ea7] { text-align: center;\n}\np[data-v-1a4b0ea7] { white-space: pre-wrap;\n}\n.Editor[data-v-1a4b0ea7] { position: relative;\n}\nbutton.right-side[data-v-1a4b0ea7] {\n\tposition: absolute;\n\tright: 0;\n}\nbutton.power-editor[data-v-1a4b0ea7] {\n\tbackground: #D13DD1;\n\tcolor: #fff;\n\tborder: #8c3f8c;\n}\nbutton.power-editor[data-v-1a4b0ea7]:hover { background: #BC2EBC;\n}\n.Copyscape[data-v-1a4b0ea7] { margin-top: 5em;\n}\n", ""]);
+exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;\n}\nh3[data-v-1a4b0ea7] { text-align: center;\n}\np[data-v-1a4b0ea7] { white-space: pre-wrap;\n}\n.Editor[data-v-1a4b0ea7] { position: relative;\n}\nbutton.right-side[data-v-1a4b0ea7] {\n\tposition: absolute;\n\tright: 0;\n}\nbutton.power-editor[data-v-1a4b0ea7] {\n\tbackground: #D13DD1;\n\tcolor: #fff;\n\tborder: #8c3f8c;\n}\nbutton.power-editor[data-v-1a4b0ea7]:hover { background: #BC2EBC;\n}\n.Copyscape[data-v-1a4b0ea7] { margin-top: 5em;\n}\ndiv.first-button[data-v-1a4b0ea7] {\n    float: left;\n    margin-right: 0.2em;\n}\n\n/*=============== Gradient button ===============*/\n.btn-business-rule[data-v-1a4b0ea7] {\n\tbackground-color: hsl(0, 0%, 13%) !important;\n\tbackground-repeat: repeat-x;\n\tfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#bababa\", endColorstr=\"#212121\");\n\tbackground-image: -khtml-gradient(linear, left top, left bottom, from(#bababa), to(#212121));\n\tbackground-image: linear-gradient(#bababa, #212121);\n\tborder: 1px solid #7d7d7d;\n\tcolor: #fff !important;\n\ttext-shadow: 0 -1px 0 rgba(0, 0, 0, 0.99);\n\t-webkit-font-smoothing: antialiased;\n}\n", ""]);
 
 /***/ }),
 /* 201 */
@@ -46716,6 +46767,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "Actions"
+  }, [_c('div', {
+    staticClass: "first-button"
+  }, [(!_vm.csBusinessRuleShow) ? _c('div', {
+    staticClass: "action"
   }, [_c('button', {
     ref: "csButton",
     staticClass: "btn btn-warning",
@@ -46725,7 +46780,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.processToCopyscape
     }
-  }, [_vm._v("Copyscape")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Copyscape")])]) : _c('div', {
+    staticClass: "business-rule"
+  }, [_c('button', {
+    staticClass: "btn btn-business-rule",
+    attrs: {
+      "disabled": ""
+    }
+  }, [_vm._v("Copyscape check hits business rule")])])]), _vm._v(" "), _c('div', {
+    staticClass: "first-button"
+  }, [(!_vm.respinBusinessRuleShow) ? _c('div', {
+    staticClass: "action"
+  }, [_c('button', {
     ref: "respinBtn",
     staticClass: "btn btn-info",
     attrs: {
@@ -46734,7 +46800,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.respinArticle
     }
-  }, [_vm._v("Respin Article")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("Respin Article")])]) : _c('div', {
+    staticClass: "business-rule"
+  }, [_c('button', {
+    staticClass: "btn btn-business-rule",
+    attrs: {
+      "disabled": ""
+    }
+  }, [_vm._v("Respin hits business rule")])])]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-danger",
     attrs: {
       "type": "button"
@@ -46742,7 +46815,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.dissmissArticle
     }
-  }, [_vm._v("Dismiss")]), _vm._v("\n\t\t           \n\t\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
+  }, [_vm._v("Dismiss")]), _vm._v(" "), _vm._v("\n\t\t           \n\t\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
     staticStyle: {
       "color": "red"
     }

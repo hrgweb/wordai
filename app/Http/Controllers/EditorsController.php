@@ -34,6 +34,7 @@ class EditorsController extends Controller
 				'protected',
 				'synonym',
 				'isEditorUpdateSC',
+				'isCsCheckHitMax',
 				'words.created_at'
     		]);
     }

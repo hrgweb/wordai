@@ -35,9 +35,30 @@
  			</copyscape-result>
 
 			<div class="Actions">
-				<button type="button" class="btn btn-warning" @click="processToCopyscape" ref="csButton">Copyscape</button>
-			    <button type="button" class="btn btn-info" @click="respinArticle" ref="respinBtn">Respin Article</button>
+				<!-- Copyscape -->
+				<div class="first-button">
+					<div class="action" v-if="! csBusinessRuleShow">
+						<button type="button" class="btn btn-warning" @click="processToCopyscape" ref="csButton">Copyscape</button>
+					</div>
+					<div class="business-rule" v-else>
+						<button class="btn btn-business-rule" disabled>Copyscape check hits business rule</button>
+					</div>					
+				</div>
+
+				<!-- Respin -->
+				<div class="first-button">
+					<div class="action" v-if="! respinBusinessRuleShow">
+			   			<button type="button" class="btn btn-info" @click="respinArticle" ref="respinBtn">Respin Article</button>
+					</div>
+					<div class="business-rule" v-else>
+						<button class="btn btn-business-rule" disabled>Respin hits business rule</button>
+					</div>	
+				</div>
+
+				<!-- Dismiss -->
 		        <button type="button" class="btn btn-danger" @click="dissmissArticle">Dismiss</button>
+
+		        <!-- Misc -->
 		        &nbsp;&nbsp;&nbsp;
 				<span v-if="isLoading">LOADING....</span>
 				<span v-if="isError" style="color: red;">{{ error }}</span><br>
@@ -60,7 +81,15 @@
 			return {
 				type: 'edit-article',
 				spin: {},
-				pEditorAccess: false
+				pEditorAccess: false,
+				csCounter: 0,
+				csBusinessRuleShow: false,
+				respinBusinessRuleShow: false,
+			}
+		},
+		watch: {
+			spin(data) {
+				this.csBusinessRuleShow = data.isCsCheckHitMax === 1 ? true : false;
 			}
 		},
 		mounted() {
@@ -122,6 +151,16 @@
 						this.isError = true;
 					}
 				});
+			},
+
+			updateCsCheckHitMax() {
+				const data = { word_id: this.article.id };
+
+				axios.patch('/words/updateCsCheckHitMax', data).then(response => {
+					if (response.data) {
+						this.csBusinessRuleShow = true;
+					}
+				});
 			}
 		}
 	}
@@ -145,4 +184,27 @@
 	}
 	button.power-editor:hover { background: #BC2EBC; }
 	.Copyscape { margin-top: 5em; }
+
+	div.first-button {
+	    float: left;
+	    margin-right: 0.2em;
+	}
+
+	/*=============== Gradient button ===============*/ 
+	.btn-business-rule {
+		background-color: hsl(0, 0%, 13%) !important;
+		background-repeat: repeat-x;
+		filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#bababa", endColorstr="#212121");
+		background-image: -khtml-gradient(linear, left top, left bottom, from(#bababa), to(#212121));
+		background-image: -moz-linear-gradient(top, #bababa, #212121);
+		background-image: -ms-linear-gradient(top, #bababa, #212121);
+		background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #bababa), color-stop(100%, #212121));
+		background-image: -webkit-linear-gradient(top, #bababa, #212121);
+		background-image: -o-linear-gradient(top, #bababa, #212121);
+		background-image: linear-gradient(#bababa, #212121);
+		border: 1px solid #7d7d7d;
+		color: #fff !important;
+		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.99);
+		-webkit-font-smoothing: antialiased;
+	}
 </style>

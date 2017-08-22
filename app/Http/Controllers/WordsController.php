@@ -320,4 +320,8 @@ class WordsController extends Controller
 
 		return response()->json(['spintax_copy' => $spintax]);
 	}
+
+	public function updateCsCheckHitMax() {
+		return DB::table('words')->where('id', request('word_id'))->update(['isCsCheckHitMax' => true]);
+	}
 }

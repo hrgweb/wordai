@@ -154,6 +154,11 @@ export const ArticleMixin = {
 			this.isError = false;
 			this.$refs.csButton.disabled = true;
 
+			// check if type is 'edit-article'
+			if (this.type === 'edit-article') {
+				this.csCounter++; 	// track cs checks counter
+			}
+
 			axios.post(url, data).then(response => {
 				let data = response.data;
 
@@ -174,6 +179,11 @@ export const ArticleMixin = {
 				} else {
 					// find all duplicate occurences
 					this.copyScapeData(data.result);
+				}
+
+				// check if counter = 5
+				if (this.type == 'edit-article' && this.csCounter == 5) {
+					this.updateCsCheckHitMax();
 				}
 			});
 		},
