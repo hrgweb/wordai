@@ -20037,16 +20037,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			this.isLoading = true;
 			this.isError = false;
+			this.$refs.respinBtn.disabled = true;
 
 			// vars
 			this.spin['article'] = $('div.note-editable').html();
 			this.spin['type'] = 'edit-article';
 
+			var editor = $('div.note-editable');
+			editor.slideUp(); // hide editor
+
 			axios.post('/words/respinArticle', this.spin).then(function (response) {
 				var data = response.data;
+				editor.slideDown(); // show editor
+				editor.html(data);
 
 				_this2.isLoading = false;
-				$('div.note-editable').html(data);
+				_this2.$refs.respinBtn.disabled = false;
 
 				// check if api response is fail
 				if (data.status === 'Failure') {
@@ -46720,6 +46726,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.processToCopyscape
     }
   }, [_vm._v("Copyscape")]), _vm._v(" "), _c('button', {
+    ref: "respinBtn",
     staticClass: "btn btn-info",
     attrs: {
       "type": "button"

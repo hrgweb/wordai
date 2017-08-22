@@ -36,7 +36,7 @@
 
 			<div class="Actions">
 				<button type="button" class="btn btn-warning" @click="processToCopyscape" ref="csButton">Copyscape</button>
-			    <button type="button" class="btn btn-info" @click="respinArticle">Respin Article</button>
+			    <button type="button" class="btn btn-info" @click="respinArticle" ref="respinBtn">Respin Article</button>
 		        <button type="button" class="btn btn-danger" @click="dissmissArticle">Dismiss</button>
 		        &nbsp;&nbsp;&nbsp;
 				<span v-if="isLoading">LOADING....</span>
@@ -99,16 +99,22 @@
 			respinArticle() {
 				this.isLoading = true;
 				this.isError = false;
+				this.$refs.respinBtn.disabled = true;
 
 				// vars
 				this.spin['article'] = $('div.note-editable').html();
 				this.spin['type'] = 'edit-article';
 
+				let editor = $('div.note-editable');
+				editor.slideUp(); // hide editor
+
 				axios.post('/words/respinArticle', this.spin).then(response => {
 					let data = response.data;
+					editor.slideDown(); // show editor
+					editor.html(data);
 
 					this.isLoading = false;
-					$('div.note-editable').html(data);
+					this.$refs.respinBtn.disabled = false;
 
 					// check if api response is fail
 					if (data.status === 'Failure') {
