@@ -3,8 +3,9 @@
 		<h2 class="text-center">{{ article.doc_title }}</h2><hr>
 
 		<div class="Spintax__result" v-if="peditoraccess">
+			<h3>Spintax Result</h3>
+			
 			<div class="Peditor" v-if="! pEditorAccess">
-				<h3>Spintax Result</h3>
 				<p>{{ article.spintax }}</p><br>
 
 				<button type="button" class="btn btn-default power-editor" @click="onPowerEditor" ref="pEditorBtn">Power Editor</button>
