@@ -19,12 +19,10 @@
 </script>
 
 <style scoped>
-	/*.EditorPage { position: relative; }*/
 	ul { padding-left: 2em; }
 
 	ul.alert.alert-danger {
 	    position: absolute;
 	    right: 7em;
-	    /*top: 0;*/
 	}
 </style>

@@ -6169,10 +6169,10 @@ var UserLevel = function () {
 					lev = 'Admin';
 					break;
 				case 3:
-					lev = 'Editor';
+					lev = 'Writer';
 					break;
 				case 4:
-					lev = 'Writer';
+					lev = 'Editor';
 					break;
 				case 5:
 					lev = 'Curator';
@@ -25013,7 +25013,7 @@ exports.push([module.i, "\ninput[data-v-1a643e37], select[data-v-1a643e37] {\n  
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.EditorPage { position: relative; }*/\nul[data-v-1cb57eac] { padding-left: 2em;\n}\nul.alert.alert-danger[data-v-1cb57eac] {\n    position: absolute;\n    right: 7em;\n    /*top: 0;*/\n}\n", ""]);
+exports.push([module.i, "\nul[data-v-1cb57eac] { padding-left: 2em;\n}\nul.alert.alert-danger[data-v-1cb57eac] {\n    position: absolute;\n    right: 7em;\n}\n", ""]);
 
 /***/ }),
 /* 203 */

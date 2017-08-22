@@ -11,10 +11,10 @@ class UserLevel {
 				lev = 'Admin';
 				break;
 			case 3:
-				lev = 'Editor';
+				lev = 'Writer';
 				break;
 			case 4:
-				lev = 'Writer';
+				lev = 'Editor';
 				break;
 			case 5:
 				lev = 'Curator';
