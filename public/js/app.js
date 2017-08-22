@@ -17712,46 +17712,51 @@ module.exports = function(module) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_admin_Admin_vue__ = __webpack_require__(224);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_admin_Admin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_admin_Admin_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_admin_PendingUser_vue__ = __webpack_require__(231);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_admin_PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_admin_PendingUser_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_admin_Domain_vue__ = __webpack_require__(228);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_admin_Domain_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_admin_Domain_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_admin_User_vue__ = __webpack_require__(233);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_admin_User_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_admin_User_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_admin_ProtectedTerm_vue__ = __webpack_require__(232);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_admin_ProtectedTerm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_admin_ProtectedTerm_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_admin_DomainDetail_vue__ = __webpack_require__(229);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_admin_DomainDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_admin_DomainDetail_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_admin_Copyscape_vue__ = __webpack_require__(226);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_admin_Copyscape_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_admin_Copyscape_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_words_WordApi_vue__ = __webpack_require__(246);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_words_WordApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_words_WordApi_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_words_WordApi2_vue__ = __webpack_require__(247);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_words_WordApi2_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_words_WordApi2_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_words_CurationEdit_vue__ = __webpack_require__(242);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_words_CurationEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_words_CurationEdit_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_PasteArticle_vue__ = __webpack_require__(244);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_PasteArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_words_PasteArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_CreateArticle_vue__ = __webpack_require__(241);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_CreateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_words_CreateArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_CopyscapeApiResult_vue__ = __webpack_require__(240);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_CopyscapeApiResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_words_CopyscapeApiResult_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_GenerateArticle_vue__ = __webpack_require__(243);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_GenerateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_words_GenerateArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_words_UserArticle_vue__ = __webpack_require__(245);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_words_UserArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_words_UserArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_editor_Editor_vue__ = __webpack_require__(234);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_editor_Editor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_editor_Editor_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_editor_SuperEditor_vue__ = __webpack_require__(236);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_editor_SuperEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_editor_SuperEditor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__eventbus_EventBus_js__ = __webpack_require__(311);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_admin_Admin_vue__ = __webpack_require__(224);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__components_admin_Admin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__components_admin_Admin_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_admin_PendingUser_vue__ = __webpack_require__(231);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_admin_PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_admin_PendingUser_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_admin_Domain_vue__ = __webpack_require__(228);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_admin_Domain_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_admin_Domain_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_admin_User_vue__ = __webpack_require__(233);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_admin_User_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_admin_User_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_admin_ProtectedTerm_vue__ = __webpack_require__(232);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_admin_ProtectedTerm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_admin_ProtectedTerm_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_admin_DomainDetail_vue__ = __webpack_require__(229);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_admin_DomainDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_admin_DomainDetail_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_admin_Copyscape_vue__ = __webpack_require__(226);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_admin_Copyscape_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_admin_Copyscape_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_words_WordApi_vue__ = __webpack_require__(246);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_words_WordApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_words_WordApi_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_words_WordApi2_vue__ = __webpack_require__(247);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_words_WordApi2_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_words_WordApi2_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_CurationEdit_vue__ = __webpack_require__(242);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_CurationEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_words_CurationEdit_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_PasteArticle_vue__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_PasteArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_words_PasteArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_CreateArticle_vue__ = __webpack_require__(241);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_CreateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_words_CreateArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_CopyscapeApiResult_vue__ = __webpack_require__(240);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_CopyscapeApiResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_words_CopyscapeApiResult_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_words_GenerateArticle_vue__ = __webpack_require__(243);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_words_GenerateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_words_GenerateArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_words_UserArticle_vue__ = __webpack_require__(245);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_words_UserArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_words_UserArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_editor_Editor_vue__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_editor_Editor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_editor_Editor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_editor_SuperEditor_vue__ = __webpack_require__(236);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_editor_SuperEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_editor_SuperEditor_vue__);
 __webpack_require__(196);
+
+/*=============== Global vars ===============*/
+
 
 window.$ = $;
 window.Vue = __webpack_require__(302);
 window.moment = __webpack_require__(0);
 window.Noty = __webpack_require__(222);
+window.EventBus = __WEBPACK_IMPORTED_MODULE_0__eventbus_EventBus_js__["a" /* EventBus */];
 
 /*=============== Components ===============*/
 
@@ -17778,24 +17783,24 @@ var app = new Vue({
    name: 'WordAI',
    el: '#app',
    components: {
-      Admin: __WEBPACK_IMPORTED_MODULE_0__components_admin_Admin_vue___default.a,
-      PendingUser: __WEBPACK_IMPORTED_MODULE_1__components_admin_PendingUser_vue___default.a,
-      Domain: __WEBPACK_IMPORTED_MODULE_2__components_admin_Domain_vue___default.a,
-      User: __WEBPACK_IMPORTED_MODULE_3__components_admin_User_vue___default.a,
-      ProtectedTerm: __WEBPACK_IMPORTED_MODULE_4__components_admin_ProtectedTerm_vue___default.a,
-      DomainDetail: __WEBPACK_IMPORTED_MODULE_5__components_admin_DomainDetail_vue___default.a,
-      Copyscape: __WEBPACK_IMPORTED_MODULE_6__components_admin_Copyscape_vue___default.a,
-      WordApi: __WEBPACK_IMPORTED_MODULE_7__components_words_WordApi_vue___default.a,
-      WordApi2: __WEBPACK_IMPORTED_MODULE_8__components_words_WordApi2_vue___default.a,
-      CurationEdit: __WEBPACK_IMPORTED_MODULE_9__components_words_CurationEdit_vue___default.a,
-      PasteArticle: __WEBPACK_IMPORTED_MODULE_10__components_words_PasteArticle_vue___default.a,
-      CreateArticle: __WEBPACK_IMPORTED_MODULE_11__components_words_CreateArticle_vue___default.a,
-      CopyscapeApiResult: __WEBPACK_IMPORTED_MODULE_12__components_words_CopyscapeApiResult_vue___default.a,
+      Admin: __WEBPACK_IMPORTED_MODULE_1__components_admin_Admin_vue___default.a,
+      PendingUser: __WEBPACK_IMPORTED_MODULE_2__components_admin_PendingUser_vue___default.a,
+      Domain: __WEBPACK_IMPORTED_MODULE_3__components_admin_Domain_vue___default.a,
+      User: __WEBPACK_IMPORTED_MODULE_4__components_admin_User_vue___default.a,
+      ProtectedTerm: __WEBPACK_IMPORTED_MODULE_5__components_admin_ProtectedTerm_vue___default.a,
+      DomainDetail: __WEBPACK_IMPORTED_MODULE_6__components_admin_DomainDetail_vue___default.a,
+      Copyscape: __WEBPACK_IMPORTED_MODULE_7__components_admin_Copyscape_vue___default.a,
+      WordApi: __WEBPACK_IMPORTED_MODULE_8__components_words_WordApi_vue___default.a,
+      WordApi2: __WEBPACK_IMPORTED_MODULE_9__components_words_WordApi2_vue___default.a,
+      CurationEdit: __WEBPACK_IMPORTED_MODULE_10__components_words_CurationEdit_vue___default.a,
+      PasteArticle: __WEBPACK_IMPORTED_MODULE_11__components_words_PasteArticle_vue___default.a,
+      CreateArticle: __WEBPACK_IMPORTED_MODULE_12__components_words_CreateArticle_vue___default.a,
+      CopyscapeApiResult: __WEBPACK_IMPORTED_MODULE_13__components_words_CopyscapeApiResult_vue___default.a,
       // CurlPage,
-      GenerateArticle: __WEBPACK_IMPORTED_MODULE_13__components_words_GenerateArticle_vue___default.a,
-      UserArticle: __WEBPACK_IMPORTED_MODULE_14__components_words_UserArticle_vue___default.a,
-      Editor: __WEBPACK_IMPORTED_MODULE_15__components_editor_Editor_vue___default.a,
-      SuperEditor: __WEBPACK_IMPORTED_MODULE_16__components_editor_SuperEditor_vue___default.a
+      GenerateArticle: __WEBPACK_IMPORTED_MODULE_14__components_words_GenerateArticle_vue___default.a,
+      UserArticle: __WEBPACK_IMPORTED_MODULE_15__components_words_UserArticle_vue___default.a,
+      Editor: __WEBPACK_IMPORTED_MODULE_16__components_editor_Editor_vue___default.a,
+      SuperEditor: __WEBPACK_IMPORTED_MODULE_17__components_editor_SuperEditor_vue___default.a
    }
 });
 
@@ -19976,6 +19981,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -20198,7 +20205,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-// import { EventBus } from './../../eventbus/EventBus.js';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['user'],
@@ -20233,6 +20239,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	mounted: function mounted() {
 		this.authUser = JSON.parse(this.user);
+		this.listenWhenPowerEditorUpdated();
 	},
 
 	methods: {
@@ -20270,6 +20277,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		dismissUpdate: function dismissUpdate() {
 			this.isEdit = false;
+		},
+		listenWhenPowerEditorUpdated: function listenWhenPowerEditorUpdated(data) {
+			var _this3 = this;
+
+			EventBus.$on('editorUpdatedSpintaxCopy', function (data) {
+				_this3.articles[_this3.index].spintax_copy = data.spintax;
+			});
 		}
 	}
 });
@@ -20288,19 +20302,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['article'],
-	data: function data() {
-		return {};
-	},
 	mounted: function mounted() {
-		$('div#peditor').summernote('editor.insertText', this.article.spintax);
+		this.initSpintax();
 	},
 
 	methods: {
+		initSpintax: function initSpintax() {
+			var article = this.article;
+			var div = $('div#peditor');
+
+			if (article.isEditorUpdateSC === 1) {
+				div.summernote('editor.insertText', article.spintax_copy);
+			} else {
+				div.summernote('editor.insertText', article.spintax);
+			}
+		},
 		dissmissSpintaxArticle: function dissmissSpintaxArticle() {
 			this.$emit('isPowerEditorDismiss');
+		},
+		updateSpintaxArticle: function updateSpintaxArticle() {
+			var _this = this;
+
+			var data = {
+				word_id: this.article.id,
+				spintax: $('div.note-editable').first().text()
+			};
+
+			axios.patch('/words/updateSpintaxArticle', data).then(function (response) {
+				var data = response.data;
+
+				if (data) {
+					_this.$emit('isPowerEditorDismiss'); // close the power editor component
+					EventBus.$emit('editorUpdatedSpintaxCopy', { spintax: data.spintax_copy });
+				}
+			});
 		}
 	}
 });
@@ -46627,7 +46666,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "Spintax__result"
   }, [_c('h3', [_vm._v("Spintax Result")]), _vm._v(" "), (!_vm.pEditorAccess) ? _c('div', {
     staticClass: "Peditor"
-  }, [_c('p', [_vm._v(_vm._s(_vm.article.spintax))]), _c('br'), _vm._v(" "), _c('button', {
+  }, [(_vm.article.isEditorUpdateSC === 0) ? _c('p', [_vm._v(_vm._s(_vm.article.spintax))]) : _c('p', [_vm._v(_vm._s(_vm.article.spintax_copy))]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
     ref: "pEditorBtn",
     staticClass: "btn btn-default power-editor",
     attrs: {
@@ -48984,6 +49023,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "peditor"
     }
   }), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.updateSpintaxArticle
+    }
+  }, [_vm._v("Save Spintax Changes")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-danger",
     attrs: {
       "type": "button"
@@ -60922,6 +60969,31 @@ module.exports = Vue$3;
 __webpack_require__(143);
 module.exports = __webpack_require__(144);
 
+
+/***/ }),
+/* 304 */,
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(302);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return EventBus; });
+
+
+var EventBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+	data: function data() {
+		return {
+			isEditorEditBtnDisable: false
+		};
+	}
+});
 
 /***/ })
 /******/ ]);

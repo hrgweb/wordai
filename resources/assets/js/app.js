@@ -1,9 +1,14 @@
 require('./bootstrap');
 
+/*=============== Global vars ===============*/ 
+import { EventBus } from './eventbus/EventBus.js';
+
 window.$ = $;
 window.Vue = require('vue');
 window.moment = require('moment');
 window.Noty = require('noty');
+window.EventBus = EventBus;
+
 
 /*=============== Components ===============*/  
 

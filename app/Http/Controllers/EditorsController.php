@@ -29,9 +29,11 @@ class EditorsController extends Controller
 				'domain_protected',
 				'article',
 				'spintax',
+				'spintax_copy',
 				'spin',
 				'protected',
 				'synonym',
+				'isEditorUpdateSC',
 				'words.created_at'
     		]);
     }

@@ -10,6 +10,7 @@ use App\Repositories\WordRepository;
 use App\Word;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Ixudra\Curl\Facades\Curl;
 
@@ -310,5 +311,13 @@ class WordsController extends Controller
 		} else {
 			return json_encode($spintax);
 		}
+	}
+
+	public function updateSpintaxArticle() {
+		$spintax = request('spintax');
+
+		DB::table('words')->where('id', request('word_id'))->update(['spintax_copy' => $spintax, 'isEditorUpdateSC' => 1]);
+
+		return response()->json(['spintax_copy' => $spintax]);
 	}
 }

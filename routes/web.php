@@ -37,6 +37,7 @@ Route::prefix('words')->group(function() {
 
 	Route::post('processTextGrammar', 'WordsController@processTextGrammar');
 	Route::post('respinArticle', 'WordsController@respinArticle');
+	Route::patch('updateSpintaxArticle', 'WordsController@updateSpintaxArticle');
 	// tmp
 	Route::post('runCurl', 'WordsController@runCurl');
 });

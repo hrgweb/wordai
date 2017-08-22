@@ -6,7 +6,9 @@
 			<h3>Spintax Result</h3>
 			
 			<div class="Peditor" v-if="! pEditorAccess">
-				<p>{{ article.spintax }}</p><br>
+				<p v-if="article.isEditorUpdateSC === 0">{{ article.spintax }}</p>
+				<p v-else>{{ article.spintax_copy }}</p>
+				<br>
 
 				<button type="button" class="btn btn-default power-editor" @click="onPowerEditor" ref="pEditorBtn">Power Editor</button>
 			</div>

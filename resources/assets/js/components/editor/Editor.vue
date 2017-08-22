@@ -36,7 +36,6 @@
 	import ArticleEditor from './ArticleEditor.vue';
 	import { UserArticleMixin } from './../../mixins/UserArticleMixin.js';
 	import Error from './../errors/Error.vue';
-	// import { EventBus } from './../../eventbus/EventBus.js';
 
 	export default {
 		props: ['user'],
@@ -71,6 +70,7 @@
 		},
 		mounted() {
 			this.authUser = JSON.parse(this.user);
+			this.listenWhenPowerEditorUpdated();
 		},
 		methods: {
 			articleList() {
@@ -102,6 +102,12 @@
 
 			dismissUpdate() {
 				this.isEdit = false;
+			},
+
+			listenWhenPowerEditorUpdated(data) {
+				EventBus.$on('editorUpdatedSpintaxCopy', data => {
+					this.articles[this.index].spintax_copy = data.spintax;
+				});
 			}
 		}
 	}

@@ -24,6 +24,7 @@ class CreateWordsTable extends Migration
             $table->string('domain_protected')->nullable();
             $table->text('article');
             $table->text('spintax')->nullable();
+            $table->text('spintax_copy')->nullable();
             $table->text('spin')->nullable();
             $table->string('protected')->nullable();
             $table->string('synonym')->nullable();
