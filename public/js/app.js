@@ -30109,6 +30109,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -30128,7 +30131,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			respinCounter: 0,
 			csBusinessRuleShow: false,
 			respinBusinessRuleShow: false,
-			charType: ''
+			charHighlighted: ''
 		};
 	},
 
@@ -30148,10 +30151,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var vm = this;
 			var div = $('div#editor');
 
-			div.summernote('editor.insertText', this.article.spin);
-			div.on('summernote.keyup', function (we, e) {
-				// vm.charType += e.key;
-				console.log(e);
+			// Setup summernote
+			div.summernote({
+				callbacks: {
+					onInit: function onInit() {
+						// Insert text
+						$('div.note-editable').find('p').html(vm.article.spin);
+
+						$('button#tmpSummernote').on('click', function (e) {
+							var range = div.summernote('createRange');
+
+							console.log(range.toString());
+
+							// console.log('select: ', e);
+						});
+					}
+				}
 			});
 		},
 		updateArticle: function updateArticle() {
@@ -56982,7 +56997,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "color": "red"
     }
-  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br')])], 1)])
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br'), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-default",
+    attrs: {
+      "type": "button",
+      "id": "tmpSummernote"
+    }
+  }, [_vm._v("Temp")])])], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

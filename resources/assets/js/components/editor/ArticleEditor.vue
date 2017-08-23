@@ -62,6 +62,9 @@
 		        &nbsp;&nbsp;&nbsp;
 				<span v-if="isLoading">LOADING....</span>
 				<span v-if="isError" style="color: red;">{{ error }}</span><br>
+
+                <!-- tmp -->
+                <button type="button" class="btn btn-default" id="tmpSummernote">Temp</button>
 			</div>
 		</div>
 	</div>
@@ -86,7 +89,7 @@
                 respinCounter: 0,
 				csBusinessRuleShow: false,
 				respinBusinessRuleShow: false,
-                charType: ''
+                charHighlighted: '',
 			}
 		},
 		watch: {
@@ -104,10 +107,22 @@
                 let vm = this;
                 let div = $('div#editor');
 
-                div.summernote('editor.insertText', this.article.spin);
-                div.on('summernote.keyup', function(we, e) {
-                    // vm.charType += e.key;
-                    console.log(e);
+                // Setup summernote
+                div.summernote({
+                    callbacks: {
+                        onInit() {
+                            // Insert text
+                            $('div.note-editable').find('p').html(vm.article.spin);
+
+                            $('button#tmpSummernote').on('click', function(e) {
+                                let range = div.summernote('createRange');
+
+                                console.log(range.toString());
+
+                                // console.log('select: ', e);
+                            });
+                        }
+                    }
                 });
             },
 
