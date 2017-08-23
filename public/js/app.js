@@ -30125,6 +30125,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			spin: {},
 			pEditorAccess: false,
 			csCounter: 0,
+			respinCounter: 0,
 			csBusinessRuleShow: false,
 			respinBusinessRuleShow: false
 		};
@@ -30133,6 +30134,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	watch: {
 		spin: function spin(data) {
 			this.csBusinessRuleShow = data.isCsCheckHitMax === 1 ? true : false;
+			this.respinBusinessRuleShow = data.isRespinHitMax === 1 ? true : false;
 		}
 	},
 	mounted: function mounted() {
@@ -30178,6 +30180,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.spin['article'] = $('div.note-editable').html();
 			this.spin['type'] = 'edit-article';
 
+			// check if type is 'edit-article'
+			if (this.type === 'edit-article') {
+				this.respinCounter++; // increment respinCounter
+			}
+
 			var editor = $('div.note-editable');
 			editor.slideUp(); // hide editor
 
@@ -30194,6 +30201,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					_this2.error = data.error;
 					_this2.isError = true;
 				}
+
+				// check if counter = 5
+				if (_this2.type == 'edit-article' && _this2.respinCounter == 5) {
+					_this2.updateRespinCheckHitMax();
+				}
 			});
 		},
 		updateCsCheckHitMax: function updateCsCheckHitMax() {
@@ -30204,6 +30216,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.patch('/words/updateCsCheckHitMax', data).then(function (response) {
 				if (response.data) {
 					_this3.csBusinessRuleShow = true;
+				}
+			});
+		},
+		updateRespinCheckHitMax: function updateRespinCheckHitMax() {
+			var _this4 = this;
+
+			var data = { word_id: this.article.id };
+
+			axios.patch('/words/updateRespinCheckHitMax', data).then(function (response) {
+				if (response.data) {
+					_this4.respinBusinessRuleShow = true;
 				}
 			});
 		}

@@ -4,7 +4,7 @@
 
 		<div class="Spintax__result" v-if="peditoraccess">
 			<h3>Spintax Result</h3>
-			
+
 			<div class="Peditor" v-if="! pEditorAccess">
 				<p v-if="article.isEditorUpdateSC === 0">{{ article.spintax }}</p>
 				<p v-else>{{ article.spintax_copy }}</p>
@@ -42,7 +42,7 @@
 					</div>
 					<div class="business-rule" v-else>
 						<button class="btn btn-business-rule" disabled>Copyscape check hits business rule</button>
-					</div>					
+					</div>
 				</div>
 
 				<!-- Respin -->
@@ -52,7 +52,7 @@
 					</div>
 					<div class="business-rule" v-else>
 						<button class="btn btn-business-rule" disabled>Respin hits business rule</button>
-					</div>	
+					</div>
 				</div>
 
 				<!-- Dismiss -->
@@ -83,13 +83,15 @@
 				spin: {},
 				pEditorAccess: false,
 				csCounter: 0,
+                respinCounter: 0,
 				csBusinessRuleShow: false,
 				respinBusinessRuleShow: false,
 			}
 		},
 		watch: {
 			spin(data) {
-				this.csBusinessRuleShow = data.isCsCheckHitMax === 1 ? true : false;
+                this.csBusinessRuleShow = data.isCsCheckHitMax === 1 ? true : false;
+				this.respinBusinessRuleShow = data.isRespinHitMax === 1 ? true : false;
 			}
 		},
 		mounted() {
@@ -99,9 +101,9 @@
 		},
 		methods: {
 			updateArticle() {
-				const data = { 
+				const data = {
 					id: this.article.id,
-					article: $('div.note-editable').text() 
+					article: $('div.note-editable').text()
 				};
 
 				axios.patch('/editor/updateArticle', data).then(response => {
@@ -134,6 +136,11 @@
 				this.spin['article'] = $('div.note-editable').html();
 				this.spin['type'] = 'edit-article';
 
+                // check if type is 'edit-article'
+                if (this.type === 'edit-article') {
+                    this.respinCounter++;   // increment respinCounter
+                }
+
 				let editor = $('div.note-editable');
 				editor.slideUp(); // hide editor
 
@@ -150,6 +157,11 @@
 						this.error = data.error;
 						this.isError = true;
 					}
+
+                    // check if counter = 5
+                    if (this.type == 'edit-article' && this.respinCounter == 5) {
+                        this.updateRespinCheckHitMax();
+                    }
 				});
 			},
 
@@ -161,7 +173,17 @@
 						this.csBusinessRuleShow = true;
 					}
 				});
-			}
+			},
+
+            updateRespinCheckHitMax() {
+                const data = { word_id: this.article.id };
+
+                axios.patch('/words/updateRespinCheckHitMax', data).then(response => {
+                    if (response.data) {
+                        this.respinBusinessRuleShow = true;
+                    }
+                });
+            }
 		}
 	}
 </script>
@@ -190,7 +212,7 @@
 	    margin-right: 0.2em;
 	}
 
-	/*=============== Gradient button ===============*/ 
+	/*=============== Gradient button ===============*/
 	.btn-business-rule {
 		background-color: hsl(0, 0%, 13%) !important;
 		background-repeat: repeat-x;

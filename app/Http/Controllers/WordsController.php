@@ -29,7 +29,7 @@ class WordsController extends Controller
 	public function test()
 	{
 		dd(env('COPYSCAPE_API_KEY'));
-		return \Config::get('copyscape.username'); 
+		return \Config::get('copyscape.username');
 
 		dd(env('COPYSCAPE_USERNAME'));
 	}
@@ -67,15 +67,15 @@ class WordsController extends Controller
 
 		$result = $this->api(
 			stripslashes($articleOrParagraph),
-			$quality, 
-			$email, 
-			$pass, 
-			$terms_protected, 
-			$synonyms, 
-			$nonested, 
-			$sentence, 
-			$paragraph, 
-			$title, 
+			$quality,
+			$email,
+			$pass,
+			$terms_protected,
+			$synonyms,
+			$nonested,
+			$sentence,
+			$paragraph,
+			$title,
 			$nooriginal
 		);
 
@@ -94,7 +94,7 @@ class WordsController extends Controller
 		$paragraphs = request('paragraphs');
 		$result = [];
 
-		for ($i=0; $i < count($paragraphs); $i++) { 
+		for ($i=0; $i < count($paragraphs); $i++) {
 			array_push($result, $this->spin->process($paragraphs[$i]));
 		}
 
@@ -104,7 +104,7 @@ class WordsController extends Controller
 	public function store(Request $request)
 	{
 		$validator = Validator::make($request->all(), [
-            'doc_title' => 'required', 
+            'doc_title' => 'required',
 	    	'keyword' => 'required',
 	    	'lsi_terms' => 'required',
 	    	// 'domain_protected' => 'required',
@@ -154,7 +154,7 @@ class WordsController extends Controller
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt ($ch, CURLOPT_POST, 1);
 			curl_setopt ($ch, CURLOPT_POSTFIELDS, "s=$text&quality=$quality&email=$email&pass=$pass&output=json&protected=$protected&synonyms=$synonyms");
-			
+
 			$result = curl_exec($ch);
 			curl_close ($ch);
 
@@ -227,8 +227,8 @@ class WordsController extends Controller
 		// return $settings;
 
 		$result = copyscape_api_text_search_internet(
-			$articleType, 
-			$settings->e, 
+			$articleType,
+			$settings->e,
 			$settings->c,
 			$settings->o
 		);
@@ -238,7 +238,7 @@ class WordsController extends Controller
 
 	public function runCurl()
 	{
-		// With a POST you pass the data via the CURLOPT_POSTFIELDS option instead 
+		// With a POST you pass the data via the CURLOPT_POSTFIELDS option instead
 		// of passing it in the CURLOPT__URL.
 		// -------------------------------------------------------------------------
 
@@ -247,7 +247,7 @@ class WordsController extends Controller
 		$curl=curl_init();
 
 		// $qry_str = "x=10&y=20";
-		curl_setopt($ch, CURLOPT_URL, 'https://cnn.com');  
+		curl_setopt($ch, CURLOPT_URL, 'https://cnn.com');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_TIMEOUT, 3);
 
@@ -294,11 +294,11 @@ class WordsController extends Controller
 
 	public function respinArticle() {
 		$vars = request()->only([
-			'article', 
-			'keyword', 
-			'lsi_terms', 
-			'domain_protected', 
-			'protected', 
+			'article',
+			'keyword',
+			'lsi_terms',
+			'domain_protected',
+			'protected',
 			'synonym',
 			'type'
 		]);
@@ -324,4 +324,8 @@ class WordsController extends Controller
 	public function updateCsCheckHitMax() {
 		return DB::table('words')->where('id', request('word_id'))->update(['isCsCheckHitMax' => true]);
 	}
+
+    public function updateRespinCheckHitMax() {
+        return DB::table('words')->where('id', request('word_id'))->update(['isRespinHitMax' => true]);
+    }
 }

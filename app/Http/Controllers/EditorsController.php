@@ -19,7 +19,7 @@ class EditorsController extends Controller
     		->oldest()
     		->get([
     			'words.id',
-    			'users.firstname', 
+    			'users.firstname',
     			'users.lastname',
     			'article_types.article_type',
     			'domains.domain',
@@ -34,7 +34,8 @@ class EditorsController extends Controller
 				'protected',
 				'synonym',
 				'isEditorUpdateSC',
-				'isCsCheckHitMax',
+                'isCsCheckHitMax',
+				'isRespinHitMax',
 				'words.created_at'
     		]);
     }
@@ -63,7 +64,7 @@ class EditorsController extends Controller
 
     public function publishArticle() {
 		$url = 'https://hooks.zapier.com/hooks/catch/2462016/ryantm/';
-		
+
 		// folder name = domain name
 		// file name = title-keyword-domain-com.txt
 
@@ -74,8 +75,8 @@ class EditorsController extends Controller
 
     	return Curl::to($url)
     		->withData([
-    			'folderName' => $folderName, 
-    			'fileName' => strtolower($fileName), 
+    			'folderName' => $folderName,
+    			'fileName' => strtolower($fileName),
     			'fileArticleContent' => $fileArticleContent,
     			'fileSpintaxContent' => $fileSpintaxContent
     		])

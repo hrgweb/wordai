@@ -32,6 +32,7 @@ class CreateWordsTable extends Migration
             $table->boolean('isEditorEdit')->default(0);
             $table->integer('editor_id')->unsigned();
             $table->boolean('isCsCheckHitMax')->default(0);
+            $table->boolean('isRespinHitMax')->default(0);
             $table->boolean('isProcess')->default(0);
             $table->timestamps();
         });
