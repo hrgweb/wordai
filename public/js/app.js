@@ -30127,7 +30127,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			csCounter: 0,
 			respinCounter: 0,
 			csBusinessRuleShow: false,
-			respinBusinessRuleShow: false
+			respinBusinessRuleShow: false,
+			charType: ''
 		};
 	},
 
@@ -30139,11 +30140,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	mounted: function mounted() {
 		this.spin = this.article;
-
-		$('div#editor').summernote('editor.insertText', this.article.spin);
+		this.initSummernote();
 	},
 
 	methods: {
+		initSummernote: function initSummernote() {
+			var vm = this;
+			var div = $('div#editor');
+
+			div.summernote('editor.insertText', this.article.spin);
+			div.on('summernote.keyup', function (we, e) {
+				// vm.charType += e.key;
+				console.log(e);
+			});
+		},
 		updateArticle: function updateArticle() {
 			var _this = this;
 
@@ -30152,8 +30162,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				article: $('div.note-editable').text()
 			};
 
+			this.$refs.saveChangeBtn.disabled = true;
+
 			axios.patch('/editor/updateArticle', data).then(function (response) {
 				var data = response.data;
+
+				_this.$refs.saveChangeBtn.disabled = false;
 
 				if (data.isSuccess) {
 					_this.$emit('isUpdated', { article: data.result });

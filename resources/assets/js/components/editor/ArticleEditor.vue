@@ -86,6 +86,7 @@
                 respinCounter: 0,
 				csBusinessRuleShow: false,
 				respinBusinessRuleShow: false,
+                charType: ''
 			}
 		},
 		watch: {
@@ -96,18 +97,32 @@
 		},
 		mounted() {
 			this.spin = this.article;
-
-			$('div#editor').summernote('editor.insertText', this.article.spin);
+            this.initSummernote();
 		},
 		methods: {
+            initSummernote() {
+                let vm = this;
+                let div = $('div#editor');
+
+                div.summernote('editor.insertText', this.article.spin);
+                div.on('summernote.keyup', function(we, e) {
+                    // vm.charType += e.key;
+                    console.log(e);
+                });
+            },
+
 			updateArticle() {
 				const data = {
 					id: this.article.id,
 					article: $('div.note-editable').text()
 				};
 
+                this.$refs.saveChangeBtn.disabled = true;
+
 				axios.patch('/editor/updateArticle', data).then(response => {
 					let data = response.data;
+
+                    this.$refs.saveChangeBtn.disabled = false;
 
 					if (data.isSuccess) {
 						this.$emit('isUpdated', { article: data.result });
