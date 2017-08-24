@@ -34,9 +34,9 @@ class CreateWordsTable extends Migration
             $table->boolean('isCsCheckHitMax')->default(0);
             $table->boolean('isRespinHitMax')->default(0);
             $table->boolean('isProcess')->default(0);
-            $table->integer('hr_spent_editor_edit_article')->unsigned()->nullable();
-            $table->integer('min_spent_editor_edit_article')->unsigned()->nullable();
-            $table->integer('sec_spent_editor_edit_article')->unsigned()->nullable();
+            $table->integer('hr_spent_editor_edit_article')->unsigned()->default(0);
+            $table->integer('min_spent_editor_edit_article')->unsigned()->default(0);
+            $table->integer('sec_spent_editor_edit_article')->unsigned()->default(0);
             $table->timestamps();
         });
     }

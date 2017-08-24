@@ -63,8 +63,11 @@
 				<span v-if="isLoading">LOADING....</span>
 				<span v-if="isError" style="color: red;">{{ error }}</span><br>
 
-                <!-- tmp -->
-                <button type="button" class="btn btn-default" id="tmpSummernote">Temp</button>
+                <!-- Stopwatch -->
+                <div class="timer-overlay">
+                    <span>Time Spent Editing Article</span>
+                    <div class="stopwatch"></div>
+                </div>
 			</div>
 		</div>
 	</div>
@@ -75,6 +78,7 @@
 	import CopyscapeResult from './../words/CopyscapeResult.vue';
 	import { CrudMixin } from './../../mixins/CrudMixin.js';
 	import { ArticleMixin } from './../../mixins/ArticleMixin.js';
+    import Stopwatch from './../../class/Stopwatch.js';
 
 	export default {
 		props: ['article', 'peditoraccess'],
@@ -90,6 +94,8 @@
 				csBusinessRuleShow: false,
 				respinBusinessRuleShow: false,
                 charHighlighted: '',
+                clock: {},
+                times: [0, 0, 0]
 			}
 		},
 		watch: {
@@ -101,6 +107,7 @@
 		mounted() {
 			this.spin = this.article;
             this.initSummernote();
+            this.initStopwatch();
 		},
 		methods: {
             initSummernote() {
@@ -114,22 +121,40 @@
                             // Insert text
                             $('div.note-editable').find('p').html(vm.article.spin);
 
-                            $('button#tmpSummernote').on('click', function(e) {
+                            /*$('button#tmpSummernote').on('click', function(e) {
                                 let range = div.summernote('createRange');
 
                                 console.log(range.toString());
 
                                 // console.log('select: ', e);
-                            });
+                            });*/
                         }
                     }
                 });
             },
 
+            initStopwatch() {
+                let article = this.article;
+
+                this.times = [
+                    article.hr_spent_editor_edit_article,
+                    article.min_spent_editor_edit_article,
+                    article.sec_spent_editor_edit_article
+                ];
+
+                this.clock = new Stopwatch(
+                    this.times,
+                    document.querySelector('.stopwatch'),
+                    document.querySelector('.results')
+                );
+                this.clock.start();
+            },
+
 			updateArticle() {
 				const data = {
 					id: this.article.id,
-					article: $('div.note-editable').text()
+					article: $('div.note-editable').text(),
+                    times: this.times
 				};
 
                 this.$refs.saveChangeBtn.disabled = true;
@@ -140,13 +165,16 @@
                     this.$refs.saveChangeBtn.disabled = false;
 
 					if (data.isSuccess) {
-						this.$emit('isUpdated', { article: data.result });
+						this.$emit('isUpdated', {
+                            article: data.result,
+                            times: data.times
+                        });
 					}
 				});
 			},
 
 			dissmissArticle() {
-				this.$emit('isDismiss');
+                this.editorSpentTimeOnEditingArticle();
 			},
 
 			onPowerEditor() {
@@ -213,6 +241,21 @@
                         this.respinBusinessRuleShow = true;
                     }
                 });
+            },
+
+            editorSpentTimeOnEditingArticle(emitType) {
+                const data = {
+                    word_id: this.article.id,
+                    times: this.times
+                };
+
+                axios.patch('/editor/editorSpentTimeOnEditingArticle', data).then(response => {
+                    let data = response.data;
+
+                    if (data) {
+                        this.$emit('isDismiss', data);
+                    }
+                });
             }
 		}
 	}
@@ -241,6 +284,24 @@
 	    float: left;
 	    margin-right: 0.2em;
 	}
+
+    .stopwatch { font-size: 5em; }
+
+    .timer-overlay {
+        position: fixed;
+        background: #fff;
+        right: 0;
+        top: 5em;
+        padding-top: 1em;
+        padding-left: 1.2em;
+        padding-right: .5em;
+        /* border-top-left-radius: .5em; */
+        /* border-bottom-left-radius: .5em; */
+        border: 5px solid #ecdfdf;
+        border-right-width: 0;
+        z-index: 999999;
+    }
+    .timer-overlay span { font-size: 1.2em; }
 
 	/*=============== Gradient button ===============*/
 	.btn-business-rule {

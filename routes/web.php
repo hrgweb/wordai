@@ -39,7 +39,7 @@ Route::prefix('words')->group(function() {
 	Route::post('respinArticle', 'WordsController@respinArticle');
 	Route::patch('updateSpintaxArticle', 'WordsController@updateSpintaxArticle');
     Route::patch('updateCsCheckHitMax', 'WordsController@updateCsCheckHitMax');
-	Route::patch('updateRespinCheckHitMax', 'WordsController@updateRespinCheckHitMax');
+    Route::patch('updateRespinCheckHitMax', 'WordsController@updateRespinCheckHitMax');
 	// tmp
 	Route::post('runCurl', 'WordsController@runCurl');
 });
@@ -90,6 +90,7 @@ Route::prefix('editor')->group(function() {
 	Route::get('articleList', 'EditorsController@articleList');
 	Route::post('publishArticle', 'EditorsController@publishArticle');
 	Route::patch('updateArticle', 'EditorsController@updateArticle');
+    Route::patch('editorSpentTimeOnEditingArticle', 'EditorsController@editorSpentTimeOnEditingArticle');
 });
 
 Auth::routes();

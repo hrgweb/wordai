@@ -88,9 +88,12 @@
 				if (data) {
 					this.isEdit = false;
 					this.articles[this.index].spin = data.article;
-					let articleTitle = this.article.doc_title;
+                    this.articles[this.index].hr_spent_editor_edit_article = data.times[0];
+                    this.articles[this.index].min_spent_editor_edit_article = data.times[1];
+                    this.articles[this.index].sec_spent_editor_edit_article = data.times[2];
 
-					// successfully updated
+                    // successfully updated
+					let articleTitle = this.article.doc_title;
 					new Noty({
 						type: 'info',
 						text: `<b>${articleTitle}</b> article successfully updated.`,
@@ -100,8 +103,11 @@
 				}
 			},
 
-			dismissUpdate() {
+			dismissUpdate(payload) {
 				this.isEdit = false;
+                this.articles[this.index].hr_spent_editor_edit_article = payload[0];
+                this.articles[this.index].min_spent_editor_edit_article = payload[1];
+                this.articles[this.index].sec_spent_editor_edit_article = payload[2];
 			},
 
 			listenWhenPowerEditorUpdated(data) {

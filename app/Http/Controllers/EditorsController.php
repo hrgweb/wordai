@@ -36,6 +36,9 @@ class EditorsController extends Controller
 				'isEditorUpdateSC',
                 'isCsCheckHitMax',
 				'isRespinHitMax',
+                'hr_spent_editor_edit_article',
+                'min_spent_editor_edit_article',
+                'sec_spent_editor_edit_article',
 				'words.created_at'
     		]);
     }
@@ -44,6 +47,8 @@ class EditorsController extends Controller
     {
     	$editor_id = request()->user()->id;
     	$article = request('article');
+        $time = request('times');
+        $times = [$time[0], $time[1], $time[2]];
 
     	DB::beginTransaction();
 		try {
@@ -51,7 +56,10 @@ class EditorsController extends Controller
 			$result = Word::where('id', request('id'))->update([
 				'spin' => $article,
 				'isEditorEdit' => 1,
-				'editor_id' => $editor_id
+				'editor_id' => $editor_id,
+                'hr_spent_editor_edit_article' => $times[0],
+                'min_spent_editor_edit_article' => $times[1],
+                'sec_spent_editor_edit_article' => $times[2]
 			]);
 		} catch (ValidationException $e) {
 			DB::rollback();
@@ -59,7 +67,7 @@ class EditorsController extends Controller
 		}
 		DB::commit();
 
-    	return response()->json(['isSuccess' => true, 'result' => $article]);
+    	return response()->json(['isSuccess' => true, 'result' => $article, 'times' => $times]);
     }
 
     public function publishArticle() {
@@ -81,5 +89,14 @@ class EditorsController extends Controller
     			'fileSpintaxContent' => $fileSpintaxContent
     		])
     		->post();
+    }
+
+    public function editorSpentTimeOnEditingArticle() {
+        $time = request('times');
+        $times = [$time[0], $time[1], $time[2]];
+
+        DB::table('words')->where('id', request('word_id'))->update(['hr_spent_editor_edit_article' => $times[0], 'min_spent_editor_edit_article' => $times[1], 'sec_spent_editor_edit_article' => $times[2]]);
+
+        return $times;
     }
 }

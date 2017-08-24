@@ -30040,6 +30040,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_ArticleMixin_js__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__class_Stopwatch_js__ = __webpack_require__(319);
 //
 //
 //
@@ -30112,6 +30113,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -30119,147 +30124,176 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['article', 'peditoraccess'],
-	components: { PowerEditor: __WEBPACK_IMPORTED_MODULE_0__PowerEditor_vue___default.a, CopyscapeResult: __WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue___default.a },
-	mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_3__mixins_ArticleMixin_js__["a" /* ArticleMixin */]],
-	data: function data() {
-		return {
-			type: 'edit-article',
-			spin: {},
-			pEditorAccess: false,
-			csCounter: 0,
-			respinCounter: 0,
-			csBusinessRuleShow: false,
-			respinBusinessRuleShow: false,
-			charHighlighted: ''
-		};
-	},
+				props: ['article', 'peditoraccess'],
+				components: { PowerEditor: __WEBPACK_IMPORTED_MODULE_0__PowerEditor_vue___default.a, CopyscapeResult: __WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue___default.a },
+				mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_3__mixins_ArticleMixin_js__["a" /* ArticleMixin */]],
+				data: function data() {
+								return {
+												type: 'edit-article',
+												spin: {},
+												pEditorAccess: false,
+												csCounter: 0,
+												respinCounter: 0,
+												csBusinessRuleShow: false,
+												respinBusinessRuleShow: false,
+												charHighlighted: '',
+												clock: {},
+												times: [0, 0, 0]
+								};
+				},
 
-	watch: {
-		spin: function spin(data) {
-			this.csBusinessRuleShow = data.isCsCheckHitMax === 1 ? true : false;
-			this.respinBusinessRuleShow = data.isRespinHitMax === 1 ? true : false;
-		}
-	},
-	mounted: function mounted() {
-		this.spin = this.article;
-		this.initSummernote();
-	},
+				watch: {
+								spin: function spin(data) {
+												this.csBusinessRuleShow = data.isCsCheckHitMax === 1 ? true : false;
+												this.respinBusinessRuleShow = data.isRespinHitMax === 1 ? true : false;
+								}
+				},
+				mounted: function mounted() {
+								this.spin = this.article;
+								this.initSummernote();
+								this.initStopwatch();
+				},
 
-	methods: {
-		initSummernote: function initSummernote() {
-			var vm = this;
-			var div = $('div#editor');
+				methods: {
+								initSummernote: function initSummernote() {
+												var vm = this;
+												var div = $('div#editor');
 
-			// Setup summernote
-			div.summernote({
-				callbacks: {
-					onInit: function onInit() {
-						// Insert text
-						$('div.note-editable').find('p').html(vm.article.spin);
+												// Setup summernote
+												div.summernote({
+																callbacks: {
+																				onInit: function onInit() {
+																								// Insert text
+																								$('div.note-editable').find('p').html(vm.article.spin);
 
-						$('button#tmpSummernote').on('click', function (e) {
-							var range = div.summernote('createRange');
+																								/*$('button#tmpSummernote').on('click', function(e) {
+                            let range = div.summernote('createRange');
+                             console.log(range.toString());
+                             // console.log('select: ', e);
+                        });*/
+																				}
+																}
+												});
+								},
+								initStopwatch: function initStopwatch() {
+												var article = this.article;
 
-							console.log(range.toString());
+												this.times = [article.hr_spent_editor_edit_article, article.min_spent_editor_edit_article, article.sec_spent_editor_edit_article];
 
-							// console.log('select: ', e);
-						});
-					}
+												this.clock = new __WEBPACK_IMPORTED_MODULE_4__class_Stopwatch_js__["a" /* default */](this.times, document.querySelector('.stopwatch'), document.querySelector('.results'));
+												this.clock.start();
+								},
+								updateArticle: function updateArticle() {
+												var _this = this;
+
+												var data = {
+																id: this.article.id,
+																article: $('div.note-editable').text(),
+																times: this.times
+												};
+
+												this.$refs.saveChangeBtn.disabled = true;
+
+												axios.patch('/editor/updateArticle', data).then(function (response) {
+																var data = response.data;
+
+																_this.$refs.saveChangeBtn.disabled = false;
+
+																if (data.isSuccess) {
+																				_this.$emit('isUpdated', {
+																								article: data.result,
+																								times: data.times
+																				});
+																}
+												});
+								},
+								dissmissArticle: function dissmissArticle() {
+												this.editorSpentTimeOnEditingArticle();
+								},
+								onPowerEditor: function onPowerEditor() {
+												this.pEditorAccess = true;
+								},
+								dissmissSpintaxArticle: function dissmissSpintaxArticle() {
+												this.pEditorAccess = false;
+								},
+								respinArticle: function respinArticle() {
+												var _this2 = this;
+
+												this.isLoading = true;
+												this.isError = false;
+												this.$refs.respinBtn.disabled = true;
+
+												// vars
+												this.spin['article'] = $('div.note-editable').html();
+												this.spin['type'] = 'edit-article';
+
+												// check if type is 'edit-article'
+												if (this.type === 'edit-article') {
+																this.respinCounter++; // increment respinCounter
+												}
+
+												var editor = $('div.note-editable');
+												editor.slideUp(); // hide editor
+
+												axios.post('/words/respinArticle', this.spin).then(function (response) {
+																var data = response.data;
+																editor.slideDown(); // show editor
+																editor.html(data);
+
+																_this2.isLoading = false;
+																_this2.$refs.respinBtn.disabled = false;
+
+																// check if api response is fail
+																if (data.status === 'Failure') {
+																				_this2.error = data.error;
+																				_this2.isError = true;
+																}
+
+																// check if counter = 5
+																if (_this2.type == 'edit-article' && _this2.respinCounter == 5) {
+																				_this2.updateRespinCheckHitMax();
+																}
+												});
+								},
+								updateCsCheckHitMax: function updateCsCheckHitMax() {
+												var _this3 = this;
+
+												var data = { word_id: this.article.id };
+
+												axios.patch('/words/updateCsCheckHitMax', data).then(function (response) {
+																if (response.data) {
+																				_this3.csBusinessRuleShow = true;
+																}
+												});
+								},
+								updateRespinCheckHitMax: function updateRespinCheckHitMax() {
+												var _this4 = this;
+
+												var data = { word_id: this.article.id };
+
+												axios.patch('/words/updateRespinCheckHitMax', data).then(function (response) {
+																if (response.data) {
+																				_this4.respinBusinessRuleShow = true;
+																}
+												});
+								},
+								editorSpentTimeOnEditingArticle: function editorSpentTimeOnEditingArticle(emitType) {
+												var _this5 = this;
+
+												var data = {
+																word_id: this.article.id,
+																times: this.times
+												};
+
+												axios.patch('/editor/editorSpentTimeOnEditingArticle', data).then(function (response) {
+																var data = response.data;
+
+																if (data) {
+																				_this5.$emit('isDismiss', data);
+																}
+												});
+								}
 				}
-			});
-		},
-		updateArticle: function updateArticle() {
-			var _this = this;
-
-			var data = {
-				id: this.article.id,
-				article: $('div.note-editable').text()
-			};
-
-			this.$refs.saveChangeBtn.disabled = true;
-
-			axios.patch('/editor/updateArticle', data).then(function (response) {
-				var data = response.data;
-
-				_this.$refs.saveChangeBtn.disabled = false;
-
-				if (data.isSuccess) {
-					_this.$emit('isUpdated', { article: data.result });
-				}
-			});
-		},
-		dissmissArticle: function dissmissArticle() {
-			this.$emit('isDismiss');
-		},
-		onPowerEditor: function onPowerEditor() {
-			this.pEditorAccess = true;
-		},
-		dissmissSpintaxArticle: function dissmissSpintaxArticle() {
-			this.pEditorAccess = false;
-		},
-		respinArticle: function respinArticle() {
-			var _this2 = this;
-
-			this.isLoading = true;
-			this.isError = false;
-			this.$refs.respinBtn.disabled = true;
-
-			// vars
-			this.spin['article'] = $('div.note-editable').html();
-			this.spin['type'] = 'edit-article';
-
-			// check if type is 'edit-article'
-			if (this.type === 'edit-article') {
-				this.respinCounter++; // increment respinCounter
-			}
-
-			var editor = $('div.note-editable');
-			editor.slideUp(); // hide editor
-
-			axios.post('/words/respinArticle', this.spin).then(function (response) {
-				var data = response.data;
-				editor.slideDown(); // show editor
-				editor.html(data);
-
-				_this2.isLoading = false;
-				_this2.$refs.respinBtn.disabled = false;
-
-				// check if api response is fail
-				if (data.status === 'Failure') {
-					_this2.error = data.error;
-					_this2.isError = true;
-				}
-
-				// check if counter = 5
-				if (_this2.type == 'edit-article' && _this2.respinCounter == 5) {
-					_this2.updateRespinCheckHitMax();
-				}
-			});
-		},
-		updateCsCheckHitMax: function updateCsCheckHitMax() {
-			var _this3 = this;
-
-			var data = { word_id: this.article.id };
-
-			axios.patch('/words/updateCsCheckHitMax', data).then(function (response) {
-				if (response.data) {
-					_this3.csBusinessRuleShow = true;
-				}
-			});
-		},
-		updateRespinCheckHitMax: function updateRespinCheckHitMax() {
-			var _this4 = this;
-
-			var data = { word_id: this.article.id };
-
-			axios.patch('/words/updateRespinCheckHitMax', data).then(function (response) {
-				if (response.data) {
-					_this4.respinBusinessRuleShow = true;
-				}
-			});
-		}
-	}
 });
 
 /***/ }),
@@ -30468,9 +30502,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			if (data) {
 				this.isEdit = false;
 				this.articles[this.index].spin = data.article;
-				var articleTitle = this.article.doc_title;
+				this.articles[this.index].hr_spent_editor_edit_article = data.times[0];
+				this.articles[this.index].min_spent_editor_edit_article = data.times[1];
+				this.articles[this.index].sec_spent_editor_edit_article = data.times[2];
 
 				// successfully updated
+				var articleTitle = this.article.doc_title;
 				new Noty({
 					type: 'info',
 					text: '<b>' + articleTitle + '</b> article successfully updated.',
@@ -30479,8 +30516,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				}).show();
 			}
 		},
-		dismissUpdate: function dismissUpdate() {
+		dismissUpdate: function dismissUpdate(payload) {
 			this.isEdit = false;
+			this.articles[this.index].hr_spent_editor_edit_article = payload[0];
+			this.articles[this.index].min_spent_editor_edit_article = payload[1];
+			this.articles[this.index].sec_spent_editor_edit_article = payload[2];
 		},
 		listenWhenPowerEditorUpdated: function listenWhenPowerEditorUpdated(data) {
 			var _this3 = this;
@@ -35273,7 +35313,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;\n}\nh3[data-v-1a4b0ea7] { text-align: center;\n}\np[data-v-1a4b0ea7] { white-space: pre-wrap;\n}\n.Editor[data-v-1a4b0ea7] { position: relative;\n}\nbutton.right-side[data-v-1a4b0ea7] {\n\tposition: absolute;\n\tright: 0;\n}\nbutton.power-editor[data-v-1a4b0ea7] {\n\tbackground: #D13DD1;\n\tcolor: #fff;\n\tborder: #8c3f8c;\n}\nbutton.power-editor[data-v-1a4b0ea7]:hover { background: #BC2EBC;\n}\n.Copyscape[data-v-1a4b0ea7] { margin-top: 5em;\n}\ndiv.first-button[data-v-1a4b0ea7] {\n    float: left;\n    margin-right: 0.2em;\n}\n\n/*=============== Gradient button ===============*/\n.btn-business-rule[data-v-1a4b0ea7] {\n\tbackground-color: hsl(0, 0%, 13%) !important;\n\tbackground-repeat: repeat-x;\n\tfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#bababa\", endColorstr=\"#212121\");\n\tbackground-image: -khtml-gradient(linear, left top, left bottom, from(#bababa), to(#212121));\n\tbackground-image: linear-gradient(#bababa, #212121);\n\tborder: 1px solid #7d7d7d;\n\tcolor: #fff !important;\n\ttext-shadow: 0 -1px 0 rgba(0, 0, 0, 0.99);\n\t-webkit-font-smoothing: antialiased;\n}\n", ""]);
+exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;\n}\nh3[data-v-1a4b0ea7] { text-align: center;\n}\np[data-v-1a4b0ea7] { white-space: pre-wrap;\n}\n.Editor[data-v-1a4b0ea7] { position: relative;\n}\nbutton.right-side[data-v-1a4b0ea7] {\n\t\tposition: absolute;\n\t\tright: 0;\n}\nbutton.power-editor[data-v-1a4b0ea7] {\n\t\tbackground: #D13DD1;\n\t\tcolor: #fff;\n\t\tborder: #8c3f8c;\n}\nbutton.power-editor[data-v-1a4b0ea7]:hover { background: #BC2EBC;\n}\n.Copyscape[data-v-1a4b0ea7] { margin-top: 5em;\n}\ndiv.first-button[data-v-1a4b0ea7] {\n\t    float: left;\n\t    margin-right: 0.2em;\n}\n.stopwatch[data-v-1a4b0ea7] { font-size: 5em;\n}\n.timer-overlay[data-v-1a4b0ea7] {\n        position: fixed;\n        background: #fff;\n        right: 0;\n        top: 5em;\n        padding-top: 1em;\n        padding-left: 1.2em;\n        padding-right: .5em;\n        /* border-top-left-radius: .5em; */\n        /* border-bottom-left-radius: .5em; */\n        border: 5px solid #ecdfdf;\n        border-right-width: 0;\n        z-index: 999999;\n}\n.timer-overlay span[data-v-1a4b0ea7] { font-size: 1.2em;\n}\n\n\t/*=============== Gradient button ===============*/\n.btn-business-rule[data-v-1a4b0ea7] {\n\t\tbackground-color: hsl(0, 0%, 13%) !important;\n\t\tbackground-repeat: repeat-x;\n\t\tfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#bababa\", endColorstr=\"#212121\");\n\t\tbackground-image: -khtml-gradient(linear, left top, left bottom, from(#bababa), to(#212121));\n\t\tbackground-image: linear-gradient(#bababa, #212121);\n\t\tborder: 1px solid #7d7d7d;\n\t\tcolor: #fff !important;\n\t\ttext-shadow: 0 -1px 0 rgba(0, 0, 0, 0.99);\n\t\t-webkit-font-smoothing: antialiased;\n}\n", ""]);
 
 /***/ }),
 /* 203 */
@@ -56997,14 +57037,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "color": "red"
     }
-  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br'), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-default",
-    attrs: {
-      "type": "button",
-      "id": "tmpSummernote"
-    }
-  }, [_vm._v("Temp")])])], 1)])
-},staticRenderFns: []}
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br'), _vm._v(" "), _vm._m(0)])], 1)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "timer-overlay"
+  }, [_c('span', [_vm._v("Time Spent Editing Article")]), _vm._v(" "), _c('div', {
+    staticClass: "stopwatch"
+  })])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -61139,6 +61179,149 @@ module.exports = function listToStyles (parentId, list) {
 __webpack_require__(144);
 module.exports = __webpack_require__(145);
 
+
+/***/ }),
+/* 305 */,
+/* 306 */,
+/* 307 */,
+/* 308 */,
+/* 309 */,
+/* 310 */,
+/* 311 */,
+/* 312 */,
+/* 313 */,
+/* 314 */,
+/* 315 */,
+/* 316 */,
+/* 317 */,
+/* 318 */,
+/* 319 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var Stopwatch = function () {
+    function Stopwatch(times, display, results) {
+        _classCallCheck(this, Stopwatch);
+
+        this.running = false;
+        this.display = display;
+        this.results = results;
+        this.laps = [];
+        this.reset();
+        this.print(this.times);
+        this.times = times; // custom
+    }
+
+    _createClass(Stopwatch, [{
+        key: 'reset',
+        value: function reset() {
+            this.times = [0, 0, 0];
+        }
+    }, {
+        key: 'start',
+        value: function start() {
+            if (!this.time) this.time = performance.now();
+            if (!this.running) {
+                this.running = true;
+                requestAnimationFrame(this.step.bind(this));
+            }
+        }
+    }, {
+        key: 'lap',
+        value: function lap() {
+            var times = this.times;
+            var li = document.createElement('li');
+            li.innerText = this.format(times);
+            this.results.appendChild(li);
+        }
+    }, {
+        key: 'stop',
+        value: function stop() {
+            this.running = false;
+            this.time = null;
+        }
+    }, {
+        key: 'restart',
+        value: function restart() {
+            if (!this.time) this.time = performance.now();
+            if (!this.running) {
+                this.running = true;
+                requestAnimationFrame(this.step.bind(this));
+            }
+            this.reset();
+        }
+    }, {
+        key: 'clear',
+        value: function clear() {
+            clearChildren(this.results);
+        }
+    }, {
+        key: 'step',
+        value: function step(timestamp) {
+            if (!this.running) return;
+            this.calculate(timestamp);
+            this.time = timestamp;
+            this.print();
+            requestAnimationFrame(this.step.bind(this));
+        }
+    }, {
+        key: 'calculate',
+        value: function calculate(timestamp) {
+            var diff = timestamp - this.time;
+
+            // Minutes are 60 seconds
+            this.times[2] += diff / 1000; // tick on sec by 1000 ms
+            if (this.times[2] >= 60) {
+
+                // min - add only < 59
+                if (this.times[1] < 59) {
+                    this.times[1]++; // increment min by 1
+                } else {
+                    this.times[0]++; // increment hr by 1
+                    this.times[1] = 0;
+                }
+
+                this.times[2] = 0;
+            }
+        }
+    }, {
+        key: 'print',
+        value: function print() {
+            this.display.innerText = this.format(this.times);
+        }
+    }, {
+        key: 'format',
+        value: function format(times) {
+            return '            ' + pad0(times[0], 2) + ':            ' + pad0(times[1], 2) + ':            ' + pad0(Math.floor(times[2]), 2);
+        }
+    }]);
+
+    return Stopwatch;
+}();
+
+function pad0(value, count) {
+    var result = value.toString();
+    for (; result.length < count; --count) {
+        result = '0' + result;
+    }return result;
+}
+
+function clearChildren(node) {
+    while (node.lastChild) {
+        node.removeChild(node.lastChild);
+    }
+}
+
+// let stopwatch = new Stopwatch(
+//     document.querySelector('.stopwatch'),
+//     document.querySelector('.results'));
+
+
+/* harmony default export */ __webpack_exports__["a"] = (Stopwatch);
 
 /***/ })
 /******/ ]);
