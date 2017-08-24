@@ -285,23 +285,27 @@
 	    margin-right: 0.2em;
 	}
 
-    .stopwatch { font-size: 5em; }
+    .stopwatch {
+        font-size: 2em;
+        text-align: center;
+    }
 
     .timer-overlay {
         position: fixed;
-        background: #fff;
-        right: 0;
-        top: 5em;
+        background: #080808;
+        color: #fff;
+        left: 0;
+        bottom: 1em;
         padding-top: 1em;
         padding-left: 1.2em;
         padding-right: .5em;
         /* border-top-left-radius: .5em; */
         /* border-bottom-left-radius: .5em; */
-        border: 5px solid #ecdfdf;
-        border-right-width: 0;
+        /* border: 5px solid #ecdfdf; */
+        /* border-left-width: 0; */
         z-index: 999999;
     }
-    .timer-overlay span { font-size: 1.2em; }
+    .timer-overlay span { font-size: 14px; }
 
 	/*=============== Gradient button ===============*/
 	.btn-business-rule {
