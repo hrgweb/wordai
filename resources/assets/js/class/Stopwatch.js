@@ -56,17 +56,20 @@ class Stopwatch {
 
     calculate(timestamp) {
         var diff = timestamp - this.time;
-        // Hundredths of a second are 100 ms
-        this.times[2] += diff / 10;
-        // Seconds are 100 hundredths of a second
-        if (this.times[2] >= 100) {
-            this.times[1] += 1;
-            this.times[2] -= 100;
-        }
+
         // Minutes are 60 seconds
-        if (this.times[1] >= 60) {
-            this.times[0] += 1;
-            this.times[1] -= 60;
+        this.times[2] += diff / 1000; // tick on sec by 1000 ms
+        if (this.times[2] >= 60) {
+
+            // min - add only < 59
+            if (this.times[1] < 59) {
+                this.times[1]++; // increment min by 1
+            } else {
+                this.times[0]++; // increment hr by 1
+                this.times[1] = 0;
+            }
+
+            this.times[2] = 0;
         }
     }
 
@@ -76,9 +79,9 @@ class Stopwatch {
 
     format(times) {
         return `\
-${pad0(times[0], 2)}:\
-${pad0(times[1], 2)}:\
-${pad0(Math.floor(times[2]), 2)}`;
+            ${pad0(times[0], 2)}:\
+            ${pad0(times[1], 2)}:\
+            ${pad0(Math.floor(times[2]), 2)}`;
     }
 }
 
