@@ -1,5 +1,5 @@
 <template>
-	<div class="User">
+	<div class="User" style="top: 5em;">
 		<!-- <div class="User__pending" v-if="usersCount"> -->
 		<div class="User__pending">
 			<h2>
@@ -76,12 +76,6 @@
 </script>
 
 <style scoped>
-    .User {
-        clear: both;
-        position: relative;
-        top: 2em;
-    }
-
 	.User__profile-controls {
 		position: relative;
 		top: -3em;

@@ -7,6 +7,13 @@
             :toUtc="toUtc">
         </article-report>
 
+        <!-- Article Edited -->
+        <article-edited
+            :articles="noOfArticlesEditedThisWeek"
+            :fromUtc="fromUtc"
+            :toUtc="toUtc">
+        </article-edited>
+
         <!-- Pending User -->
         <pending-user :token="token"></pending-user>
     </div>
@@ -14,14 +21,16 @@
 
 <script>
     import ArticleReport from './ArticleReport.vue';
+    import ArticleEdited from './ArticleEdited.vue';
     import PendingUser from './PendingUser.vue';
 
     export default {
         props: ['token'],
-        components: { ArticleReport, PendingUser },
+        components: { ArticleReport, ArticleEdited, PendingUser },
         data() {
             return {
                 articles: [],
+                noOfArticlesEditedThisWeek: 0,
                 date: {
                     fromMon: 0,
                     toSun: 0,
@@ -35,6 +44,10 @@
         watch: {
             date() {
                 this.articlesThisWeek();
+            },
+
+            articles(data) {
+                this.articlesEditedThisWeek();
             }
         },
         mounted() {
@@ -77,10 +90,17 @@
                                 doc_title: item.doc_title,
                                 keyword: item.keyword,
                                 article: item.article.substr(0, 200) + '...',
-                                created_at: item.created_at
+                                created_at: item.created_at,
+                                isEditorEdit: item.isEditorEdit
                             };
                         });
                     }
+                });
+            },
+
+            articlesEditedThisWeek() {
+                this.noOfArticlesEditedThisWeek = this.articles.filter(item => {
+                    return item.isEditorEdit === 1;
                 });
             }
         }
@@ -90,6 +110,6 @@
 <style scoped>
     .Dashboard {
         padding: 0 1em;
-        overflow: hidden;
+        margin-bottom: 10em;
     }
 </style>

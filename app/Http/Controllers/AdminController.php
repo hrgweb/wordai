@@ -215,20 +215,4 @@ class AdminController extends Controller
             ->oldest()
             ->get();
     }
-
-    public function articlesEditedThisWeek() {
-        $mon = request('fromMon');
-        $sun = request('toSun');
-        $month = (int) request('curMonth') <= 9 ? '0'.request('curMonth') : request('curMonth');
-        $year = request('curYear');
-
-        $fromMon = $year . '-' . $month . '-' . $mon . ' 00:00:00';
-        $toSun = $year . '-' . $month . '-' . $sun  . ' 23:59:59';
-
-        return DB::table('words')
-            ->whereBetween('created_at', [$fromMon, $toSun])
-            ->where('isEditorEditt', 1)
-            ->oldest()
-            ->get();
-    }
 }

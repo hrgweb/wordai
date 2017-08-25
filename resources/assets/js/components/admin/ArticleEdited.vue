@@ -1,10 +1,9 @@
 <template>
-    <div class="Report">
-        <!-- New Articles This Week -->
-        <div class="articles-this-week">
+    <div class="Edited" style="top: 3em;">
+        <div class="articles-edited-this-week">
             <h2>
-                Articles This Week
-                <span class="badge">{{ newArticlesCount }}</span>
+                Articles Edited This Week
+                <span class="badge">{{ articlesCount }}</span>
             </h2>
             <p>
                 <span>From: <b>{{ fromUtc }}</b></span> -
@@ -25,13 +24,13 @@
         props: ['articles', 'fromUtc', 'toUtc'],
         data() {
             return {
-                newArticlesCount: 0,
-                time: moment,
+                articlesCount: 0,
+                time: moment
             }
         },
         watch: {
-            articles(data) {
-                this.newArticlesCount = data.length;
+            articles() {
+                this.articlesCount = this.articles.length;
             }
         }
     }

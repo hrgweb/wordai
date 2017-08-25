@@ -58,7 +58,6 @@ Route::prefix('admin')->group(function() {
 	Route::get('domainDetails', 'AdminController@domainDetails');
     Route::get('retrieveCopyscapeSetting', 'AdminController@retrieveCopyscapeSetting');
     Route::get('articlesThisWeek', 'AdminController@articlesThisWeek');
-	Route::get('articlesEditedThisWeek', 'AdminController@articlesEditedThisWeek');
 	Route::post('postDomain', 'AdminController@postDomain');
 	Route::post('saveDetails', 'AdminController@saveDetails');
 	Route::patch('updateDomain', 'AdminController@updateDomain');

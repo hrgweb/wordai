@@ -1,6 +1,6 @@
 html, body { overflow-x: visible !important; }
 
-/*=============== navigation ===============*/ 
+/*=============== navigation ===============*/
 .navbar-header {
 	margin-left: 5em;
 
@@ -16,12 +16,12 @@ html, body { overflow-x: visible !important; }
     margin-right: 5em;
 }
 
-/*=============== login, register ===============*/ 
+/*=============== login, register ===============*/
 .row-table > [class*="col-"] {
 	top: 7em !important;
 }
 
-/*=============== dashboard ===============*/ 
+/*=============== dashboard ===============*/
 .wrapper {
 	height: 100vh !important;
 }
@@ -41,7 +41,7 @@ html, body { overflow-x: visible !important; }
 	}
 } */
 
-/*=============== admin ===============*/ 
+/*=============== admin ===============*/
 button.close {
 	position: absolute;
     top: 1em;
@@ -49,8 +49,41 @@ button.close {
     font-size: 2em;
 }
 
+.Edited,
+.User {
+    clear: both;
+    position: relative;
+    top: 2em;
+}
 
-/*=============== home, home2 ===============*/ 
+/*=============== admin - reporting ===============*/
+.articles-content {
+    background: #fff;
+    padding: 0.1em 1em 1em;
+    width: 300px;
+    max-width: 300px;
+    float: left;
+    margin-right: 1em;
+    margin-top: 1em;
+}
+
+.articles-content h3,
+.articles-content p {
+    overflow: hidden;
+}
+
+.articles-content h3 {
+    font-size: 1.4em;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.articles-content p {
+    white-space: pre-wrap;
+}
+
+
+/*=============== home, home2 ===============*/
 .Spintax__result,
 .Process__article {
 	padding: 1em 2em 2em;
@@ -77,12 +110,12 @@ button.close {
 	overflow-y: hidden;
 }
 
-/*=============== summernote ===============*/ 
+/*=============== summernote ===============*/
 
 mark { background-color: #f9e603 !important; }
 
-.Copyscape__result mark { 
-	background-color: #F73838 !important; 
+.Copyscape__result mark {
+	background-color: #F73838 !important;
 	color: #fff;
 }
 
