@@ -82,6 +82,9 @@ button.close {
     white-space: pre-wrap;
 }
 
+table { background: #fff; }
+table thead th:last-child { width: 120px; }
+
 
 /*=============== home, home2 ===============*/
 .Spintax__result,

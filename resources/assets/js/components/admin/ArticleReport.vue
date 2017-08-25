@@ -50,9 +50,3 @@
         }
     }
 </script>
-
-<style scoped>
-    table { background: #fff; }
-    /*table tbody td { background: #F5F5F5; }*/
-    table thead th:last-child { width: 120px; }
-</style>

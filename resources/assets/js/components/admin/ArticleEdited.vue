@@ -9,12 +9,26 @@
                 <span>From: <b>{{ fromUtc }}</b></span> -
                 <span>To <b>{{ toUtc }}</b></span>
             </p>
-            <div class="articles-content" v-for="article in articles">
-                <h3>{{ article.doc_title }}</h3>
-                <p>{{ article.article }}</p><br>
-                <em>Date Created: </em>
-                <b>{{ time(article.created_at).format('LL') }}</b>
-            </div>
+            <table class="table table-striped table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Title</th>
+                        <th>Article</th>
+                        <th>Keyword</th>
+                        <th>Date Created</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(article, index) in articles">
+                        <td>{{ ++index }}</td>
+                        <td>{{ article.doc_title }}</td>
+                        <td>{{ article.article }}</td>
+                        <td>{{ article.keyword }}</td>
+                        <td>{{ time(article.created_at).format('LL') }}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </template>
