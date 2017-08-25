@@ -35554,7 +35554,7 @@ exports.push([module.i, "\n.Editor[data-v-c27ca10e] { padding: 0 7em;\n}\n.Copys
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.User__profile-controls[data-v-d84a48a8] {\n\tposition: relative;\n\ttop: -3em;\n}\n", ""]);
+exports.push([module.i, "\n.User[data-v-d84a48a8] {\n        clear: both;\n        position: relative;\n        top: 2em;\n}\n.User__profile-controls[data-v-d84a48a8] {\n\t\tposition: relative;\n\t\ttop: -3em;\n}\n", ""]);
 
 /***/ }),
 /* 220 */
@@ -61336,6 +61336,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 
 
@@ -61344,10 +61348,71 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['token'],
     components: { ArticleReport: __WEBPACK_IMPORTED_MODULE_0__ArticleReport_vue___default.a, PendingUser: __WEBPACK_IMPORTED_MODULE_1__PendingUser_vue___default.a },
     data: function data() {
-        return {};
+        return {
+            articles: [],
+            date: {
+                fromMon: 0,
+                toSun: 0,
+                curMonth: 0,
+                curYear: 0
+            },
+            fromUtc: '',
+            toUtc: ''
+        };
+    },
+
+    watch: {
+        date: function date() {
+            this.articlesThisWeek();
+        }
     },
     mounted: function mounted() {
-        console.log('ready');
+        this.setDayFromMonToSun();
+    },
+
+    methods: {
+        setDayFromMonToSun: function setDayFromMonToSun() {
+            var curr = new Date(); // get current date
+            var mon = curr.getDate() - curr.getDay() + 1;
+            var sun = mon + 6;
+
+            // set data in vue
+            this.fromUtc = new Date(curr.setDate(mon)).toUTCString();
+            this.toUtc = new Date(curr.setDate(sun)).toUTCString();
+            this.date = {
+                fromMon: mon,
+                toSun: sun,
+                curMonth: curr.getMonth() + 1,
+                curYear: curr.getFullYear()
+            };
+        },
+        paramsForDate: function paramsForDate() {
+            var date = this.date;
+
+            return '?fromMon=' + date.fromMon + '&toSun=' + date.toSun + '&curMonth=' + date.curMonth + '&curYear=' + date.curYear;
+        },
+        articlesThisWeek: function articlesThisWeek() {
+            var _this = this;
+
+            var params = this.paramsForDate();
+
+            axios.get('/admin/articlesThisWeek' + params).then(function (response) {
+                var data = response.data;
+
+                if (data) {
+                    // map results
+                    _this.articles = data.map(function (item) {
+                        return {
+                            word_id: item.id,
+                            doc_title: item.doc_title,
+                            keyword: item.keyword,
+                            article: item.article.substr(0, 200) + '...',
+                            created_at: item.created_at
+                        };
+                    });
+                }
+            });
+        }
     }
 });
 
@@ -61396,7 +61461,13 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Dashboard"
-  }, [_c('article-report'), _vm._v(" "), _c('pending-user', {
+  }, [_c('article-report', {
+    attrs: {
+      "articles": _vm.articles,
+      "fromUtc": _vm.fromUtc,
+      "toUtc": _vm.toUtc
+    }
+  }), _vm._v(" "), _c('pending-user', {
     attrs: {
       "token": _vm.token
     }
@@ -61414,13 +61485,17 @@ if (false) {
 /* 316 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(322)
+
 var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(317),
   /* template */
   __webpack_require__(318),
   /* scopeId */
-  null,
+  "data-v-6b229a18",
   /* cssModules */
   null
 )
@@ -61460,23 +61535,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['articles', 'fromUtc', 'toUtc'],
     data: function data() {
         return {
-            noArticlesThisWeek: 0
+            newArticlesCount: 0,
+            time: moment
         };
     },
-    created: function created() {
-        this.articlesThisWeek();
-    },
-    mounted: function mounted() {},
 
-    methods: {
-        articlesThisWeek: function articlesThisWeek() {
-            axios.get('/admin/articlesThisWeek').then(function (response) {
-                return console.log(response.data);
-            });
+    watch: {
+        articles: function articles(data) {
+            this.newArticlesCount = data.length;
         }
     }
 });
@@ -61490,7 +61573,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "Report"
   }, [_c('div', {
     staticClass: "articles-this-week"
-  }, [_c('h2', [_vm._v("Articles This Week")]), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.noArticlesThisWeek))])])])
+  }, [_c('h2', [_vm._v("\n            Articles This Week\n            "), _c('span', {
+    staticClass: "badge"
+  }, [_vm._v(_vm._s(_vm.newArticlesCount))])]), _vm._v(" "), _c('p', [_c('span', [_vm._v("From: "), _c('b', [_vm._v(_vm._s(_vm.fromUtc))])]), _vm._v(" -\n            "), _c('span', [_vm._v("To "), _c('b', [_vm._v(_vm._s(_vm.toUtc))])])]), _vm._v(" "), _vm._l((_vm.articles), function(article) {
+    return _c('div', {
+      staticClass: "articles-content"
+    }, [_c('h3', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(article.article))]), _c('br'), _vm._v(" "), _c('em', [_vm._v("Date Created: ")]), _vm._v(" "), _c('b', [_vm._v(_vm._s(_vm.time(article.created_at).format('LL')))])])
+  })], 2)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -61505,7 +61594,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.Dashboard[data-v-edfa7884] { padding: 0 1em;\n}\n", ""]);
+exports.push([module.i, "\n.Dashboard[data-v-edfa7884] {\n    padding: 0 1em;\n    overflow: hidden;\n}\n", ""]);
 
 /***/ }),
 /* 320 */
@@ -61525,6 +61614,39 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-edfa7884\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Dashboard.vue", function() {
      var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-edfa7884\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Dashboard.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 321 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.articles-content[data-v-6b229a18] {\n    background: #fff;\n    padding: 0.1em 1em 1em;\n    width: 300px;\n    max-width: 300px;\n    float: left;\n    margin-right: 1em;\n    margin-top: 1em;\n}\n.articles-content h3[data-v-6b229a18],\n.articles-content p[data-v-6b229a18] {\n    overflow: hidden;\n}\n.articles-content h3[data-v-6b229a18] {\n    font-size: 1.4em;\n    white-space: nowrap;\n    text-overflow: ellipsis;\n}\n.articles-content p[data-v-6b229a18] {\n    white-space: pre-wrap;\n}\n", ""]);
+
+/***/ }),
+/* 322 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(321);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("bfa79c36", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-6b229a18\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleReport.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-6b229a18\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleReport.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

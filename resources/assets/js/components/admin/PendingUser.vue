@@ -76,6 +76,12 @@
 </script>
 
 <style scoped>
+    .User {
+        clear: both;
+        position: relative;
+        top: 2em;
+    }
+
 	.User__profile-controls {
 		position: relative;
 		top: -3em;
