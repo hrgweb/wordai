@@ -1,6 +1,6 @@
 require('./bootstrap');
 
-/*=============== Global vars ===============*/ 
+/*=============== Global vars ===============*/
 import { EventBus } from './eventbus/EventBus.js';
 
 window.$ = $;
@@ -10,10 +10,10 @@ window.Noty = require('noty');
 window.EventBus = EventBus;
 
 
-/*=============== Components ===============*/  
+/*=============== Components ===============*/
 
+import Dashboard from './components/admin/Dashboard.vue';
 import Admin from './components/admin/Admin.vue';
-import PendingUser from './components/admin/PendingUser.vue';
 import Domain from './components/admin/Domain.vue';
 import User from './components/admin/User.vue';
 import ProtectedTerm from './components/admin/ProtectedTerm.vue';
@@ -32,11 +32,11 @@ import Editor from './components/editor/Editor.vue';
 import SuperEditor from './components/editor/SuperEditor.vue';
 
 const app = new Vue({
-	name: 'WordAI',
+	name: 'Connexions Content Suite',
     el: '#app',
     components: {
+        Dashboard,
     	Admin,
-    	PendingUser,
     	Domain,
     	User,
     	ProtectedTerm,
