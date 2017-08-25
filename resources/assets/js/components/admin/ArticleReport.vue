@@ -18,6 +18,7 @@
                         <th>Article</th>
                         <th>Keyword</th>
                         <th>Date Created</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,6 +28,10 @@
                         <td>{{ article.article }}</td>
                         <td>{{ article.keyword }}</td>
                         <td>{{ time(article.created_at).format('LL') }}</td>
+                        <td>
+                            <button class="btn btn-info">Edit Spintax</button>
+                            <button class="btn btn-warning">Edit Article</button>
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -83,7 +83,7 @@ button.close {
 }
 
 table { background: #fff; }
-table thead th:last-child { width: 120px; }
+table thead th:nth-child(5) { width: 120px; }
 
 
 /*=============== home, home2 ===============*/
