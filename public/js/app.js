@@ -35554,7 +35554,7 @@ exports.push([module.i, "\n.Editor[data-v-c27ca10e] { padding: 0 7em;\n}\n.Copys
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.User[data-v-d84a48a8] {\n\tpadding: 0 1em;\n}\n.User__profile-controls[data-v-d84a48a8] {\n\tposition: relative;\n\ttop: -3em;\n}\n", ""]);
+exports.push([module.i, "\n.User__profile-controls[data-v-d84a48a8] {\n\tposition: relative;\n\ttop: -3em;\n}\n", ""]);
 
 /***/ }),
 /* 220 */
@@ -61322,8 +61322,10 @@ module.exports = __webpack_require__(145);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PendingUser_vue__ = __webpack_require__(234);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__PendingUser_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArticleReport_vue__ = __webpack_require__(316);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArticleReport_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ArticleReport_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PendingUser_vue__ = __webpack_require__(234);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__PendingUser_vue__);
 //
 //
 //
@@ -61331,12 +61333,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['token'],
-    components: { PendingUser: __WEBPACK_IMPORTED_MODULE_0__PendingUser_vue___default.a },
+    components: { ArticleReport: __WEBPACK_IMPORTED_MODULE_0__ArticleReport_vue___default.a, PendingUser: __WEBPACK_IMPORTED_MODULE_1__PendingUser_vue___default.a },
     data: function data() {
         return {};
     },
@@ -61349,13 +61355,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 314 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(320)
+
 var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(313),
   /* template */
   __webpack_require__(315),
   /* scopeId */
-  null,
+  "data-v-edfa7884",
   /* cssModules */
   null
 )
@@ -61386,7 +61396,7 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Dashboard"
-  }, [_c('pending-user', {
+  }, [_c('article-report'), _vm._v(" "), _c('pending-user', {
     attrs: {
       "token": _vm.token
     }
@@ -61398,6 +61408,129 @@ if (false) {
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-edfa7884", module.exports)
   }
+}
+
+/***/ }),
+/* 316 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(317),
+  /* template */
+  __webpack_require__(318),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\ArticleReport.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ArticleReport.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-6b229a18", Component.options)
+  } else {
+    hotAPI.reload("data-v-6b229a18", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 317 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            noArticlesThisWeek: 0
+        };
+    },
+    created: function created() {
+        this.articlesThisWeek();
+    },
+    mounted: function mounted() {},
+
+    methods: {
+        articlesThisWeek: function articlesThisWeek() {
+            axios.get('/admin/articlesThisWeek').then(function (response) {
+                return console.log(response.data);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 318 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Report"
+  }, [_c('div', {
+    staticClass: "articles-this-week"
+  }, [_c('h2', [_vm._v("Articles This Week")]), _vm._v(" "), _c('span', [_vm._v(_vm._s(_vm.noArticlesThisWeek))])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-6b229a18", module.exports)
+  }
+}
+
+/***/ }),
+/* 319 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.Dashboard[data-v-edfa7884] { padding: 0 1em;\n}\n", ""]);
+
+/***/ }),
+/* 320 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(319);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("a1675712", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-edfa7884\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Dashboard.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-edfa7884\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Dashboard.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
 }
 
 /***/ })

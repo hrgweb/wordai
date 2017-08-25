@@ -8,13 +8,14 @@ use App\DomainDetail;
 use App\ProtectedTerm;
 use App\User;
 use App\UserLevel;
+use App\Word;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
-	function __construct() {
+	public function __construct() {
 		$this->middleware('auth');
 	}
 
@@ -32,7 +33,6 @@ class AdminController extends Controller
     	$result = auth()->user()->domains()->create(request()->all());
 
 		return response()->json($result);
-
     }
 
     public function domainList()
@@ -84,7 +84,7 @@ class AdminController extends Controller
     	$result = auth()->user()->terms()->create(request()->all());
 
     	return response()->json($result);
-    	
+
     }
 
     public function saveDetails()
@@ -101,7 +101,7 @@ class AdminController extends Controller
 			Domain::where('id', $domain_id)->update(['isSet' => 1]);
 
 	    	// save protected terms
-	    	// for ($i=0; $i < count($protected_terms); $i++) { 
+	    	// for ($i=0; $i < count($protected_terms); $i++) {
 	    		ProtectedTerm::create([
 	    			'domain_id' => $domain_id,
 	    			'user_id' => auth()->user()->id,
@@ -144,9 +144,9 @@ class AdminController extends Controller
 		try {
 			// remove old protected terms
 	    	ProtectedTerm::where('domain_id', $domain_id)->delete();
-	    	
+
 			// save protected terms
-	    	// for ($i=0; $i < count($protected_terms); $i++) { 
+	    	// for ($i=0; $i < count($protected_terms); $i++) {
 	    		ProtectedTerm::create([
 	    			'domain_id' => $domain_id,
 	    			'user_id' => auth()->user()->id,
@@ -199,5 +199,9 @@ class AdminController extends Controller
 
     public function retrieveCopyscapeSetting() {
     	return Copyscape::first(['o', 'e', 'c', 'i', 'x']);
+    }
+
+    public function articlesThisWeek() {
+        return Word::all();
     }
 }
