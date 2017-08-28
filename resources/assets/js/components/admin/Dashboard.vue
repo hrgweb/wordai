@@ -1,5 +1,8 @@
 <template>
     <div class="Dashboard">
+        <!-- Filter Box -->
+        <filter-box></filter-box>
+
         <!-- Article Report -->
         <article-report
             :articles="articles"
@@ -34,6 +37,7 @@
 </template>
 
 <script>
+    import FilterBox from './FilterBox.vue';
     import ArticleReport from './ArticleReport.vue';
     import ArticleEdited from './ArticleEdited.vue';
     import ArticleToEdit from './ArticleToEdit.vue';
@@ -42,7 +46,14 @@
 
     export default {
         props: ['token'],
-        components: { ArticleReport, ArticleEdited, ArticleToEdit, ArticleSpun, PendingUser },
+        components: {
+            FilterBox,
+            ArticleReport,
+            ArticleEdited,
+            ArticleToEdit,
+            ArticleSpun,
+            PendingUser
+        },
         data() {
             return {
                 articles: [],
@@ -126,7 +137,6 @@
                 } else {
                     return '?fromMon='+date.fromMon+'&toSun='+date.toSun+'&curMonthMon='+date.curMonthMon+'&curMonthSun='+date.curMonthSun+'&curYear='+date.curYear+'&monthSame='+date.monthSame;
                 }
-
             },
 
             articlesThisWeek() {
@@ -136,18 +146,20 @@
                     const data = response.data;
 
                     if (data) {
+                        this.articles = data;
+
                         // map results
-                        this.articles = data.map(item => {
-                            return {
-                                word_id: item.id,
-                                doc_title: item.doc_title,
-                                keyword: item.keyword,
-                                article: item.article.substr(0, 200) + '...',
-                                created_at: item.created_at,
-                                isEditorEdit: item.isEditorEdit,
-                                isProcess: item.isProcess
-                            };
-                        });
+                        // this.articles = data.map(item => {
+                        //     return {
+                        //         word_id: item.id,
+                        //         doc_title: item.doc_title,
+                        //         keyword: item.keyword,
+                        //         article: item.article.substr(0, 200) + '...',
+                        //         created_at: item.created_at,
+                        //         isEditorEdit: item.isEditorEdit,
+                        //         isProcess: item.isProcess
+                        //     };
+                        // });
                     }
                 });
             },
