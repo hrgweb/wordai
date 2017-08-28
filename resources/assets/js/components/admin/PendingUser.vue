@@ -1,5 +1,5 @@
 <template>
-	<div class="User" style="top: 5em;">
+	<div class="User" style="top: 7em;">
 		<!-- <div class="User__pending" v-if="usersCount"> -->
 		<div class="User__pending">
 			<h2>

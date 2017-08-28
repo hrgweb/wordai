@@ -204,11 +204,27 @@ class AdminController extends Controller
     public function articlesThisWeek() {
         $mon = request('fromMon');
         $sun = request('toSun');
-        $month = (int) request('curMonth') <= 9 ? '0'.request('curMonth') : request('curMonth');
         $year = request('curYear');
 
-        $fromMon = $year . '-' . $month . '-' . $mon . ' 00:00:00';
-        $toSun = $year . '-' . $month . '-' . $sun  . ' 23:59:59';
+        $fromMon = '';
+        $toSun = '';
+        $month = 0;
+        $monthMon = request('curMonthMon');
+        $monthSun = request('curMonthSun');
+        $isSameMonth = request('monthSame');
+
+        // check if month is not same, then use additional request data
+        if ($isSameMonth === 'false') {
+            $monthMon = (int) $monthMon <= 9 ? '0'.$monthMon : $monthMon;
+            $monthSun = (int) $monthSun <= 9 ? '0'.$monthSun : $monthSun;
+            $fromMon = $year . '-' . $monthMon . '-' . $mon . ' 00:00:00';
+            $toSun = $year . '-' . $monthSun . '-' . $sun  . ' 23:59:59';
+
+        } else {
+            $month = (int) request('curMonth') <= 9 ? '0'.request('curMonth') : request('curMonth');
+            $fromMon = $year . '-' . $month . '-' . $mon . ' 00:00:00';
+            $toSun = $year . '-' . $month . '-' . $sun  . ' 23:59:59';
+        }
 
         return DB::table('words')
             ->whereBetween('created_at', [$fromMon, $toSun])
