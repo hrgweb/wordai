@@ -83,6 +83,14 @@ button.close {
     white-space: pre-wrap;
 }
 
+.Report table thead th:last-child,
+.Edited table thead th:last-child,
+.Waiting table thead th:last-child {
+    width: 200px;
+    max-width: 200px;
+    text-align: center;
+}
+
 table { background: #fff; }
 table thead th:nth-child(5) { width: 120px; }
 
