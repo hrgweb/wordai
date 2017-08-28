@@ -28905,6 +28905,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['articles', 'fromUtc', 'toUtc'],
@@ -33371,11 +33374,16 @@ var WordAi = function () {
 
 
 var EventBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
-	data: function data() {
-		return {
-			isEditorEditBtnDisable: false
-		};
-	}
+  data: function data() {
+    return {
+      isEditorEditBtnDisable: false
+      /*reportingFilter: {
+          groupBy: 'select',
+          orderBy: 'date',
+          sortBy: 'asc'
+      }*/
+    };
+  }
 });
 
 /***/ }),
@@ -59288,11 +59296,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "articles-this-week"
   }, [_c('h2', [_vm._v("\n            Articles This Week\n            "), _c('span', {
     staticClass: "badge"
-  }, [_vm._v(_vm._s(_vm.newArticlesCount))])]), _vm._v(" "), _c('p', [_c('span', [_vm._v("From: "), _c('b', [_vm._v(_vm._s(_vm.fromUtc))])]), _vm._v(" -\n            "), _c('span', [_vm._v("To "), _c('b', [_vm._v(_vm._s(_vm.toUtc))])])]), _vm._v(" "), _c('table', {
+  }, [_vm._v(_vm._s(_vm.newArticlesCount))])]), _vm._v(" "), _c('p', [_c('span', [_vm._v("From: "), _c('b', [_vm._v(_vm._s(_vm.fromUtc))])]), _vm._v(" -\n            "), _c('span', [_vm._v("To "), _c('b', [_vm._v(_vm._s(_vm.toUtc))])])]), _vm._v(" "), _c('div', {
+    staticClass: "content"
+  }, [_c('table', {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(++index))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s((article.article.length > 100) ? article.article.substr(0, 100) + '...' : article.article))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.time(article.created_at).format('LL')))]), _vm._v(" "), _vm._m(1, true)])
-  }))])])])
+  }))])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Article")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Date Created")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])])
 },function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
@@ -62195,15 +62205,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             groupBy: ['user', 'domain'],
             sortBy: ['asc', 'desc'],
             orderBy: ['date', 'wordcount', 'title'],
-            filter: {
-                groupBy: 'select',
-                orderBy: 'date',
-                sortBy: 'asc'
-            }
+            eventBus: EventBus
         };
     },
     mounted: function mounted() {
-        console.log('ready');
+        console.log(this.eventBus);
     }
 });
 
@@ -62262,8 +62268,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.filter.groupBy),
-      expression: "filter.groupBy"
+      value: (_vm.eventBus.reportingFilter.groupBy),
+      expression: "eventBus.reportingFilter.groupBy"
     }],
     on: {
       "change": function($event) {
@@ -62273,7 +62279,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.filter.groupBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.eventBus.reportingFilter.groupBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, [_c('option', {
@@ -62296,8 +62302,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.filter.orderBy),
-      expression: "filter.orderBy"
+      value: (_vm.eventBus.reportingFilter.orderBy),
+      expression: "eventBus.reportingFilter.orderBy"
     }],
     on: {
       "change": function($event) {
@@ -62307,7 +62313,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.filter.orderBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.eventBus.reportingFilter.orderBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, _vm._l((_vm.orderBy), function(order) {
@@ -62326,8 +62332,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.filter.sortBy),
-      expression: "filter.sortBy"
+      value: (_vm.eventBus.reportingFilter.sortBy),
+      expression: "eventBus.reportingFilter.sortBy"
     }],
     on: {
       "change": function($event) {
@@ -62337,7 +62343,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.filter.sortBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.eventBus.reportingFilter.sortBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
   }, _vm._l((_vm.sortBy), function(sort) {
