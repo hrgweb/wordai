@@ -53,8 +53,8 @@ button.close {
 .User,
 .Waiting {
     clear: both;
-    position: relative;
-    top: 2em;
+    // position: relative;
+    // top: 2em;
 }
 
 /*=============== admin - reporting ===============*/
@@ -85,6 +85,7 @@ button.close {
 
 .Report table thead th:last-child,
 .Edited table thead th:last-child,
+.Spun table thead th:last-child,
 .Waiting table thead th:last-child {
     width: 200px;
     max-width: 200px;

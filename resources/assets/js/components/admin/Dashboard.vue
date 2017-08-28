@@ -21,6 +21,13 @@
             :toUtc="toUtc">
         </article-to-edit>
 
+        <!-- Article Spun -->
+        <article-spun
+            :articles="noOfArticlesSpunThisWeek"
+            :fromUtc="fromUtc"
+            :toUtc="toUtc">
+        </article-spun>
+
         <!-- Pending User -->
         <pending-user :token="token"></pending-user>
     </div>
@@ -30,16 +37,18 @@
     import ArticleReport from './ArticleReport.vue';
     import ArticleEdited from './ArticleEdited.vue';
     import ArticleToEdit from './ArticleToEdit.vue';
+    import ArticleSpun from './ArticleSpun.vue';
     import PendingUser from './PendingUser.vue';
 
     export default {
         props: ['token'],
-        components: { ArticleReport, ArticleEdited, ArticleToEdit, PendingUser },
+        components: { ArticleReport, ArticleEdited, ArticleToEdit, ArticleSpun, PendingUser },
         data() {
             return {
                 articles: [],
                 noOfArticlesEditedThisWeek: 0,
                 noOfArticlesToEditThisWeek: 0,
+                noOfArticlesSpunThisWeek: 0,
                 date: {
                     fromMon: 0,
                     toSun: 0,
@@ -60,6 +69,7 @@
             articles(data) {
                 this.articlesEditedThisWeek();
                 this.articlesWaitToEdit();
+                this.articlesSpunThisWeek();
             }
         },
         mounted() {
@@ -134,7 +144,8 @@
                                 keyword: item.keyword,
                                 article: item.article.substr(0, 200) + '...',
                                 created_at: item.created_at,
-                                isEditorEdit: item.isEditorEdit
+                                isEditorEdit: item.isEditorEdit,
+                                isProcess: item.isProcess
                             };
                         });
                     }
@@ -148,9 +159,14 @@
             },
 
             articlesWaitToEdit() {
-                console.log(this.articles);
                 this.noOfArticlesToEditThisWeek = this.articles.filter(item => {
                     return item.isEditorEdit === 0;
+                });
+            },
+
+            articlesSpunThisWeek() {
+                this.noOfArticlesSpunThisWeek = this.articles.filter(item => {
+                    return item.isProcess === 1;
                 });
             }
         }
