@@ -61941,8 +61941,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             time: moment
         };
     },
-    mounted: function mounted() {
-        console.log('ready');
+
+    watch: {
+        articles: function articles() {
+            this.articlesCount = this.articles.length;
+        }
     }
 });
 
@@ -61958,7 +61961,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "articles-to-be-edit"
-  }, [_c('h2', [_vm._v("\n            Articles To Be Edit\n            "), _c('span', {
+  }, [_c('h2', [_vm._v("\n            Articles Waiting To Be Edit\n            "), _c('span', {
     staticClass: "badge"
   }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('p', [_c('span', [_vm._v("From: "), _c('b', [_vm._v(_vm._s(_vm.fromUtc))])]), _vm._v(" -\n            "), _c('span', [_vm._v("To "), _c('b', [_vm._v(_vm._s(_vm.toUtc))])])]), _vm._v(" "), _c('table', {
     staticClass: "table table-striped table-hover"
