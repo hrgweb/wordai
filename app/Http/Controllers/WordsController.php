@@ -125,6 +125,38 @@ class WordsController extends Controller
         // return $this->generateSpintax($request->all(), $request->article);
 	}
 
+    public function saveAndProcessNow(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'doc_title' => 'required',
+            'keyword' => 'required',
+            'lsi_terms' => 'required',
+            // 'domain_protected' => 'required',
+            'article' => 'required',
+            'protected' => 'required',
+            // 'synonyms' => 'required'
+        ]);
+
+
+        // if validation fails
+        if ($validator->fails()) {
+            return response()->json(['isError' => true, 'errors' => $validator->errors()]);
+        }
+
+        $spintax = $this->generateSpintax($request->all(), $request->article);
+        $spintax = json_decode($spintax);
+
+        if ($spintax->status === 'Success') {
+            // if validation success the post article
+            $result = $this->postSpinTax();
+
+            return response()->json(['isError' => false, 'result' => $result]);
+        } else {
+            $spintax = json_encode($spintax);
+
+            return response()->json(['isError' => true, 'spintax' => $spintax]);
+        }
+    }
+
 	private function generateSpintaxParagraph(array $request, $paragraph)
 	{
 		return $this->generateSpintax($request, $paragraph);

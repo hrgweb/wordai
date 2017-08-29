@@ -34,9 +34,9 @@ Route::prefix('words')->group(function() {
 	Route::post('generateRespintax', 'WordsController@generateRespintax');
 	Route::post('postSpinTax', 'WordsController@postSpinTax');
 	Route::post('processToCopyscape', 'WordsController@processToCopyscape');
-
 	Route::post('processTextGrammar', 'WordsController@processTextGrammar');
-	Route::post('respinArticle', 'WordsController@respinArticle');
+    Route::post('respinArticle', 'WordsController@respinArticle');
+	Route::post('saveAndProcessNow', 'WordsController@saveAndProcessNow');
 	Route::patch('updateSpintaxArticle', 'WordsController@updateSpintaxArticle');
     Route::patch('updateCsCheckHitMax', 'WordsController@updateCsCheckHitMax');
     Route::patch('updateRespinCheckHitMax', 'WordsController@updateRespinCheckHitMax');

@@ -18,7 +18,7 @@ export const ArticleActionMixin = {
 			isValidationFail: false,
 			errorType: 1, // legend: 1-input validation, 0-fail response result from server
 			spintaxType: 'article',
-			spin: { 
+			spin: {
 				article_type_id: 'select',
 				doc_title: '',
 				domain_id: 0,
@@ -107,7 +107,7 @@ export const ArticleActionMixin = {
 						this.spin['article'] = this.spin.article;
 						this.spin['spintax'] = text;
 					}
-					
+
 					// check if api response is fail
 					if (data.status === 'Failure') {
 						this.errorType = 0;
@@ -156,7 +156,7 @@ export const ArticleActionMixin = {
 			let vm = this;
 			let options = $('datalist#domains').find('option');
 			let domain_id = this.userObj.getUserId(vm, options, vm.spin.domain);
-			this.spin.domain_id = domain_id.attributes[0].value;
+            this.spin.domain_id = domain_id.attributes[1].value;
 			let url = '/words/domainChange?domain_id=' + this.spin.domain_id;
 
 			if (this.spin.domain_id > 0) {

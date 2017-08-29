@@ -2,7 +2,7 @@
 	<div class="Word">
 		<h1>Create Article</h1><hr>
 
-		<form method="POST" @submit.prevent="saveArticle">
+		<form method="POST">
 			<input type="hidden" name="_token" :value="token">
 
 			<div class="form-group">
@@ -63,7 +63,7 @@
 			<br>
 
 			<!-- Erorr component -->
-			<error 
+			<error
 				:type="errorType"
 				:list="errors"
 				v-if="isValidationFail">
@@ -75,7 +75,9 @@
 			</div>
 			<br>
 
-			<button type="submit" class="btn btn-primary" ref="spinButton">Save Article</button>
+            <!-- <button type="submit" class="btn btn-primary" ref="spinButton" @click.prevent="saveArticle">Save Article</button> -->
+            <!-- tmp -->
+			<button type="submit" class="btn btn-primary" ref="spinButton" @click.prevent="saveAndProcessNow">Save & Process Now</button>
 			&nbsp;&nbsp;&nbsp;
 			<span v-if="isLoading">LOADING....</span><br>
 		</form>
@@ -91,6 +93,15 @@
 		components: { UniqueHandwritten },
 		mixins: [ CrudMixin, ArticleActionMixin ],
 		methods: {
+            resetInputFields() {
+                this.spin['article'] = $('textarea#article').val('');
+                this.spin['article_type_id'] = 'select';
+                this.spin['doc_title'] = '';
+                this.spin['keyword'] = '';
+                this.spin['lsi_terms'] = '';
+                this.spin['domain_protected'] = '';
+            },
+
 			saveArticle() {
 				// check if domain_id is set
 				if (this.spin.domain_id !== 'select') {
@@ -113,12 +124,7 @@
 							this.isValidationFail = false;
 
 							// reset spin values
-							this.spin['article'] = $('textarea#article').val('');
-							this.spin['article_type_id'] = 'select';
-							this.spin['doc_title'] = '';
-							this.spin['keyword'] = '';
-							this.spin['lsi_terms'] = '';
-							this.spin['domain_protected'] = '';
+                            this.resetInputFields();
 
 							// notify user article posted successfully
 							let articleTitle = this.spin.doc_title;
@@ -139,6 +145,62 @@
 					}).show();
 				}
 			},
+
+            saveAndProcessNow() {
+                // check if domain_id is set
+                if (this.spin.domain_id !== 'select') {
+                    this.isLoading = true;
+                    this.isValidationFail = false;
+                    this.$refs.spinButton.disabled = true;
+
+                    axios.post('/words/saveAndProcessNow', this.spin).then(response => {
+                        let data = response.data;
+
+                        this.isLoading = false;
+                        this.isDomainNotSet = false;
+                        this.$refs.spinButton.disabled = false;
+
+                        if (data.isError) { // validation fails
+                            this.isValidationFail = true;
+                            this.errorType = 1;
+                            this.errors = data.errors;
+                        } else { // validation success
+                            this.isValidationFail = false;
+
+                            // reset spin values
+                            /*this.resetInputFields();
+
+                            // notify user article posted successfully
+                            let articleTitle = this.spin.doc_title;
+                            new Noty({
+                                type: 'success',
+                                text: `<b>${articleTitle}</b> article successfully saved.`,
+                                layout: 'bottomLeft',
+                                timeout: 5000
+                            }).show();*/
+
+                            /*if (data.isError) { // validation fails
+                                this.isValidationFail = true;
+                                this.errorType = 0;
+                                this.errors = data.errors;
+                            }*/
+
+                            console.log(data);
+                        }
+                    });
+                } else {
+                    new Noty({
+                        type: 'warning',
+                        text: `Please select domain name.`,
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
+                }
+            },
 		}
 	}
 </script>
+
+<style scoped>
+    ul.alert.alert-danger { position: inherit; }
+</style>

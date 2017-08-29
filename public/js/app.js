@@ -6393,7 +6393,7 @@ var ArticleActionMixin = {
 			var vm = this;
 			var options = $('datalist#domains').find('option');
 			var domain_id = this.userObj.getUserId(vm, options, vm.spin.domain);
-			this.spin.domain_id = domain_id.attributes[0].value;
+			this.spin.domain_id = domain_id.attributes[1].value;
 			var url = '/words/domainChange?domain_id=' + this.spin.domain_id;
 
 			if (this.spin.domain_id > 0) {
@@ -31837,68 +31837,127 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	components: { UniqueHandwritten: __WEBPACK_IMPORTED_MODULE_0__UniqueHandwritten_vue___default.a },
-	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleActionMixin_js__["a" /* ArticleActionMixin */]],
-	methods: {
-		saveArticle: function saveArticle() {
-			var _this = this;
+    components: { UniqueHandwritten: __WEBPACK_IMPORTED_MODULE_0__UniqueHandwritten_vue___default.a },
+    mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleActionMixin_js__["a" /* ArticleActionMixin */]],
+    methods: {
+        resetInputFields: function resetInputFields() {
+            this.spin['article'] = $('textarea#article').val('');
+            this.spin['article_type_id'] = 'select';
+            this.spin['doc_title'] = '';
+            this.spin['keyword'] = '';
+            this.spin['lsi_terms'] = '';
+            this.spin['domain_protected'] = '';
+        },
+        saveArticle: function saveArticle() {
+            var _this = this;
 
-			// check if domain_id is set
-			if (this.spin.domain_id !== 'select') {
-				this.isLoading = true;
-				this.isValidationFail = false;
-				this.$refs.spinButton.disabled = true;
+            // check if domain_id is set
+            if (this.spin.domain_id !== 'select') {
+                this.isLoading = true;
+                this.isValidationFail = false;
+                this.$refs.spinButton.disabled = true;
 
-				axios.post('/words', this.spin).then(function (response) {
-					var data = response.data;
+                axios.post('/words', this.spin).then(function (response) {
+                    var data = response.data;
 
-					_this.isLoading = false;
-					_this.isDomainNotSet = false;
-					_this.$refs.spinButton.disabled = false;
+                    _this.isLoading = false;
+                    _this.isDomainNotSet = false;
+                    _this.$refs.spinButton.disabled = false;
 
-					if (data.isError) {
-						// validation fails
-						_this.isValidationFail = true;
-						_this.errorType = 1;
-						_this.errors = data.errors;
-					} else {
-						// validation success
-						_this.isValidationFail = false;
+                    if (data.isError) {
+                        // validation fails
+                        _this.isValidationFail = true;
+                        _this.errorType = 1;
+                        _this.errors = data.errors;
+                    } else {
+                        // validation success
+                        _this.isValidationFail = false;
 
-						// reset spin values
-						_this.spin['article'] = $('textarea#article').val('');
-						_this.spin['article_type_id'] = 'select';
-						_this.spin['doc_title'] = '';
-						_this.spin['keyword'] = '';
-						_this.spin['lsi_terms'] = '';
-						_this.spin['domain_protected'] = '';
+                        // reset spin values
+                        _this.resetInputFields();
 
-						// notify user article posted successfully
-						var articleTitle = _this.spin.doc_title;
-						new Noty({
-							type: 'success',
-							text: '<b>' + articleTitle + '</b> article successfully saved.',
-							layout: 'bottomLeft',
-							timeout: 5000
-						}).show();
-					}
-				});
-			} else {
-				new Noty({
-					type: 'warning',
-					text: 'Please select domain name.',
-					layout: 'bottomLeft',
-					timeout: 5000
-				}).show();
-			}
-		}
-	}
+                        // notify user article posted successfully
+                        var articleTitle = _this.spin.doc_title;
+                        new Noty({
+                            type: 'success',
+                            text: '<b>' + articleTitle + '</b> article successfully saved.',
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+                    }
+                });
+            } else {
+                new Noty({
+                    type: 'warning',
+                    text: 'Please select domain name.',
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
+            }
+        },
+        saveAndProcessNow: function saveAndProcessNow() {
+            var _this2 = this;
+
+            // check if domain_id is set
+            if (this.spin.domain_id !== 'select') {
+                this.isLoading = true;
+                this.isValidationFail = false;
+                this.$refs.spinButton.disabled = true;
+
+                axios.post('/words/saveAndProcessNow', this.spin).then(function (response) {
+                    var data = response.data;
+
+                    _this2.isLoading = false;
+                    _this2.isDomainNotSet = false;
+                    _this2.$refs.spinButton.disabled = false;
+
+                    if (data.isError) {
+                        // validation fails
+                        _this2.isValidationFail = true;
+                        _this2.errorType = 1;
+                        _this2.errors = data.errors;
+                    } else {
+                        // validation success
+                        _this2.isValidationFail = false;
+
+                        // reset spin values
+                        /*this.resetInputFields();
+                         // notify user article posted successfully
+                        let articleTitle = this.spin.doc_title;
+                        new Noty({
+                            type: 'success',
+                            text: `<b>${articleTitle}</b> article successfully saved.`,
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();*/
+
+                        /*if (data.isError) { // validation fails
+                            this.isValidationFail = true;
+                            this.errorType = 0;
+                            this.errors = data.errors;
+                        }*/
+
+                        console.log(data);
+                    }
+                });
+            } else {
+                new Noty({
+                    type: 'warning',
+                    text: 'Please select domain name.',
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
+            }
+        }
+    }
 });
 
 /***/ }),
@@ -57542,13 +57601,17 @@ module.exports = Component.exports
 /* 258 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(336)
+
 var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(192),
   /* template */
   __webpack_require__(301),
   /* scopeId */
-  null,
+  "data-v-ea02db44",
   /* cssModules */
   null
 )
@@ -61318,12 +61381,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('h1', [_vm._v("Create Article")]), _c('hr'), _vm._v(" "), _c('form', {
     attrs: {
       "method": "POST"
-    },
-    on: {
-      "submit": function($event) {
-        $event.preventDefault();
-        _vm.saveArticle($event)
-      }
     }
   }, [_c('input', {
     attrs: {
@@ -61590,8 +61647,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "btn btn-primary",
     attrs: {
       "type": "submit"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.saveAndProcessNow($event)
+      }
     }
-  }, [_vm._v("Save Article")]), _vm._v("\n\t\t   \n\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')], 1)])
+  }, [_vm._v("Save & Process Now")]), _vm._v("\n\t\t\t   \n\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')], 1)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('textarea', {
     directives: [{
@@ -62387,6 +62450,46 @@ module.exports = function listToStyles (parentId, list) {
 __webpack_require__(144);
 module.exports = __webpack_require__(145);
 
+
+/***/ }),
+/* 328 */,
+/* 329 */,
+/* 330 */,
+/* 331 */,
+/* 332 */,
+/* 333 */,
+/* 334 */,
+/* 335 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\nul.alert.alert-danger[data-v-ea02db44] { position: inherit;\n}\n", ""]);
+
+/***/ }),
+/* 336 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(335);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("74ab7056", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-ea02db44\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CreateArticle.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-ea02db44\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./CreateArticle.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);
