@@ -138,5 +138,8 @@ class Wordai extends Command
 			// Log the response status result
 			Log::info($status);
 		}
+
+        // Log - no unprocess article
+        Log::info('No unprocess article at the moment.');
 	}
 }
