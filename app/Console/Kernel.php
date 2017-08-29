@@ -27,7 +27,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
-        $schedule->command(Wordai::class)->everyFiveMinutes();
+        $schedule->command(Wordai::class)->everyMinute();
     }
 
     /**
