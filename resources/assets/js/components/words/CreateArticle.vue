@@ -75,9 +75,9 @@
 			</div>
 			<br>
 
-            <!-- <button type="submit" class="btn btn-primary" ref="spinButton" @click.prevent="saveArticle">Save Article</button> -->
+            <button type="submit" class="btn btn-primary" ref="spinButton" @click.prevent="saveArticle">Save Article</button>
             <!-- tmp -->
-			<button type="submit" class="btn btn-primary" ref="spinButton" @click.prevent="saveAndProcessNow">Save & Process Now</button>
+			<!-- <button type="submit" class="btn btn-primary" ref="spinButton" @click.prevent="saveAndProcessNow">Save & Process Now</button> -->
 			&nbsp;&nbsp;&nbsp;
 			<span v-if="isLoading">LOADING....</span><br>
 		</form>
