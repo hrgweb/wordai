@@ -49,7 +49,7 @@ class Wordai extends Command
 
     /**
      * Unprocess articles
-     * 
+     *
      * @return [type] [description]
      */
     protected function has_unprocess_article()
@@ -61,7 +61,7 @@ class Wordai extends Command
 
 	/**
 	 * Wordai api
-	 * 
+	 *
 	 * @return [type] [description]
 	 */
 	protected function api()
@@ -72,7 +72,7 @@ class Wordai extends Command
 		$text = $article->article;
 		$quality = 100;
 		$email = 'accounting@connexionsolutions.com';
-		$pass = 'fastredsportscar';
+		$pass = 'privape23';
 		$protected = $article->protected;
 		$synonyms = $article->synonym;
 
@@ -91,7 +91,7 @@ class Wordai extends Command
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt ($ch, CURLOPT_POST, 1);
 			curl_setopt ($ch, CURLOPT_POSTFIELDS, "s=$text&quality=$quality&email=$email&pass=$pass&output=json&protected=$protected&synonyms=$synonyms");
-			
+
 			$result = curl_exec($ch);
 			curl_close ($ch);
 
@@ -105,7 +105,7 @@ class Wordai extends Command
 
 	/**
 	 * Spin result after spintax
-	 * 
+	 *
 	 * @param  [type] $article [description]
 	 * @return [type]          [description]
 	 */
@@ -116,7 +116,7 @@ class Wordai extends Command
 
 	/**
 	 * Process wordai api
-	 * 
+	 *
 	 * @return [type] [description]
 	 */
 	private function process_api()
@@ -134,7 +134,7 @@ class Wordai extends Command
 				// update words table
 				Word::where('id', $word_id)->update(['spintax' => $spintax, 'spin' => $spin, 'isProcess' => 1]);
 			}
-			
+
 			// Log the response status result
 			Log::info($status);
 		}

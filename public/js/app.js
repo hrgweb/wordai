@@ -31939,11 +31939,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             timeout: 5000
                         }).show();*/
 
-                        /*if (data.isError) { // validation fails
-                            this.isValidationFail = true;
-                            this.errorType = 0;
-                            this.errors = data.errors;
-                        }*/
+                        if (data.isError) {
+                            // validation fails
+                            _this2.isValidationFail = true;
+                            _this2.errorType = 0;
+                            _this2.errors = data.errors;
+                        }
 
                         console.log(data);
                     }

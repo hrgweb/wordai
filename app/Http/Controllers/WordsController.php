@@ -52,7 +52,7 @@ class WordsController extends Controller
 		// $text = stripslashes($request['article']);
 		$quality = 100;
 		$email = 'accounting@connexionsolutions.com';
-		$pass = 'fastredsportscar';
+		$pass = 'privape23';
 		$protected = $request['protected'];
 		$synonyms = $request['synonym'];
 
@@ -135,7 +135,6 @@ class WordsController extends Controller
             'protected' => 'required',
             // 'synonyms' => 'required'
         ]);
-
 
         // if validation fails
         if ($validator->fails()) {

@@ -179,11 +179,11 @@
                                 timeout: 5000
                             }).show();*/
 
-                            /*if (data.isError) { // validation fails
+                            if (data.isError) { // validation fails
                                 this.isValidationFail = true;
                                 this.errorType = 0;
                                 this.errors = data.errors;
-                            }*/
+                            }
 
                             console.log(data);
                         }
