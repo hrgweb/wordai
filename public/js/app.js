@@ -28914,10 +28914,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             newArticlesCount: 0,
-            time: moment
+            time: moment,
+            report: ReportingBus
         };
     },
 
+    computed: {
+        filterGroupBy: function filterGroupBy() {
+            return this.report.reportingFilter.groupBy.toUpperCase();
+        }
+    },
     watch: {
         articles: function articles(data) {
             this.newArticlesCount = data.length;
@@ -30075,6 +30081,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         console.log(this.report);
+    },
+
+    methods: {
+        tmpChange: function tmpChange() {
+            console.log(this.report.reportingFilter);
+        }
     }
 });
 
@@ -59515,10 +59527,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "badge"
   }, [_vm._v(_vm._s(_vm.newArticlesCount))])]), _vm._v(" "), _c('p', [_c('span', [_vm._v("From: "), _c('b', [_vm._v(_vm._s(_vm.fromUtc))])]), _vm._v(" -\n            "), _c('span', [_vm._v("To "), _c('b', [_vm._v(_vm._s(_vm.toUtc))])])]), _vm._v(" "), _c('div', {
     staticClass: "content"
-  }, [_c('table', {
+  }, [_c('h3', [_vm._v(_vm._s(_vm.filterGroupBy))]), _vm._v(" "), _c('table', {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(++index))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s((article.article.length > 100) ? article.article.substr(0, 100) + '...' : article.article))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.time(article.created_at).format('LL')))]), _vm._v(" "), _vm._m(1, true)])
+    return _c('tr', [_c('td', [_vm._v(_vm._s(++index))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s((article.article.length > 100) ? article.article.substr(0, 100) + '...' : article.article))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.time(article.created_at).format('ll')))]), _vm._v(" "), _vm._m(1, true)])
   }))])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Article")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Date Created")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])])
@@ -61115,7 +61127,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "report.reportingFilter.groupBy"
     }],
     on: {
-      "change": function($event) {
+      "change": [function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
           return o.selected
         }).map(function(o) {
@@ -61123,7 +61135,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           return val
         });
         _vm.report.reportingFilter.groupBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
+      }, _vm.tmpChange]
     }
   }, [_c('option', {
     attrs: {

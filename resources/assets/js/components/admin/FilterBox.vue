@@ -2,7 +2,7 @@
     <div class="Filter">
         <div class="group-by">
             <label for="groupBy">Group by</label>
-            <select v-model="report.reportingFilter.groupBy">
+            <select v-model="report.reportingFilter.groupBy" @change="tmpChange">
                 <option value="select">SELECT</option>
                 <option v-for="group in groupBy" :value="group.toLowerCase()">{{ group.toUpperCase() }}</option>
             </select>
@@ -36,6 +36,11 @@
         },
         mounted() {
             console.log(this.report);
+        },
+        methods: {
+            tmpChange() {
+                console.log(this.report.reportingFilter);
+            }
         }
     }
 </script>
