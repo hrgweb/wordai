@@ -28896,6 +28896,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -59514,14 +59517,18 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     slot: "head"
   }, [_vm._v("Articles This Week")])], 2)], 1), _vm._v(" "), _c('div', {
     staticClass: "content"
-  }, _vm._l((_vm.report.creatorOfArticles), function(creator) {
+  }, [(_vm.isGroupByEqualSelect) ? _c('div', [_c('report-table', {
+    attrs: {
+      "articles": _vm.report.articles
+    }
+  })], 1) : (_vm.isGroupByEqualUser) ? _c('div', _vm._l((_vm.report.creatorOfArticles), function(creator) {
     return _c('report-filter-by-user', {
       key: creator.user_id,
       attrs: {
         "creator": creator
       }
     })
-  }))])])
+  })) : _vm._e()])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

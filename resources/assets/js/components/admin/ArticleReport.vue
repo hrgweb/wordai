@@ -9,16 +9,19 @@
                 </report-header>
             </div>
             <div class="content">
-                <report-filter-by-user
-                    v-for="creator in report.creatorOfArticles"
-                    :creator="creator"
-                    :key="creator.user_id">
-                </report-filter-by-user>
-
-                <!-- <div class="groupByDefault" v-else-if="isGroupByEqualSelect">
-                    Report Table
+                <div v-if="isGroupByEqualSelect">
                     <report-table :articles="report.articles"></report-table>
-                </div> -->
+                </div>
+
+                <div v-else-if="isGroupByEqualUser">
+                    <report-filter-by-user
+                        v-for="creator in report.creatorOfArticles"
+                        :creator="creator"
+                        :key="creator.user_id">
+                    </report-filter-by-user>
+                </div>
+
+
             </div>
         </div>
     </div>
