@@ -28899,6 +28899,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -59525,7 +59533,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('report-filter-by-user', {
       key: creator.user_id,
       attrs: {
-        "creator": creator
+        "creator": creator,
+        "filterByUser": true
+      }
+    })
+  })) : (_vm.isGroupByEqualDomain) ? _c('div', _vm._l((_vm.report.creatorOfArticles), function(creator) {
+    return _c('report-filter-by-user', {
+      key: creator.domain_id,
+      attrs: {
+        "creator": creator,
+        "filterByDomain": true
       }
     })
   })) : _vm._e()])])])
@@ -62496,9 +62513,20 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         filterGroupByChanged: function filterGroupByChanged() {
             var _this2 = this;
 
-            axios.get('/admin/articlesCreator').then(function (response) {
-                return _this2.creatorOfArticles = response.data;
-            });
+            var params = this.paramsForDate();
+
+            switch (this.reportingFilter.groupBy) {
+                case 'user':
+                    axios.get('/admin/articlesCreator' + params).then(function (response) {
+                        return _this2.creatorOfArticles = response.data;
+                    });
+                    break;
+                case 'domain':
+                    axios.get('/admin/articlesDomain' + params).then(function (response) {
+                        return _this2.creatorOfArticles = response.data;
+                    });
+                    break;
+            }
         }
     }
 });
@@ -62746,11 +62774,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['creator'],
+    props: ['creator', 'filterByUser', 'filterByDomain'],
     components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a },
     data: function data() {
         return {
@@ -62766,10 +62795,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function mounted() {
-        this.listOfArticlesCreatedByUser();
+        this.groupByFilter(this.creator);
     },
 
     methods: {
+        groupByFilter: function groupByFilter(creator) {
+            if (this.filterByUser && creator.user_id > 0) this.listOfArticlesCreatedByUser();
+            if (this.filterByDomain && creator.domain_id > 0) this.listOfDomainByArticles();
+        },
         listOfArticlesCreatedByUser: function listOfArticlesCreatedByUser() {
             var _this = this;
 
@@ -62779,6 +62812,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             axios.get('/admin/listOfArticlesCreatedByUser' + params).then(function (response) {
                 return _this.articles = response.data;
+            });
+        },
+        listOfDomainByArticles: function listOfDomainByArticles() {
+            var _this2 = this;
+
+            var domain_id = this.creator.domain_id;
+            var params = this.report.paramsForDate();
+            params = params + '&domain_id=' + domain_id;
+
+            axios.get('/admin/listOfDomainByArticles' + params).then(function (response) {
+                return _this2.articles = response.data;
             });
         }
     }
@@ -62791,7 +62835,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "groupByUser"
-  }, [_c('h3', [_vm._v("\n        " + _vm._s(_vm.creator.full_name) + "\n        "), _c('span', {
+  }, [_c('h3', [(_vm.filterByUser) ? _c('span', [_vm._v(_vm._s(_vm.creator.full_name))]) : _c('span', [_vm._v(_vm._s(_vm.creator.domain))]), _vm._v(" "), _c('span', {
     staticClass: "badge"
   }, [_vm._v(_vm._s(_vm.count))])]), _vm._v(" "), _c('report-table', {
     attrs: {

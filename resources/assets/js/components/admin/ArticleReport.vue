@@ -17,11 +17,19 @@
                     <report-filter-by-user
                         v-for="creator in report.creatorOfArticles"
                         :creator="creator"
+                        :filterByUser="true"
                         :key="creator.user_id">
                     </report-filter-by-user>
                 </div>
 
-
+                <div v-else-if="isGroupByEqualDomain">
+                    <report-filter-by-user
+                        v-for="creator in report.creatorOfArticles"
+                        :creator="creator"
+                        :filterByDomain="true"
+                        :key="creator.domain_id">
+                    </report-filter-by-user>
+                </div>
             </div>
         </div>
     </div>

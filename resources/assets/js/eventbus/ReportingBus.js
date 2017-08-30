@@ -141,7 +141,16 @@ export const ReportingBus = new Vue({
         },
 
         filterGroupByChanged() {
-            axios.get('/admin/articlesCreator').then(response => this.creatorOfArticles = response.data);
+            let params = this.paramsForDate();
+
+            switch(this.reportingFilter.groupBy) {
+                case 'user':
+                    axios.get('/admin/articlesCreator'+params).then(response => this.creatorOfArticles = response.data);
+                    break;
+                case 'domain':
+                    axios.get('/admin/articlesDomain'+params).then(response => this.creatorOfArticles = response.data);
+                    break;
+            }
         }
     }
 });

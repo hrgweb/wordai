@@ -60,6 +60,8 @@ Route::prefix('admin')->group(function() {
     Route::get('articlesThisWeek', 'AdminController@articlesThisWeek');
     Route::get('articlesCreator', 'AdminController@articlesCreator');
     Route::get('listOfArticlesCreatedByUser', 'AdminController@listOfArticlesCreatedByUser');
+    Route::get('articlesDomain', 'AdminController@articlesDomain');
+    Route::get('listOfDomainByArticles', 'AdminController@listOfDomainByArticles');
 	Route::post('postDomain', 'AdminController@postDomain');
 	Route::post('saveDetails', 'AdminController@saveDetails');
 	Route::patch('updateDomain', 'AdminController@updateDomain');

@@ -49,12 +49,11 @@ button.close {
     font-size: 2em;
 }
 
+.Report,
 .Edited,
 .User,
 .Waiting {
-    clear: both;
-    // position: relative;
-    // top: 2em;
+    margin-bottom: 5em;
 }
 
 /*=============== admin - reporting ===============*/

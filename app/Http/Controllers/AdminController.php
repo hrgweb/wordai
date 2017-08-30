@@ -253,11 +253,14 @@ class AdminController extends Controller
     }
 
     public function articlesCreator() {
+        $this->paramsForDate();
+
         return DB::select("
             SELECT u.id AS user_id, CONCAT(u.firstname, ' ', u.lastname) AS full_name
             FROM `words` AS w
             JOIN users AS u
             ON u.id = w.user_id
+            WHERE w.created_at BETWEEN '" . $this->fromMon . "' AND '" . $this->toSun . "'
             GROUP BY w.user_id
         ");
     }
@@ -266,6 +269,27 @@ class AdminController extends Controller
         $this->paramsForDate();
 
         return Word::where('user_id', request('user_id'))
+                ->whereBetween('created_at', [$this->fromMon, $this->toSun])
+                ->get();
+    }
+
+    public function articlesDomain() {
+        $this->paramsForDate();
+
+        return DB::select("
+            SELECT d.id AS domain_id, d.domain
+            FROM `words` AS w
+            JOIN domains AS d
+            ON d.id = w.domain_id
+            WHERE w.created_at BETWEEN '" . $this->fromMon . "' AND '" . $this->toSun . "'
+            GROUP BY w.domain_id
+        ");
+    }
+
+    public function listOfDomainByArticles() {
+        $this->paramsForDate();
+
+        return Word::where('domain_id', request('domain_id'))
                 ->whereBetween('created_at', [$this->fromMon, $this->toSun])
                 ->get();
     }
