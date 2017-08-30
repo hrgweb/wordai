@@ -2,7 +2,7 @@
     <div class="Filter">
         <div class="group-by">
             <label for="groupBy">Group by</label>
-            <select v-model="eventBus.reportingFilter.groupBy">
+            <select v-model="report.reportingFilter.groupBy">
                 <option value="select">SELECT</option>
                 <option v-for="group in groupBy" :value="group.toLowerCase()">{{ group.toUpperCase() }}</option>
             </select>
@@ -10,14 +10,14 @@
 
         <div class="order-by">
             <label for="orderBy">Order by</label>
-            <select v-model="eventBus.reportingFilter.orderBy">
+            <select v-model="report.reportingFilter.orderBy">
                 <option v-for="order in orderBy" :value="order.toLowerCase()">{{ order.toUpperCase() }}</option>
             </select>
         </div>
 
         <div class="sort-by">
             <label for="groupBy">Sort by</label>
-             <select v-model="eventBus.reportingFilter.sortBy">
+             <select v-model="report.reportingFilter.sortBy">
                 <option v-for="sort in sortBy" :value="sort.toLowerCase()">{{ sort.toUpperCase() }}</option>
             </select>
         </div>
@@ -31,11 +31,11 @@
                 groupBy: ['user', 'domain'],
                 sortBy: ['asc', 'desc'],
                 orderBy: ['date', 'wordcount', 'title'],
-                eventBus: EventBus
+                report: ReportingBus
             }
         },
         mounted() {
-            console.log(this.eventBus);
+            console.log(this.report);
         }
     }
 </script>
