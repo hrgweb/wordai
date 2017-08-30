@@ -62743,6 +62743,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -62752,8 +62755,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             report: ReportingBus,
-            articles: []
+            articles: [],
+            count: 0
         };
+    },
+
+    watch: {
+        articles: function articles(data) {
+            this.count = data.length;
+        }
     },
     mounted: function mounted() {
         this.listOfArticlesCreatedByUser();
@@ -62781,7 +62791,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "groupByUser"
-  }, [_c('h3', [_vm._v(_vm._s(_vm.creator.full_name))]), _vm._v(" "), _c('report-table', {
+  }, [_c('h3', [_vm._v("\n        " + _vm._s(_vm.creator.full_name) + "\n        "), _c('span', {
+    staticClass: "badge"
+  }, [_vm._v(_vm._s(_vm.count))])]), _vm._v(" "), _c('report-table', {
     attrs: {
       "articles": _vm.articles
     }

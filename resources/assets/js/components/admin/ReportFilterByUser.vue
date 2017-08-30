@@ -1,6 +1,9 @@
 <template>
     <div class="groupByUser">
-        <h3>{{ creator.full_name }}</h3>
+        <h3>
+            {{ creator.full_name }}
+            <span class="badge">{{ count }}</span>
+        </h3>
 
         <!-- Report Table -->
         <report-table :articles="articles"></report-table>
@@ -16,8 +19,14 @@
         data() {
             return {
                 report: ReportingBus,
-                articles: []
+                articles: [],
+                count: 0
             };
+        },
+        watch: {
+            articles(data) {
+                this.count = data.length;
+            }
         },
         mounted() {
             this.listOfArticlesCreatedByUser();
