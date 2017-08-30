@@ -20,6 +20,7 @@ export const ReportingBus = new Vue({
             fromUtc: '',
             toUtc: '',
             isSameMonth: false,
+            noOfArticlesThisWeek: 0,
             noOfArticlesEditedThisWeek: 0,
             noOfArticlesToEditThisWeek: 0,
             noOfArticlesSpunThisWeek: 0
@@ -32,6 +33,10 @@ export const ReportingBus = new Vue({
         },
 
         articles(data) {
+            // vars
+            this.noOfArticlesThisWeek = data.length;
+
+            // methods
             this.articlesEditedThisWeek();
             this.articlesWaitToEdit();
             this.articlesSpunThisWeek();
@@ -132,6 +137,10 @@ export const ReportingBus = new Vue({
             this.noOfArticlesSpunThisWeek = this.articles.filter(item => {
                 return item.isProcess === 1;
             });
+        },
+
+        filterGroupByChanged() {
+            console.log(this.reportingFilter);
         }
     }
 });

@@ -5,9 +5,7 @@
 
         <!-- Article Report -->
         <article-report
-            :articles="report.articles"
-            :fromUtc="report.fromUtc"
-            :toUtc="report.toUtc">
+            :articles="report.articles">
         </article-report>
 
         <!-- Article Edited -->
