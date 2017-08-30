@@ -262,6 +262,7 @@ class AdminController extends Controller
             ON u.id = w.user_id
             WHERE w.created_at BETWEEN '" . $this->fromMon . "' AND '" . $this->toSun . "'
             GROUP BY w.user_id
+            ORDER BY full_name ASC
         ");
     }
 
@@ -283,6 +284,7 @@ class AdminController extends Controller
             ON d.id = w.domain_id
             WHERE w.created_at BETWEEN '" . $this->fromMon . "' AND '" . $this->toSun . "'
             GROUP BY w.domain_id
+            ORDER BY d.domain ASC
         ");
     }
 
