@@ -23,7 +23,8 @@ export const ReportingBus = new Vue({
             noOfArticlesThisWeek: 0,
             noOfArticlesEditedThisWeek: 0,
             noOfArticlesToEditThisWeek: 0,
-            noOfArticlesSpunThisWeek: 0
+            noOfArticlesSpunThisWeek: 0,
+            creatorOfArticles: []
 		};
 	},
 
@@ -140,7 +141,7 @@ export const ReportingBus = new Vue({
         },
 
         filterGroupByChanged() {
-            console.log(this.reportingFilter);
+            axios.get('/admin/articlesCreator').then(response => this.creatorOfArticles = response.data);
         }
     }
 });

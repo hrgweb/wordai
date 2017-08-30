@@ -28868,6 +28868,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue__ = __webpack_require__(342);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ReportFilterByUser_vue__ = __webpack_require__(344);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ReportFilterByUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ReportFilterByUser_vue__);
 //
 //
 //
@@ -28888,12 +28890,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a, ReportHeader: __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue___default.a },
+    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a, ReportHeader: __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue___default.a, ReportFilterByUser: __WEBPACK_IMPORTED_MODULE_2__ReportFilterByUser_vue___default.a },
     data: function data() {
         return {
             report: ReportingBus
@@ -28903,6 +28912,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         filterGroupBy: function filterGroupBy() {
             return this.report.reportingFilter.groupBy.toUpperCase();
+        },
+        isGroupByEqualSelect: function isGroupByEqualSelect() {
+            return this.report.reportingFilter.groupBy === 'select' ? true : false;
+        },
+        isGroupByEqualUser: function isGroupByEqualUser() {
+            return this.report.reportingFilter.groupBy === 'user' ? true : false;
+        },
+        isGroupByEqualDomain: function isGroupByEqualDomain() {
+            return this.report.reportingFilter.groupBy === 'domain' ? true : false;
         }
     }
 });
@@ -29347,8 +29365,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ArticleSpun_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__ArticleSpun_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__PendingUser_vue__ = __webpack_require__(249);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__PendingUser_vue__);
-//
-//
 //
 //
 //
@@ -30052,9 +30068,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             orderBy: ['date', 'wordcount', 'title'],
             report: ReportingBus
         };
-    },
-    mounted: function mounted() {
-        console.log(this.report);
     }
 });
 
@@ -59501,11 +59514,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     slot: "head"
   }, [_vm._v("Articles This Week")])], 2)], 1), _vm._v(" "), _c('div', {
     staticClass: "content"
-  }, [_c('h3', [_vm._v(_vm._s(_vm.filterGroupBy))]), _vm._v(" "), _c('report-table', {
-    attrs: {
-      "articles": _vm.report.articles
-    }
-  })], 1)])])
+  }, _vm._l((_vm.report.creatorOfArticles), function(creator) {
+    return _c('report-filter-by-user', {
+      key: creator.user_id,
+      attrs: {
+        "creator": creator
+      }
+    })
+  }))])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -61541,11 +61557,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Dashboard"
-  }, [_c('filter-box'), _vm._v(" "), _c('article-report', {
-    attrs: {
-      "articles": _vm.report.articles
-    }
-  }), _vm._v(" "), _c('article-edited', {
+  }, [_c('filter-box'), _vm._v(" "), _c('article-report'), _vm._v(" "), _c('article-edited', {
     attrs: {
       "articles": _vm.report.noOfArticlesEditedThisWeek,
       "fromUtc": _vm.report.fromUtc,
@@ -62361,7 +62373,8 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             noOfArticlesThisWeek: 0,
             noOfArticlesEditedThisWeek: 0,
             noOfArticlesToEditThisWeek: 0,
-            noOfArticlesSpunThisWeek: 0
+            noOfArticlesSpunThisWeek: 0,
+            creatorOfArticles: []
         };
     },
 
@@ -62474,7 +62487,11 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             });
         },
         filterGroupByChanged: function filterGroupByChanged() {
-            console.log(this.reportingFilter);
+            var _this2 = this;
+
+            axios.get('/admin/articlesCreator').then(function (response) {
+                return _this2.creatorOfArticles = response.data;
+            });
         }
     }
 });
@@ -62655,16 +62672,119 @@ module.exports = Component.exports
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
-    staticClass: "ReportHeader"
+    staticClass: "ReportHeader text-center"
   }, [_c('h2', [_vm._t("head"), _vm._v(" "), _c('span', {
     staticClass: "badge"
-  }, [_vm._v(_vm._s(_vm.count))])], 2), _vm._v(" "), _c('p', [_c('span', [_vm._v("From: "), _c('b', [_vm._v(_vm._s(_vm.report.fromUtc))])]), _vm._v(" -\n        "), _c('span', [_vm._v("To "), _c('b', [_vm._v(_vm._s(_vm.report.toUtc))])])])])
+  }, [_vm._v(_vm._s(_vm.count))])], 2), _vm._v(" "), _c('p', [_c('span', [_vm._v("From: "), _c('b', [_vm._v(_vm._s(_vm.report.fromUtc))])]), _vm._v(" -\n        "), _c('span', [_vm._v("To: "), _c('b', [_vm._v(_vm._s(_vm.report.toUtc))])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-ea9cd5b2", module.exports)
+  }
+}
+
+/***/ }),
+/* 344 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(345),
+  /* template */
+  __webpack_require__(346),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\ReportFilterByUser.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ReportFilterByUser.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-7f957e18", Component.options)
+  } else {
+    hotAPI.reload("data-v-7f957e18", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 345 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__ = __webpack_require__(339);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['creator'],
+    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a },
+    data: function data() {
+        return {
+            report: ReportingBus,
+            articles: []
+        };
+    },
+    mounted: function mounted() {
+        this.listOfArticlesCreatedByUser();
+    },
+
+    methods: {
+        listOfArticlesCreatedByUser: function listOfArticlesCreatedByUser() {
+            var _this = this;
+
+            var user_id = this.creator.user_id;
+            var params = this.report.paramsForDate();
+            params = params + '&user_id=' + user_id;
+
+            axios.get('/admin/listOfArticlesCreatedByUser' + params).then(function (response) {
+                return _this.articles = response.data;
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 346 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "groupByUser"
+  }, [_c('h3', [_vm._v(_vm._s(_vm.creator.full_name))]), _vm._v(" "), _c('report-table', {
+    attrs: {
+      "articles": _vm.articles
+    }
+  })], 1)
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-7f957e18", module.exports)
   }
 }
 

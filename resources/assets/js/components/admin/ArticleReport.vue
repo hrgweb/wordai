@@ -9,10 +9,16 @@
                 </report-header>
             </div>
             <div class="content">
-                <h3>{{ filterGroupBy }}</h3>
+                <report-filter-by-user
+                    v-for="creator in report.creatorOfArticles"
+                    :creator="creator"
+                    :key="creator.user_id">
+                </report-filter-by-user>
 
-                <!-- Report Table -->
-                <report-table :articles="report.articles"></report-table>
+                <!-- <div class="groupByDefault" v-else-if="isGroupByEqualSelect">
+                    Report Table
+                    <report-table :articles="report.articles"></report-table>
+                </div> -->
             </div>
         </div>
     </div>
@@ -21,9 +27,10 @@
 <script>
     import ReportTable from './ReportTable.vue';
     import ReportHeader from './ReportHeader.vue';
+    import ReportFilterByUser from './ReportFilterByUser.vue';
 
     export default {
-        components: { ReportTable, ReportHeader },
+        components: { ReportTable, ReportHeader, ReportFilterByUser },
         data() {
             return {
                 report: ReportingBus
@@ -32,6 +39,18 @@
         computed: {
             filterGroupBy() {
                 return this.report.reportingFilter.groupBy.toUpperCase();
+            },
+
+            isGroupByEqualSelect() {
+                return (this.report.reportingFilter.groupBy === 'select') ? true : false;
+            },
+
+            isGroupByEqualUser() {
+                return (this.report.reportingFilter.groupBy === 'user') ? true : false;
+            },
+
+            isGroupByEqualDomain() {
+                return (this.report.reportingFilter.groupBy === 'domain') ? true : false;
             }
         }
     }

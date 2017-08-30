@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
+    protected $fromMon;
+    protected $toSun;
+
 	public function __construct() {
 		$this->middleware('auth');
 	}
@@ -201,13 +204,11 @@ class AdminController extends Controller
     	return Copyscape::first(['o', 'e', 'c', 'i', 'x']);
     }
 
-    public function articlesThisWeek() {
+    protected function paramsForDate() {
         $mon = request('fromMon');
         $sun = request('toSun');
         $year = request('curYear');
 
-        $fromMon = '';
-        $toSun = '';
         $month = 0;
         $monthMon = request('curMonthMon');
         $monthSun = request('curMonthSun');
@@ -217,19 +218,23 @@ class AdminController extends Controller
         if ($isSameMonth === 'false') {
             $monthMon = (int) $monthMon <= 9 ? '0'.$monthMon : $monthMon;
             $monthSun = (int) $monthSun <= 9 ? '0'.$monthSun : $monthSun;
-            $fromMon = $year . '-' . $monthMon . '-' . $mon . ' 00:00:00';
-            $toSun = $year . '-' . $monthSun . '-' . $sun  . ' 23:59:59';
+            $this->fromMon = $year . '-' . $monthMon . '-' . $mon . ' 00:00:00';
+            $this->toSun = $year . '-' . $monthSun . '-' . $sun  . ' 23:59:59';
 
         } else {
             $month = (int) request('curMonth') <= 9 ? '0'.request('curMonth') : request('curMonth');
-            $fromMon = $year . '-' . $month . '-' . $mon . ' 00:00:00';
-            $toSun = $year . '-' . $month . '-' . $sun  . ' 23:59:59';
+            $this->fromMon = $year . '-' . $month . '-' . $mon . ' 00:00:00';
+            $this->toSun = $year . '-' . $month . '-' . $sun  . ' 23:59:59';
         }
+    }
+
+    public function articlesThisWeek() {
+        $this->paramsForDate();
 
         return DB::table('words AS w')
             ->join('users AS u', 'u.id', '=', 'w.user_id')
             ->join('domains AS d', 'd.id', '=', 'w.domain_id')
-            ->whereBetween('w.created_at', [$fromMon, $toSun])
+            ->whereBetween('w.created_at', [$this->fromMon, $this->toSun])
             ->orderBy('w.created_at')
             ->get([
                 'w.id AS word_id',
@@ -245,5 +250,23 @@ class AdminController extends Controller
                 'u.firstname',
                 'u.lastname'
             ]);
+    }
+
+    public function articlesCreator() {
+        return DB::select("
+            SELECT u.id AS user_id, CONCAT(u.firstname, ' ', u.lastname) AS full_name
+            FROM `words` AS w
+            JOIN users AS u
+            ON u.id = w.user_id
+            GROUP BY w.user_id
+        ");
+    }
+
+    public function listOfArticlesCreatedByUser() {
+        $this->paramsForDate();
+
+        return Word::where('user_id', request('user_id'))
+                ->whereBetween('created_at', [$this->fromMon, $this->toSun])
+                ->get();
     }
 }

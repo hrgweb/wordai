@@ -4,9 +4,7 @@
         <filter-box></filter-box>
 
         <!-- Article Report -->
-        <article-report
-            :articles="report.articles">
-        </article-report>
+        <article-report></article-report>
 
         <!-- Article Edited -->
         <article-edited

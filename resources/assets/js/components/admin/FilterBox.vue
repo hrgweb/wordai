@@ -33,9 +33,6 @@
                 orderBy: ['date', 'wordcount', 'title'],
                 report: ReportingBus
             }
-        },
-        mounted() {
-            console.log(this.report);
         }
     }
 </script>
