@@ -17,7 +17,7 @@
 			<power-editor
 				:article="article"
 				v-if="pEditorAccess"
-				@isPowerEditorDismiss="pEditorAccess = false">
+				@isPowerEditorDismiss="dismissPowerEditor">
 			</power-editor>
 		</div>
 
@@ -102,7 +102,11 @@
 			spin(data) {
                 this.csBusinessRuleShow = data.isCsCheckHitMax === 1 ? true : false;
 				this.respinBusinessRuleShow = data.isRespinHitMax === 1 ? true : false;
-			}
+			},
+
+            pEditorAccess() {
+                Vue.nextTick(() => $('div.Peditor').find('p').html(this.spin.spintax_copy));
+            }
 		},
 		mounted() {
 			this.spin = this.article;
@@ -113,12 +117,17 @@
             initSummernote() {
                 let vm = this;
                 let div = $('div#editor');
+                let p = $('div.Peditor').find('p');
+
 
                 // Setup summernote
                 div.summernote({
                     callbacks: {
                         onInit() {
-                            // Insert text
+                            // 1st summernote - format paragraph
+                            if (p.length > 0) Vue.nextTick(() => p.html(vm.article.spintax_copy));
+
+                            // 2nd summernote - insert text
                             $('div.note-editable').find('p').html(vm.article.spin);
 
                             /*$('button#tmpSummernote').on('click', function(e) {
@@ -256,6 +265,10 @@
                         this.$emit('isDismiss', data);
                     }
                 });
+            },
+
+            dismissPowerEditor() {
+                this.pEditorAccess = false;
             }
 		}
 	}

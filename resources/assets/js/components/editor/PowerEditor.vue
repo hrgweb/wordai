@@ -21,15 +21,22 @@
 			this.initSpintax();
 		},
 		methods: {
+            initSummernote(spintax) {
+                // summernote insert text
+                $('div#peditor').summernote('editor.insertText', spintax);
+
+                // format 1st summernote
+                Vue.nextTick(() => $('div.Peditor').find('p').html(spintax));
+            },
+
 			initSpintax() {
-				let article = this.article;
-				let div = $('div#peditor');
+                let article = this.article;
 
 				if (article.isEditorUpdateSC === 1) {
-					div.summernote('editor.insertText', article.spintax_copy);
-				} else {
-					div.summernote('editor.insertText', article.spintax);
-				}
+                    this.initSummernote(article.spintax_copy);
+                } else {
+                    this.initSummernote(article.spintax);
+                }
 			},
 
 			dissmissSpintaxArticle() {
@@ -52,7 +59,7 @@
 					this.$refs.changesBtn.disabled = false;
 
 					if (data) {
-						this.$emit('isPowerEditorDismiss');  // close the power editor component
+						this.$emit('isPowerEditorDismiss', { spintax: data.spintax_copy });  // close the power editor component
 						ArticleBus.$emit('editorUpdatedSpintaxCopy', { spintax: data.spintax_copy });
 					}
 				});

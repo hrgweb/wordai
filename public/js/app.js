@@ -30694,176 +30694,192 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-				props: ['article', 'peditoraccess'],
-				components: { PowerEditor: __WEBPACK_IMPORTED_MODULE_0__PowerEditor_vue___default.a, CopyscapeResult: __WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue___default.a },
-				mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_3__mixins_ArticleMixin_js__["a" /* ArticleMixin */]],
-				data: function data() {
-								return {
-												type: 'edit-article',
-												spin: {},
-												pEditorAccess: false,
-												csCounter: 0,
-												respinCounter: 0,
-												csBusinessRuleShow: false,
-												respinBusinessRuleShow: false,
-												charHighlighted: '',
-												clock: {},
-												times: [0, 0, 0]
-								};
-				},
+    props: ['article', 'peditoraccess'],
+    components: { PowerEditor: __WEBPACK_IMPORTED_MODULE_0__PowerEditor_vue___default.a, CopyscapeResult: __WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue___default.a },
+    mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_3__mixins_ArticleMixin_js__["a" /* ArticleMixin */]],
+    data: function data() {
+        return {
+            type: 'edit-article',
+            spin: {},
+            pEditorAccess: false,
+            csCounter: 0,
+            respinCounter: 0,
+            csBusinessRuleShow: false,
+            respinBusinessRuleShow: false,
+            charHighlighted: '',
+            clock: {},
+            times: [0, 0, 0]
+        };
+    },
 
-				watch: {
-								spin: function spin(data) {
-												this.csBusinessRuleShow = data.isCsCheckHitMax === 1 ? true : false;
-												this.respinBusinessRuleShow = data.isRespinHitMax === 1 ? true : false;
-								}
-				},
-				mounted: function mounted() {
-								this.spin = this.article;
-								this.initSummernote();
-								this.initStopwatch();
-				},
+    watch: {
+        spin: function spin(data) {
+            this.csBusinessRuleShow = data.isCsCheckHitMax === 1 ? true : false;
+            this.respinBusinessRuleShow = data.isRespinHitMax === 1 ? true : false;
+        },
+        pEditorAccess: function pEditorAccess() {
+            var _this = this;
 
-				methods: {
-								initSummernote: function initSummernote() {
-												var vm = this;
-												var div = $('div#editor');
+            Vue.nextTick(function () {
+                return $('div.Peditor').find('p').html(_this.spin.spintax_copy);
+            });
+        }
+    },
+    mounted: function mounted() {
+        this.spin = this.article;
+        this.initSummernote();
+        this.initStopwatch();
+    },
 
-												// Setup summernote
-												div.summernote({
-																callbacks: {
-																				onInit: function onInit() {
-																								// Insert text
-																								$('div.note-editable').find('p').html(vm.article.spin);
+    methods: {
+        initSummernote: function initSummernote() {
+            var vm = this;
+            var div = $('div#editor');
+            var p = $('div.Peditor').find('p');
 
-																								/*$('button#tmpSummernote').on('click', function(e) {
+            // Setup summernote
+            div.summernote({
+                callbacks: {
+                    onInit: function onInit() {
+                        // 1st summernote - format paragraph
+                        if (p.length > 0) Vue.nextTick(function () {
+                            return p.html(vm.article.spintax_copy);
+                        });
+
+                        // 2nd summernote - insert text
+                        $('div.note-editable').find('p').html(vm.article.spin);
+
+                        /*$('button#tmpSummernote').on('click', function(e) {
                             let range = div.summernote('createRange');
                              console.log(range.toString());
                              // console.log('select: ', e);
                         });*/
-																				}
-																}
-												});
-								},
-								initStopwatch: function initStopwatch() {
-												var article = this.article;
+                    }
+                }
+            });
+        },
+        initStopwatch: function initStopwatch() {
+            var article = this.article;
 
-												this.times = [article.hr_spent_editor_edit_article, article.min_spent_editor_edit_article, article.sec_spent_editor_edit_article];
+            this.times = [article.hr_spent_editor_edit_article, article.min_spent_editor_edit_article, article.sec_spent_editor_edit_article];
 
-												this.clock = new __WEBPACK_IMPORTED_MODULE_4__class_Stopwatch_js__["a" /* default */](this.times, document.querySelector('.stopwatch'), document.querySelector('.results'));
-												this.clock.start();
-								},
-								updateArticle: function updateArticle() {
-												var _this = this;
+            this.clock = new __WEBPACK_IMPORTED_MODULE_4__class_Stopwatch_js__["a" /* default */](this.times, document.querySelector('.stopwatch'), document.querySelector('.results'));
+            this.clock.start();
+        },
+        updateArticle: function updateArticle() {
+            var _this2 = this;
 
-												var data = {
-																id: this.article.id,
-																article: $('div.note-editable').text(),
-																times: this.times
-												};
+            var data = {
+                id: this.article.id,
+                article: $('div.note-editable').text(),
+                times: this.times
+            };
 
-												this.$refs.saveChangeBtn.disabled = true;
+            this.$refs.saveChangeBtn.disabled = true;
 
-												axios.patch('/editor/updateArticle', data).then(function (response) {
-																var data = response.data;
+            axios.patch('/editor/updateArticle', data).then(function (response) {
+                var data = response.data;
 
-																_this.$refs.saveChangeBtn.disabled = false;
+                _this2.$refs.saveChangeBtn.disabled = false;
 
-																if (data.isSuccess) {
-																				_this.$emit('isUpdated', {
-																								article: data.result,
-																								times: data.times
-																				});
-																}
-												});
-								},
-								dissmissArticle: function dissmissArticle() {
-												this.editorSpentTimeOnEditingArticle();
-								},
-								onPowerEditor: function onPowerEditor() {
-												this.pEditorAccess = true;
-								},
-								dissmissSpintaxArticle: function dissmissSpintaxArticle() {
-												this.pEditorAccess = false;
-								},
-								respinArticle: function respinArticle() {
-												var _this2 = this;
+                if (data.isSuccess) {
+                    _this2.$emit('isUpdated', {
+                        article: data.result,
+                        times: data.times
+                    });
+                }
+            });
+        },
+        dissmissArticle: function dissmissArticle() {
+            this.editorSpentTimeOnEditingArticle();
+        },
+        onPowerEditor: function onPowerEditor() {
+            this.pEditorAccess = true;
+        },
+        dissmissSpintaxArticle: function dissmissSpintaxArticle() {
+            this.pEditorAccess = false;
+        },
+        respinArticle: function respinArticle() {
+            var _this3 = this;
 
-												this.isLoading = true;
-												this.isError = false;
-												this.$refs.respinBtn.disabled = true;
+            this.isLoading = true;
+            this.isError = false;
+            this.$refs.respinBtn.disabled = true;
 
-												// vars
-												this.spin['article'] = $('div.note-editable').html();
-												this.spin['type'] = 'edit-article';
+            // vars
+            this.spin['article'] = $('div.note-editable').html();
+            this.spin['type'] = 'edit-article';
 
-												// check if type is 'edit-article'
-												if (this.type === 'edit-article') {
-																this.respinCounter++; // increment respinCounter
-												}
+            // check if type is 'edit-article'
+            if (this.type === 'edit-article') {
+                this.respinCounter++; // increment respinCounter
+            }
 
-												var editor = $('div.note-editable');
-												editor.slideUp(); // hide editor
+            var editor = $('div.note-editable');
+            editor.slideUp(); // hide editor
 
-												axios.post('/words/respinArticle', this.spin).then(function (response) {
-																var data = response.data;
-																editor.slideDown(); // show editor
-																editor.html(data);
+            axios.post('/words/respinArticle', this.spin).then(function (response) {
+                var data = response.data;
+                editor.slideDown(); // show editor
+                editor.html(data);
 
-																_this2.isLoading = false;
-																_this2.$refs.respinBtn.disabled = false;
+                _this3.isLoading = false;
+                _this3.$refs.respinBtn.disabled = false;
 
-																// check if api response is fail
-																if (data.status === 'Failure') {
-																				_this2.error = data.error;
-																				_this2.isError = true;
-																}
+                // check if api response is fail
+                if (data.status === 'Failure') {
+                    _this3.error = data.error;
+                    _this3.isError = true;
+                }
 
-																// check if counter = 5
-																if (_this2.type == 'edit-article' && _this2.respinCounter == 5) {
-																				_this2.updateRespinCheckHitMax();
-																}
-												});
-								},
-								updateCsCheckHitMax: function updateCsCheckHitMax() {
-												var _this3 = this;
+                // check if counter = 5
+                if (_this3.type == 'edit-article' && _this3.respinCounter == 5) {
+                    _this3.updateRespinCheckHitMax();
+                }
+            });
+        },
+        updateCsCheckHitMax: function updateCsCheckHitMax() {
+            var _this4 = this;
 
-												var data = { word_id: this.article.id };
+            var data = { word_id: this.article.id };
 
-												axios.patch('/words/updateCsCheckHitMax', data).then(function (response) {
-																if (response.data) {
-																				_this3.csBusinessRuleShow = true;
-																}
-												});
-								},
-								updateRespinCheckHitMax: function updateRespinCheckHitMax() {
-												var _this4 = this;
+            axios.patch('/words/updateCsCheckHitMax', data).then(function (response) {
+                if (response.data) {
+                    _this4.csBusinessRuleShow = true;
+                }
+            });
+        },
+        updateRespinCheckHitMax: function updateRespinCheckHitMax() {
+            var _this5 = this;
 
-												var data = { word_id: this.article.id };
+            var data = { word_id: this.article.id };
 
-												axios.patch('/words/updateRespinCheckHitMax', data).then(function (response) {
-																if (response.data) {
-																				_this4.respinBusinessRuleShow = true;
-																}
-												});
-								},
-								editorSpentTimeOnEditingArticle: function editorSpentTimeOnEditingArticle(emitType) {
-												var _this5 = this;
+            axios.patch('/words/updateRespinCheckHitMax', data).then(function (response) {
+                if (response.data) {
+                    _this5.respinBusinessRuleShow = true;
+                }
+            });
+        },
+        editorSpentTimeOnEditingArticle: function editorSpentTimeOnEditingArticle(emitType) {
+            var _this6 = this;
 
-												var data = {
-																word_id: this.article.id,
-																times: this.times
-												};
+            var data = {
+                word_id: this.article.id,
+                times: this.times
+            };
 
-												axios.patch('/editor/editorSpentTimeOnEditingArticle', data).then(function (response) {
-																var data = response.data;
+            axios.patch('/editor/editorSpentTimeOnEditingArticle', data).then(function (response) {
+                var data = response.data;
 
-																if (data) {
-																				_this5.$emit('isDismiss', data);
-																}
-												});
-								}
-				}
+                if (data) {
+                    _this6.$emit('isDismiss', data);
+                }
+            });
+        },
+        dismissPowerEditor: function dismissPowerEditor() {
+            this.pEditorAccess = false;
+        }
+    }
 });
 
 /***/ }),
@@ -31132,14 +31148,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 
 	methods: {
+		initSummernote: function initSummernote(spintax) {
+			// summernote insert text
+			$('div#peditor').summernote('editor.insertText', spintax);
+
+			// format 1st summernote
+			Vue.nextTick(function () {
+				return $('div.Peditor').find('p').html(spintax);
+			});
+		},
 		initSpintax: function initSpintax() {
 			var article = this.article;
-			var div = $('div#peditor');
 
 			if (article.isEditorUpdateSC === 1) {
-				div.summernote('editor.insertText', article.spintax_copy);
+				this.initSummernote(article.spintax_copy);
 			} else {
-				div.summernote('editor.insertText', article.spintax);
+				this.initSummernote(article.spintax);
 			}
 		},
 		dissmissSpintaxArticle: function dissmissSpintaxArticle() {
@@ -31163,7 +31187,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				_this.$refs.changesBtn.disabled = false;
 
 				if (data) {
-					_this.$emit('isPowerEditorDismiss'); // close the power editor component
+					_this.$emit('isPowerEditorDismiss', { spintax: data.spintax_copy }); // close the power editor component
 					ArticleBus.$emit('editorUpdatedSpintaxCopy', { spintax: data.spintax_copy });
 				}
 			});
@@ -58168,9 +58192,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "article": _vm.article
     },
     on: {
-      "isPowerEditorDismiss": function($event) {
-        _vm.pEditorAccess = false
-      }
+      "isPowerEditorDismiss": _vm.dismissPowerEditor
     }
   }) : _vm._e()], 1) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "Process__article"
