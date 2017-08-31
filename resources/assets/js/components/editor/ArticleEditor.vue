@@ -320,7 +320,7 @@
         background: #080808;
         color: #fff;
         left: 0;
-        bottom: 1em;
+        bottom: 38em;
         padding-top: 1em;
         padding-left: 1.2em;
         padding-right: .5em;
