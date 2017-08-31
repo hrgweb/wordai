@@ -324,7 +324,8 @@ class WordsController extends Controller
 	}
 
 	public function respinArticle() {
-		$vars = request()->only([
+        /*=============== Before ===============*/
+		/*$vars = request()->only([
 			'article',
 			'keyword',
 			'lsi_terms',
@@ -341,7 +342,17 @@ class WordsController extends Controller
 			return $this->generateFullArticle();
 		} else {
 			return json_encode($spintax);
-		}
+		}*/
+
+        /*=============== After ===============*/
+
+        $spin = $this->spin->process(request('article'));
+
+        // Update words table in spintax_copy
+        $update = Word::where('id', request('word_id'))
+                    ->update(['spin' => $spin]);
+
+        if ($update) return $spin; // return response
 	}
 
 	public function updateSpintaxArticle() {

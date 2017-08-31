@@ -30721,7 +30721,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             Vue.nextTick(function () {
-                return _this.updateFirstSummernote(_this.article);
+                return _this.updateFirstSummernote($('div.Peditor'), _this.article);
             });
         }
     },
@@ -30732,8 +30732,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
 
     methods: {
-        updateFirstSummernote: function updateFirstSummernote(article) {
-            var p = $('div.Peditor').find('p');
+        updateFirstSummernote: function updateFirstSummernote(div, article) {
+            var p = div.find('p');
 
             // check if ther is paragraph && there is spintax_copy and not = to null
             if (p.length > 0 && article.isEditorUpdateSC === 1) {
@@ -30756,22 +30756,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 callbacks: {
                     onInit: function onInit() {
                         // 1st summernote - format paragraph
-                        // check if ther is paragraph && there is spintax_copy and not = to null
-                        /*if (p.length > 0 && article.isEditorUpdateSC === 1) {
-                            Vue.nextTick(() => p.html(article.spintax_copy));
-                        } else {
-                            Vue.nextTick(() => p.html(article.spintax));
-                        }*/
-                        vm.updateFirstSummernote(article);
+                        vm.updateFirstSummernote($('div.Peditor'), article);
 
                         // 2nd summernote - insert text
                         $('div.note-editable').find('p').html(article.spin);
-
-                        /*$('button#tmpSummernote').on('click', function(e) {
-                            let range = div.summernote('createRange');
-                             console.log(range.toString());
-                             // console.log('select: ', e);
-                        });*/
+                        // vm.updateFirstSummernote($('div.note-editable'), article);
                     }
                 }
             });
@@ -30825,7 +30814,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$refs.respinBtn.disabled = true;
 
             // vars
-            this.spin['article'] = $('div.note-editable').html();
+            // this.spin['article'] = $('div.note-editable').html();
             this.spin['type'] = 'edit-article';
 
             // check if type is 'edit-article'
@@ -30836,7 +30825,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var editor = $('div.note-editable');
             editor.slideUp(); // hide editor
 
-            axios.post('/words/respinArticle', this.spin).then(function (response) {
+            // params
+            var params = {
+                word_id: this.article.id,
+                article: this.article.spintax_copy
+            };
+
+            axios.post('/words/respinArticle', params).then(function (response) {
                 var data = response.data;
                 editor.slideDown(); // show editor
                 editor.html(data);
@@ -30844,11 +30839,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this3.isLoading = false;
                 _this3.$refs.respinBtn.disabled = false;
 
+                // update article obj in vue data
+                ArticleBus.$emit('isRespinArticle', { spin: data });
+
                 // check if api response is fail
-                if (data.status === 'Failure') {
-                    _this3.error = data.error;
-                    _this3.isError = true;
-                }
+                /*if (data.status === 'Failure') {
+                	this.error = data.error;
+                	this.isError = true;
+                }*/
 
                 // check if counter = 5
                 if (_this3.type == 'edit-article' && _this3.respinCounter == 5) {
@@ -31132,6 +31130,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	mounted: function mounted() {
 		this.authUser = JSON.parse(this.user);
 		this.listenWhenPowerEditorUpdated();
+		this.updateArticleData();
 	},
 
 	methods: {
@@ -31206,6 +31205,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			ArticleBus.$on('editorUpdatedSpintaxCopy', function (data) {
 				_this3.articles[_this3.index].spintax_copy = data.spintax;
+			});
+		},
+		updateArticleData: function updateArticleData() {
+			var _this4 = this;
+
+			ArticleBus.$on('isRespinArticle', function (data) {
+				_this4.articles[_this4.index].spin = data.spin;
 			});
 		}
 	}

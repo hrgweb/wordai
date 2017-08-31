@@ -71,6 +71,7 @@
 		mounted() {
 			this.authUser = JSON.parse(this.user);
 			this.listenWhenPowerEditorUpdated();
+            this.updateArticleData();
 		},
 		methods: {
 			articleList() {
@@ -141,7 +142,13 @@
 				ArticleBus.$on('editorUpdatedSpintaxCopy', data => {
 					this.articles[this.index].spintax_copy = data.spintax;
 				});
-			}
+			},
+
+            updateArticleData() {
+                ArticleBus.$on('isRespinArticle', data => {
+                    this.articles[this.index].spin = data.spin;
+                });
+            }
 		}
 	}
 </script>
