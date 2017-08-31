@@ -63023,13 +63023,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 351 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(354)
+
 var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(350),
   /* template */
   __webpack_require__(352),
   /* scopeId */
-  null,
+  "data-v-a54fcbde",
   /* cssModules */
   null
 )
@@ -63128,6 +63132,39 @@ if (false) {
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-a54fcbde", module.exports)
   }
+}
+
+/***/ }),
+/* 353 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.Filter[data-v-a54fcbde] {\n    background: #baf7c7;\n    padding: 1em 1em 0.7em;\n    margin-top: 2em;\n    border: 1px solid #71f58d;\n}\n.Filter div[data-v-a54fcbde]:first-child {\n    float: left;\n    margin-right: 1em;\n}\n", ""]);
+
+/***/ }),
+/* 354 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(353);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("d0242bd6", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-a54fcbde\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FilterEditor.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-a54fcbde\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FilterEditor.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
 }
 
 /***/ })
