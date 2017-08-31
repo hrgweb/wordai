@@ -105,7 +105,7 @@
 			},
 
             pEditorAccess() {
-                Vue.nextTick(() => $('div.Peditor').find('p').html(this.spin.spintax_copy));
+                Vue.nextTick(() => this.updateFirstSummernote(this.article));
             }
 		},
 		mounted() {
@@ -114,21 +114,38 @@
             this.initStopwatch();
 		},
 		methods: {
-            initSummernote() {
-                let vm = this;
-                let div = $('div#editor');
+            updateFirstSummernote(article) {
                 let p = $('div.Peditor').find('p');
 
+                // check if ther is paragraph && there is spintax_copy and not = to null
+                if (p.length > 0 && article.isEditorUpdateSC === 1) {
+                    Vue.nextTick(() => p.html(article.spintax_copy));
+                } else {
+                    Vue.nextTick(() => p.html(article.spintax));
+                }
+            },
+
+            initSummernote() {
+                let vm = this;
+                let article = vm.article;
+                let div = $('div#editor');
 
                 // Setup summernote
                 div.summernote({
                     callbacks: {
                         onInit() {
                             // 1st summernote - format paragraph
-                            if (p.length > 0) Vue.nextTick(() => p.html(vm.article.spintax_copy));
+                            // check if ther is paragraph && there is spintax_copy and not = to null
+                            /*if (p.length > 0 && article.isEditorUpdateSC === 1) {
+                                Vue.nextTick(() => p.html(article.spintax_copy));
+                            } else {
+                                Vue.nextTick(() => p.html(article.spintax));
+                            }*/
+                            vm.updateFirstSummernote(article);
+
 
                             // 2nd summernote - insert text
-                            $('div.note-editable').find('p').html(vm.article.spin);
+                            $('div.note-editable').find('p').html(article.spin);
 
                             /*$('button#tmpSummernote').on('click', function(e) {
                                 let range = div.summernote('createRange');
