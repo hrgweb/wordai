@@ -30888,6 +30888,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FilterEditor_vue__ = __webpack_require__(351);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FilterEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__FilterEditor_vue__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -30927,10 +30935,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['articles'],
+	components: { FilterEditor: __WEBPACK_IMPORTED_MODULE_0__FilterEditor_vue___default.a },
 	data: function data() {
-		return { index: 0 };
+		return {
+			index: 0
+		};
 	},
 
 	methods: {
@@ -30974,6 +30987,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					}).show();
 				}
 			});
+		},
+		groupByChange: function groupByChange(data) {
+			if (data) {
+				var filter = data.filter;
+
+				this.articles = this.articles.sort(function (a, b) {
+					var nameA = a[filter.orderBy];
+					var nameB = b[filter.orderBy];
+
+					if (nameA < nameB) return -1;
+					if (nameA > nameB) return 1;
+
+					return 0; // names must be equal
+				});
+			}
+		},
+		orderByChange: function orderByChange(data) {
+			if (data) {
+				var filter = data.filter;
+
+				this.articles = this.articles.sort(function (a, b) {
+					var nameA = a[filter.orderBy];
+					var nameB = b[filter.orderBy];
+
+					if (filter.sortBy === 'asc') {
+						if (nameA < nameB) return -1;
+						if (nameA > nameB) return 1;
+
+						return 0; // names must be equal
+					} else {
+						if (nameB < nameA) return -1;
+						if (nameB > nameA) return 1;
+
+						return 0; // names must be equal
+					}
+				});
+			}
 		}
 	}
 });
@@ -31071,7 +31121,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var _this = this;
 
 			axios.get('/editor/articleList').then(function (response) {
-				return _this.articles = response.data;
+				_this.articles = response.data.map(function (item) {
+					return {
+						article: item.article,
+						article_type: item.article_type,
+						created_at: item.created_at,
+						domain: item.domain,
+						domain_protected: item.domain_protected,
+						firstname: item.firstname,
+						hr_spent_editor_edit_article: item.hr_spent_editor_edit_article,
+						id: item.id,
+						isCsCheckHitMax: item.isCsCheckHitMax,
+						isEditorUpdateSC: item.isEditorUpdateSC,
+						isRespinHitMax: item.isRespinHitMax,
+						keyword: item.keyword,
+						lastname: item.lastname,
+						lsi_terms: item.lsi_terms,
+						min_spent_editor_edit_article: item.min_spent_editor_edit_article,
+						protected: item.protected,
+						sec_spent_editor_edit_article: item.sec_spent_editor_edit_article,
+						spin: item.spin,
+						spintax: item.spintax,
+						spintax_copy: item.spintax_copy,
+						synonym: item.synonym,
+						writer: item.firstname + ' ' + item.lastname
+					};
+				});
 			});
 		},
 		updateArticle: function updateArticle(data) {
@@ -59743,10 +59818,17 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "ArticleResult"
-  }, [_c('table', {
+  }, [_c('filter-editor', {
+    on: {
+      "hasChangeGroupBy": _vm.groupByChange,
+      "hasChangeOrderBy": _vm.orderByChange
+    }
+  }), _vm._v(" "), _c('table', {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(article.firstname) + " " + _vm._s(article.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.article_type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.lsi_terms))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain_protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.synonym))]), _vm._v(" "), _c('td', [_c('button', {
+    return _c('tr', {
+      key: index
+    }, [_c('td', [_vm._v(_vm._s(article.writer))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.article_type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.lsi_terms))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain_protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.synonym))]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-info",
       attrs: {
         "type": "button"
@@ -59769,9 +59851,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("Publish")])])])
-  }))])])
+  }))])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("User")]), _vm._v(" "), _c('th', [_vm._v("Article Type")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("LSI Terms")]), _vm._v(" "), _c('th', [_vm._v("Domain Protected")]), _vm._v(" "), _c('th', [_vm._v("Protected")]), _vm._v(" "), _c('th', [_vm._v("Synonym")]), _vm._v(" "), _c('th', {
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Writer")]), _vm._v(" "), _c('th', [_vm._v("Article Type")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("LSI Terms")]), _vm._v(" "), _c('th', [_vm._v("Domain Protected")]), _vm._v(" "), _c('th', [_vm._v("Protected")]), _vm._v(" "), _c('th', [_vm._v("Synonym")]), _vm._v(" "), _c('th', {
     staticClass: "text-center"
   }, [_vm._v("Actions")])])])
 }]}
@@ -62886,6 +62968,167 @@ module.exports = __webpack_require__(146);
 
 
 var ArticleBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({});
+
+/***/ }),
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            orderBy: ['created_at', 'domain', 'writer'],
+            sortBy: ['asc', 'desc'],
+            editorFilter: {
+                orderBy: 'created_at',
+                sortBy: 'asc'
+            }
+        };
+    },
+
+    methods: {
+        orderByChange: function orderByChange() {
+            this.$emit('hasChangeGroupBy', { filter: this.editorFilter });
+        },
+        sortByChange: function sortByChange() {
+            this.$emit('hasChangeOrderBy', { filter: this.editorFilter });
+        }
+    }
+});
+
+/***/ }),
+/* 351 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(350),
+  /* template */
+  __webpack_require__(352),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\editor\\FilterEditor.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] FilterEditor.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-a54fcbde", Component.options)
+  } else {
+    hotAPI.reload("data-v-a54fcbde", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 352 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Filter"
+  }, [_c('div', {
+    staticClass: "order-by"
+  }, [_c('label', {
+    attrs: {
+      "for": "orderBy"
+    }
+  }, [_vm._v("Order by: ")]), _vm._v("  \n        "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editorFilter.orderBy),
+      expression: "editorFilter.orderBy"
+    }],
+    on: {
+      "change": [function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.editorFilter.orderBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.orderByChange]
+    }
+  }, _vm._l((_vm.orderBy), function(order) {
+    return _c('option', {
+      domProps: {
+        "value": order
+      }
+    }, [_vm._v(_vm._s(order.toUpperCase()))])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "sort-by"
+  }, [_c('label', {
+    attrs: {
+      "for": "sortBy"
+    }
+  }, [_vm._v("Sort by: ")]), _vm._v("  \n        "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editorFilter.sortBy),
+      expression: "editorFilter.sortBy"
+    }],
+    on: {
+      "change": [function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.editorFilter.sortBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.sortByChange]
+    }
+  }, _vm._l((_vm.sortBy), function(sort) {
+    return _c('option', {
+      domProps: {
+        "value": sort
+      }
+    }, [_vm._v(_vm._s(sort.toUpperCase()))])
+  }))])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-a54fcbde", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

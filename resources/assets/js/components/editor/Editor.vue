@@ -74,7 +74,34 @@
 		},
 		methods: {
 			articleList() {
-				axios.get('/editor/articleList').then(response => this.articles = response.data);
+				axios.get('/editor/articleList').then(response => {
+                    this.articles = response.data.map(item => {
+                        return {
+                            article: item.article,
+                            article_type: item.article_type,
+                            created_at: item.created_at,
+                            domain: item.domain,
+                            domain_protected: item.domain_protected,
+                            firstname: item.firstname,
+                            hr_spent_editor_edit_article: item.hr_spent_editor_edit_article,
+                            id: item.id,
+                            isCsCheckHitMax: item.isCsCheckHitMax,
+                            isEditorUpdateSC: item.isEditorUpdateSC,
+                            isRespinHitMax: item.isRespinHitMax,
+                            keyword: item.keyword,
+                            lastname: item.lastname,
+                            lsi_terms: item.lsi_terms,
+                            min_spent_editor_edit_article: item.min_spent_editor_edit_article,
+                            protected: item.protected,
+                            sec_spent_editor_edit_article: item.sec_spent_editor_edit_article,
+                            spin: item.spin,
+                            spintax: item.spintax,
+                            spintax_copy: item.spintax_copy,
+                            synonym: item.synonym,
+                            writer: item.firstname + ' ' + item.lastname
+                        }
+                    });
+                });
 			},
 
 			updateArticle(data) {

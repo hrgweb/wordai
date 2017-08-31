@@ -1,9 +1,15 @@
 <template>
 	<div class="ArticleResult">
+        <!-- Filter Editor -->
+        <filter-editor
+            @hasChangeGroupBy="groupByChange"
+            @hasChangeOrderBy="orderByChange">
+        </filter-editor>
+
 		<table class="table table-striped table-hover">
 		    <thead>
 		        <tr>
-		            <th>User</th>
+		            <th>Writer</th>
 		            <th>Article Type</th>
 		            <th>Domain</th>
 		            <th>Title</th>
@@ -16,8 +22,8 @@
 		        </tr>
 		    </thead>
 		    <tbody>
-		        <tr v-for="(article, index) in articles">
-		        	<td>{{ article.firstname }} {{ article.lastname }}</td>
+		        <tr v-for="(article, index) in articles" :key="index">
+		        	<td>{{ article.writer }}</td>
 		        	<td>{{ article.article_type }}</td>
 		        	<td>{{ article.domain }}</td>
 		        	<td>{{ article.doc_title }}</td>
@@ -37,10 +43,15 @@
 </template>
 
 <script>
+    import FilterEditor from './FilterEditor.vue';
+
 	export default {
 		props: ['articles'],
+        components: { FilterEditor },
 		data() {
-			return { index: 0 };
+			return {
+                index: 0
+            };
 		},
 		methods: {
 			editArticle(article, index) {
@@ -86,7 +97,47 @@
 
 					}
 				});
-			}
+			},
+
+            groupByChange(data) {
+                if (data) {
+                    let filter = data.filter;
+
+                    this.articles = this.articles.sort((a, b) => {
+                        let nameA = a[filter.orderBy];
+                        let nameB = b[filter.orderBy];
+
+                        if (nameA < nameB) return -1;
+                        if (nameA > nameB) return 1;
+
+                        return 0; // names must be equal
+                    });
+                }
+            },
+
+            orderByChange(data) {
+                if (data) {
+                    let filter = data.filter;
+
+                    this.articles = this.articles.sort((a, b) => {
+                        let nameA = a[filter.orderBy];
+                        let nameB = b[filter.orderBy];
+
+                        if (filter.sortBy === 'asc') {
+                            if (nameA < nameB) return -1;
+                            if (nameA > nameB) return 1;
+
+                            return 0; // names must be equal
+
+                        } else {
+                            if (nameB < nameA) return -1;
+                            if (nameB > nameA) return 1;
+
+                            return 0; // names must be equal
+                        }
+                    });
+                }
+            }
 		}
 	}
 </script>
