@@ -2,12 +2,14 @@ require('./bootstrap');
 
 /*=============== Global vars ===============*/
 import { ReportingBus } from './eventbus/ReportingBus.js';
+import { ArticleBus } from './eventbus/ArticleBus.js';
 
 window.$ = $;
 window.Vue = require('vue');
 window.moment = require('moment');
 window.Noty = require('noty');
 window.ReportingBus = ReportingBus;
+window.ArticleBus = ArticleBus;
 
 
 /*=============== Components ===============*/

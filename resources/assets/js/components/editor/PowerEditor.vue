@@ -39,7 +39,7 @@
 			updateSpintaxArticle() {
 				const data = {
 					word_id: this.article.id,
-					spintax: $('div.note-editable').first().text()
+					spintax: $('div.note-editable').first().html()
 				};
 
 				this.isLoading = true;
@@ -53,7 +53,7 @@
 
 					if (data) {
 						this.$emit('isPowerEditorDismiss');  // close the power editor component
-						EventBus.$emit('editorUpdatedSpintaxCopy', { spintax: data.spintax_copy });
+						ArticleBus.$emit('editorUpdatedSpintaxCopy', { spintax: data.spintax_copy });
 					}
 				});
 			}

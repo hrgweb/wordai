@@ -111,7 +111,7 @@
 			},
 
 			listenWhenPowerEditorUpdated(data) {
-				EventBus.$on('editorUpdatedSpintaxCopy', data => {
+				ArticleBus.$on('editorUpdatedSpintaxCopy', data => {
 					this.articles[this.index].spintax_copy = data.spintax;
 				});
 			}
