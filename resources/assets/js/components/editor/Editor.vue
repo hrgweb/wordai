@@ -1,5 +1,10 @@
 <template>
 	<div class="Editor">
+        <!-- Article To Edit -->
+        <article-to-edit
+            :articles="listToEdit">
+        </article-to-edit>
+
 		<!-- Permission Details -->
 		<div class="Permission">
 			<error
@@ -8,6 +13,8 @@
 				v-if="! hasPeditorAccess">
  			</error>
 		</div>
+
+        <h2>Article List <span class="badge">{{ articlesCount }}</span></h2>
 
 		<!-- Article Editor -->
 		<article-editor
@@ -19,8 +26,6 @@
 		</article-editor>
 
 		<div class="Editor__table" v-if="! isEdit">
-			<h2>Editor <span class="badge">{{ articlesCount }}</span></h2>
-
 			<!-- Article Result -->
 			<article-result
 				:articles="articles"
@@ -33,13 +38,19 @@
 
 <script>
 	import ArticleResult from './ArticleResult.vue';
-	import ArticleEditor from './ArticleEditor.vue';
+    import ArticleEditor from './ArticleEditor.vue';
+	import ArticleToEdit from './ArticleToEdit.vue';
 	import { UserArticleMixin } from './../../mixins/UserArticleMixin.js';
 	import Error from './../errors/Error.vue';
 
 	export default {
 		props: ['user'],
-		components: { ArticleResult, ArticleEditor, Error },
+		components: {
+            ArticleResult,
+            ArticleEditor,
+            ArticleToEdit,
+            Error
+        },
 		mixins: [ UserArticleMixin ],
 		data() {
 			return {
@@ -47,12 +58,14 @@
 				articlesCount: 0,
 				error: '',
 				authUser: {},
-				hasPeditorAccess: false
+				hasPeditorAccess: false,
+                listToEdit: []
 			}
 		},
 		watch: {
 			articles(data) {
 				this.articlesCount = data.length;
+                this.articlesToEdit(data);
 			},
 
 			authUser(data) {
@@ -148,6 +161,16 @@
             updateArticleData() {
                 ArticleBus.$on('isRespinArticle', data => {
                     this.articles[this.index].spin = data.spin;
+                });
+            },
+
+            articlesToEdit(data) {
+                this.listToEdit = data.filter(item => {
+                    return (
+                        parseInt(item.hr_spent_editor_edit_article, 10) <= 0 &&
+                        parseInt(item.min_spent_editor_edit_article, 10) <= 0 &&
+                        parseInt(item.sec_spent_editor_edit_article, 10) <= 0
+                    );
                 });
             }
 		}

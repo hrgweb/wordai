@@ -31073,9 +31073,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue__ = __webpack_require__(139);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_UserArticleMixin_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__errors_Error_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ArticleToEdit_vue__ = __webpack_require__(355);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ArticleToEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ArticleToEdit_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_UserArticleMixin_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__errors_Error_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__errors_Error_vue__);
 //
 //
 //
@@ -31109,6 +31111,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -31117,21 +31125,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['user'],
-	components: { ArticleResult: __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default.a, ArticleEditor: __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue___default.a, Error: __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue___default.a },
-	mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_UserArticleMixin_js__["a" /* UserArticleMixin */]],
+	components: {
+		ArticleResult: __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default.a,
+		ArticleEditor: __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue___default.a,
+		ArticleToEdit: __WEBPACK_IMPORTED_MODULE_2__ArticleToEdit_vue___default.a,
+		Error: __WEBPACK_IMPORTED_MODULE_4__errors_Error_vue___default.a
+	},
+	mixins: [__WEBPACK_IMPORTED_MODULE_3__mixins_UserArticleMixin_js__["a" /* UserArticleMixin */]],
 	data: function data() {
 		return {
 			isEdit: false,
 			articlesCount: 0,
 			error: '',
 			authUser: {},
-			hasPeditorAccess: false
+			hasPeditorAccess: false,
+			listToEdit: []
 		};
 	},
 
 	watch: {
 		articles: function articles(data) {
 			this.articlesCount = data.length;
+			this.articlesToEdit(data);
 		},
 		authUser: function authUser(data) {
 			// has power editor access
@@ -31232,6 +31247,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			ArticleBus.$on('isRespinArticle', function (data) {
 				_this4.articles[_this4.index].spin = data.spin;
+			});
+		},
+		articlesToEdit: function articlesToEdit(data) {
+			this.listToEdit = data.filter(function (item) {
+				return parseInt(item.hr_spent_editor_edit_article, 10) <= 0 && parseInt(item.min_spent_editor_edit_article, 10) <= 0 && parseInt(item.sec_spent_editor_edit_article, 10) <= 0;
 			});
 		}
 	}
@@ -61442,14 +61462,20 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Editor"
-  }, [_c('div', {
+  }, [_c('article-to-edit', {
+    attrs: {
+      "articles": _vm.listToEdit
+    }
+  }), _vm._v(" "), _c('div', {
     staticClass: "Permission"
   }, [(!_vm.hasPeditorAccess) ? _c('error', {
     attrs: {
       "list": _vm.error,
       "type": false
     }
-  }) : _vm._e()], 1), _vm._v(" "), (_vm.isEdit) ? _c('article-editor', {
+  }) : _vm._e()], 1), _vm._v(" "), _c('h2', [_vm._v("Article List "), _c('span', {
+    staticClass: "badge"
+  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), (_vm.isEdit) ? _c('article-editor', {
     attrs: {
       "article": _vm.article,
       "peditoraccess": _vm.hasPeditorAccess
@@ -61460,9 +61486,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }) : _vm._e(), _vm._v(" "), (!_vm.isEdit) ? _c('div', {
     staticClass: "Editor__table"
-  }, [_c('h2', [_vm._v("Editor "), _c('span', {
-    staticClass: "badge"
-  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), (_vm.isArticlesNotEmpty) ? _c('article-result', {
+  }, [(_vm.isArticlesNotEmpty) ? _c('article-result', {
     attrs: {
       "articles": _vm.articles
     },
@@ -63214,6 +63238,125 @@ module.exports = function listToStyles (parentId, list) {
 __webpack_require__(145);
 module.exports = __webpack_require__(146);
 
+
+/***/ }),
+/* 345 */,
+/* 346 */,
+/* 347 */,
+/* 348 */,
+/* 349 */,
+/* 350 */,
+/* 351 */,
+/* 352 */,
+/* 353 */,
+/* 354 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__admin_ReportTable_vue__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__admin_ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__admin_ReportTable_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['articles', 'fromUtc', 'toUtc'],
+    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__admin_ReportTable_vue___default.a },
+    data: function data() {
+        return {
+            articlesCount: 0,
+            time: moment
+        };
+    },
+
+    watch: {
+        articles: function articles(data) {
+            this.articlesCount = this.articles.length;
+        }
+    }
+});
+
+/***/ }),
+/* 355 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(354),
+  /* template */
+  __webpack_require__(356),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\editor\\ArticleToEdit.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ArticleToEdit.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-554ae742", Component.options)
+  } else {
+    hotAPI.reload("data-v-554ae742", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 356 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Waiting",
+    staticStyle: {
+      "top": "5em"
+    }
+  }, [_c('div', {
+    staticClass: "articles-to-be-edit"
+  }, [_c('h2', [_vm._v("\n            Articles Waiting To Be Edit\n            "), _c('span', {
+    staticClass: "badge"
+  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('report-table', {
+    attrs: {
+      "articles": _vm.articles
+    }
+  })], 1)])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-554ae742", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
