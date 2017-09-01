@@ -5,7 +5,7 @@
 				:data="wordObj"
 				@cancelEdit="dismissEdit"
 				@isUpdated="updateRecord">
-			</article-editor>			
+			</article-editor>
 		</div>
 
 		<div class="User__articles" v-else>

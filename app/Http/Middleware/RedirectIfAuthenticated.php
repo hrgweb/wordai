@@ -23,12 +23,12 @@ class RedirectIfAuthenticated
 
             // check if user is Admin
             if ($user_level === 2) {
-                return redirect('articles');
+                return redirect('admin');
             }
 
             // check if user is Writer
             if ($user_level === 3) {
-                return redirect('home');
+                return redirect('writer');
             }
 
             // check if user is Editor

@@ -55,11 +55,16 @@ class LoginController extends Controller
                 return redirect('admin');
             }
 
+            /*if ($request->user()->user_level_id === 3) {
+                return redirect('writer');
+            }*/
+
         	// if user is 'editor'
         	if ($request->user()->user_level_id === 4) {
         		return redirect('editor');
         	}
 
+            // if user is 'writer'
         	return redirect()->intended($this->redirectTo);
         }
     }

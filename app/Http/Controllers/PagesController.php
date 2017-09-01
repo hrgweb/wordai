@@ -71,7 +71,7 @@ class PagesController extends Controller
     	return view('editor.index');
     }
 
-    public function articles()
+    public function writer()
     {
     	return view('users.articles');
     }
@@ -82,5 +82,9 @@ class PagesController extends Controller
 
     public function superEditor() {
     	return view('editor.super-editor');
+    }
+
+    public function admin() {
+        return view('admin.index');
     }
 }

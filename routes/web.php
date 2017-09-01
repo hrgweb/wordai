@@ -5,6 +5,7 @@ Route::get('test', 'WordsController@test');
 
 // Pages
 Route::get('/', 'PagesController@index');
+Route::get('admin', 'PagesController@admin');
 Route::get('domain', 'PagesController@domain');
 Route::get('domain-details', 'PagesController@domain_details');
 Route::get('user', 'PagesController@user');
@@ -16,7 +17,7 @@ Route::get('copyscape', 'PagesController@copyscape');
 Route::get('curl', 'PagesController@curl');
 Route::get('verification', 'PagesController@verification');
 Route::get('editor', 'PagesController@editor');
-Route::get('articles', 'PagesController@articles');
+Route::get('writer', 'PagesController@writer');
 Route::get('copyscape-page', 'PagesController@copyscapePage');
 Route::get('super-editor', 'PagesController@superEditor');
 
