@@ -36410,7 +36410,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;\n}\nh3[data-v-1a4b0ea7] { text-align: center;\n}\np[data-v-1a4b0ea7] { white-space: pre-wrap;\n}\n.Editor[data-v-1a4b0ea7] { position: relative;\n}\nbutton.right-side[data-v-1a4b0ea7] {\n\t\tposition: absolute;\n\t\tright: 0;\n}\nbutton.power-editor[data-v-1a4b0ea7] {\n\t\tbackground: #D13DD1;\n\t\tcolor: #fff;\n\t\tborder: #8c3f8c;\n}\nbutton.power-editor[data-v-1a4b0ea7]:hover { background: #BC2EBC;\n}\n.Copyscape[data-v-1a4b0ea7] { margin-top: 5em;\n}\ndiv.first-button[data-v-1a4b0ea7] {\n\t    float: left;\n\t    margin-right: 0.2em;\n}\n.stopwatch[data-v-1a4b0ea7] {\n        font-size: 2em;\n        text-align: center;\n}\n.timer-overlay[data-v-1a4b0ea7] {\n        position: fixed;\n        background: #080808;\n        color: #fff;\n        left: 0;\n        bottom: 33em;\n        padding-top: 1em;\n        padding-left: 1.2em;\n        padding-right: .5em;\n        /* border-top-left-radius: .5em; */\n        /* border-bottom-left-radius: .5em; */\n        /* border: 5px solid #ecdfdf; */\n        /* border-left-width: 0; */\n        z-index: 999999;\n}\n.timer-overlay span[data-v-1a4b0ea7] { font-size: 14px;\n}\n\n\t/*=============== Gradient button ===============*/\n.btn-business-rule[data-v-1a4b0ea7] {\n\t\tbackground-color: hsl(0, 0%, 13%) !important;\n\t\tbackground-repeat: repeat-x;\n\t\tfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#bababa\", endColorstr=\"#212121\");\n\t\tbackground-image: -khtml-gradient(linear, left top, left bottom, from(#bababa), to(#212121));\n\t\tbackground-image: linear-gradient(#bababa, #212121);\n\t\tborder: 1px solid #7d7d7d;\n\t\tcolor: #fff !important;\n\t\ttext-shadow: 0 -1px 0 rgba(0, 0, 0, 0.99);\n\t\t-webkit-font-smoothing: antialiased;\n}\n", ""]);
+exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;\n}\nh3[data-v-1a4b0ea7] { text-align: center;\n}\np[data-v-1a4b0ea7] { white-space: pre-wrap;\n}\n.Editor[data-v-1a4b0ea7] { position: relative;\n}\nbutton.right-side[data-v-1a4b0ea7] {\n\t\tposition: absolute;\n\t\tright: 0;\n}\nbutton.power-editor[data-v-1a4b0ea7] {\n\t\tbackground: #D13DD1;\n\t\tcolor: #fff;\n\t\tborder: #8c3f8c;\n}\nbutton.power-editor[data-v-1a4b0ea7]:hover { background: #BC2EBC;\n}\n.Copyscape[data-v-1a4b0ea7] { margin-top: 5em;\n}\ndiv.first-button[data-v-1a4b0ea7] {\n\t    float: left;\n\t    margin-right: 0.2em;\n}\n.stopwatch[data-v-1a4b0ea7] {\n        font-size: 2em;\n        text-align: center;\n}\n.timer-overlay[data-v-1a4b0ea7] {\n        position: fixed;\n        background: #080808;\n        color: #fff;\n        left: 0;\n        bottom: 33em;\n        padding-top: 1em;\n        padding-left: 1.2em;\n        padding-right: .5em;\n        /* border-top-left-radius: .5em; */\n        /* border-bottom-left-radius: .5em; */\n        /* border: 5px solid #ecdfdf; */\n        /* border-left-width: 0; */\n        z-index: 999999;\n}\n.timer-overlay span[data-v-1a4b0ea7] { font-size: 14px;\n}\n#close[data-v-1a4b0ea7] {\n        position: fixed;\n        top: 4.6em;\n        right: 0;\n        padding: 1em 4em 1em 1em;\n        font-weight: bold;\n        border-top-right-radius: 0;\n        border-bottom-right-radius: 0;\n}\n\n\t/*=============== Gradient button ===============*/\n.btn-business-rule[data-v-1a4b0ea7] {\n\t\tbackground-color: hsl(0, 0%, 13%) !important;\n\t\tbackground-repeat: repeat-x;\n\t\tfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#bababa\", endColorstr=\"#212121\");\n\t\tbackground-image: -khtml-gradient(linear, left top, left bottom, from(#bababa), to(#212121));\n\t\tbackground-image: linear-gradient(#bababa, #212121);\n\t\tborder: 1px solid #7d7d7d;\n\t\tcolor: #fff !important;\n\t\ttext-shadow: 0 -1px 0 rgba(0, 0, 0, 0.99);\n\t\t-webkit-font-smoothing: antialiased;\n}\n", ""]);
 
 /***/ }),
 /* 216 */
@@ -58473,12 +58473,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Respin hits business rule")])])]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-danger",
     attrs: {
-      "type": "button"
+      "type": "button",
+      "id": "close"
     },
     on: {
       "click": _vm.dissmissArticle
     }
-  }, [_vm._v("Dismiss")]), _vm._v(" "), _vm._v("\n\t\t           \n\t\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
+  }, [_vm._v("Back to Articles")]), _vm._v(" "), _vm._v("\n\t\t           \n\t\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
     staticStyle: {
       "color": "red"
     }

@@ -56,7 +56,7 @@
 				</div>
 
 				<!-- Dismiss -->
-		        <button type="button" class="btn btn-danger" @click="dissmissArticle">Dismiss</button>
+		        <button type="button" class="btn btn-danger" id="close" @click="dissmissArticle">Back to Articles</button>
 
 		        <!-- Misc -->
 		        &nbsp;&nbsp;&nbsp;
@@ -331,6 +331,16 @@
         z-index: 999999;
     }
     .timer-overlay span { font-size: 14px; }
+
+    #close {
+        position: fixed;
+        top: 4.6em;
+        right: 0;
+        padding: 1em 4em 1em 1em;
+        font-weight: bold;
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
 
 	/*=============== Gradient button ===============*/
 	.btn-business-rule {
