@@ -1,7 +1,7 @@
 <nav role="navigation" class="navbar navbar-default navbar-top navbar-fixed-top">
     <div class="navbar-header">
         <a class="brand-logo" href="{{ url('/') }}">
-            Connexions Content Suite
+        	Connexions Content Suite
         </a>
     </div>
 

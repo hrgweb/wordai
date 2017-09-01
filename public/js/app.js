@@ -5527,7 +5527,7 @@ var ArticleMixin = {
 
 					// new article base on check grammar result
 					// $('div.note-editable').text('').html(result);
-					console.log(result);
+					// console.log(result);
 				} else {
 					// check if api response is fail
 					_this4.error = data.error;
