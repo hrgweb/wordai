@@ -18,7 +18,23 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
-            return redirect('/home');
+            $user = $request->user();
+            $user_level = (int) $user->user_level_id;
+
+            // check if user is Admin
+            if ($user_level === 2) {
+                return redirect('articles');
+            }
+
+            // check if user is Writer
+            if ($user_level === 3) {
+                return redirect('home');
+            }
+
+            // check if user is Editor
+            if ($user_level === 4) {
+                return redirect('editor');
+            }
         }
 
         return $next($request);

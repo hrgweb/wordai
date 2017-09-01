@@ -9,6 +9,10 @@ use Ixudra\Curl\Facades\Curl;
 
 class EditorsController extends Controller
 {
+    public function __construct() {
+        $this->middleware('auth');
+    }
+
     public function articleList()
     {
     	return DB::table('words')

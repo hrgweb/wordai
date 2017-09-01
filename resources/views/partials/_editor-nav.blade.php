@@ -1,6 +1,6 @@
 <nav role="navigation" class="navbar navbar-default navbar-top navbar-fixed-top">
     <div class="navbar-header">
-        <a class="brand-logo" href="{{ url('/') }}">
+        <a class="brand-logo" href="{{ url('/editor') }}">
         	Connexions Content Suite
         </a>
     </div>
@@ -17,13 +17,6 @@
                         {{ Auth::user()->full_name() }}
                     </a>
                 </li>
-
-                {{-- show if logged in as user --}}
-                @if (! $user->isAdmin)
-                    <li><a href="{{ url('create-article') }}">Create Article</a></li>
-                    <li><a href="{{ url('articles') }}">Article List</a></li>
-                    {{-- <li><a href="{{ url('words/generate') }}">Generate Article</a></li> --}}
-                @endif
 
                 <li>
                     {{-- <a href="{{ url('logout') }}" --}}
