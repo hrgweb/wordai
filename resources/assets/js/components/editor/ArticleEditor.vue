@@ -31,7 +31,8 @@
             <!-- textgear -->
             <textgear-result
                 :grammar="textgear"
-                v-if="isGrammarTrue">
+                v-if="isGrammarTrue"
+                @isClose="closeTextGear">
             </textgear-result>
 
             <!-- copyscape -->
@@ -292,6 +293,10 @@
 
             dismissPowerEditor() {
                 this.pEditorAccess = false;
+            },
+
+            closeTextGear() {
+                this.isGrammarTrue = false;
             }
 		}
 	}

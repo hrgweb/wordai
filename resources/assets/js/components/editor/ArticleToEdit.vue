@@ -19,7 +19,7 @@
 </template>
 
 <script>
-    import ReportTable from './../admin/ReportTable.vue';
+    import ReportTable from './ReportTable.vue';
 
     export default {
         props: ['articles', 'fromUtc', 'toUtc'],

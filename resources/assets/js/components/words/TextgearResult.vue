@@ -1,6 +1,7 @@
 <template>
 	<div class="errorlist">
 		<h4>Check Grammar Result</h4><hr>
+        <button type="button" class="close" id="textgear-close" data-dismiss="alert" aria-hidden="true" @click="$emit('isClose')">&times;</button>
 
 	    <table>
 	        <tbody>
@@ -30,11 +31,21 @@
 
 <style scoped>
 	.errorlist {
+        position: relative;
 		background: #ffedf0;
 	    padding: .5em 1em;
 	    margin: 0 0 2em;
 	    border: 1px solid #f9d8dd;
 	}
+
+    button#textgear-close {
+        background: red;
+        opacity: 1;
+        padding: .2em 0.5em;
+        color: #fff;
+        top: 0.3em;
+        right: .5em;
+    }
 
 	table {
 		width: 100%;

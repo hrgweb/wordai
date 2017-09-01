@@ -30704,6 +30704,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -30913,6 +30914,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         dismissPowerEditor: function dismissPowerEditor() {
             this.pEditorAccess = false;
+        },
+        closeTextGear: function closeTextGear() {
+            this.isGrammarTrue = false;
         }
     }
 });
@@ -31147,6 +31151,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		articles: function articles(data) {
 			this.articlesCount = data.length;
 			this.articlesToEdit(data);
+			console.log('changed articles');
 		},
 		authUser: function authUser(data) {
 			// has power editor access
@@ -31165,6 +31170,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		this.authUser = JSON.parse(this.user);
 		this.listenWhenPowerEditorUpdated();
 		this.updateArticleData();
+
+		// Bus
+		var vm = this;
+		ArticleBus.$on('isEditing', function (data) {
+			return vm.updateArticle(data);
+		});
 	},
 
 	methods: {
@@ -31213,7 +31224,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		updateRecord: function updateRecord(data) {
 			if (data) {
-				this.isEdit = false;
+				// this.isEdit = false;  // close the article-editor component
 				this.articles[this.index].spin = data.article;
 				this.articles[this.index].hr_spent_editor_edit_article = data.times[0];
 				this.articles[this.index].min_spent_editor_edit_article = data.times[1];
@@ -32825,6 +32836,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
 //
 //
 //
@@ -36513,7 +36525,7 @@ exports.push([module.i, "\ntable tbody tr:first-child > td[data-v-54f9dd57]:last
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.errorlist[data-v-57f506a5] {\n\t\tbackground: #ffedf0;\n\t    padding: .5em 1em;\n\t    margin: 0 0 2em;\n\t    border: 1px solid #f9d8dd;\n}\ntable[data-v-57f506a5] {\n\t\twidth: 100%;\n\t\tfont-family: tahoma;\n\t\tfont-weight: normal;\n\t\tfont-size: 1.1em;\n\t\tline-height: 1.6em;\n\t\tcolor: #B52E47;\n}\ntable td[data-v-57f506a5] {\n        vertical-align: top;\n        padding: .5em 1em;\n}\ntd[data-v-57f506a5]:nth-child(3) { word-break: break-word;\n}\ntable td span.green[data-v-57f506a5] {\n\t\tpadding-right: .5em;\n\t\twhite-space: pre-wrap;\n}\n.errorlist .red[data-v-57f506a5] { color: #B52E47;\n}\n.errorlist .green[data-v-57f506a5] { color: #3FBD44;\n}\nhr[data-v-57f506a5] { border-top: 1px solid #c5c5c5;\n}\n", ""]);
+exports.push([module.i, "\n.errorlist[data-v-57f506a5] {\n        position: relative;\n\t\tbackground: #ffedf0;\n\t    padding: .5em 1em;\n\t    margin: 0 0 2em;\n\t    border: 1px solid #f9d8dd;\n}\nbutton#textgear-close[data-v-57f506a5] {\n        background: red;\n        opacity: 1;\n        padding: .2em 0.5em;\n        color: #fff;\n        top: 0.3em;\n        right: .5em;\n}\ntable[data-v-57f506a5] {\n\t\twidth: 100%;\n\t\tfont-family: tahoma;\n\t\tfont-weight: normal;\n\t\tfont-size: 1.1em;\n\t\tline-height: 1.6em;\n\t\tcolor: #B52E47;\n}\ntable td[data-v-57f506a5] {\n        vertical-align: top;\n        padding: .5em 1em;\n}\ntd[data-v-57f506a5]:nth-child(3) { word-break: break-word;\n}\ntable td span.green[data-v-57f506a5] {\n\t\tpadding-right: .5em;\n\t\twhite-space: pre-wrap;\n}\n.errorlist .red[data-v-57f506a5] { color: #B52E47;\n}\n.errorlist .green[data-v-57f506a5] { color: #3FBD44;\n}\nhr[data-v-57f506a5] { border-top: 1px solid #c5c5c5;\n}\n", ""]);
 
 /***/ }),
 /* 226 */
@@ -58457,6 +58469,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Save Article Changes")])]), _vm._v(" "), (_vm.isGrammarTrue) ? _c('textgear-result', {
     attrs: {
       "grammar": _vm.textgear
+    },
+    on: {
+      "isClose": _vm.closeTextGear
     }
   }) : _vm._e(), _vm._v(" "), (_vm.responseSuccess) ? _c('copyscape-result', {
     attrs: {
@@ -60083,7 +60098,20 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "errorlist"
-  }, [_c('h4', [_vm._v("Check Grammar Result")]), _c('hr'), _vm._v(" "), _c('table', [_c('tbody', _vm._l((_vm.grammar.errors), function(worse) {
+  }, [_c('h4', [_vm._v("Check Grammar Result")]), _c('hr'), _vm._v(" "), _c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "id": "textgear-close",
+      "data-dismiss": "alert",
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.$emit('isClose')
+      }
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('table', [_c('tbody', _vm._l((_vm.grammar.errors), function(worse) {
     return _c('tr', [_c('td', [_c('span', {
       staticClass: "red"
     }, [_vm._v(_vm._s(worse.bad))])]), _vm._v(" "), _c('td', {
@@ -61462,20 +61490,14 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Editor"
-  }, [_c('article-to-edit', {
-    attrs: {
-      "articles": _vm.listToEdit
-    }
-  }), _vm._v(" "), _c('div', {
+  }, [_c('div', {
     staticClass: "Permission"
   }, [(!_vm.hasPeditorAccess) ? _c('error', {
     attrs: {
       "list": _vm.error,
       "type": false
     }
-  }) : _vm._e()], 1), _vm._v(" "), _c('h2', [_vm._v("Article List "), _c('span', {
-    staticClass: "badge"
-  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), (_vm.isEdit) ? _c('article-editor', {
+  }) : _vm._e()], 1), _vm._v(" "), (_vm.isEdit) ? _c('article-editor', {
     attrs: {
       "article": _vm.article,
       "peditoraccess": _vm.hasPeditorAccess
@@ -61486,7 +61508,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }) : _vm._e(), _vm._v(" "), (!_vm.isEdit) ? _c('div', {
     staticClass: "Editor__table"
-  }, [(_vm.isArticlesNotEmpty) ? _c('article-result', {
+  }, [_c('article-to-edit', {
+    attrs: {
+      "articles": _vm.listToEdit
+    }
+  }), _vm._v(" "), _c('h2', [_vm._v("Article List "), _c('span', {
+    staticClass: "badge"
+  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), (_vm.isArticlesNotEmpty) ? _c('article-result', {
     attrs: {
       "articles": _vm.articles
     },
@@ -63254,8 +63282,8 @@ module.exports = __webpack_require__(146);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__admin_ReportTable_vue__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__admin_ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__admin_ReportTable_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__ = __webpack_require__(361);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
 //
 //
 //
@@ -63281,7 +63309,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['articles', 'fromUtc', 'toUtc'],
-    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__admin_ReportTable_vue___default.a },
+    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a },
     data: function data() {
         return {
             articlesCount: 0,
@@ -63355,6 +63383,190 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-554ae742", module.exports)
+  }
+}
+
+/***/ }),
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['articles'],
+    data: function data() {
+        return {
+            time: moment
+        };
+    },
+
+    methods: {
+        editArticle: function editArticle(article, index) {
+            ArticleBus.$emit('isEditing', {
+                article: article,
+                index: index
+            });
+        },
+        publishBtnState: function publishBtnState(text, state) {
+            this.$refs.btnPublish[this.index].innerText = text;
+            this.$refs.btnPublish[this.index].disabled = state;
+        },
+        publishArticle: function publishArticle(article, index) {
+            this.index = index;
+            this.publishBtnState('Publishing...', true);
+
+            var payload = {
+                domain: article.domain,
+                title: article.doc_title,
+                keyword: article.keyword,
+                article: article.spin,
+                spintax: article.spintax
+            };
+
+            var vm = this;
+            axios.post('/editor/publishArticle', payload).then(function (response) {
+                var data = response.data;
+
+                // publish button state
+                vm.publishBtnState('Publish', false);
+
+                if (data.status === 'success') {
+                    // notify user successfully uploade to dropbox
+                    var articleTitle = payload.title;
+                    new Noty({
+                        type: 'success',
+                        text: '<b>' + articleTitle + '</b> article successfully uploaded to dropbox.',
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
+                }
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 361 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(360),
+  /* template */
+  __webpack_require__(362),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\editor\\ReportTable.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ReportTable.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0c0109c4", Component.options)
+  } else {
+    hotAPI.reload("data-v-0c0109c4", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 362 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "ReportTable"
+  }, [_c('table', {
+    staticClass: "table table-striped table-hover"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
+    return _c('tr', {
+      key: index
+    }, [_c('td', [_vm._v(_vm._s(article.writer))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.article_type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.lsi_terms))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain_protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.synonym))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-info",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.editArticle(article, index)
+        }
+      }
+    }, [_vm._v("Edit Article")]), _vm._v(" "), _c('button', {
+      ref: "btnPublish",
+      refInFor: true,
+      staticClass: "btn btn-danger",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.publishArticle(article, index)
+        }
+      }
+    }, [_vm._v("Publish")])])])
+  }))])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Writer")]), _vm._v(" "), _c('th', [_vm._v("Article Type")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("LSI Terms")]), _vm._v(" "), _c('th', [_vm._v("Domain Protected")]), _vm._v(" "), _c('th', [_vm._v("Protected")]), _vm._v(" "), _c('th', [_vm._v("Synonym")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("Actions")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-0c0109c4", module.exports)
   }
 }
 

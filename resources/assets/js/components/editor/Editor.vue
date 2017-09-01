@@ -1,10 +1,5 @@
 <template>
 	<div class="Editor">
-        <!-- Article To Edit -->
-        <article-to-edit
-            :articles="listToEdit">
-        </article-to-edit>
-
 		<!-- Permission Details -->
 		<div class="Permission">
 			<error
@@ -13,8 +8,6 @@
 				v-if="! hasPeditorAccess">
  			</error>
 		</div>
-
-        <h2>Article List <span class="badge">{{ articlesCount }}</span></h2>
 
 		<!-- Article Editor -->
 		<article-editor
@@ -26,6 +19,13 @@
 		</article-editor>
 
 		<div class="Editor__table" v-if="! isEdit">
+            <!-- Article To Edit -->
+            <article-to-edit
+                :articles="listToEdit">
+            </article-to-edit>
+
+            <h2>Article List <span class="badge">{{ articlesCount }}</span></h2>
+
 			<!-- Article Result -->
 			<article-result
 				:articles="articles"
@@ -66,6 +66,7 @@
 			articles(data) {
 				this.articlesCount = data.length;
                 this.articlesToEdit(data);
+                console.log('changed articles');
 			},
 
 			authUser(data) {
@@ -85,6 +86,10 @@
 			this.authUser = JSON.parse(this.user);
 			this.listenWhenPowerEditorUpdated();
             this.updateArticleData();
+
+            // Bus
+            let vm = this;
+            ArticleBus.$on('isEditing', data => vm.updateArticle(data));
 		},
 		methods: {
 			articleList() {
@@ -128,7 +133,7 @@
 
 			updateRecord(data) {
 				if (data) {
-					this.isEdit = false;
+					// this.isEdit = false;  // close the article-editor component
 					this.articles[this.index].spin = data.article;
                     this.articles[this.index].hr_spent_editor_edit_article = data.times[0];
                     this.articles[this.index].min_spent_editor_edit_article = data.times[1];
