@@ -50,6 +50,11 @@ class LoginController extends Controller
         	// login the user
         	Auth::login($request->user());
 
+            // if user is 'admin'
+            if ($request->user()->user_level_id ===2) {
+                return redirect('admin');
+            }
+
         	// if user is 'editor'
         	if ($request->user()->user_level_id === 4) {
         		return redirect('editor');
