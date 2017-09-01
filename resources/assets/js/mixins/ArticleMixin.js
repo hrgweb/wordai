@@ -236,7 +236,7 @@ export const ArticleMixin = {
 			this.isError = false;
 			this.$refs.tgButton.disabled = true;
 
-			const payload = { text: $('div.note-editable').text() };
+			const payload = { text: $('div.note-editable').html() };
 
 			axios.post('/words/processTextGrammar', payload).then(response => {
 				let data = response.data;

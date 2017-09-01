@@ -5481,7 +5481,7 @@ var ArticleMixin = {
 			this.isError = false;
 			this.$refs.tgButton.disabled = true;
 
-			var payload = { text: $('div.note-editable').text() };
+			var payload = { text: $('div.note-editable').html() };
 
 			axios.post('/words/processTextGrammar', payload).then(function (response) {
 				var data = response.data;
@@ -30617,6 +30617,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_ArticleMixin_js__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__class_Stopwatch_js__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__words_TextgearResult_vue__ = __webpack_require__(141);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__words_TextgearResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__words_TextgearResult_vue__);
 //
 //
 //
@@ -30692,6 +30694,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -30701,7 +30714,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['article', 'peditoraccess'],
-    components: { PowerEditor: __WEBPACK_IMPORTED_MODULE_0__PowerEditor_vue___default.a, CopyscapeResult: __WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue___default.a },
+    components: { PowerEditor: __WEBPACK_IMPORTED_MODULE_0__PowerEditor_vue___default.a, CopyscapeResult: __WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue___default.a, TextgearResult: __WEBPACK_IMPORTED_MODULE_5__words_TextgearResult_vue___default.a },
     mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_3__mixins_ArticleMixin_js__["a" /* ArticleMixin */]],
     data: function data() {
         return {
@@ -36410,7 +36423,7 @@ if (typeof jQuery === 'undefined') {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;\n}\nh3[data-v-1a4b0ea7] { text-align: center;\n}\np[data-v-1a4b0ea7] { white-space: pre-wrap;\n}\n.Editor[data-v-1a4b0ea7] { position: relative;\n}\nbutton.right-side[data-v-1a4b0ea7] {\n\t\tposition: absolute;\n\t\tright: 0;\n}\nbutton.power-editor[data-v-1a4b0ea7] {\n\t\tbackground: #D13DD1;\n\t\tcolor: #fff;\n\t\tborder: #8c3f8c;\n}\nbutton.power-editor[data-v-1a4b0ea7]:hover { background: #BC2EBC;\n}\n.Copyscape[data-v-1a4b0ea7] { margin-top: 5em;\n}\ndiv.first-button[data-v-1a4b0ea7] {\n\t    float: left;\n\t    margin-right: 0.2em;\n}\n.stopwatch[data-v-1a4b0ea7] {\n        font-size: 2em;\n        text-align: center;\n}\n.timer-overlay[data-v-1a4b0ea7] {\n        position: fixed;\n        background: #080808;\n        color: #fff;\n        left: 0;\n        bottom: 33em;\n        padding-top: 1em;\n        padding-left: 1.2em;\n        padding-right: .5em;\n        /* border-top-left-radius: .5em; */\n        /* border-bottom-left-radius: .5em; */\n        /* border: 5px solid #ecdfdf; */\n        /* border-left-width: 0; */\n        z-index: 999999;\n}\n.timer-overlay span[data-v-1a4b0ea7] { font-size: 14px;\n}\n#close[data-v-1a4b0ea7] {\n        position: fixed;\n        top: 4.6em;\n        right: 0;\n        padding: 1em 4em 1em 1em;\n        font-weight: bold;\n        border-top-right-radius: 0;\n        border-bottom-right-radius: 0;\n}\n\n\t/*=============== Gradient button ===============*/\n.btn-business-rule[data-v-1a4b0ea7] {\n\t\tbackground-color: hsl(0, 0%, 13%) !important;\n\t\tbackground-repeat: repeat-x;\n\t\tfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#bababa\", endColorstr=\"#212121\");\n\t\tbackground-image: -khtml-gradient(linear, left top, left bottom, from(#bababa), to(#212121));\n\t\tbackground-image: linear-gradient(#bababa, #212121);\n\t\tborder: 1px solid #7d7d7d;\n\t\tcolor: #fff !important;\n\t\ttext-shadow: 0 -1px 0 rgba(0, 0, 0, 0.99);\n\t\t-webkit-font-smoothing: antialiased;\n}\n", ""]);
+exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;\n}\nh3[data-v-1a4b0ea7] { text-align: center;\n}\np[data-v-1a4b0ea7] { white-space: pre-wrap;\n}\n.Editor[data-v-1a4b0ea7] { position: relative;\n}\nbutton.right-side[data-v-1a4b0ea7] {\n\t\tposition: absolute;\n\t\tright: 0;\n}\nbutton.power-editor[data-v-1a4b0ea7] {\n\t\tbackground: #D13DD1;\n\t\tcolor: #fff;\n\t\tborder: #8c3f8c;\n}\nbutton.power-editor[data-v-1a4b0ea7]:hover { background: #BC2EBC;\n}\n.Copyscape[data-v-1a4b0ea7], .errorlist[data-v-1a4b0ea7] { margin-top: 5em;\n}\nbutton.textgear[data-v-1a4b0ea7] { background-color: #af863f !important;\n}\nbutton.textgear[data-v-1a4b0ea7]:hover {\n        background-color: #9D7734 !important;\n        border: 1px solid #936B25 !important;\n}\ndiv.first-button[data-v-1a4b0ea7] {\n\t    float: left;\n\t    margin-right: 0.2em;\n}\n.stopwatch[data-v-1a4b0ea7] {\n        font-size: 2em;\n        text-align: center;\n}\n.timer-overlay[data-v-1a4b0ea7] {\n        position: fixed;\n        background: #080808;\n        color: #fff;\n        left: 0;\n        bottom: 33em;\n        padding-top: 1em;\n        padding-left: 1.2em;\n        padding-right: .5em;\n        /* border-top-left-radius: .5em; */\n        /* border-bottom-left-radius: .5em; */\n        /* border: 5px solid #ecdfdf; */\n        /* border-left-width: 0; */\n        z-index: 999999;\n}\n.timer-overlay span[data-v-1a4b0ea7] { font-size: 14px;\n}\n#close[data-v-1a4b0ea7] {\n        position: fixed;\n        top: 4.6em;\n        right: 0;\n        padding: 1em 4em 1em 1em;\n        font-weight: bold;\n        border-top-right-radius: 0;\n        border-bottom-right-radius: 0;\n}\n\n\t/*=============== Gradient button ===============*/\n.btn-business-rule[data-v-1a4b0ea7] {\n\t\tbackground-color: hsl(0, 0%, 13%) !important;\n\t\tbackground-repeat: repeat-x;\n\t\tfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#bababa\", endColorstr=\"#212121\");\n\t\tbackground-image: -khtml-gradient(linear, left top, left bottom, from(#bababa), to(#212121));\n\t\tbackground-image: linear-gradient(#bababa, #212121);\n\t\tborder: 1px solid #7d7d7d;\n\t\tcolor: #fff !important;\n\t\ttext-shadow: 0 -1px 0 rgba(0, 0, 0, 0.99);\n\t\t-webkit-font-smoothing: antialiased;\n}\n", ""]);
 
 /***/ }),
 /* 216 */
@@ -36480,7 +36493,7 @@ exports.push([module.i, "\ntable tbody tr:first-child > td[data-v-54f9dd57]:last
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.errorlist[data-v-57f506a5] {\n\tbackground: #ffedf0;\n    padding: .5em 1em;\n    margin: 0 0 2em;\n    border: 1px solid #f9d8dd;\n}\ntable[data-v-57f506a5] { \n\twidth: 100%; \n\tfont-family: tahoma;\n\tfont-weight: normal;\n\tfont-size: 1.1em;\n\tline-height: 1.6em;\n\tcolor: #B52E47;\n}\ntable td[data-v-57f506a5] { vertical-align: top;\n}\ntd[data-v-57f506a5]:nth-child(3) { word-break: break-word;\n}\ntable td span.green[data-v-57f506a5] { \n\tpadding-right: .5em;  \n\twhite-space: pre-wrap;\n}\n.errorlist .red[data-v-57f506a5] { color: #B52E47;\n}\n.errorlist .green[data-v-57f506a5] { color: #3FBD44;\n}\nhr[data-v-57f506a5] { border-top: 1px solid #c5c5c5;\n}\n", ""]);
+exports.push([module.i, "\n.errorlist[data-v-57f506a5] {\n\t\tbackground: #ffedf0;\n\t    padding: .5em 1em;\n\t    margin: 0 0 2em;\n\t    border: 1px solid #f9d8dd;\n}\ntable[data-v-57f506a5] {\n\t\twidth: 100%;\n\t\tfont-family: tahoma;\n\t\tfont-weight: normal;\n\t\tfont-size: 1.1em;\n\t\tline-height: 1.6em;\n\t\tcolor: #B52E47;\n}\ntable td[data-v-57f506a5] {\n        vertical-align: top;\n        padding: .5em 1em;\n}\ntd[data-v-57f506a5]:nth-child(3) { word-break: break-word;\n}\ntable td span.green[data-v-57f506a5] {\n\t\tpadding-right: .5em;\n\t\twhite-space: pre-wrap;\n}\n.errorlist .red[data-v-57f506a5] { color: #B52E47;\n}\n.errorlist .green[data-v-57f506a5] { color: #3FBD44;\n}\nhr[data-v-57f506a5] { border-top: 1px solid #c5c5c5;\n}\n", ""]);
 
 /***/ }),
 /* 226 */
@@ -58421,7 +58434,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.updateArticle
     }
-  }, [_vm._v("Save Article Changes")])]), _vm._v(" "), (_vm.responseSuccess) ? _c('copyscape-result', {
+  }, [_vm._v("Save Article Changes")])]), _vm._v(" "), (_vm.isGrammarTrue) ? _c('textgear-result', {
+    attrs: {
+      "grammar": _vm.textgear
+    }
+  }) : _vm._e(), _vm._v(" "), (_vm.responseSuccess) ? _c('copyscape-result', {
     attrs: {
       "copy": _vm.copyscape
     },
@@ -58471,6 +58488,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "disabled": ""
     }
   }, [_vm._v("Respin hits business rule")])])]), _vm._v(" "), _c('button', {
+    ref: "tgButton",
+    staticClass: "btn btn-info textgear",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.processToTextGear
+    }
+  }, [_vm._v("Check Grammar")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-danger",
     attrs: {
       "type": "button",

@@ -36,8 +36,8 @@
 	    border: 1px solid #f9d8dd;
 	}
 
-	table { 
-		width: 100%; 
+	table {
+		width: 100%;
 		font-family: tahoma;
 		font-weight: normal;
 		font-size: 1.1em;
@@ -45,10 +45,14 @@
 		color: #B52E47;
 	}
 
-	table td { vertical-align: top; }
+	table td {
+        vertical-align: top;
+        padding: .5em 1em;
+    }
+
 	td:nth-child(3) { word-break: break-word; }
-	table td span.green { 
-		padding-right: .5em;  
+	table td span.green {
+		padding-right: .5em;
 		white-space: pre-wrap;
 	}
 

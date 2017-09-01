@@ -28,6 +28,13 @@
 				<button type="button" class="btn btn-success right-side" @click="updateArticle" ref="saveChangeBtn">Save Article Changes</button>
 			</div>
 
+            <!-- textgear -->
+            <textgear-result
+                :grammar="textgear"
+                v-if="isGrammarTrue">
+            </textgear-result>
+
+            <!-- copyscape -->
 			<copyscape-result
 				:copy="copyscape"
 				@updateduplicates="updateDuplicates"
@@ -55,6 +62,9 @@
 					</div>
 				</div>
 
+                <!-- Textgear -->
+                <button type="button" class="btn btn-info textgear" @click="processToTextGear" ref="tgButton">Check Grammar</button>
+
 				<!-- Dismiss -->
 		        <button type="button" class="btn btn-danger" id="close" @click="dissmissArticle">Back to Articles</button>
 
@@ -79,10 +89,11 @@
 	import { CrudMixin } from './../../mixins/CrudMixin.js';
 	import { ArticleMixin } from './../../mixins/ArticleMixin.js';
     import Stopwatch from './../../class/Stopwatch.js';
+    import TextgearResult from './../words/TextgearResult.vue';
 
 	export default {
 		props: ['article', 'peditoraccess'],
-		components: { PowerEditor, CopyscapeResult },
+		components: { PowerEditor, CopyscapeResult, TextgearResult },
 		mixins: [ CrudMixin, ArticleMixin ],
 		data() {
 			return {
@@ -303,7 +314,13 @@
 		border: #8c3f8c;
 	}
 	button.power-editor:hover { background: #BC2EBC; }
-	.Copyscape { margin-top: 5em; }
+	.Copyscape, .errorlist { margin-top: 5em; }
+
+    button.textgear { background-color: #af863f !important; }
+    button.textgear:hover {
+        background-color: #9D7734 !important;
+        border: 1px solid #936B25 !important;
+    }
 
 	div.first-button {
 	    float: left;
