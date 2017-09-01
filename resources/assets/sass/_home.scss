@@ -1,5 +1,4 @@
 html, body { overflow-x: visible !important; }
-
 /*=============== Writer ===============*/
 .Writer { margin: 7em 5em; }
 
@@ -106,8 +105,12 @@ table thead th:nth-child(5) { width: 120px; }
 }
 
 .Spintax__result {
-    background: #ffc8c8;
-    border: 1px solid #e4abab;
+    background: #524747;
+    color: #fff;
+    font-size: 16px;
+    line-height: 22px;
+    border: 1px solid #413737;
+
 }
 
 .Process__article {
