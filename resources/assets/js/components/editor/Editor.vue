@@ -81,6 +81,7 @@
                             article: item.article,
                             article_type: item.article_type,
                             created_at: item.created_at,
+                            doc_title: item.doc_title,
                             domain: item.domain,
                             domain_protected: item.domain_protected,
                             firstname: item.firstname,

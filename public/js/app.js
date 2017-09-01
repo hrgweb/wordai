@@ -5255,13 +5255,14 @@ var ArticleMixin = {
 			textgear: {},
 			isGrammarTrue: false,
 			articleDuplicates: [],
-			isDisableSpinAndCs: true
+			isDisableSpinAndCs: true,
+			isCsHasResult: false
 		};
 	},
 
 	watch: {
 		articleDuplicates: function articleDuplicates(data) {
-			this.isDisableSpinAndCs = data.length > 0 ? false : true;
+			this.isDisableSpinAndCs = this.isCsHasResult === true && data.length > 0 ? false : true;
 		}
 	},
 	methods: {
@@ -5377,7 +5378,7 @@ var ArticleMixin = {
 			var duplicates = [];
 			var finds = [];
 
-			// split to sentence 
+			// split to sentence
 			duplicates = this.splitResultBySentence(results);
 
 			// remove empty value from duplicates
@@ -5425,7 +5426,12 @@ var ArticleMixin = {
 					_this3.responseSuccess = false;
 				} else {
 					// find all duplicate occurences
-					_this3.copyScapeData(data.result);
+					if (data.hasOwnProperty('result')) {
+						_this3.copyScapeData(data.result);
+						_this3.isCsHasResult = true;
+					} else {
+						_this3.isCsHasResult = false;
+					}
 				}
 
 				// check if counter = 5
@@ -31143,6 +31149,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 						article: item.article,
 						article_type: item.article_type,
 						created_at: item.created_at,
+						doc_title: item.doc_title,
 						domain: item.domain,
 						domain_protected: item.domain_protected,
 						firstname: item.firstname,

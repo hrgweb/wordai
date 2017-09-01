@@ -10,12 +10,13 @@ export const ArticleMixin = {
 			textgear: {},
 			isGrammarTrue: false,
 			articleDuplicates: [],
-			isDisableSpinAndCs: true
+			isDisableSpinAndCs: true,
+            isCsHasResult: false
 		}
 	},
 	watch: {
 		articleDuplicates(data) {
-			this.isDisableSpinAndCs = data.length > 0 ? false : true;
+			this.isDisableSpinAndCs = (this.isCsHasResult === true && data.length > 0) ? false : true;
 		}
 	},
 	methods: {
@@ -122,7 +123,7 @@ export const ArticleMixin = {
 
 				// modify result of the copyscape[index].result.textsnippet
 				vm.copyscape.result[index].textsnippet = paragraph;
-				
+
 				// when search color red the duplicate
 				paragraphs.html(paragraph);
 			});
@@ -133,7 +134,7 @@ export const ArticleMixin = {
 			let duplicates = [];
 			let finds = [];
 
-			// split to sentence 
+			// split to sentence
 			duplicates = this.splitResultBySentence(results);
 
 			// remove empty value from duplicates
@@ -178,7 +179,12 @@ export const ArticleMixin = {
 					this.responseSuccess = false;
 				} else {
 					// find all duplicate occurences
-					this.copyScapeData(data.result);
+                    if (data.hasOwnProperty('result')) {
+                        this.copyScapeData(data.result);
+                        this.isCsHasResult = true;
+                    } else {
+                        this.isCsHasResult = false;
+                    }
 				}
 
 				// check if counter = 5
@@ -244,7 +250,7 @@ export const ArticleMixin = {
 					// add span tag on a bad words result in check grammar
 					let article = payload.text;
 					let result = '';
-					let off = 0; 
+					let off = 0;
 
 					for (let i = 0; i < data.errors.length; i++) {
 						/*// find index/offset
@@ -334,7 +340,7 @@ export const ArticleMixin = {
 						// display finish full article
 						this.generateNewArticle(this.spin.article);
 					}
-					
+
 					// check if api response is fail
 					if (data.status === 'Failure') {
 						this.error = data.error;
