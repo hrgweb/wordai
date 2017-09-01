@@ -3,7 +3,7 @@
 		<h2 class="text-center">{{ article.doc_title }}</h2><hr>
 
 		<div class="Spintax__result" v-if="peditoraccess">
-			<h3>Spintax Result</h3>
+			<h3>Spintax Result</h3><br>
 
 			<div class="Peditor" v-if="! pEditorAccess">
 				<p v-if="article.isEditorUpdateSC === 0">{{ article.spintax }}</p>
@@ -22,7 +22,7 @@
 		</div>
 
 		<div class="Process__article">
-			<h3>Processed Article</h3>
+			<h3>Processed Article</h3><br>
 			<div class="Editor">
 				<div id="editor"></div>
 				<button type="button" class="btn btn-success right-side" @click="updateArticle" ref="saveChangeBtn">Save Article Changes</button>

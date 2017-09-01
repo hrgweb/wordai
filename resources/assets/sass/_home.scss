@@ -104,13 +104,18 @@ table thead th:nth-child(5) { width: 120px; }
     margin-bottom: 3em;
 }
 
-.Spintax__result {
-    background: #524747;
-    color: #fff;
-    font-size: 16px;
-    line-height: 22px;
+.Spintax__result,
+.note-editable.panel-body {
+    background: #252525;
+    color: #e8e8e8;
+    font-size: 1.5em;
+    line-height: 1.6em;
     border: 1px solid #413737;
+}
 
+.note-editable.panel-body {
+    background: none;
+    border: none;
 }
 
 .Process__article {

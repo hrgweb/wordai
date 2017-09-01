@@ -58431,7 +58431,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "text-center"
   }, [_vm._v(_vm._s(_vm.article.doc_title))]), _c('hr'), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
     staticClass: "Spintax__result"
-  }, [_c('h3', [_vm._v("Spintax Result")]), _vm._v(" "), (!_vm.pEditorAccess) ? _c('div', {
+  }, [_c('h3', [_vm._v("Spintax Result")]), _c('br'), _vm._v(" "), (!_vm.pEditorAccess) ? _c('div', {
     staticClass: "Peditor"
   }, [(_vm.article.isEditorUpdateSC === 0) ? _c('p', [_vm._v(_vm._s(_vm.article.spintax))]) : _c('p', [_vm._v(_vm._s(_vm.article.spintax_copy))]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
     ref: "pEditorBtn",
@@ -58451,7 +58451,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }) : _vm._e()], 1) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "Process__article"
-  }, [_c('h3', [_vm._v("Processed Article")]), _vm._v(" "), _c('div', {
+  }, [_c('h3', [_vm._v("Processed Article")]), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "Editor"
   }, [_c('div', {
     attrs: {
