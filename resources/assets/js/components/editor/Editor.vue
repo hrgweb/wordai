@@ -24,6 +24,11 @@
                 :articles="listToEdit">
             </article-to-edit>
 
+            <!-- Article Edited -->
+            <article-edited
+                :articles="listEditedArticles">
+            </article-edited>
+
             <h2>Article List <span class="badge">{{ articlesCount }}</span></h2>
 
 			<!-- Article Result -->
@@ -39,7 +44,8 @@
 <script>
 	import ArticleResult from './ArticleResult.vue';
     import ArticleEditor from './ArticleEditor.vue';
-	import ArticleToEdit from './ArticleToEdit.vue';
+    import ArticleToEdit from './ArticleToEdit.vue';
+	import ArticleEdited from './ArticleEdited.vue';
 	import { UserArticleMixin } from './../../mixins/UserArticleMixin.js';
 	import Error from './../errors/Error.vue';
 
@@ -49,6 +55,7 @@
             ArticleResult,
             ArticleEditor,
             ArticleToEdit,
+            ArticleEdited,
             Error
         },
 		mixins: [ UserArticleMixin ],
@@ -59,13 +66,15 @@
 				error: '',
 				authUser: {},
 				hasPeditorAccess: false,
-                listToEdit: []
+                listToEdit: [],
+                listEditedArticles: []
 			}
 		},
 		watch: {
 			articles(data) {
 				this.articlesCount = data.length;
                 this.articlesToEdit(data);
+                this.editedArticles(data);
 			},
 
 			authUser(data) {
@@ -174,6 +183,16 @@
                         parseInt(item.hr_spent_editor_edit_article, 10) <= 0 &&
                         parseInt(item.min_spent_editor_edit_article, 10) <= 0 &&
                         parseInt(item.sec_spent_editor_edit_article, 10) <= 0
+                    );
+                });
+            },
+
+            editedArticles(data) {
+                this.listEditedArticles = data.filter(item => {
+                    return (
+                        parseInt(item.hr_spent_editor_edit_article, 10) > 0 ||
+                        parseInt(item.min_spent_editor_edit_article, 10) > 0 ||
+                        parseInt(item.sec_spent_editor_edit_article, 10) > 0
                     );
                 });
             }
