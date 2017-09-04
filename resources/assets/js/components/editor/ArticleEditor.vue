@@ -137,6 +137,23 @@
                 }
             },
 
+            changeCurlyColor() {
+                let spintax = $('div.Peditor').find('p').html();
+                let result = spintax.replace(/[{}|]/g, function(char, offset, string) {
+                    let span = '';
+
+                    if (char.match(/[{}]/)) {
+                        span = '<span class="curly">' + char + '</span>'
+                    } else {
+                        span = '<span class="pipe">' + char + '</span>'
+                    }
+
+                    return span;
+                });
+
+                $('div.Peditor').find('p').html(result);
+            },
+
             initSummernote() {
                 let vm = this;
                 let article = vm.article;
@@ -148,6 +165,9 @@
                         onInit() {
                             // 1st summernote - format paragraph
                             vm.updateFirstSummernote($('div.Peditor'), article);
+
+                            // change curly color
+                            Vue.nextTick(() => vm.changeCurlyColor());
 
                             // 2nd summernote - insert text
                             $('div.note-editable').find('p').html(article.spin);

@@ -66,7 +66,6 @@
 			articles(data) {
 				this.articlesCount = data.length;
                 this.articlesToEdit(data);
-                console.log('changed articles');
 			},
 
 			authUser(data) {

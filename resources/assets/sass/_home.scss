@@ -2,6 +2,10 @@ html, body { overflow-x: visible !important; }
 /*=============== Writer ===============*/
 .Writer { margin: 7em 5em; }
 
+/*=============== Curly Color ===============*/
+span.curly { color: #39B3D7; }
+span.pipe { color: #ECB32B; }
+
 /*=============== navigation ===============*/
 .navbar-header {
 	margin-left: 5em;
