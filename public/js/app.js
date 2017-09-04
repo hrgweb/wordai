@@ -32338,9 +32338,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         // validation success
                         _this.isValidationFail = false;
 
-                        // reset spin values
-                        _this.resetInputFields();
-
                         // notify user article posted successfully
                         var articleTitle = _this.spin.doc_title;
                         new Noty({
@@ -32349,6 +32346,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             layout: 'bottomLeft',
                             timeout: 5000
                         }).show();
+
+                        // reset spin values
+                        _this.resetInputFields();
+
+                        // animate div to top
+                        $('html, body').animate({ scrollTop: 0 });
                     }
                 });
             } else {

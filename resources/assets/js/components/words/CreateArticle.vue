@@ -123,9 +123,6 @@
 						} else { // validation success
 							this.isValidationFail = false;
 
-							// reset spin values
-                            this.resetInputFields();
-
 							// notify user article posted successfully
 							let articleTitle = this.spin.doc_title;
 							new Noty({
@@ -134,6 +131,12 @@
 								layout: 'bottomLeft',
 								timeout: 5000
 							}).show();
+
+                            // reset spin values
+                            this.resetInputFields();
+
+                            // animate div to top
+                            $('html, body').animate({ scrollTop: 0 });
 						}
 					});
 				} else {
