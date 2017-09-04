@@ -30753,16 +30753,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         updateFirstSummernote: function updateFirstSummernote(div, article) {
+            var _this2 = this;
+
             var p = div.find('p');
 
             // check if ther is paragraph && there is spintax_copy and not = to null
             if (p.length > 0 && article.isEditorUpdateSC === 1) {
                 Vue.nextTick(function () {
-                    return p.text(article.spintax_copy);
+                    p.text(article.spintax_copy);
+                    _this2.changeCurlyColor();
                 });
             } else {
                 Vue.nextTick(function () {
-                    return p.text(article.spintax);
+                    p.text(article.spintax);
+                    _this2.changeCurlyColor();
                 });
             }
         },
@@ -30780,7 +30784,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return span;
             });
 
-            $('div.Peditor').find('p').html(result);
+            $('div.Peditor').find('p').html(result); // format as html
         },
         initSummernote: function initSummernote() {
             var vm = this;
@@ -30815,7 +30819,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.clock.start();
         },
         updateArticle: function updateArticle() {
-            var _this2 = this;
+            var _this3 = this;
 
             var data = {
                 id: this.article.id,
@@ -30828,10 +30832,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             axios.patch('/editor/updateArticle', data).then(function (response) {
                 var data = response.data;
 
-                _this2.$refs.saveChangeBtn.disabled = false;
+                _this3.$refs.saveChangeBtn.disabled = false;
 
                 if (data.isSuccess) {
-                    _this2.$emit('isUpdated', {
+                    _this3.$emit('isUpdated', {
                         article: data.result,
                         times: data.times
                     });
@@ -30848,7 +30852,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.pEditorAccess = false;
         },
         respinArticle: function respinArticle() {
-            var _this3 = this;
+            var _this4 = this;
 
             this.isLoading = true;
             this.isError = false;
@@ -30877,8 +30881,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 editor.slideDown(); // show editor
                 editor.html(data);
 
-                _this3.isLoading = false;
-                _this3.$refs.respinBtn.disabled = false;
+                _this4.isLoading = false;
+                _this4.$refs.respinBtn.disabled = false;
 
                 // update article obj in vue data
                 ArticleBus.$emit('isRespinArticle', { spin: data });
@@ -30890,35 +30894,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }*/
 
                 // check if counter = 5
-                if (_this3.type == 'edit-article' && _this3.respinCounter == 5) {
-                    _this3.updateRespinCheckHitMax();
+                if (_this4.type == 'edit-article' && _this4.respinCounter == 5) {
+                    _this4.updateRespinCheckHitMax();
                 }
             });
         },
         updateCsCheckHitMax: function updateCsCheckHitMax() {
-            var _this4 = this;
+            var _this5 = this;
 
             var data = { word_id: this.article.id };
 
             axios.patch('/words/updateCsCheckHitMax', data).then(function (response) {
                 if (response.data) {
-                    _this4.csBusinessRuleShow = true;
+                    _this5.csBusinessRuleShow = true;
                 }
             });
         },
         updateRespinCheckHitMax: function updateRespinCheckHitMax() {
-            var _this5 = this;
+            var _this6 = this;
 
             var data = { word_id: this.article.id };
 
             axios.patch('/words/updateRespinCheckHitMax', data).then(function (response) {
                 if (response.data) {
-                    _this5.respinBusinessRuleShow = true;
+                    _this6.respinBusinessRuleShow = true;
                 }
             });
         },
         editorSpentTimeOnEditingArticle: function editorSpentTimeOnEditingArticle(emitType) {
-            var _this6 = this;
+            var _this7 = this;
 
             var data = {
                 word_id: this.article.id,
@@ -30929,7 +30933,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var data = response.data;
 
                 if (data) {
-                    _this6.$emit('isDismiss', data);
+                    _this7.$emit('isDismiss', data);
                 }
             });
         },

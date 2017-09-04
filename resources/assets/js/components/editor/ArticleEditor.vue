@@ -131,9 +131,15 @@
 
                 // check if ther is paragraph && there is spintax_copy and not = to null
                 if (p.length > 0 && article.isEditorUpdateSC === 1) {
-                    Vue.nextTick(() => p.text(article.spintax_copy));
+                    Vue.nextTick(() => {
+                        p.text(article.spintax_copy);
+                        this.changeCurlyColor();
+                    });
                 } else {
-                    Vue.nextTick(() => p.text(article.spintax));
+                    Vue.nextTick(() => {
+                        p.text(article.spintax);
+                        this.changeCurlyColor();
+                    });
                 }
             },
 
@@ -151,7 +157,7 @@
                     return span;
                 });
 
-                $('div.Peditor').find('p').html(result);
+                $('div.Peditor').find('p').html(result); // format as html
             },
 
             initSummernote() {
