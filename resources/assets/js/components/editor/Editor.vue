@@ -29,6 +29,11 @@
                 :articles="listEditedArticles">
             </article-edited>
 
+            <!-- Article To Publish -->
+            <article-to-publish
+                :articles="listArticleToPublish">
+            </article-to-publish>
+
             <h2>Article List <span class="badge">{{ articlesCount }}</span></h2>
 
 			<!-- Article Result -->
@@ -45,7 +50,8 @@
 	import ArticleResult from './ArticleResult.vue';
     import ArticleEditor from './ArticleEditor.vue';
     import ArticleToEdit from './ArticleToEdit.vue';
-	import ArticleEdited from './ArticleEdited.vue';
+    import ArticleEdited from './ArticleEdited.vue';
+	import ArticleToPublish from './ArticleToPublish.vue';
 	import { UserArticleMixin } from './../../mixins/UserArticleMixin.js';
 	import Error from './../errors/Error.vue';
 
@@ -56,6 +62,7 @@
             ArticleEditor,
             ArticleToEdit,
             ArticleEdited,
+            ArticleToPublish,
             Error
         },
 		mixins: [ UserArticleMixin ],
@@ -67,7 +74,8 @@
 				authUser: {},
 				hasPeditorAccess: false,
                 listToEdit: [],
-                listEditedArticles: []
+                listEditedArticles: [],
+                listArticleToPublish: []
 			}
 		},
 		watch: {
@@ -75,6 +83,7 @@
 				this.articlesCount = data.length;
                 this.articlesToEdit(data);
                 this.editedArticles(data);
+                this.articlesToPublish(data);
 			},
 
 			authUser(data) {
@@ -114,6 +123,7 @@
                             hr_spent_editor_edit_article: item.hr_spent_editor_edit_article,
                             id: item.id,
                             isCsCheckHitMax: item.isCsCheckHitMax,
+                            isEditorEdit: item.isEditorEdit,
                             isEditorUpdateSC: item.isEditorUpdateSC,
                             isRespinHitMax: item.isRespinHitMax,
                             keyword: item.keyword,
@@ -194,6 +204,12 @@
                         parseInt(item.min_spent_editor_edit_article, 10) > 0 ||
                         parseInt(item.sec_spent_editor_edit_article, 10) > 0
                     );
+                });
+            },
+
+            articlesToPublish(data) {
+                this.listArticleToPublish = data.filter(item => {
+                    return item.isEditorEdit === 1;
                 });
             }
 		}

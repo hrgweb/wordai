@@ -37,6 +37,7 @@ class EditorsController extends Controller
 				'spin',
 				'protected',
 				'synonym',
+                'isEditorEdit',
 				'isEditorUpdateSC',
                 'isCsCheckHitMax',
 				'isRespinHitMax',

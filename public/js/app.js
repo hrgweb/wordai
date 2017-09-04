@@ -31154,9 +31154,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ArticleToEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ArticleToEdit_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue__ = __webpack_require__(359);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_UserArticleMixin_js__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__errors_Error_vue__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__errors_Error_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ArticleToPublish_vue__ = __webpack_require__(362);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ArticleToPublish_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__ArticleToPublish_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__mixins_UserArticleMixin_js__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__errors_Error_vue__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__errors_Error_vue__);
 //
 //
 //
@@ -31200,6 +31202,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -31215,9 +31223,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     ArticleEditor: __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue___default.a,
     ArticleToEdit: __WEBPACK_IMPORTED_MODULE_2__ArticleToEdit_vue___default.a,
     ArticleEdited: __WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue___default.a,
-    Error: __WEBPACK_IMPORTED_MODULE_5__errors_Error_vue___default.a
+    ArticleToPublish: __WEBPACK_IMPORTED_MODULE_4__ArticleToPublish_vue___default.a,
+    Error: __WEBPACK_IMPORTED_MODULE_6__errors_Error_vue___default.a
   },
-  mixins: [__WEBPACK_IMPORTED_MODULE_4__mixins_UserArticleMixin_js__["a" /* UserArticleMixin */]],
+  mixins: [__WEBPACK_IMPORTED_MODULE_5__mixins_UserArticleMixin_js__["a" /* UserArticleMixin */]],
   data: function data() {
     return {
       isEdit: false,
@@ -31226,7 +31235,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       authUser: {},
       hasPeditorAccess: false,
       listToEdit: [],
-      listEditedArticles: []
+      listEditedArticles: [],
+      listArticleToPublish: []
     };
   },
 
@@ -31235,6 +31245,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       this.articlesCount = data.length;
       this.articlesToEdit(data);
       this.editedArticles(data);
+      this.articlesToPublish(data);
     },
     authUser: function authUser(data) {
       // has power editor access
@@ -31278,6 +31289,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             hr_spent_editor_edit_article: item.hr_spent_editor_edit_article,
             id: item.id,
             isCsCheckHitMax: item.isCsCheckHitMax,
+            isEditorEdit: item.isEditorEdit,
             isEditorUpdateSC: item.isEditorUpdateSC,
             isRespinHitMax: item.isRespinHitMax,
             keyword: item.keyword,
@@ -31351,6 +31363,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     editedArticles: function editedArticles(data) {
       this.listEditedArticles = data.filter(function (item) {
         return parseInt(item.hr_spent_editor_edit_article, 10) > 0 || parseInt(item.min_spent_editor_edit_article, 10) > 0 || parseInt(item.sec_spent_editor_edit_article, 10) > 0;
+      });
+    },
+    articlesToPublish: function articlesToPublish(data) {
+      this.listArticleToPublish = data.filter(function (item) {
+        return item.isEditorEdit === 1;
       });
     }
   }
@@ -61850,6 +61867,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "articles": _vm.listEditedArticles
     }
+  }), _vm._v(" "), _c('article-to-publish', {
+    attrs: {
+      "articles": _vm.listArticleToPublish
+    }
   }), _vm._v(" "), _c('h2', [_vm._v("Article List "), _c('span', {
     staticClass: "badge"
   }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), (_vm.isArticlesNotEmpty) ? _c('article-result', {
@@ -63719,6 +63740,116 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-08754f63", module.exports)
+  }
+}
+
+/***/ }),
+/* 361 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__ = __webpack_require__(267);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['articles', 'fromUtc', 'toUtc'],
+    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a },
+    data: function data() {
+        return {
+            articlesCount: 0,
+            time: moment
+        };
+    },
+
+    watch: {
+        articles: function articles(data) {
+            this.articlesCount = this.articles.length;
+        }
+    }
+});
+
+/***/ }),
+/* 362 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(361),
+  /* template */
+  __webpack_require__(363),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\editor\\ArticleToPublish.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ArticleToPublish.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-9db8cb6c", Component.options)
+  } else {
+    hotAPI.reload("data-v-9db8cb6c", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 363 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Waiting",
+    staticStyle: {
+      "top": "5em"
+    }
+  }, [_c('div', {
+    staticClass: "articles-to-be-edit"
+  }, [_c('h2', [_vm._v("\n            Articles To Publish\n            "), _c('span', {
+    staticClass: "badge"
+  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('report-table', {
+    attrs: {
+      "articles": _vm.articles
+    }
+  })], 1)])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-9db8cb6c", module.exports)
   }
 }
 
