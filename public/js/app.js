@@ -62701,32 +62701,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.spin.domain_protected),
-      expression: "spin.domain_protected"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "rows": "8"
-    },
-    domProps: {
-      "value": (_vm.spin.domain_protected)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.spin.domain_protected = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
-  }, [_c('label', {
-    attrs: {
-      "for": "domain_protected"
-    }
-  }, [_vm._v("Domain Protected Terms")]), _vm._v(" "), _c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
       value: (_vm.spin.protected),
       expression: "spin.protected"
     }],
@@ -62741,6 +62715,32 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.spin.protected = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c('label', {
+    attrs: {
+      "for": "domain_protected"
+    }
+  }, [_vm._v("Domain Protected Terms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.domain_protected),
+      expression: "spin.domain_protected"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.spin.domain_protected)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.domain_protected = $event.target.value
       }
     }
   })])]), _c('br'), _vm._v(" "), _c('label', {

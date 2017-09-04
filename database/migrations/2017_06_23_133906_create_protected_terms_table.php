@@ -17,7 +17,7 @@ class CreateProtectedTermsTable extends Migration
             $table->increments('id');
             $table->integer('domain_id')->index()->unsigned();
             $table->integer('user_id')->index()->unsigned();
-            $table->string('terms')->index();
+            $table->text('terms')->nullable();
             $table->timestamps();
         });
     }

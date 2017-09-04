@@ -21,12 +21,12 @@ class CreateWordsTable extends Migration
             $table->string('doc_title')->index()->nullable();
             $table->string('keyword')->nullable();
             $table->string('lsi_terms')->nullable();
-            $table->string('domain_protected')->nullable();
+            $table->text('domain_protected')->nullable();
             $table->text('article');
             $table->text('spintax')->nullable();
             $table->text('spintax_copy')->nullable();
             $table->text('spin')->nullable();
-            $table->string('protected')->nullable();
+            $table->text('protected')->nullable();
             $table->string('synonym')->nullable();
             $table->boolean('isUserEdit')->default(0);
             $table->boolean('isEditorEdit')->default(0);
