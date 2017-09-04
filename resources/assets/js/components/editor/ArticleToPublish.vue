@@ -12,7 +12,8 @@
 
             <!-- Report Table -->
             <report-table
-                :articles="articles">
+                :articles="articles"
+                :isPublish="true">
             </report-table>
         </div>
     </div>

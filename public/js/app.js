@@ -31120,6 +31120,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -31543,7 +31544,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['articles'],
+    props: ['articles', 'isPublish'],
     data: function data() {
         return {
             time: moment
@@ -58706,7 +58707,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
     return _c('tr', {
       key: index
-    }, [_c('td', [_vm._v(_vm._s(article.writer))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.article_type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.lsi_terms))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain_protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.synonym))]), _vm._v(" "), _c('td', [_c('button', {
+    }, [_c('td', [_vm._v(_vm._s(article.writer))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.article_type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.lsi_terms))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain_protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.synonym))]), _vm._v(" "), _c('td', [(!_vm.isPublish) ? _c('button', {
       staticClass: "btn btn-info",
       attrs: {
         "type": "button"
@@ -58716,7 +58717,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.editArticle(article, index)
         }
       }
-    }, [_vm._v("Edit Article")]), _vm._v(" "), _c('button', {
+    }, [_vm._v("Edit Article")]) : _c('button', {
       ref: "btnPublish",
       refInFor: true,
       staticClass: "btn btn-danger",
@@ -60401,7 +60402,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "badge"
   }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('report-table', {
     attrs: {
-      "articles": _vm.articles
+      "articles": _vm.articles,
+      "isPublish": false
     }
   })], 1)])
 },staticRenderFns: []}
@@ -63661,6 +63663,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -63731,7 +63734,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "badge"
   }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('report-table', {
     attrs: {
-      "articles": _vm.articles
+      "articles": _vm.articles,
+      "isPublish": false
     }
   })], 1)])
 },staticRenderFns: []}
@@ -63751,6 +63755,7 @@ if (false) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__ = __webpack_require__(267);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
+//
 //
 //
 //
@@ -63841,7 +63846,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "badge"
   }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('report-table', {
     attrs: {
-      "articles": _vm.articles
+      "articles": _vm.articles,
+      "isPublish": true
     }
   })], 1)])
 },staticRenderFns: []}
