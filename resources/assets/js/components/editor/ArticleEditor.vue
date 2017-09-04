@@ -131,9 +131,9 @@
 
                 // check if ther is paragraph && there is spintax_copy and not = to null
                 if (p.length > 0 && article.isEditorUpdateSC === 1) {
-                    Vue.nextTick(() => p.html(article.spintax_copy));
+                    Vue.nextTick(() => p.text(article.spintax_copy));
                 } else {
-                    Vue.nextTick(() => p.html(article.spintax));
+                    Vue.nextTick(() => p.text(article.spintax));
                 }
             },
 

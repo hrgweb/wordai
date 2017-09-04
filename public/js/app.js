@@ -30758,11 +30758,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // check if ther is paragraph && there is spintax_copy and not = to null
             if (p.length > 0 && article.isEditorUpdateSC === 1) {
                 Vue.nextTick(function () {
-                    return p.html(article.spintax_copy);
+                    return p.text(article.spintax_copy);
                 });
             } else {
                 Vue.nextTick(function () {
-                    return p.html(article.spintax);
+                    return p.text(article.spintax);
                 });
             }
         },
