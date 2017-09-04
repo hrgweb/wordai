@@ -46,7 +46,7 @@
 			updateSpintaxArticle() {
 				const data = {
 					word_id: this.article.id,
-					spintax: $('div.note-editable').first().html()
+					spintax: $('div.note-editable').first().text()
 				};
 
 				this.isLoading = true;

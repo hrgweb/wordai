@@ -86,6 +86,11 @@ class EditorsController extends Controller
 		$fileArticleContent = request('article');
 		$fileSpintaxContent = request('spintax');
 
+        return request()->all();
+
+        // update words isPublish column
+        // Word::where('id', request('word_id'))->update(['isPublish' => request('time')]);
+
     	return Curl::to($url)
     		->withData([
     			'folderName' => $folderName,

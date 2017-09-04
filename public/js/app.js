@@ -31477,7 +31477,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			var data = {
 				word_id: this.article.id,
-				spintax: $('div.note-editable').first().html()
+				spintax: $('div.note-editable').first().text()
 			};
 
 			this.isLoading = true;
