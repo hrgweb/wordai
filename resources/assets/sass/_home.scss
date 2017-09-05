@@ -100,6 +100,16 @@ button.close {
 table { background: #fff; }
 table thead th:nth-child(5) { width: 120px; }
 
+.Report {
+
+    table td:last-child {
+        width: 200px;
+        max-width: 200px;
+
+
+        button { width: 90px; }
+    }
+}
 
 /*=============== home, home2 ===============*/
 .Spintax__result,

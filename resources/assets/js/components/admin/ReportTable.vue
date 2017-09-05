@@ -15,7 +15,9 @@
                 <tr v-for="(article, index) in articles">
                     <td>{{ ++index }}</td>
                     <td>{{ article.doc_title }}</td>
-                    <td>{{ (article.article.length > 100) ? article.article.substr(0, 100) + '...' : article.article }}</td>
+                    <td>
+                        <p>{{ (article.article.length > 100) ? article.article.substr(0, 100) + '...' : article.article }}</p>
+                    </td>
                     <td>{{ article.keyword }}</td>
                     <td>{{ time(article.created_at).format('ll') }}</td>
                     <td>
