@@ -76,11 +76,13 @@ class PagesController extends Controller
     	return view('users.articles');
     }
 
-    public function copyscapePage() {
+    public function copyscapePage()
+    {
     	return view('copyscape.index');
     }
 
-    public function superEditor() {
+    public function superEditor()
+    {
     	return view('editor.super-editor');
     }
 

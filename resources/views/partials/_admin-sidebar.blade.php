@@ -9,6 +9,11 @@
             </li>
             <li>
                 <a href="{{ url('domain') }}">
+                    <em class="fa fa-address-card-o" aria-hidden="true"></em> Article
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('domain') }}">
                     <em class="fa fa-link" aria-hidden="true"></em> Domain
                 </a>
             </li>

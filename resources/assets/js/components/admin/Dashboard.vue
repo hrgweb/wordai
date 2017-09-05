@@ -13,11 +13,7 @@
         <article-to-edit></article-to-edit>
 
         <!-- Article Spun -->
-        <article-spun
-            :articles="report.noOfArticlesSpunThisWeek"
-            :fromUtc="report.fromUtc"
-            :toUtc="report.toUtc">
-        </article-spun>
+        <article-spun></article-spun>
 
         <!-- Pending User -->
         <pending-user :token="token"></pending-user>

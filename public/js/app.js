@@ -29471,10 +29471,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -62944,13 +62940,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Dashboard"
-  }, [_c('filter-box'), _vm._v(" "), _c('article-report'), _vm._v(" "), _c('article-edited'), _vm._v(" "), _c('article-to-edit'), _vm._v(" "), _c('article-spun', {
-    attrs: {
-      "articles": _vm.report.noOfArticlesSpunThisWeek,
-      "fromUtc": _vm.report.fromUtc,
-      "toUtc": _vm.report.toUtc
-    }
-  }), _vm._v(" "), _c('pending-user', {
+  }, [_c('filter-box'), _vm._v(" "), _c('article-report'), _vm._v(" "), _c('article-edited'), _vm._v(" "), _c('article-to-edit'), _vm._v(" "), _c('article-spun'), _vm._v(" "), _c('pending-user', {
     attrs: {
       "token": _vm.token
     }
