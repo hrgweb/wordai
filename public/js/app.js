@@ -29870,7 +29870,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					id: item.id,
 					domain_id: item.domain_id,
 					domain: item.domain.domain,
-					protected: item.protected,
+					protected: item.protected.length < 100 ? item.protected : item.protected.substr(0, 100) + '...',
 					synonym: item.synonym,
 					created_at: item.created_at
 				};

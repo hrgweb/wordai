@@ -3,8 +3,8 @@
 		<h2>Domain Details</h2><br>
 
 		<!-- Error  -->
-		<error 
-			:list="errors" 
+		<error
+			:list="errors"
 			:type="0"
 			v-if="isError">
  		</error>
@@ -18,7 +18,7 @@
 					<option id="domain" v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
 				</select>
 			</div>
-			
+
 			<!-- Portfolio -->
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-left: 1em;">
 				<label for="portfolio">Portfolio</label>
@@ -131,7 +131,7 @@
 						id: item.id,
 						domain_id: item.domain_id,
 						domain: item.domain.domain,
-						protected: item.protected,
+						protected: item.protected.length < 100 ? item.protected : item.protected.substr(0, 100) + '...',
 						synonym: item.synonym,
 						created_at: item.created_at
 					};
@@ -164,7 +164,7 @@
 				if (this.detail.domain_id !== 'select' && this.detail.user.length > 0) {
 					this.detail['protected'] = (this.detail.protected.length > 0) ? this.wordai.protectedTermsSetup(this.detail.protected) : '';
 					// this.detail['protected'] = 'the man,who cant,be moved,a test,sample';
-					
+
 					let vm = this;
 					let options = $('datalist option');
 
@@ -246,8 +246,8 @@
 			removeDetails(data) {
 				this.index = data.index;
 
-				const output = { 
-					params: { 
+				const output = {
+					params: {
 						id: data.detail.id,
 						domain_id: data.detail.domain_id
 					}
