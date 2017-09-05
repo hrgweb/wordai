@@ -29021,6 +29021,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue__);
 //
 //
 //
@@ -29058,23 +29062,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
+
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['articles', 'fromUtc', 'toUtc'],
+    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a, ReportHeader: __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue___default.a },
     data: function data() {
         return {
-            articlesCount: 0,
-            time: moment
+            report: ReportingBus
         };
-    },
-
-    watch: {
-        articles: function articles() {
-            this.articlesCount = this.articles.length;
-        }
     }
 });
 
@@ -34264,6 +34261,7 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             isSameMonth: false,
             editedThisWeek: [],
             waitingToEdit: [],
+            spunThisWeek: [],
             noOfArticlesThisWeek: 0,
             noOfArticlesEditedThisWeek: 0,
             noOfArticlesToEditThisWeek: 0,
@@ -34382,9 +34380,12 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             this.noOfArticlesToEditThisWeek = result.length;
         },
         articlesSpunThisWeek: function articlesSpunThisWeek() {
-            this.noOfArticlesSpunThisWeek = this.articles.filter(function (item) {
+            var result = this.articles.filter(function (item) {
                 return item.isProcess === 1;
             });
+
+            this.spunThisWeek = result;
+            this.noOfArticlesSpunThisWeek = result.length;
         },
         filterGroupByChanged: function filterGroupByChanged() {
             var _this2 = this;
@@ -61720,22 +61721,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "articles-spun"
-  }, [_c('h2', [_vm._v("\n            Articles Spun This Week\n            "), _c('span', {
-    staticClass: "badge"
-  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('p', [_c('span', [_vm._v("From: "), _c('b', [_vm._v(_vm._s(_vm.fromUtc))])]), _vm._v(" -\n            "), _c('span', [_vm._v("To "), _c('b', [_vm._v(_vm._s(_vm.toUtc))])])]), _vm._v(" "), _c('table', {
-    staticClass: "table table-striped table-hover"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(++index))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s((article.article.length > 100) ? article.article.substr(0, 100) + '...' : article.article))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.time(article.created_at).format('LL')))]), _vm._v(" "), _vm._m(1, true)])
-  }))])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Article")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Date Created")]), _vm._v(" "), _c('th', [_vm._v("Actions")])])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('td', [_c('button', {
-    staticClass: "btn btn-info"
-  }, [_vm._v("Edit Spintax")]), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-warning"
-  }, [_vm._v("Edit Article")])])
-}]}
+  }, [_c('div', {
+    staticClass: "header"
+  }, [_c('report-header', {
+    attrs: {
+      "count": _vm.report.noOfArticlesSpunThisWeek
+    }
+  }, [_c('template', {
+    slot: "head"
+  }, [_vm._v("Articles Spun This Week")])], 2)], 1), _vm._v(" "), _c('div', {
+    staticClass: "content"
+  }, [_c('div', [_c('report-table', {
+    attrs: {
+      "articles": _vm.report.spunThisWeek
+    }
+  })], 1)])])])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

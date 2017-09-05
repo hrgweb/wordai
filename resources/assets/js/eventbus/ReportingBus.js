@@ -22,6 +22,7 @@ export const ReportingBus = new Vue({
             isSameMonth: false,
             editedThisWeek: [],
             waitingToEdit: [],
+            spunThisWeek: [],
             noOfArticlesThisWeek: 0,
             noOfArticlesEditedThisWeek: 0,
             noOfArticlesToEditThisWeek: 0,
@@ -143,9 +144,12 @@ export const ReportingBus = new Vue({
         },
 
         articlesSpunThisWeek() {
-            this.noOfArticlesSpunThisWeek = this.articles.filter(item => {
+            let result = this.articles.filter(item => {
                 return item.isProcess === 1;
             });
+
+            this.spunThisWeek = result;
+            this.noOfArticlesSpunThisWeek = result.length;
         },
 
         filterGroupByChanged() {
