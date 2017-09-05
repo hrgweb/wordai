@@ -132,6 +132,13 @@ table thead th:nth-child(5) { width: 120px; }
     }
 }
 
+.articles-to-be-edit,
+.articles-edited-this-week {
+    table td:last-child {
+        width: 200px !important;
+    }
+}
+
 /*=============== home, home2 ===============*/
 .Spintax__result,
 .Process__article {
