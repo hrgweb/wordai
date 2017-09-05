@@ -29478,10 +29478,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -34267,6 +34263,7 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             toUtc: '',
             isSameMonth: false,
             editedThisWeek: [],
+            waitingToEdit: [],
             noOfArticlesThisWeek: 0,
             noOfArticlesEditedThisWeek: 0,
             noOfArticlesToEditThisWeek: 0,
@@ -34377,9 +34374,12 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             this.noOfArticlesEditedThisWeek = result.length;
         },
         articlesWaitToEdit: function articlesWaitToEdit() {
-            this.noOfArticlesToEditThisWeek = this.articles.filter(function (item) {
+            var result = this.articles.filter(function (item) {
                 return item.isEditorEdit === 0;
             });
+
+            this.waitingToEdit = result;
+            this.noOfArticlesToEditThisWeek = result.length;
         },
         articlesSpunThisWeek: function articlesSpunThisWeek() {
             this.noOfArticlesSpunThisWeek = this.articles.filter(function (item) {
@@ -61582,15 +61582,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "header"
   }, [_c('report-header', {
     attrs: {
-      "count": _vm.report.noOfArticlesThisWeek
+      "count": _vm.report.noOfArticlesToEditThisWeek
     }
   }, [_c('template', {
     slot: "head"
-  }, [_vm._v("Articles This Week")])], 2)], 1), _vm._v(" "), _c('div', {
+  }, [_vm._v("Articles To Edit This Week")])], 2)], 1), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('div', [_c('report-table', {
     attrs: {
-      "articles": _vm.report.articles
+      "articles": _vm.report.waitingToEdit
     }
   })], 1)])])])
 },staticRenderFns: []}
@@ -63057,13 +63057,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Dashboard"
-  }, [_c('filter-box'), _vm._v(" "), _c('article-report'), _vm._v(" "), _c('article-edited'), _vm._v(" "), _c('article-to-edit', {
-    attrs: {
-      "articles": _vm.report.noOfArticlesToEditThisWeek,
-      "fromUtc": _vm.report.fromUtc,
-      "toUtc": _vm.report.toUtc
-    }
-  }), _vm._v(" "), _c('article-spun', {
+  }, [_c('filter-box'), _vm._v(" "), _c('article-report'), _vm._v(" "), _c('article-edited'), _vm._v(" "), _c('article-to-edit'), _vm._v(" "), _c('article-spun', {
     attrs: {
       "articles": _vm.report.noOfArticlesSpunThisWeek,
       "fromUtc": _vm.report.fromUtc,

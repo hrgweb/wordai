@@ -3,14 +3,14 @@
         <div class="articles-to-be-edit">
             <div class="header">
                 <!-- Report Header -->
-                <report-header :count="report.noOfArticlesThisWeek">
-                    <template slot="head">Articles This Week</template>
+                <report-header :count="report.noOfArticlesToEditThisWeek">
+                    <template slot="head">Articles To Edit This Week</template>
                 </report-header>
             </div>
             <div class="content">
                 <!-- <div v-if="isGroupByEqualSelect"> -->
                 <div>
-                    <report-table :articles="report.articles"></report-table>
+                    <report-table :articles="report.waitingToEdit"></report-table>
                 </div>
 
                 <!-- <div v-else-if="isGroupByEqualUser">

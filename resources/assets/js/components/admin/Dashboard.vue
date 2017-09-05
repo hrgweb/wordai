@@ -10,11 +10,7 @@
         <article-edited></article-edited>
 
         <!-- ArticleToEdit -->
-        <article-to-edit
-            :articles="report.noOfArticlesToEditThisWeek"
-            :fromUtc="report.fromUtc"
-            :toUtc="report.toUtc">
-        </article-to-edit>
+        <article-to-edit></article-to-edit>
 
         <!-- Article Spun -->
         <article-spun
