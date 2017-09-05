@@ -20,6 +20,7 @@ export const ReportingBus = new Vue({
             fromUtc: '',
             toUtc: '',
             isSameMonth: false,
+            editedThisWeek: [],
             noOfArticlesThisWeek: 0,
             noOfArticlesEditedThisWeek: 0,
             noOfArticlesToEditThisWeek: 0,
@@ -123,9 +124,12 @@ export const ReportingBus = new Vue({
         },
 
         articlesEditedThisWeek() {
-            this.noOfArticlesEditedThisWeek = this.articles.filter(item => {
+            let result = this.articles.filter(item => {
                 return item.isEditorEdit === 1;
             });
+
+            this.editedThisWeek = result;
+            this.noOfArticlesEditedThisWeek = result.length;
         },
 
         articlesWaitToEdit() {

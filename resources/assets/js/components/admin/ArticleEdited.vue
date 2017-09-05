@@ -3,14 +3,14 @@
         <div class="articles-edited-this-week">
             <div class="header">
                 <!-- Report Header -->
-                <report-header :count="report.noOfArticlesThisWeek">
-                    <template slot="head">Articles This Week</template>
+                <report-header :count="report.noOfArticlesEditedThisWeek">
+                    <template slot="head">Articles Edited This Week</template>
                 </report-header>
             </div>
             <div class="content">
                 <!-- <div v-if="isGroupByEqualSelect"> -->
                 <div>
-                    <report-table :articles="report.articles"></report-table>
+                    <report-table :articles="report.editedThisWeek"></report-table>
                 </div>
 
                 <!-- <div v-else-if="isGroupByEqualUser">

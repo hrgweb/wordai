@@ -1,55 +1,49 @@
 <template>
     <div class="Waiting" style="top: 5em;">
         <div class="articles-to-be-edit">
-            <h2>
-                Articles Waiting To Be Edit
-                <span class="badge">{{ articlesCount }}</span>
-            </h2>
-            <p>
-                <span>From: <b>{{ fromUtc }}</b></span> -
-                <span>To <b>{{ toUtc }}</b></span>
-            </p>
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Title</th>
-                        <th>Article</th>
-                        <th>Keyword</th>
-                        <th>Date Created</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="(article, index) in articles">
-                        <td>{{ ++index }}</td>
-                        <td>{{ article.doc_title }}</td>
-                        <td>{{ (article.article.length > 100) ? article.article.substr(0, 100) + '...' : article.article }}</td>
-                        <td>{{ article.keyword }}</td>
-                        <td>{{ time(article.created_at).format('LL') }}</td>
-                        <td>
-                            <button class="btn btn-info">Edit Spintax</button>
-                            <button class="btn btn-warning">Edit Article</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="header">
+                <!-- Report Header -->
+                <report-header :count="report.noOfArticlesThisWeek">
+                    <template slot="head">Articles This Week</template>
+                </report-header>
+            </div>
+            <div class="content">
+                <!-- <div v-if="isGroupByEqualSelect"> -->
+                <div>
+                    <report-table :articles="report.articles"></report-table>
+                </div>
+
+                <!-- <div v-else-if="isGroupByEqualUser">
+                    <report-filter-by-user
+                        v-for="creator in report.creatorOfArticles"
+                        :creator="creator"
+                        :filterByUser="true"
+                        :key="creator.user_id">
+                    </report-filter-by-user>
+                </div>
+
+                <div v-else-if="isGroupByEqualDomain">
+                    <report-filter-by-user
+                        v-for="creator in report.creatorOfArticles"
+                        :creator="creator"
+                        :filterByDomain="true"
+                        :key="creator.domain_id">
+                    </report-filter-by-user>
+                </div> -->
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import ReportTable from './ReportTable.vue';
+    import ReportHeader from './ReportHeader.vue';
+
     export default {
-        props: ['articles', 'fromUtc', 'toUtc'],
+        components: { ReportTable, ReportHeader },
         data() {
             return {
-                articlesCount: 0,
-                time: moment
-            }
-        },
-        watch: {
-            articles() {
-                this.articlesCount = this.articles.length;
+                report: ReportingBus
             }
         }
     }
