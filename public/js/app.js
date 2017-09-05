@@ -28883,6 +28883,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue__);
 //
 //
 //
@@ -28918,20 +28922,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+
+
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['articles', 'fromUtc', 'toUtc'],
+    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a, ReportHeader: __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue___default.a },
     data: function data() {
         return {
-            articlesCount: 0,
-            time: moment
+            report: ReportingBus
         };
-    },
-
-    watch: {
-        articles: function articles() {
-            this.articlesCount = this.articles.length;
-        }
     }
 });
 
@@ -29453,10 +29455,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ArticleSpun_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__ArticleSpun_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__PendingUser_vue__ = __webpack_require__(261);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__PendingUser_vue__);
-//
-//
-//
-//
 //
 //
 //
@@ -59630,16 +59628,22 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "articles-edited-this-week"
-  }, [_c('h2', [_vm._v("\n            Articles Edited This Week\n            "), _c('span', {
-    staticClass: "badge"
-  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('p', [_c('span', [_vm._v("From: "), _c('b', [_vm._v(_vm._s(_vm.fromUtc))])]), _vm._v(" -\n            "), _c('span', [_vm._v("To "), _c('b', [_vm._v(_vm._s(_vm.toUtc))])])]), _vm._v(" "), _c('table', {
-    staticClass: "table table-striped table-hover"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(++index))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s((article.article.length > 100) ? article.article.substr(0, 100) + '...' : article.article))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.time(article.created_at).format('LL')))])])
-  }))])])])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Article")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Date Created")])])])
-}]}
+  }, [_c('div', {
+    staticClass: "header"
+  }, [_c('report-header', {
+    attrs: {
+      "count": _vm.report.noOfArticlesThisWeek
+    }
+  }, [_c('template', {
+    slot: "head"
+  }, [_vm._v("Articles This Week")])], 2)], 1), _vm._v(" "), _c('div', {
+    staticClass: "content"
+  }, [_c('div', [_c('report-table', {
+    attrs: {
+      "articles": _vm.report.articles
+    }
+  })], 1)])])])
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -63052,13 +63056,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Dashboard"
-  }, [_c('filter-box'), _vm._v(" "), _c('article-report'), _vm._v(" "), _c('article-edited', {
-    attrs: {
-      "articles": _vm.report.noOfArticlesEditedThisWeek,
-      "fromUtc": _vm.report.fromUtc,
-      "toUtc": _vm.report.toUtc
-    }
-  }), _vm._v(" "), _c('article-to-edit', {
+  }, [_c('filter-box'), _vm._v(" "), _c('article-report'), _vm._v(" "), _c('article-edited'), _vm._v(" "), _c('article-to-edit', {
     attrs: {
       "articles": _vm.report.noOfArticlesToEditThisWeek,
       "fromUtc": _vm.report.fromUtc,

@@ -7,11 +7,7 @@
         <article-report></article-report>
 
         <!-- Article Edited -->
-        <article-edited
-            :articles="report.noOfArticlesEditedThisWeek"
-            :fromUtc="report.fromUtc"
-            :toUtc="report.toUtc">
-        </article-edited>
+        <article-edited></article-edited>
 
         <!-- ArticleToEdit -->
         <article-to-edit
