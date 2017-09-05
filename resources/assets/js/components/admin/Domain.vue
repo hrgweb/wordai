@@ -3,8 +3,8 @@
 		<h2>Domain</h2>
 
 		<!-- Domain edit -->
-		<domain-edit 
-			v-if="isEdit" 
+		<domain-edit
+			v-if="isEdit"
 			@closeDomainEdit="hideDomainEdit"
 			:token="token"
 			:raw="raw">
@@ -20,17 +20,7 @@
 						<input type="text" class="form-control" id="domain" v-model="domain">
 					</div>
 
-					<!-- Notification -->
-					<notification :data="notify" v-if="isSuccess"></notification>
-
-					<!-- Error -->
-					<error
-						:list="errors"
-						:type="1"
-						v-if="isError">
-					</error>
-
-					<button type="submit" class="btn btn-primary">Save</button>
+					<button type="submit" class="btn btn-success">Save Domain</button>
 				</form>
 			</div>
 
@@ -44,7 +34,7 @@
 				</thead>
 				<tbody>
 					<tr v-for="(url, index) in domains">
-						<td>{{ url.id }}</td>
+						<td>{{ ++index }}</td>
 						<td>{{ url.domain }}</td>
 						<td>
 							<a href="#" class="btn btn-info" @click="displayDomainEdit(url, index)">Edit</a>
@@ -62,12 +52,10 @@
 <script>
 	import { CrudMixin } from './../../mixins/CrudMixin.js';
 	import DomainEdit from './DomainEdit.vue';
-	import Notification from './../notify/Notification.vue';
-	import Error from './../errors/Error.vue';
 
 	export default {
 		props: ['token', 'user'],
-		components: { DomainEdit, Notification, Error },
+		components: { DomainEdit },
 		mixins: [ CrudMixin ],
 		data() {
 			return {
@@ -76,7 +64,6 @@
 				domains: [],
 				raw: {},
 				isAdmin: false,
-				isError: false
 			}
 		},
 		watch: {
@@ -95,44 +82,43 @@
 				axios.get('/admin/domainList').then(response => this.domains = response.data);
 			},
 			postDomain() {
-				// hide notification
-				this.isSuccess = false;
-
 				axios.post('/admin/postDomain', { domain: this.domain }).then(response => {
 					let data = response.data;
 
 					// response is 200 and return data
 					if (data.isSuccess === false) {
-						this.isError = true;
 						this.errors = data.result;
+
+                        new Noty({
+                            type: 'error',
+                            text: `Please enter domain name.`,
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
 					} else {
+                        let domain = this.domain;
+                        new Noty({
+                            type: 'success',
+                            text: `<b>${domain}</b> successfully saved.`,
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+
 						this.domains.push(data);
-						this.isSuccess = true;
 						this.domain = '';
-						this.isError = false;
-						this.notify = {
-							type: true,
-							message: 'Domain',
-							action: 'saved'
-						};
 					}
 				});
 			},
 			displayDomainEdit(url, index) {
-				this.domainIndex = index;
+				this.domainIndex = --index;
 				this.isEdit = true;
 				this.raw = url;
-				this.isSuccess = false;
 			},
 			hideDomainEdit(payload) {
 				this.isEdit = false;
 
 				// check if payload is not empty
-				if (payload) {
-					this.domains[this.domainIndex]['domain'] = payload.domain;
-					this.notify = payload;
-					this.isSuccess = true;
-				}
+				if (payload) this.domains[this.domainIndex].domain = payload.domain;
 			},
 			removeDomain(url, index) {
 				const data = {
@@ -143,14 +129,14 @@
 					let data = response.data;
 
 					if (data) {
-						this.isSuccess = true;
-						this.domains.splice(index, 1);
-						this.isError = false;
-						this.notify = {
-							type: false,
-							message: 'Domain',
-							action: 'deleted'
-						};
+						this.domains.splice(--index, 1);
+
+                        new Noty({
+                            type: 'error',
+                            text: `<b>${url.domain}</b> successfully removed.`,
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
 					}
 				})
 			}

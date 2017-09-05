@@ -29566,10 +29566,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue__ = __webpack_require__(259);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notify_Notification_vue__ = __webpack_require__(273);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__notify_Notification_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__notify_Notification_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__errors_Error_vue__);
 //
 //
 //
@@ -29621,25 +29617,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['token', 'user'],
-	components: { DomainEdit: __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue___default.a, Notification: __WEBPACK_IMPORTED_MODULE_2__notify_Notification_vue___default.a, Error: __WEBPACK_IMPORTED_MODULE_3__errors_Error_vue___default.a },
+	components: { DomainEdit: __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue___default.a },
 	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */]],
 	data: function data() {
 		return {
@@ -29647,8 +29631,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			domainIndex: 0,
 			domains: [],
 			raw: {},
-			isAdmin: false,
-			isError: false
+			isAdmin: false
 		};
 	},
 
@@ -29675,44 +29658,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		postDomain: function postDomain() {
 			var _this2 = this;
 
-			// hide notification
-			this.isSuccess = false;
-
 			axios.post('/admin/postDomain', { domain: this.domain }).then(function (response) {
 				var data = response.data;
 
 				// response is 200 and return data
 				if (data.isSuccess === false) {
-					_this2.isError = true;
 					_this2.errors = data.result;
+
+					new Noty({
+						type: 'error',
+						text: 'Please enter domain name.',
+						layout: 'bottomLeft',
+						timeout: 5000
+					}).show();
 				} else {
+					var domain = _this2.domain;
+					new Noty({
+						type: 'success',
+						text: '<b>' + domain + '</b> successfully saved.',
+						layout: 'bottomLeft',
+						timeout: 5000
+					}).show();
+
 					_this2.domains.push(data);
-					_this2.isSuccess = true;
 					_this2.domain = '';
-					_this2.isError = false;
-					_this2.notify = {
-						type: true,
-						message: 'Domain',
-						action: 'saved'
-					};
 				}
 			});
 		},
 		displayDomainEdit: function displayDomainEdit(url, index) {
-			this.domainIndex = index;
+			this.domainIndex = --index;
 			this.isEdit = true;
 			this.raw = url;
-			this.isSuccess = false;
 		},
 		hideDomainEdit: function hideDomainEdit(payload) {
 			this.isEdit = false;
 
 			// check if payload is not empty
-			if (payload) {
-				this.domains[this.domainIndex]['domain'] = payload.domain;
-				this.notify = payload;
-				this.isSuccess = true;
-			}
+			if (payload) this.domains[this.domainIndex].domain = payload.domain;
 		},
 		removeDomain: function removeDomain(url, index) {
 			var _this3 = this;
@@ -29725,14 +29707,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				var data = response.data;
 
 				if (data) {
-					_this3.isSuccess = true;
-					_this3.domains.splice(index, 1);
-					_this3.isError = false;
-					_this3.notify = {
-						type: false,
-						message: 'Domain',
-						action: 'deleted'
-					};
+					_this3.domains.splice(--index, 1);
+
+					new Noty({
+						type: 'error',
+						text: '<b>' + url.domain + '</b> successfully removed.',
+						layout: 'bottomLeft',
+						timeout: 5000
+					}).show();
 				}
 			});
 		}
@@ -30025,8 +30007,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__errors_Error_vue__);
 //
 //
 //
@@ -30048,24 +30028,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-
-
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['token', 'raw'],
-	components: { Error: __WEBPACK_IMPORTED_MODULE_0__errors_Error_vue___default.a },
 	data: function data() {
 		return {
-			domain: '',
-			isError: false,
-			errors: []
+			domain: ''
 		};
 	},
 	mounted: function mounted() {
@@ -30076,26 +30044,34 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		updateDomain: function updateDomain() {
 			var _this = this;
 
-			var data = {
+			var params = {
 				id: this.raw.id,
 				domain: this.domain
 			};
 
-			axios.patch('/admin/updateDomain', data).then(function (response) {
+			axios.patch('/admin/updateDomain', params).then(function (response) {
 				var data = response.data;
 
 				if (data.isSuccess === false) {
-					_this.isError = true;
-					_this.errors = data.result;
-				} else {
-					var notify = {
-						type: true,
-						message: 'Domain',
-						action: 'updated',
-						domain: data.domain
-					};
+					var error = data.result['domain'][0];
 
-					_this.$emit('closeDomainEdit', notify);
+					new Noty({
+						type: 'error',
+						text: error,
+						layout: 'bottomLeft',
+						timeout: 5000
+					}).show();
+				} else {
+					new Noty({
+						type: 'info',
+						text: '<b>' + params.domain + '</b> successfully updated.',
+						layout: 'bottomLeft',
+						timeout: 5000
+					}).show();
+
+					_this.$emit('closeDomainEdit', {
+						domain: params.domain
+					});
 					_this.isError = false;
 				}
 			});
@@ -31835,33 +31811,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 196 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
-//
-//
-//
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['data'],
-	computed: {
-		alertStyle: function alertStyle() {
-			var type = this.data.type;
-
-			return {
-				'alert-success': type === true,
-				'alert-danger': type === false
-			};
-		}
-	}
-});
-
-/***/ }),
+/* 196 */,
 /* 197 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -58466,40 +58416,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 273 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(196),
-  /* template */
-  __webpack_require__(319),
-  /* scopeId */
-  null,
-  /* cssModules */
-  null
-)
-Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\notify\\Notification.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] Notification.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-b90d42ca", Component.options)
-  } else {
-    hotAPI.reload("data-v-b90d42ca", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
+/* 273 */,
 /* 274 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -60198,7 +60115,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "overlay"
   }, [_c('div', {
     staticClass: "Domain-update"
-  }, [_c('h2', [_vm._v("Edit")]), _vm._v(" "), _c('button', {
+  }, [_c('h2', [_vm._v("Edit Domain")]), _vm._v(" "), _c('button', {
     staticClass: "close",
     attrs: {
       "type": "button",
@@ -60264,12 +60181,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.domain = $event.target.value
       }
     }
-  })]), _vm._v(" "), (_vm.isError) ? _c('error', {
-    attrs: {
-      "list": _vm.errors,
-      "type": 1
-    }
-  }) : _vm._e()], 1)])])
+  })])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -61746,24 +61658,7 @@ if (false) {
 }
 
 /***/ }),
-/* 319 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "alert",
-    class: _vm.alertStyle
-  }, [_c('strong', [_vm._v(_vm._s(_vm.data.message) + " successfully " + _vm._s(_vm.data.action) + ".")])])
-},staticRenderFns: []}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-b90d42ca", module.exports)
-  }
-}
-
-/***/ }),
+/* 319 */,
 /* 320 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -62188,24 +62083,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.domain = $event.target.value
       }
     }
-  })]), _vm._v(" "), (_vm.isSuccess) ? _c('notification', {
-    attrs: {
-      "data": _vm.notify
-    }
-  }) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('error', {
-    attrs: {
-      "list": _vm.errors,
-      "type": 1
-    }
-  }) : _vm._e(), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-primary",
+  })]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-success",
     attrs: {
       "type": "submit"
     }
-  }, [_vm._v("Save")])], 1)]), _vm._v(" "), _c('table', {
+  }, [_vm._v("Save Domain")])])]), _vm._v(" "), _c('table', {
     staticClass: "table table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.domains), function(url, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(url.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(url.domain))]), _vm._v(" "), _c('td', [_c('a', {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(++index))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(url.domain))]), _vm._v(" "), _c('td', [_c('a', {
       staticClass: "btn btn-info",
       attrs: {
         "href": "#"

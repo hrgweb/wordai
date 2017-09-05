@@ -1,7 +1,7 @@
 <template>
 	<div class="overlay">
 		<div class="Domain-update">
-			<h2>Edit</h2>
+			<h2>Edit Domain</h2>
 			<button type="button" class="close" data-dismiss="alert" aria-hidden="true" @click="$emit('closeDomainEdit')">&times;</button>
 
 			<form method="POST" @submit.prevent>
@@ -13,13 +13,6 @@
 					<input type="text" class="form-control" id="domain" v-model="domain" @keyup.enter="updateDomain">
 				</div>
 
-				<!-- Error -->
-				<error
-					:list="errors"
-					:type="1"
-					v-if="isError">
-				</error>
-
 				<!-- <button type="submit" class="btn btn-primary">Update</button> -->
 			</form>
 		</div>
@@ -27,43 +20,47 @@
 </template>
 
 <script>
-	import Error from './../errors/Error.vue';
-
 	export default {
 		props: ['token', 'raw'],
-		components: { Error },
 		data() {
 			return {
-				domain: '',
-				isError: false,
-				errors: []
+				domain: ''
 			}
 		},
 		mounted() {
 			this.domain = this.raw.domain;
 		},
 		methods: {
-			updateDomain() {	
-				const data = {
+			updateDomain() {
+				const params = {
 					id: this.raw.id,
 					domain: this.domain
 				};
 
-				axios.patch('/admin/updateDomain', data).then(response => {
+				axios.patch('/admin/updateDomain', params).then(response => {
 					let data = response.data;
 
 					if (data.isSuccess === false) {
-						this.isError = true;
-						this.errors = data.result;
-					} else {
-						const notify = {
-							type: true,
-							message: 'Domain',
-							action: 'updated',
-							domain: data.domain
-						};
+						let error = data.result['domain'][0];
 
-						this.$emit('closeDomainEdit', notify);
+                        new Noty({
+                            type: 'error',
+                            text: error,
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+
+					} else {
+						new Noty({
+                            type: 'info',
+                            text: `<b>${params.domain}</b> successfully updated.`,
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+
+						this.$emit('closeDomainEdit', {
+                            domain: params.domain
+                        });
 						this.isError = false;
 					}
 				});
