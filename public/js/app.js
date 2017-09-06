@@ -32298,6 +32298,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__UniqueHandwritten_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__UniqueHandwritten_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleActionMixin_js__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_CreateArticleMixin_js__ = __webpack_require__(375);
 //
 //
 //
@@ -32384,129 +32385,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: { UniqueHandwritten: __WEBPACK_IMPORTED_MODULE_0__UniqueHandwritten_vue___default.a },
-    mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleActionMixin_js__["a" /* ArticleActionMixin */]],
-    methods: {
-        resetInputFields: function resetInputFields() {
-            this.spin['article'] = $('textarea#article').val('');
-            this.spin['article_type_id'] = 'select';
-            this.spin['doc_title'] = '';
-            this.spin['keyword'] = '';
-            this.spin['lsi_terms'] = '';
-            this.spin['domain_protected'] = '';
-        },
-        saveArticle: function saveArticle() {
-            var _this = this;
-
-            // check if domain_id is set
-            if (this.spin.domain_id !== 'select') {
-                this.isLoading = true;
-                this.isValidationFail = false;
-                this.$refs.spinButton.disabled = true;
-
-                axios.post('/words', this.spin).then(function (response) {
-                    var data = response.data;
-
-                    _this.isLoading = false;
-                    _this.isDomainNotSet = false;
-                    _this.$refs.spinButton.disabled = false;
-
-                    if (data.isError) {
-                        // validation fails
-                        _this.isValidationFail = true;
-                        _this.errorType = 1;
-                        _this.errors = data.errors;
-                    } else {
-                        // validation success
-                        _this.isValidationFail = false;
-
-                        // notify user article posted successfully
-                        var articleTitle = _this.spin.doc_title;
-                        new Noty({
-                            type: 'success',
-                            text: '<b>' + articleTitle + '</b> article successfully saved.',
-                            layout: 'bottomLeft',
-                            timeout: 5000
-                        }).show();
-
-                        // reset spin values
-                        _this.resetInputFields();
-
-                        // animate div to top
-                        $('html, body').animate({ scrollTop: 0 });
-                    }
-                });
-            } else {
-                new Noty({
-                    type: 'warning',
-                    text: 'Please select domain name.',
-                    layout: 'bottomLeft',
-                    timeout: 5000
-                }).show();
-            }
-        },
-        saveAndProcessNow: function saveAndProcessNow() {
-            var _this2 = this;
-
-            // check if domain_id is set
-            if (this.spin.domain_id !== 'select') {
-                this.isLoading = true;
-                this.isValidationFail = false;
-                this.$refs.spinButton.disabled = true;
-
-                axios.post('/words/saveAndProcessNow', this.spin).then(function (response) {
-                    var data = response.data;
-
-                    _this2.isLoading = false;
-                    _this2.isDomainNotSet = false;
-                    _this2.$refs.spinButton.disabled = false;
-
-                    if (data.isError) {
-                        // validation fails
-                        _this2.isValidationFail = true;
-                        _this2.errorType = 1;
-                        _this2.errors = data.errors;
-                    } else {
-                        // validation success
-                        _this2.isValidationFail = false;
-
-                        // reset spin values
-                        /*this.resetInputFields();
-                         // notify user article posted successfully
-                        let articleTitle = this.spin.doc_title;
-                        new Noty({
-                            type: 'success',
-                            text: `<b>${articleTitle}</b> article successfully saved.`,
-                            layout: 'bottomLeft',
-                            timeout: 5000
-                        }).show();*/
-
-                        if (data.isError) {
-                            // validation fails
-                            _this2.isValidationFail = true;
-                            _this2.errorType = 0;
-                            _this2.errors = data.errors;
-                        }
-
-                        console.log(data);
-                    }
-                });
-            } else {
-                new Noty({
-                    type: 'warning',
-                    text: 'Please select domain name.',
-                    layout: 'bottomLeft',
-                    timeout: 5000
-                }).show();
-            }
-        }
-    }
+	components: { UniqueHandwritten: __WEBPACK_IMPORTED_MODULE_0__UniqueHandwritten_vue___default.a },
+	mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleActionMixin_js__["a" /* ArticleActionMixin */], __WEBPACK_IMPORTED_MODULE_3__mixins_CreateArticleMixin_js__["a" /* CreateArticleMixin */]]
 });
 
 /***/ }),
