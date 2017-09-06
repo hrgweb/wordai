@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Copyscape;
 use App\Domain;
 use App\DomainDetail;
+use App\DomainGroup;
+use App\Group;
 use App\ProtectedTerm;
 use App\User;
 use App\UserLevel;
@@ -294,5 +296,33 @@ class AdminController extends Controller
         return Word::where('domain_id', request('domain_id'))
                 ->whereBetween('created_at', [$this->fromMon, $this->toSun])
                 ->get();
+    }
+
+    public function groupList() {
+        return Group::all(['id', 'group']);
+    }
+
+    public function newGroup() {
+        $users = request('value');
+        $counter = 0;
+
+        for ($i=0; $i < count($users); $i++) {
+            $data = [
+                'group_id' => request('group_id'),
+                'user_id' => $users[$i]['id']
+            ];
+
+            // post data
+            DomainGroup::create($data);
+
+            // increment counter
+            $counter++;
+        }
+
+        if ($counter === count($users)) {
+            return 'success';
+        } else {
+            return 'failed';
+        }
     }
 }

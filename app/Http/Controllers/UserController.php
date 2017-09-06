@@ -65,7 +65,7 @@ class UserController extends Controller
     		->oldest()
     		->get([
     			'words.id',
-    			'users.firstname', 
+    			'users.firstname',
     			'users.lastname',
     			'article_types.article_type',
     			'domains.domain',
@@ -105,7 +105,7 @@ class UserController extends Controller
     	return $result;
     }
 
-    public function updateArticle() 
+    public function updateArticle()
     {
     	return Word::where('id', request('word_id'))->update(['article' => request('article'), 'isUserEdit' => 0]);
     }
@@ -126,7 +126,7 @@ class UserController extends Controller
 
     public function updatePeditor() {
     	$peditor_val = request('peditor') === 'no' ? false : true;
-    	
+
     	DB::table('users')->where('id', request('user_id'))->update(['has_peditor_access' => $peditor_val]);
 
     	return request('peditor');

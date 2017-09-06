@@ -64638,6 +64638,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -64646,28 +64662,79 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             users: [],
+            groups: [],
             group: {
-                name: '',
-                user_id: []
+                group_id: 0,
+                value: []
             },
-            value: null,
-            options: ['list', 'of', 'options']
+            btnGroupDisable: false
         };
     },
 
     watch: {},
     created: function created() {
+        this.groupList();
         this.userList();
     },
     mounted: function mounted() {},
 
     methods: {
-        userList: function userList() {
+        groupList: function groupList() {
             var _this = this;
 
-            axios.get('/user/userList').then(function (response) {
-                return _this.users = response.data;
+            axios.get('/admin/groupList').then(function (response) {
+                return _this.groups = response.data;
             });
+        },
+        userList: function userList() {
+            var _this2 = this;
+
+            axios.get('/user/userList').then(function (response) {
+                _this2.users = response.data.map(function (item) {
+                    return {
+                        id: item.id,
+                        name: item.firstname + ' ' + item.lastname
+                    };
+                });
+            });
+        },
+        newGroup: function newGroup() {
+            var _this3 = this;
+
+            this.btnGroupDisable = true;
+
+            // validate
+            var group_id = this.group.group_id;
+
+            if (group_id === null || group_id === undefined || group_id <= 0 || this.group.value.length <= 0) {
+                this.btnGroupDisable = false;
+
+                new Noty({
+                    type: 'error',
+                    text: 'Please select group name and assign user.',
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
+            } else {
+                axios.post('/admin/newGroup', this.group).then(function (response) {
+                    if (response.data) {
+                        _this3.btnGroupDisable = false;
+
+                        new Noty({
+                            type: 'success',
+                            text: '1 record successfully saved.',
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+
+                        // clear group vue data
+                        _this3.group = {
+                            group_id: 0,
+                            value: []
+                        };
+                    }
+                });
+            }
         }
     }
 });
@@ -64687,6 +64754,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "submit": function($event) {
         $event.preventDefault();
+        _vm.newGroup($event)
       }
     }
   }, [_c('div', {
@@ -64695,27 +64763,32 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "name"
     }
-  }, [_vm._v("Group Name")]), _vm._v(" "), _c('input', {
+  }, [_vm._v("Group Name")]), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.group.name),
-      expression: "group.name"
+      value: (_vm.group.group_id),
+      expression: "group.group_id"
     }],
     staticClass: "form-control",
-    attrs: {
-      "type": "text"
-    },
-    domProps: {
-      "value": (_vm.group.name)
-    },
     on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.group.name = $event.target.value
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.group.group_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }
     }
-  })]), _vm._v(" "), _c('div', {
+  }, _vm._l((_vm.groups), function(group) {
+    return _c('option', {
+      domProps: {
+        "value": group.id
+      }
+    }, [_vm._v(_vm._s(group.group))])
+  }))]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -64723,19 +64796,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Assign User")]), _vm._v(" "), _c('multiselect', {
     attrs: {
-      "options": _vm.options
+      "options": _vm.users,
+      "multiple": true,
+      "close-on-select": true,
+      "hide-selected": true,
+      "label": "name",
+      "track-by": "id"
     },
+    scopedSlots: _vm._u([{
+      key: "tag",
+      fn: function(props) {
+        return [_c('span', {
+          staticClass: "multiselect__tag"
+        }, [_c('span', [_vm._v(_vm._s(props.option.name))])])]
+      }
+    }]),
     model: {
-      value: (_vm.value),
+      value: (_vm.group.value),
       callback: function($$v) {
-        _vm.value = $$v
+        _vm.group.value = $$v
       },
-      expression: "value"
+      expression: "group.value"
     }
-  })], 1), _vm._v(" "), _c('button', {
+  })], 1), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
     staticClass: "btn btn-success",
     attrs: {
-      "type": "submit"
+      "type": "submit",
+      "disabled": _vm.btnGroupDisable
     }
   }, [_vm._v("Save Group")])])])
 },staticRenderFns: []}

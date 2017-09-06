@@ -65,8 +65,10 @@ Route::prefix('admin')->group(function() {
     Route::get('listOfArticlesCreatedByUser', 'AdminController@listOfArticlesCreatedByUser');
     Route::get('articlesDomain', 'AdminController@articlesDomain');
     Route::get('listOfDomainByArticles', 'AdminController@listOfDomainByArticles');
+    Route::get('groupList', 'AdminController@groupList');
 	Route::post('postDomain', 'AdminController@postDomain');
-	Route::post('saveDetails', 'AdminController@saveDetails');
+    Route::post('saveDetails', 'AdminController@saveDetails');
+	Route::post('newGroup', 'AdminController@newGroup');
 	Route::patch('updateDomain', 'AdminController@updateDomain');
 	Route::patch('updateDetails', 'AdminController@updateDetails');
 	Route::patch('updateCopyscapeSetting', 'AdminController@updateCopyscapeSetting');
@@ -83,7 +85,7 @@ Route::prefix('user')->group(function() {
 	Route::get('userLevelList', 'UserController@userLevelList');
 	Route::get('userArticles', 'UserController@userArticles');
 	Route::get('editArticle', 'UserController@editArticle');
-	Route::get('userDomainSetup', 'UserController@userDomainSetup');
+    Route::get('userDomainSetup', 'UserController@userDomainSetup');
 	Route::patch('verifySignup', 'UserController@verifySignup');
 	Route::patch('updateRole', 'UserController@updateRole');
 	Route::patch('suspendUser', 'UserController@suspendUser');

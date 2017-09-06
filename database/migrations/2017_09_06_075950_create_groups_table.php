@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDomainGroupTables extends Migration
+class CreateGroupsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class CreateDomainGroupTables extends Migration
      */
     public function up()
     {
-        Schema::create('domain_group', function (Blueprint $table) {
+        Schema::create('groups', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('group_id')->index()->unsigned();
-            $table->integer('user_id')->index()->unsigned();
+            $table->string('group')->index();
             $table->timestamps();
         });
     }
@@ -28,6 +27,6 @@ class CreateDomainGroupTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('domain_group');
+        Schema::dropIfExists('groups');
     }
 }

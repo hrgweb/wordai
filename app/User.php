@@ -4,6 +4,7 @@ namespace App;
 
 use App\Article;
 use App\ArticleType;
+use App\DomainGroup;
 use App\ProtectedTerm;
 use App\UserLevel;
 use App\UserStatus;
@@ -24,12 +25,12 @@ class User extends Authenticatable
     ];
 
     public function setFirstnameAttribute($firstname)
-    {	
+    {
     	$this->attributes['firstname'] = ucwords($firstname);
     }
 
     public function setLastnameAttribute($lastname)
-    {	
+    {
     	$this->attributes['lastname'] = ucwords($lastname);
     }
 
@@ -70,7 +71,7 @@ class User extends Authenticatable
     	}
     }
 
-    /*=============== Relationships ===============*/ 
+    /*=============== Relationships ===============*/
 
     public function words()
     {
@@ -100,5 +101,9 @@ class User extends Authenticatable
     public function status()
     {
     	return $this->belongsTo(UserStatus::class);
+    }
+
+    public function domain_group() {
+        return $this->belongsTo(DomainGroup::class);
     }
 }
