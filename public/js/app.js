@@ -64464,7 +64464,7 @@ var CreateArticleMixin = {
             var _this = this;
 
             // check if domain_id is set
-            if (this.spin.domain_id !== 'select') {
+            if (this.spin.domain_id !== 'select' && this.spin.domain_id !== null) {
                 this.isLoading = true;
                 this.isValidationFail = false;
                 this.$refs.spinButton.disabled = true;

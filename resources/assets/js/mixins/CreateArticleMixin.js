@@ -11,7 +11,7 @@ export const CreateArticleMixin = {
 
         saveArticle() {
             // check if domain_id is set
-            if (this.spin.domain_id !== 'select') {
+            if (this.spin.domain_id !== 'select' && this.spin.domain_id !== null) {
                 this.isLoading = true;
                 this.isValidationFail = false;
                 this.$refs.spinButton.disabled = true;
