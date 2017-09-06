@@ -27927,43 +27927,45 @@ module.exports = function(module) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__eventbus_ReportingBus_js__ = __webpack_require__(218);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__eventbus_ArticleBus_js__ = __webpack_require__(217);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_admin_Dashboard_vue__ = __webpack_require__(255);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_admin_Dashboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_admin_Dashboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_admin_Admin_vue__ = __webpack_require__(248);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_admin_Admin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_admin_Admin_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_admin_Domain_vue__ = __webpack_require__(257);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_admin_Domain_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_admin_Domain_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_admin_User_vue__ = __webpack_require__(264);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_admin_User_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_admin_User_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_admin_ProtectedTerm_vue__ = __webpack_require__(262);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_admin_ProtectedTerm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_admin_ProtectedTerm_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_admin_DomainDetail_vue__ = __webpack_require__(258);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_admin_DomainDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_admin_DomainDetail_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_admin_Copyscape_vue__ = __webpack_require__(254);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_admin_Copyscape_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_admin_Copyscape_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_words_WordApi_vue__ = __webpack_require__(280);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_words_WordApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_words_WordApi_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_WordApi2_vue__ = __webpack_require__(281);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_WordApi2_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_words_WordApi2_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_CurationEdit_vue__ = __webpack_require__(276);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_CurationEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_words_CurationEdit_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_PasteArticle_vue__ = __webpack_require__(278);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_PasteArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_words_PasteArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_CreateArticle_vue__ = __webpack_require__(275);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_CreateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_words_CreateArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_words_CopyscapeApiResult_vue__ = __webpack_require__(274);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_words_CopyscapeApiResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_words_CopyscapeApiResult_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_words_GenerateArticle_vue__ = __webpack_require__(277);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_words_GenerateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_words_GenerateArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_words_UserArticle_vue__ = __webpack_require__(279);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_words_UserArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_words_UserArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_editor_Editor_vue__ = __webpack_require__(268);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_editor_Editor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_editor_Editor_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_editor_SuperEditor_vue__ = __webpack_require__(271);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_editor_SuperEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_editor_SuperEditor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__eventbus_DomainBus_js__ = __webpack_require__(367);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_admin_Dashboard_vue__ = __webpack_require__(255);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_admin_Dashboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_admin_Dashboard_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_admin_Admin_vue__ = __webpack_require__(248);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_admin_Admin_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_admin_Admin_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_admin_Domain_vue__ = __webpack_require__(257);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_admin_Domain_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_admin_Domain_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_admin_User_vue__ = __webpack_require__(264);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_admin_User_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_admin_User_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_admin_ProtectedTerm_vue__ = __webpack_require__(262);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_admin_ProtectedTerm_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_admin_ProtectedTerm_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_admin_DomainDetail_vue__ = __webpack_require__(258);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_admin_DomainDetail_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_admin_DomainDetail_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_admin_Copyscape_vue__ = __webpack_require__(254);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_admin_Copyscape_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_admin_Copyscape_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_WordApi_vue__ = __webpack_require__(280);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_words_WordApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_words_WordApi_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_WordApi2_vue__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_words_WordApi2_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_11__components_words_WordApi2_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_CurationEdit_vue__ = __webpack_require__(276);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_words_CurationEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_12__components_words_CurationEdit_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_PasteArticle_vue__ = __webpack_require__(278);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_words_PasteArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_13__components_words_PasteArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_words_CreateArticle_vue__ = __webpack_require__(275);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_words_CreateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_14__components_words_CreateArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_words_CopyscapeApiResult_vue__ = __webpack_require__(274);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_words_CopyscapeApiResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_15__components_words_CopyscapeApiResult_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_words_GenerateArticle_vue__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_words_GenerateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_16__components_words_GenerateArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_words_UserArticle_vue__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_words_UserArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_17__components_words_UserArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_editor_Editor_vue__ = __webpack_require__(268);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_editor_Editor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_18__components_editor_Editor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_editor_SuperEditor_vue__ = __webpack_require__(271);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_editor_SuperEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_editor_SuperEditor_vue__);
 __webpack_require__(213);
 
 /*=============== Global vars ===============*/
+
 
 
 
@@ -27973,6 +27975,7 @@ window.moment = __webpack_require__(0);
 window.Noty = __webpack_require__(246);
 window.ReportingBus = __WEBPACK_IMPORTED_MODULE_0__eventbus_ReportingBus_js__["a" /* ReportingBus */];
 window.ArticleBus = __WEBPACK_IMPORTED_MODULE_1__eventbus_ArticleBus_js__["a" /* ArticleBus */];
+window.DomainBus = __WEBPACK_IMPORTED_MODULE_2__eventbus_DomainBus_js__["a" /* DomainBus */];
 
 /*=============== Components ===============*/
 
@@ -27999,24 +28002,24 @@ var app = new Vue({
     name: 'Connexions Content Suite',
     el: '#app',
     components: {
-        Dashboard: __WEBPACK_IMPORTED_MODULE_2__components_admin_Dashboard_vue___default.a,
-        Admin: __WEBPACK_IMPORTED_MODULE_3__components_admin_Admin_vue___default.a,
-        Domain: __WEBPACK_IMPORTED_MODULE_4__components_admin_Domain_vue___default.a,
-        User: __WEBPACK_IMPORTED_MODULE_5__components_admin_User_vue___default.a,
-        ProtectedTerm: __WEBPACK_IMPORTED_MODULE_6__components_admin_ProtectedTerm_vue___default.a,
-        DomainDetail: __WEBPACK_IMPORTED_MODULE_7__components_admin_DomainDetail_vue___default.a,
-        Copyscape: __WEBPACK_IMPORTED_MODULE_8__components_admin_Copyscape_vue___default.a,
-        WordApi: __WEBPACK_IMPORTED_MODULE_9__components_words_WordApi_vue___default.a,
-        WordApi2: __WEBPACK_IMPORTED_MODULE_10__components_words_WordApi2_vue___default.a,
-        CurationEdit: __WEBPACK_IMPORTED_MODULE_11__components_words_CurationEdit_vue___default.a,
-        PasteArticle: __WEBPACK_IMPORTED_MODULE_12__components_words_PasteArticle_vue___default.a,
-        CreateArticle: __WEBPACK_IMPORTED_MODULE_13__components_words_CreateArticle_vue___default.a,
-        CopyscapeApiResult: __WEBPACK_IMPORTED_MODULE_14__components_words_CopyscapeApiResult_vue___default.a,
+        Dashboard: __WEBPACK_IMPORTED_MODULE_3__components_admin_Dashboard_vue___default.a,
+        Admin: __WEBPACK_IMPORTED_MODULE_4__components_admin_Admin_vue___default.a,
+        Domain: __WEBPACK_IMPORTED_MODULE_5__components_admin_Domain_vue___default.a,
+        User: __WEBPACK_IMPORTED_MODULE_6__components_admin_User_vue___default.a,
+        ProtectedTerm: __WEBPACK_IMPORTED_MODULE_7__components_admin_ProtectedTerm_vue___default.a,
+        DomainDetail: __WEBPACK_IMPORTED_MODULE_8__components_admin_DomainDetail_vue___default.a,
+        Copyscape: __WEBPACK_IMPORTED_MODULE_9__components_admin_Copyscape_vue___default.a,
+        WordApi: __WEBPACK_IMPORTED_MODULE_10__components_words_WordApi_vue___default.a,
+        WordApi2: __WEBPACK_IMPORTED_MODULE_11__components_words_WordApi2_vue___default.a,
+        CurationEdit: __WEBPACK_IMPORTED_MODULE_12__components_words_CurationEdit_vue___default.a,
+        PasteArticle: __WEBPACK_IMPORTED_MODULE_13__components_words_PasteArticle_vue___default.a,
+        CreateArticle: __WEBPACK_IMPORTED_MODULE_14__components_words_CreateArticle_vue___default.a,
+        CopyscapeApiResult: __WEBPACK_IMPORTED_MODULE_15__components_words_CopyscapeApiResult_vue___default.a,
         // CurlPage,
-        GenerateArticle: __WEBPACK_IMPORTED_MODULE_15__components_words_GenerateArticle_vue___default.a,
-        UserArticle: __WEBPACK_IMPORTED_MODULE_16__components_words_UserArticle_vue___default.a,
-        Editor: __WEBPACK_IMPORTED_MODULE_17__components_editor_Editor_vue___default.a,
-        SuperEditor: __WEBPACK_IMPORTED_MODULE_18__components_editor_SuperEditor_vue___default.a
+        GenerateArticle: __WEBPACK_IMPORTED_MODULE_16__components_words_GenerateArticle_vue___default.a,
+        UserArticle: __WEBPACK_IMPORTED_MODULE_17__components_words_UserArticle_vue___default.a,
+        Editor: __WEBPACK_IMPORTED_MODULE_18__components_editor_Editor_vue___default.a,
+        SuperEditor: __WEBPACK_IMPORTED_MODULE_19__components_editor_SuperEditor_vue___default.a
     }
 });
 
@@ -29596,6 +29599,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue__ = __webpack_require__(259);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DomainTable_vue__ = __webpack_require__(362);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DomainTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__DomainTable_vue__);
 //
 //
 //
@@ -29628,72 +29633,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['token', 'user'],
-	components: { DomainEdit: __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue___default.a },
+	components: { DomainEdit: __WEBPACK_IMPORTED_MODULE_1__DomainEdit_vue___default.a, DomainTable: __WEBPACK_IMPORTED_MODULE_2__DomainTable_vue___default.a },
 	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */]],
 	data: function data() {
 		return {
 			domain: '',
 			domainIndex: 0,
-			domains: [],
-			raw: {},
-			isAdmin: false
+			domainBus: DomainBus
 		};
-	},
-
-	watch: {
-		authUser: function authUser(data) {
-			this.isAdmin = data.user_level_id === 2 ? true : false;
-		}
-	},
-	created: function created() {
-		this.domainList();
 	},
 	mounted: function mounted() {
 		this.authUser = JSON.parse(this.user);
+
+		// Bus
+		DomainBus.user = this.authUser;
 	},
 
 	methods: {
-		domainList: function domainList() {
-			var _this = this;
-
-			axios.get('/admin/domainList').then(function (response) {
-				return _this.domains = response.data;
-			});
-		},
 		postDomain: function postDomain() {
-			var _this2 = this;
+			var _this = this;
 
 			axios.post('/admin/postDomain', { domain: this.domain }).then(function (response) {
 				var data = response.data;
 
 				// response is 200 and return data
 				if (data.isSuccess === false) {
-					_this2.errors = data.result;
+					_this.errors = data.result;
 
 					new Noty({
 						type: 'error',
@@ -29702,7 +29674,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 						timeout: 5000
 					}).show();
 				} else {
-					var domain = _this2.domain;
+					var domain = _this.domain;
 					new Noty({
 						type: 'success',
 						text: '<b>' + domain + '</b> successfully saved.',
@@ -29710,43 +29682,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 						timeout: 5000
 					}).show();
 
-					_this2.domains.push(data);
-					_this2.domain = '';
+					DomainBus.domains.push(data);
+					_this.domain = '';
 				}
 			});
-		},
-		displayDomainEdit: function displayDomainEdit(url, index) {
-			this.domainIndex = --index;
-			this.isEdit = true;
-			this.raw = url;
 		},
 		hideDomainEdit: function hideDomainEdit(payload) {
-			this.isEdit = false;
+			DomainBus.isEdit = false;
 
 			// check if payload is not empty
-			if (payload) this.domains[this.domainIndex].domain = payload.domain;
-		},
-		removeDomain: function removeDomain(url, index) {
-			var _this3 = this;
-
-			var data = {
-				id: url.id
-			};
-
-			axios.delete('/admin/removeDomain', { params: data }).then(function (response) {
-				var data = response.data;
-
-				if (data) {
-					_this3.domains.splice(--index, 1);
-
-					new Noty({
-						type: 'error',
-						text: '<b>' + url.domain + '</b> successfully removed.',
-						layout: 'bottomLeft',
-						timeout: 5000
-					}).show();
-				}
-			});
+			if (payload) DomainBus.domains[DomainBus.index].domain = payload.domain;
 		}
 	}
 });
@@ -62019,10 +61964,10 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Domain"
-  }, [_c('h2', [_vm._v("Domain")]), _vm._v(" "), (_vm.isEdit) ? _c('domain-edit', {
+  }, [_c('h2', [_vm._v("Domain")]), _vm._v(" "), (_vm.domainBus.isEdit) ? _c('domain-edit', {
     attrs: {
       "token": _vm.token,
-      "raw": _vm.raw
+      "raw": _vm.domainBus.raw
     },
     on: {
       "closeDomainEdit": _vm.hideDomainEdit
@@ -62081,34 +62026,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "type": "submit"
     }
-  }, [_vm._v("Save Domain")])])]), _vm._v(" "), _c('table', {
-    staticClass: "table table-hover"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.domains), function(url, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(++index))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(url.domain))]), _vm._v(" "), _c('td', [_c('a', {
-      staticClass: "btn btn-info",
-      attrs: {
-        "href": "#"
-      },
-      on: {
-        "click": function($event) {
-          _vm.displayDomainEdit(url, index)
-        }
-      }
-    }, [_vm._v("Edit")]), _vm._v(" "), (_vm.isAdmin) ? _c('a', {
-      staticClass: "btn btn-danger",
-      attrs: {
-        "href": "#"
-      },
-      on: {
-        "click": function($event) {
-          _vm.removeDomain(url, index)
-        }
-      }
-    }, [_vm._v("Remove")]) : _vm._e()])])
-  }))])])], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Domain Name")]), _vm._v(" "), _c('th', [_vm._v("Action")])])])
-}]}
+  }, [_vm._v("Save Domain")])])]), _vm._v(" "), _c('domain-table')], 1)], 1)
+},staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
@@ -63720,6 +63639,427 @@ module.exports = function listToStyles (parentId, list) {
 __webpack_require__(147);
 module.exports = __webpack_require__(148);
 
+
+/***/ }),
+/* 354 */,
+/* 355 */,
+/* 356 */,
+/* 357 */,
+/* 358 */,
+/* 359 */,
+/* 360 */,
+/* 361 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DomainTableResult_vue__ = __webpack_require__(365);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DomainTableResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__DomainTableResult_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: { DomainTableResult: __WEBPACK_IMPORTED_MODULE_0__DomainTableResult_vue___default.a },
+    data: function data() {
+        return {
+            domainBus: DomainBus
+        };
+    }
+});
+
+/***/ }),
+/* 362 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(361),
+  /* template */
+  __webpack_require__(363),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\DomainTable.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] DomainTable.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-dfe319d8", Component.options)
+  } else {
+    hotAPI.reload("data-v-dfe319d8", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 363 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('table', {
+    staticClass: "table table-hover"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.domainBus.domains), function(domain, index) {
+    return _c('domain-table-result', {
+      key: domain.id,
+      attrs: {
+        "domain": domain,
+        "index": index
+      }
+    })
+  }))])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Domain Name")]), _vm._v(" "), _c('th', [_vm._v("Action")]), _vm._v(" "), _c('th')])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-dfe319d8", module.exports)
+  }
+}
+
+/***/ }),
+/* 364 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['domain', 'index'],
+    data: function data() {
+        return {
+            url: {},
+            domainBus: DomainBus,
+            orderNum: this.index,
+            domainToRemove: '',
+            aboutToRemove: false,
+            isRemoveDisable: false
+        };
+    },
+    mounted: function mounted() {
+        this.url = this.domain;
+        this.orderNum++;
+    },
+
+    methods: {
+        btnStateWhenRemoveDomain: function btnStateWhenRemoveDomain(state) {
+            this.isRemoveDisable = state;
+            this.aboutToRemove = state;
+        },
+        removeDomain: function removeDomain(url, index) {
+            this.btnStateWhenRemoveDomain(true);
+        },
+        deleteNowDomain: function deleteNowDomain(url, index) {
+            var _this = this;
+
+            if (this.aboutToRemove === true && url.domain === this.domainToRemove) {
+                var data = { id: url.id };
+
+                axios.delete('/admin/removeDomain', { params: data }).then(function (response) {
+                    var data = response.data;
+
+                    if (data) {
+                        _this.domainBus.domains.splice(--index, 1);
+
+                        new Noty({
+                            type: 'error',
+                            text: '<b>' + url.domain + '</b> successfully removed.',
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+                    }
+                });
+            } else {
+                new Noty({
+                    type: 'info',
+                    text: 'Domain name not matched.',
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
+            }
+        },
+        dismissRemove: function dismissRemove() {
+            this.btnStateWhenRemoveDomain(false);
+        }
+    }
+});
+
+/***/ }),
+/* 365 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(369)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(364),
+  /* template */
+  __webpack_require__(366),
+  /* scopeId */
+  "data-v-1b5773d1",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\DomainTableResult.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] DomainTableResult.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1b5773d1", Component.options)
+  } else {
+    hotAPI.reload("data-v-1b5773d1", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 366 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.orderNum))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.url.domain))]), _vm._v(" "), _c('td', [_c('a', {
+    staticClass: "btn btn-info",
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": function($event) {
+        _vm.domainBus.displayDomainEdit(_vm.url, _vm.index)
+      }
+    }
+  }, [_vm._v("Edit")]), _vm._v(" "), (_vm.domainBus.isAdmin) ? _c('a', {
+    staticClass: "btn btn-danger",
+    attrs: {
+      "href": "#",
+      "disabled": _vm.isRemoveDisable
+    },
+    on: {
+      "click": function($event) {
+        _vm.removeDomain(_vm.url, _vm.index)
+      }
+    }
+  }, [_vm._v("\n            Remove\n        ")]) : _vm._e()]), _vm._v(" "), _c('td', [(_vm.aboutToRemove) ? _c('div', {
+    staticClass: "delete"
+  }, [_c('form', {
+    staticClass: "form-inline",
+    attrs: {
+      "method": "POST"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+      }
+    }
+  }, [_c('span', [_vm._v("Remove "), _c('b', [_vm._v(_vm._s(_vm.url.domain))]), _vm._v(" domain?")]), _vm._v("  \n                "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.domainToRemove),
+      expression: "domainToRemove"
+    }],
+    staticClass: "remove",
+    attrs: {
+      "type": "text",
+      "placeholder": "Enter domain name to remove"
+    },
+    domProps: {
+      "value": (_vm.domainToRemove)
+    },
+    on: {
+      "keyup": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.deleteNowDomain(_vm.url, _vm.orderNum)
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.domainToRemove = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.dismissRemove
+    }
+  }, [_vm._v("Cancel")])])]) : _vm._e()])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1b5773d1", module.exports)
+  }
+}
+
+/***/ }),
+/* 367 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios__ = __webpack_require__(149);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_axios___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_axios__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DomainBus; });
+
+
+
+var DomainBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+    data: function data() {
+        return {
+            domains: [],
+            isAdmin: false,
+            user: {},
+            isEdit: false,
+            raw: {},
+            index: 0
+        };
+    },
+
+
+    watch: {
+        domains: function domains(data) {
+            return data;
+        },
+        user: function user(data) {
+            this.isAdmin = data.user_level_id === 2 ? true : false;
+        }
+    },
+
+    created: function created() {
+        this.domainList();
+    },
+
+
+    methods: {
+        domainList: function domainList() {
+            var _this = this;
+
+            __WEBPACK_IMPORTED_MODULE_1_axios___default.a.get('/admin/domainList').then(function (response) {
+                return _this.domains = response.data;
+            });
+        },
+        displayDomainEdit: function displayDomainEdit(url, index) {
+            this.isEdit = true;
+            this.index = index;
+            this.raw = url;
+        }
+    }
+});
+
+/***/ }),
+/* 368 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\ninput.remove[data-v-1b5773d1] { width: 200px;\n}\n", ""]);
+
+/***/ }),
+/* 369 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(368);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("6be276e9", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1b5773d1\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DomainTableResult.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1b5773d1\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DomainTableResult.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

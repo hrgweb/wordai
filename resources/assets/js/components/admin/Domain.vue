@@ -4,10 +4,10 @@
 
 		<!-- Domain edit -->
 		<domain-edit
-			v-if="isEdit"
+			v-if="domainBus.isEdit"
 			@closeDomainEdit="hideDomainEdit"
 			:token="token"
-			:raw="raw">
+			:raw="domainBus.raw">
 		</domain-edit>
 
 		<div class="panel panel-default">
@@ -24,63 +24,35 @@
 				</form>
 			</div>
 
-			<table class="table table-hover">
-				<thead>
-					<tr>
-						<th>#</th>
-						<th>Domain Name</th>
-						<th>Action</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr v-for="(url, index) in domains">
-						<td>{{ ++index }}</td>
-						<td>{{ url.domain }}</td>
-						<td>
-							<a href="#" class="btn btn-info" @click="displayDomainEdit(url, index)">Edit</a>
-							<a href="#" class="btn btn-danger" v-if="isAdmin" @click="removeDomain(url, index)">Remove</a>
-						</td>
-					</tr>
-
-					<!-- <tr v-for="url in domains"><pre>{{ url.domain }}</pre></tr> -->
-				</tbody>
-			</table>
+			<!-- Domain Table -->
+            <domain-table></domain-table>
 		</div>
 	</div>
 </template>
 
 <script>
 	import { CrudMixin } from './../../mixins/CrudMixin.js';
-	import DomainEdit from './DomainEdit.vue';
+    import DomainEdit from './DomainEdit.vue';
+	import DomainTable from './DomainTable.vue';
 
 	export default {
 		props: ['token', 'user'],
-		components: { DomainEdit },
+		components: { DomainEdit, DomainTable },
 		mixins: [ CrudMixin ],
 		data() {
 			return {
 				domain: '',
 				domainIndex: 0,
-				domains: [],
-				raw: {},
-				isAdmin: false,
+                domainBus: DomainBus
 			}
-		},
-		watch: {
-			authUser(data) {
-				this.isAdmin = data.user_level_id === 2 ? true : false;
-			}
-		},
-		created() {
-			this.domainList();
 		},
 		mounted() {
 			this.authUser = JSON.parse(this.user);
+
+            // Bus
+            DomainBus.user = this.authUser;
 		},
 		methods: {
-			domainList() {
-				axios.get('/admin/domainList').then(response => this.domains = response.data);
-			},
 			postDomain() {
 				axios.post('/admin/postDomain', { domain: this.domain }).then(response => {
 					let data = response.data;
@@ -104,41 +76,17 @@
                             timeout: 5000
                         }).show();
 
-						this.domains.push(data);
+						DomainBus.domains.push(data);
 						this.domain = '';
 					}
 				});
 			},
-			displayDomainEdit(url, index) {
-				this.domainIndex = --index;
-				this.isEdit = true;
-				this.raw = url;
-			},
+
 			hideDomainEdit(payload) {
-				this.isEdit = false;
+				DomainBus.isEdit = false;
 
 				// check if payload is not empty
-				if (payload) this.domains[this.domainIndex].domain = payload.domain;
-			},
-			removeDomain(url, index) {
-				const data = {
-					id: url.id
-				};
-
-				axios.delete('/admin/removeDomain', { params: data }).then(response => {
-					let data = response.data;
-
-					if (data) {
-						this.domains.splice(--index, 1);
-
-                        new Noty({
-                            type: 'error',
-                            text: `<b>${url.domain}</b> successfully removed.`,
-                            layout: 'bottomLeft',
-                            timeout: 5000
-                        }).show();
-					}
-				})
+				if (payload) DomainBus.domains[DomainBus.index].domain = payload.domain;
 			}
 		}
 	}
