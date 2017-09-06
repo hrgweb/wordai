@@ -93,4 +93,8 @@ class PagesController extends Controller
     public function article() {
         return view('admin.article');
     }
+
+    public function domain_group() {
+        return view('admin.group');
+    }
 }

@@ -22,6 +22,7 @@ import ArticleMain from './components/admin/ArticleMain.vue';
 import Domain from './components/admin/Domain.vue';
 import User from './components/admin/User.vue';
 import ProtectedTerm from './components/admin/ProtectedTerm.vue';
+import DomainGroup from './components/admin/DomainGroup.vue';
 import DomainDetail from './components/admin/DomainDetail.vue';
 import Copyscape from './components/admin/Copyscape.vue';
 import WordApi from './components/words/WordApi.vue';
@@ -46,6 +47,7 @@ const app = new Vue({
     	Domain,
     	User,
     	ProtectedTerm,
+        DomainGroup,
     	DomainDetail,
     	Copyscape,
     	WordApi,
