@@ -13,7 +13,6 @@ window.ReportingBus = ReportingBus;
 window.ArticleBus = ArticleBus;
 window.DomainBus = DomainBus;
 
-
 /*=============== Components ===============*/
 
 import Dashboard from './components/admin/Dashboard.vue';
