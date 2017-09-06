@@ -14,7 +14,7 @@ return [
     */
 
     // 'failed' => 'These credentials do not match our records.',
-    'failed' => 'Your account has not yet been approved. Please contact your Project Manager.',
+    'failed' => 'Brad has to approve your registration. He knows you have registered so dont be pestering the boss to approve your account.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
 
 ];
