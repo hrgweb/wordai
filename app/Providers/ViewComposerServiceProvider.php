@@ -15,12 +15,13 @@ class ViewComposerServiceProvider extends ServiceProvider
     public function boot()
     {
         View::composer([
-        	'layouts.*', 
-        	'home', 
+        	'layouts.*',
+        	'home',
         	'words.*',
         	'editor.*',
         	'users.articles',
-        	'copyscape.*'
+        	'copyscape.*',
+            'admin.article'
         ], function($view) {
         	$view->with('user', auth()->user());
         });

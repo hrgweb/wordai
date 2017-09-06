@@ -6,6 +6,7 @@ Route::get('test', 'WordsController@test');
 // Pages
 Route::get('/', 'PagesController@index');
 Route::get('admin', 'PagesController@admin');
+Route::get('article', 'PagesController@article');
 Route::get('domain', 'PagesController@domain');
 Route::get('domain-details', 'PagesController@domain_details');
 Route::get('user', 'PagesController@user');
