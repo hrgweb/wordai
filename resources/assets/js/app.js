@@ -26,6 +26,7 @@ import Dashboard from './components/admin/Dashboard.vue';
 import Admin from './components/admin/Admin.vue';
 import ArticleMain from './components/admin/ArticleMain.vue';
 import Domain from './components/admin/Domain.vue';
+import CreateGroup from './components/admin/CreateGroup.vue';
 import User from './components/admin/User.vue';
 import ProtectedTerm from './components/admin/ProtectedTerm.vue';
 import DomainGroup from './components/admin/DomainGroup.vue';
@@ -51,6 +52,7 @@ const app = new Vue({
     	Admin,
         ArticleMain,
     	Domain,
+        CreateGroup,
     	User,
     	ProtectedTerm,
         DomainGroup,

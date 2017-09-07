@@ -18,6 +18,11 @@
                 </a>
             </li>
             <li>
+                <a href="{{ url('group') }}">
+                    <em class="fa fa-group" aria-hidden="true"></em> Group
+                </a>
+            </li>
+            <li>
                 <a href="{{ url('domain-group') }}">
                     <em class="fa fa-link" aria-hidden="true"></em> Domain Group
                 </a>

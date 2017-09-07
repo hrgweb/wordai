@@ -97,4 +97,8 @@ class PagesController extends Controller
     public function domain_group() {
         return view('admin.group');
     }
+
+    public function group() {
+        return view('admin.create-group');
+    }
 }

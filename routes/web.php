@@ -8,6 +8,7 @@ Route::get('/', 'PagesController@index');
 Route::get('admin', 'PagesController@admin');
 Route::get('article', 'PagesController@article');
 Route::get('domain', 'PagesController@domain');
+Route::get('group', 'PagesController@group');
 Route::get('domain-group', 'PagesController@domain_group');
 Route::get('domain-details', 'PagesController@domain_details');
 Route::get('user', 'PagesController@user');
