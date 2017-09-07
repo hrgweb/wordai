@@ -53,7 +53,15 @@
 
             onSubmit() {
                 this.form.post('/admin/addGroup')
-                    .then(data => console.log(data));
+                    .then(data => {
+                        if (data) {
+                            // push to groups data
+                            this.groups.push({ id: data.id, group: data.group });
+
+                            // clear inputs
+                            this.form.reset();
+                        }
+                    });
             }
         }
     }

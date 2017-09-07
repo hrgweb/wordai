@@ -65333,8 +65333,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         onSubmit: function onSubmit() {
+            var _this2 = this;
+
             this.form.post('/admin/addGroup').then(function (data) {
-                return console.log(data);
+                if (data) {
+                    // push to groups data
+                    _this2.groups.push({ id: data.id, group: data.group });
+
+                    // clear inputs
+                    _this2.form.reset();
+                }
             });
         }
     }
