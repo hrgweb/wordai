@@ -325,4 +325,15 @@ class AdminController extends Controller
             return 'failed';
         }
     }
+
+    public function getUsersAssociatedByDomain() {
+        return DB::table('users AS u')
+                    ->join('domain_group AS dg', 'dg.user_id', '=', 'u.id')
+                    ->where('dg.group_id', request('group_id'))
+                    ->get([
+                        'u.id AS user_id',
+                        'u.firstname',
+                        'u.lastname'
+                    ]);
+    }
 }

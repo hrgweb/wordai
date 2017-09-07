@@ -66,6 +66,7 @@ Route::prefix('admin')->group(function() {
     Route::get('articlesDomain', 'AdminController@articlesDomain');
     Route::get('listOfDomainByArticles', 'AdminController@listOfDomainByArticles');
     Route::get('groupList', 'AdminController@groupList');
+    Route::get('getUsersAssociatedByDomain', 'AdminController@getUsersAssociatedByDomain');
 	Route::post('postDomain', 'AdminController@postDomain');
     Route::post('saveDetails', 'AdminController@saveDetails');
 	Route::post('newGroup', 'AdminController@newGroup');

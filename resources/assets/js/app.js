@@ -1,17 +1,24 @@
 require('./bootstrap');
 
+/*=============== Class ===============*/
+import Form from './class/Form.js';
+
 /*=============== Global vars ===============*/
 import { ReportingBus } from './eventbus/ReportingBus.js';
 import { ArticleBus } from './eventbus/ArticleBus.js';
 import { DomainBus } from './eventbus/DomainBus.js';
 
+
 window.$ = $;
 window.Vue = require('vue');
+window.Form = Form;
 window.moment = require('moment');
 window.Noty = require('noty');
 window.ReportingBus = ReportingBus;
 window.ArticleBus = ArticleBus;
 window.DomainBus = DomainBus;
+
+
 
 /*=============== Components ===============*/
 

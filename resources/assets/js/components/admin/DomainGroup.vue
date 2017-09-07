@@ -2,10 +2,10 @@
     <div class="DomainGroup">
         <h2>Domain Group</h2><hr>
 
-        <form method="POST" role="form" @submit.prevent="newGroup">
+        <form method="POST" role="form">
             <div class="form-group">
                 <label for="name">Group Name</label>
-                <select class="form-control" v-model="group.group_id">
+                <select class="form-control" v-model="group.group_id" @change="getUsersAssociatedByDomain">
                     <option v-for="group in groups" :value="group.id">{{ group.group }}</option>
                 </select>
             </div>
@@ -29,7 +29,8 @@
             </div>
 
             <br>
-            <button type="submit" class="btn btn-success" :disabled="btnGroupDisable">Save Group</button>
+            <button type="button" class="btn btn-success" ref="btnSave" @click.prevent="newGroup">Save Group</button>
+            <button type="button" class="btn btn-warning" ref="btnUpdate" @click.prevent="updateGroup">Update Group</button>
         </form>
     </div>
 </template>
@@ -47,11 +48,9 @@
                     group_id: 0,
                     value: []
                 },
-                btnGroupDisable: false
+                form: new Form,
+                groupOfUsers: [],
             };
-        },
-        watch: {
-
         },
         created() {
             this.groupList();
@@ -76,7 +75,7 @@
             },
 
             newGroup() {
-                this.btnGroupDisable = true;
+                this.$refs.btnSave.disabled = true;
 
                 // validate
                 let group_id = this.group.group_id;
@@ -87,7 +86,7 @@
                         group_id <= 0 ||
                         this.group.value.length <= 0
                     ) {
-                    this.btnGroupDisable = false;
+                    this.$refs.btnSave.disabled = false;
 
                     new Noty({
                         type: 'error',
@@ -99,7 +98,7 @@
                 } else {
                     axios.post('/admin/newGroup', this.group).then(response => {
                         if (response.data) {
-                            this.btnGroupDisable = false;
+                            this.$refs.btnSave.disabled = false;
 
                             new Noty({
                                 type: 'success',
@@ -116,6 +115,35 @@
                         }
                     });
                 }
+            },
+
+            getUsersAssociatedByDomain() {
+                if (this.group.group_id > 0) {
+                    axios.get('/admin/getUsersAssociatedByDomain?group_id='+this.group.group_id)
+                        .then(response => {
+                            let data = response.data;
+
+                            // if there is/are users
+                            if (data.length > 0) {
+                                // map results
+                                data = data.map(item => {
+                                    return {
+                                        id: item.user_id,
+                                        name: item.firstname + ' ' + item.lastname
+                                    };
+                                });
+
+                                this.group.value = data;
+                            } else {
+                                this.group.value = [];
+                            }
+
+                            this.groupOfUsers = data;
+                        });
+                }
+            },
+
+            updateGroup() {
 
             }
         }
