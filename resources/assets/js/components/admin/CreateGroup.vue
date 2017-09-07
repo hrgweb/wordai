@@ -23,7 +23,7 @@
                 <td>{{ ++index }}</td>
                 <td>{{ group.group }}</td>
                 <td>
-                    <a href="#" class="btn btn-info">Edit</a>
+                    <a href="#" class="btn btn-info" @click="onEdit(group, index)">Edit</a>
                     <a href="#" class="btn btn-danger">Remove</a>
                 </td>
                 <td></td>
@@ -39,7 +39,10 @@
             return {
                 name: '',
                 form: new Form({ name: '' }),
-                groups: []
+                groups: [],
+                group: {},
+                isEdit: false,
+                index: 0
             }
         },
         created() {
@@ -51,12 +54,52 @@
                     .then(response => this.groups = response.data);
             },
 
-            onSubmit() {
+            postGroup() {
                 this.form.post('/admin/addGroup')
                     .then(data => {
                         if (data) {
                             // push to groups data
                             this.groups.push({ id: data.id, group: data.group });
+
+                            new Noty({
+                                type: 'success',
+                                text: `Group <b>${data.group}</b> successfully added.`,
+                                layout: 'bottomLeft',
+                                timeout: 5000
+                            }).show();
+
+                            // clear inputs
+                            this.form.reset();
+                        }
+                    });
+            },
+
+            onSubmit() {
+                return (this.isEdit)
+                    ? this.updateGroup()
+                    : this.postGroup();
+            },
+
+            onEdit(data, index) {
+                this.isEdit = true;
+                this.group = data;
+                this.index = --index;
+                this.form.name = data.group;
+            },
+
+            updateGroup() {
+                this.form.patch('/admin/updateCreateGroup?group_id='+this.group.id)
+                    .then(data => {
+                        if (data) {
+                            this.isEdit = false;
+                            this.groups[this.index].group = this.form.name;
+
+                            new Noty({
+                                type: 'info',
+                                text: `Group <b>${this.form.name}</b> successfully updated.`,
+                                layout: 'bottomLeft',
+                                timeout: 5000
+                            }).show();
 
                             // clear inputs
                             this.form.reset();

@@ -65317,7 +65317,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             name: '',
             form: new Form({ name: '' }),
-            groups: []
+            groups: [],
+            group: {},
+            isEdit: false,
+            index: 0
         };
     },
     created: function created() {
@@ -65332,7 +65335,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return _this.groups = response.data;
             });
         },
-        onSubmit: function onSubmit() {
+        postGroup: function postGroup() {
             var _this2 = this;
 
             this.form.post('/admin/addGroup').then(function (data) {
@@ -65340,8 +65343,44 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     // push to groups data
                     _this2.groups.push({ id: data.id, group: data.group });
 
+                    new Noty({
+                        type: 'success',
+                        text: 'Group <b>' + data.group + '</b> successfully added.',
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
+
                     // clear inputs
                     _this2.form.reset();
+                }
+            });
+        },
+        onSubmit: function onSubmit() {
+            return this.isEdit ? this.updateGroup() : this.postGroup();
+        },
+        onEdit: function onEdit(data, index) {
+            this.isEdit = true;
+            this.group = data;
+            this.index = --index;
+            this.form.name = data.group;
+        },
+        updateGroup: function updateGroup() {
+            var _this3 = this;
+
+            this.form.patch('/admin/updateCreateGroup?group_id=' + this.group.id).then(function (data) {
+                if (data) {
+                    _this3.isEdit = false;
+                    _this3.groups[_this3.index].group = _this3.form.name;
+
+                    new Noty({
+                        type: 'info',
+                        text: 'Group <b>' + _this3.form.name + '</b> successfully updated.',
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
+
+                    // clear inputs
+                    _this3.form.reset();
                 }
             });
         }
@@ -65398,22 +65437,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])]), _vm._v(" "), _c('table', {
     staticClass: "table table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.groups), function(group, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(++index))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(group.group))]), _vm._v(" "), _vm._m(1, true), _vm._v(" "), _c('td')])
+    return _c('tr', [_c('td', [_vm._v(_vm._s(++index))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(group.group))]), _vm._v(" "), _c('td', [_c('a', {
+      staticClass: "btn btn-info",
+      attrs: {
+        "href": "#"
+      },
+      on: {
+        "click": function($event) {
+          _vm.onEdit(group, index)
+        }
+      }
+    }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
+      staticClass: "btn btn-danger",
+      attrs: {
+        "href": "#"
+      }
+    }, [_vm._v("Remove")])]), _vm._v(" "), _c('td')])
   }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Group Name")]), _vm._v(" "), _c('th', [_vm._v("Action")]), _vm._v(" "), _c('th')])])
-},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('td', [_c('a', {
-    staticClass: "btn btn-info",
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
-    staticClass: "btn btn-danger",
-    attrs: {
-      "href": "#"
-    }
-  }, [_vm._v("Remove")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

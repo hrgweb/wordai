@@ -75,7 +75,8 @@ Route::prefix('admin')->group(function() {
 	Route::patch('updateDomain', 'AdminController@updateDomain');
 	Route::patch('updateDetails', 'AdminController@updateDetails');
     Route::patch('updateCopyscapeSetting', 'AdminController@updateCopyscapeSetting');
-	Route::patch('updateGroup', 'AdminController@updateGroup');
+    Route::patch('updateGroup', 'AdminController@updateGroup');
+	Route::patch('updateCreateGroup', 'AdminController@updateCreateGroup');
 	Route::delete('removeDomain', 'AdminController@removeDomain');
 	Route::delete('removeDetails', 'AdminController@removeDetails');
 	// Protected Terms
