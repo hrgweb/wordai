@@ -12,29 +12,29 @@
         <table class="table table-hover">
         <thead>
             <tr>
-                <th>#</th>
                 <th>Group Name</th>
                 <th>Action</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(group, index) in groups">
-                <td>{{ ++index }}</td>
-                <td>{{ group.group }}</td>
-                <td>
-                    <a href="#" class="btn btn-info" @click="onEdit(group, index)">Edit</a>
-                    <a href="#" class="btn btn-danger">Remove</a>
-                </td>
-                <td></td>
-            </tr>
+            <group-table-result
+                v-for="(group, index) in groups"
+                :group="group"
+                :index="index"
+                :key="group.id"
+                @hasRemove="updateGroupsData">
+            </group-table-result>
         </tbody>
     </table>
     </div>
 </template>
 
 <script>
+    import GroupTableResult from './GroupTableResult.vue';
+
     export default {
+        components: { GroupTableResult },
         data() {
             return {
                 name: '',
@@ -42,7 +42,7 @@
                 groups: [],
                 group: {},
                 isEdit: false,
-                index: 0
+                index: 0,
             }
         },
         created() {
@@ -105,6 +105,10 @@
                             this.form.reset();
                         }
                     });
+            },
+
+            updateGroupsData(data) {
+                this.groups.splice(data.index, 1);
             }
         }
     }

@@ -65276,9 +65276,8 @@ module.exports = Component.exports
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GroupTableResult_vue__ = __webpack_require__(388);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__GroupTableResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__GroupTableResult_vue__);
 //
 //
 //
@@ -65312,7 +65311,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: { GroupTableResult: __WEBPACK_IMPORTED_MODULE_0__GroupTableResult_vue___default.a },
     data: function data() {
         return {
             name: '',
@@ -65383,6 +65385,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     _this3.form.reset();
                 }
             });
+        },
+        updateGroupsData: function updateGroupsData(data) {
+            this.groups.splice(data.index, 1);
         }
     }
 });
@@ -65437,31 +65442,226 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })])]), _vm._v(" "), _c('table', {
     staticClass: "table table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.groups), function(group, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(++index))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(group.group))]), _vm._v(" "), _c('td', [_c('a', {
-      staticClass: "btn btn-info",
+    return _c('group-table-result', {
+      key: group.id,
       attrs: {
-        "href": "#"
+        "group": group,
+        "index": index
       },
       on: {
-        "click": function($event) {
-          _vm.onEdit(group, index)
-        }
+        "hasRemove": _vm.updateGroupsData
       }
-    }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
-      staticClass: "btn btn-danger",
-      attrs: {
-        "href": "#"
-      }
-    }, [_vm._v("Remove")])]), _vm._v(" "), _c('td')])
+    })
   }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Group Name")]), _vm._v(" "), _c('th', [_vm._v("Action")]), _vm._v(" "), _c('th')])])
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Group Name")]), _vm._v(" "), _c('th', [_vm._v("Action")]), _vm._v(" "), _c('th')])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-5514e00d", module.exports)
+  }
+}
+
+/***/ }),
+/* 387 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['group', 'index'],
+    data: function data() {
+        return {
+            aboutToRemove: false,
+            removeDisable: false,
+            groupToRemove: '',
+            form: new Form()
+        };
+    },
+
+    methods: {
+        removeState: function removeState(state) {
+            this.aboutToRemove = state;
+            this.removeDisable = state;
+        },
+        onDelete: function onDelete(group, index) {
+            this.removeState(true);
+        },
+        removeGroup: function removeGroup(data, index) {
+            var _this = this;
+
+            // check if group name is equal to input name
+            if (data.group === this.groupToRemove) {
+                // remove group
+                this.form.delete('/admin/removeCreateGroup?group_id=' + data.id).then(function (response) {
+                    if (response) {
+                        _this.$emit('hasRemove', { index: index });
+
+                        var group = data.group;
+                        new Noty({
+                            type: 'error',
+                            text: '<b>' + group + '</b> successfully removed.',
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+                    }
+                });
+            } else {
+                new Noty({
+                    type: 'info',
+                    text: 'Group name not matched.',
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
+            }
+        },
+        dismissRemove: function dismissRemove() {
+            this.removeState(false);
+        }
+    }
+});
+
+/***/ }),
+/* 388 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(387),
+  /* template */
+  __webpack_require__(389),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\GroupTableResult.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] GroupTableResult.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-42bb255c", Component.options)
+  } else {
+    hotAPI.reload("data-v-42bb255c", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 389 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.group.group))]), _vm._v(" "), _c('td', [_c('a', {
+    staticClass: "btn btn-info",
+    attrs: {
+      "href": "#"
+    },
+    on: {
+      "click": function($event) {
+        _vm.onEdit(_vm.group, _vm.index)
+      }
+    }
+  }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-danger",
+    attrs: {
+      "href": "#",
+      "disabled": _vm.removeDisable
+    },
+    on: {
+      "click": function($event) {
+        _vm.onDelete(_vm.group, _vm.index)
+      }
+    }
+  }, [_vm._v("Remove")])]), _vm._v(" "), _c('td', [(_vm.aboutToRemove) ? _c('div', {
+    staticClass: "delete"
+  }, [_c('form', {
+    staticClass: "form-inline",
+    attrs: {
+      "method": "POST"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+      }
+    }
+  }, [_c('span', [_vm._v("Remove "), _c('b', [_vm._v(_vm._s(_vm.group.group))]), _vm._v(" group?")]), _vm._v("  \n                "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.groupToRemove),
+      expression: "groupToRemove"
+    }],
+    staticClass: "remove",
+    attrs: {
+      "type": "text",
+      "placeholder": "Enter group name to remove"
+    },
+    domProps: {
+      "value": (_vm.groupToRemove)
+    },
+    on: {
+      "keyup": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.removeGroup(_vm.group, _vm.index)
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.groupToRemove = $event.target.value
+      }
+    }
+  }), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.dismissRemove
+    }
+  }, [_vm._v("Cancel")])])]) : _vm._e()])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-42bb255c", module.exports)
   }
 }
 

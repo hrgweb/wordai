@@ -375,4 +375,8 @@ class AdminController extends Controller
     public function updateCreateGroup() {
         return Group::where('id', request('group_id'))->update(['group' => request('name')]);
     }
+
+    public function removeCreateGroup() {
+        return Group::where('id', request('group_id'))->delete();
+    }
 }
