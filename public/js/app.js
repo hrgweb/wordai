@@ -65303,19 +65303,35 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
         return {
             name: '',
-            form: new Form({ name: '' })
+            form: new Form({ name: '' }),
+            groups: []
         };
     },
-    mounted: function mounted() {
-        console.log('ready');
+    created: function created() {
+        this.groupList();
     },
 
     methods: {
+        groupList: function groupList() {
+            var _this = this;
+
+            axios.get('/admin/groupList').then(function (response) {
+                return _this.groups = response.data;
+            });
+        },
         onSubmit: function onSubmit() {
             this.form.post('/admin/addGroup').then(function (data) {
                 return console.log(data);
@@ -65371,11 +65387,25 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.form.name = $event.target.value
       }
     }
-  })])]), _vm._v(" "), _vm._m(0)])
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('table', {
+  })])]), _vm._v(" "), _c('table', {
     staticClass: "table table-hover"
-  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Group Name")]), _vm._v(" "), _c('th', [_vm._v("Action")]), _vm._v(" "), _c('th')])]), _vm._v(" "), _c('tbody')])
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.groups), function(group, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(++index))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(group.group))]), _vm._v(" "), _vm._m(1, true), _vm._v(" "), _c('td')])
+  }))])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Group Name")]), _vm._v(" "), _c('th', [_vm._v("Action")]), _vm._v(" "), _c('th')])])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('td', [_c('a', {
+    staticClass: "btn btn-info",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
+    staticClass: "btn btn-danger",
+    attrs: {
+      "href": "#"
+    }
+  }, [_vm._v("Remove")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {

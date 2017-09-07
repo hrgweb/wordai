@@ -19,7 +19,15 @@
             </tr>
         </thead>
         <tbody>
-
+            <tr v-for="(group, index) in groups">
+                <td>{{ ++index }}</td>
+                <td>{{ group.group }}</td>
+                <td>
+                    <a href="#" class="btn btn-info">Edit</a>
+                    <a href="#" class="btn btn-danger">Remove</a>
+                </td>
+                <td></td>
+            </tr>
         </tbody>
     </table>
     </div>
@@ -30,13 +38,19 @@
         data() {
             return {
                 name: '',
-                form: new Form({ name: '' })
+                form: new Form({ name: '' }),
+                groups: []
             }
         },
-        mounted() {
-            console.log('ready');
+        created() {
+            this.groupList();
         },
         methods: {
+            groupList() {
+                axios.get('/admin/groupList')
+                    .then(response => this.groups = response.data);
+            },
+
             onSubmit() {
                 this.form.post('/admin/addGroup')
                     .then(data => console.log(data));
