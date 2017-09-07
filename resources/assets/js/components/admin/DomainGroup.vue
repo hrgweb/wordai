@@ -5,7 +5,7 @@
         <form method="POST" role="form">
             <div class="form-group">
                 <label for="name">Group Name</label>
-                <select class="form-control" v-model="group.group_id" @change="getUsersAssociatedByDomain">
+                <select class="form-control" v-model="form.group_id" @change="getUsersAssociatedByDomain">
                     <option v-for="group in groups" :value="group.id">{{ group.group }}</option>
                 </select>
             </div>
@@ -13,13 +13,14 @@
             <div class="form-group">
                 <label for="name">Assign User</label>
                 <multiselect
-                    v-model="group.value"
+                    v-model="form.value"
                     :options="users"
                     :multiple="true"
                     :close-on-select="true"
                     :hide-selected="true"
                     label="name"
-                    track-by="id">
+                    track-by="id"
+                >
                     <template slot="tag" scope="props">
                         <span class="multiselect__tag">
                             <span>{{ props.option.name }}</span>
@@ -29,8 +30,24 @@
             </div>
 
             <br>
-            <button type="button" class="btn btn-success" ref="btnSave" @click.prevent="newGroup">Save Group</button>
-            <button type="button" class="btn btn-warning" ref="btnUpdate" @click.prevent="updateGroup">Update Group</button>
+            <button
+                type="button"
+                class="btn btn-success"
+                v-if="! isUpdate"
+                ref="btnSave"
+                @click.prevent="newGroup"
+            >
+                Save Group
+            </button>
+            <button
+                type="button"
+                class="btn btn-warning"
+                v-else
+                ref="btnUpdate"
+                @click.prevent="updateGroup"
+            >
+                Update Group
+            </button>
         </form>
     </div>
 </template>
@@ -44,12 +61,16 @@
             return {
                 users: [],
                 groups: [],
-                group: {
+                /*group: {
                     group_id: 0,
                     value: []
-                },
-                form: new Form,
+                },*/
+                form: new Form({
+                    group_id: 0,
+                    value: []
+                }),
                 groupOfUsers: [],
+                isUpdate: false
             };
         },
         created() {
@@ -74,19 +95,13 @@
                 });
             },
 
-            newGroup() {
-                this.$refs.btnSave.disabled = true;
-
-                // validate
-                let group_id = this.group.group_id;
-
+            validationFail(group_id) {
                 if (
                         group_id === null ||
                         group_id === undefined ||
                         group_id <= 0 ||
-                        this.group.value.length <= 0
+                        this.form.value.length <= 0
                     ) {
-                    this.$refs.btnSave.disabled = false;
 
                     new Noty({
                         type: 'error',
@@ -95,31 +110,54 @@
                         timeout: 5000
                     }).show();
 
+                    return true;
+
                 } else {
-                    axios.post('/admin/newGroup', this.group).then(response => {
-                        if (response.data) {
-                            this.$refs.btnSave.disabled = false;
+                    return false;
+                }
+            },
 
-                            new Noty({
-                                type: 'success',
-                                text: `1 record successfully saved.`,
-                                layout: 'bottomLeft',
-                                timeout: 5000
-                            }).show();
+            clearForm() {
+                this.form['group_id'] = 0;
+                this.form['value'] = [];
+                this.isUpdate = false;
+            },
 
-                            // clear group vue data
-                            this.group = {
-                                group_id: 0,
-                                value: []
-                            };
-                        }
+            newGroup() {
+                this.$refs.btnSave.disabled = true;
+
+                // validate
+                if (this.validationFail(this.form.group_id)) {
+                    this.$refs.btnSave.disabled = false;
+                } else {
+                    this.form.post('/admin/newGroup')
+                        .then(data => {
+                            if (data.result) {
+                                this.$refs.btnSave.disabled = false;
+
+                                new Noty({
+                                    type: 'success',
+                                    text: `Successfully saved.`,
+                                    layout: 'bottomLeft',
+                                    timeout: 5000
+                                }).show();
+
+                                // clear group vue data
+                                this.clearForm();
+                            }
                     });
                 }
             },
 
+            usersLoaded(users, isUpdate) {
+                this.groupOfUsers = users;
+                this.form.value = users;
+                this.isUpdate = isUpdate;
+            },
+
             getUsersAssociatedByDomain() {
-                if (this.group.group_id > 0) {
-                    axios.get('/admin/getUsersAssociatedByDomain?group_id='+this.group.group_id)
+                if (this.form.group_id > 0) {
+                    axios.get('/admin/getUsersAssociatedByDomain?group_id='+this.form.group_id)
                         .then(response => {
                             let data = response.data;
 
@@ -133,18 +171,38 @@
                                     };
                                 });
 
-                                this.group.value = data;
+                                this.usersLoaded(data, true);
                             } else {
-                                this.group.value = [];
+                                this.usersLoaded([], false);
                             }
-
-                            this.groupOfUsers = data;
                         });
                 }
             },
 
             updateGroup() {
+                this.$refs.btnUpdate.disabled = true;
 
+                // validate
+                if (this.validationFail(this.form.group_id)) {
+                    this.$refs.btnUpdate.disabled = false;
+                } else {
+                    this.form.patch('/admin/updateGroup')
+                        .then(data => {
+                            if (data) {
+                                this.$refs.btnUpdate.disabled = false;
+
+                                new Noty({
+                                    type: 'info',
+                                    text: `Successfully updated.`,
+                                    layout: 'bottomLeft',
+                                    timeout: 5000
+                                }).show();
+
+                                // clear group vue data
+                                this.clearForm();
+                            }
+                        });
+                }
             }
         }
     }

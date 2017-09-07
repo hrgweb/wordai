@@ -319,11 +319,9 @@ class AdminController extends Controller
             $counter++;
         }
 
-        if ($counter === count($users)) {
-            return 'success';
-        } else {
-            return 'failed';
-        }
+        return $counter === count($users)
+            ? response()->json(['result' => true])
+            : response()->json(['result' => false]);
     }
 
     public function getUsersAssociatedByDomain() {
@@ -335,5 +333,38 @@ class AdminController extends Controller
                         'u.firstname',
                         'u.lastname'
                     ]);
+    }
+
+    public function updateGroup() {
+        $users = request('value');
+        $counter = 0;
+
+        DB::beginTransaction();
+        try {
+            // delete old users
+            DomainGroup::where('group_id', request('group_id'))->delete();
+
+            // update users
+            for ($i=0; $i < count($users); $i++) {
+                $data = [
+                    'group_id' => request('group_id'),
+                    'user_id' => $users[$i]['id']
+                ];
+
+                // post data
+                DomainGroup::create($data);
+
+                // increment counter
+                $counter++;
+            }
+        } catch (ValidationException $e) {
+            DB::rollback();
+            throw $e;
+        }
+        DB::commit();
+
+        return $counter === count($users)
+            ? response()->json(['result' => true])
+            : response()->json(['result' => false]);
     }
 }

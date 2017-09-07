@@ -30340,6 +30340,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -30349,12 +30366,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             users: [],
             groups: [],
-            group: {
+            /*group: {
                 group_id: 0,
                 value: []
-            },
-            form: new Form(),
-            groupOfUsers: []
+            },*/
+            form: new Form({
+                group_id: 0,
+                value: []
+            }),
+            groupOfUsers: [],
+            isUpdate: false
         };
     },
     created: function created() {
@@ -30383,16 +30404,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             });
         },
-        newGroup: function newGroup() {
-            var _this3 = this;
-
-            this.$refs.btnSave.disabled = true;
-
-            // validate
-            var group_id = this.group.group_id;
-
-            if (group_id === null || group_id === undefined || group_id <= 0 || this.group.value.length <= 0) {
-                this.$refs.btnSave.disabled = false;
+        validationFail: function validationFail(group_id) {
+            if (group_id === null || group_id === undefined || group_id <= 0 || this.form.value.length <= 0) {
 
                 new Noty({
                     type: 'error',
@@ -30400,32 +30413,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     layout: 'bottomLeft',
                     timeout: 5000
                 }).show();
+
+                return true;
             } else {
-                axios.post('/admin/newGroup', this.group).then(function (response) {
-                    if (response.data) {
+                return false;
+            }
+        },
+        clearForm: function clearForm() {
+            this.form['group_id'] = 0;
+            this.form['value'] = [];
+            this.isUpdate = false;
+        },
+        newGroup: function newGroup() {
+            var _this3 = this;
+
+            this.$refs.btnSave.disabled = true;
+
+            // validate
+            if (this.validationFail(this.form.group_id)) {
+                this.$refs.btnSave.disabled = false;
+            } else {
+                this.form.post('/admin/newGroup').then(function (data) {
+                    if (data.result) {
                         _this3.$refs.btnSave.disabled = false;
 
                         new Noty({
                             type: 'success',
-                            text: '1 record successfully saved.',
+                            text: 'Successfully saved.',
                             layout: 'bottomLeft',
                             timeout: 5000
                         }).show();
 
                         // clear group vue data
-                        _this3.group = {
-                            group_id: 0,
-                            value: []
-                        };
+                        _this3.clearForm();
                     }
                 });
             }
         },
+        usersLoaded: function usersLoaded(users, isUpdate) {
+            this.groupOfUsers = users;
+            this.form.value = users;
+            this.isUpdate = isUpdate;
+        },
         getUsersAssociatedByDomain: function getUsersAssociatedByDomain() {
             var _this4 = this;
 
-            if (this.group.group_id > 0) {
-                axios.get('/admin/getUsersAssociatedByDomain?group_id=' + this.group.group_id).then(function (response) {
+            if (this.form.group_id > 0) {
+                axios.get('/admin/getUsersAssociatedByDomain?group_id=' + this.form.group_id).then(function (response) {
                     var data = response.data;
 
                     // if there is/are users
@@ -30438,16 +30472,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                             };
                         });
 
-                        _this4.group.value = data;
+                        _this4.usersLoaded(data, true);
                     } else {
-                        _this4.group.value = [];
+                        _this4.usersLoaded([], false);
                     }
-
-                    _this4.groupOfUsers = data;
                 });
             }
         },
-        updateGroup: function updateGroup() {}
+        updateGroup: function updateGroup() {
+            var _this5 = this;
+
+            this.$refs.btnUpdate.disabled = true;
+
+            // validate
+            if (this.validationFail(this.form.group_id)) {
+                this.$refs.btnUpdate.disabled = false;
+            } else {
+                this.form.patch('/admin/updateGroup').then(function (data) {
+                    if (data) {
+                        _this5.$refs.btnUpdate.disabled = false;
+
+                        new Noty({
+                            type: 'info',
+                            text: 'Successfully updated.',
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+
+                        // clear group vue data
+                        _this5.clearForm();
+                    }
+                });
+            }
+        }
     }
 });
 
@@ -62557,8 +62614,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.group.group_id),
-      expression: "group.group_id"
+      value: (_vm.form.group_id),
+      expression: "form.group_id"
     }],
     staticClass: "form-control",
     on: {
@@ -62569,7 +62626,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.group.group_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.form.group_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }, _vm.getUsersAssociatedByDomain]
     }
   }, _vm._l((_vm.groups), function(group) {
@@ -62602,13 +62659,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }]),
     model: {
-      value: (_vm.group.value),
+      value: (_vm.form.value),
       callback: function($$v) {
-        _vm.group.value = $$v
+        _vm.form.value = $$v
       },
-      expression: "group.value"
+      expression: "form.value"
     }
-  })], 1), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
+  })], 1), _vm._v(" "), _c('br'), _vm._v(" "), (!_vm.isUpdate) ? _c('button', {
     ref: "btnSave",
     staticClass: "btn btn-success",
     attrs: {
@@ -62620,7 +62677,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.newGroup($event)
       }
     }
-  }, [_vm._v("Save Group")]), _vm._v(" "), _c('button', {
+  }, [_vm._v("\n            Save Group\n        ")]) : _c('button', {
     ref: "btnUpdate",
     staticClass: "btn btn-warning",
     attrs: {
@@ -62632,7 +62689,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.updateGroup($event)
       }
     }
-  }, [_vm._v("Update Group")])])])
+  }, [_vm._v("\n            Update Group\n        ")])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -65040,7 +65097,7 @@ var Form = function () {
 
             return new Promise(function (resolve, reject) {
                 axios[requestType](url, _this.data()).then(function (response) {
-                    _this.onSuccess(response.data);
+                    // this.onSuccess(response.data);
 
                     resolve(response.data);
                 }).catch(function (error) {
@@ -65060,7 +65117,7 @@ var Form = function () {
     }, {
         key: 'onSuccess',
         value: function onSuccess(data) {
-            alert(data.message); // temporary
+            // temporary
 
             this.reset();
         }
