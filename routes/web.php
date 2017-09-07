@@ -70,7 +70,8 @@ Route::prefix('admin')->group(function() {
     Route::get('getUsersAssociatedByDomain', 'AdminController@getUsersAssociatedByDomain');
 	Route::post('postDomain', 'AdminController@postDomain');
     Route::post('saveDetails', 'AdminController@saveDetails');
-	Route::post('newGroup', 'AdminController@newGroup');
+    Route::post('newGroup', 'AdminController@newGroup');
+	Route::post('addGroup', 'AdminController@addGroup');
 	Route::patch('updateDomain', 'AdminController@updateDomain');
 	Route::patch('updateDetails', 'AdminController@updateDetails');
     Route::patch('updateCopyscapeSetting', 'AdminController@updateCopyscapeSetting');

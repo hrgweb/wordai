@@ -367,4 +367,8 @@ class AdminController extends Controller
             ? response()->json(['result' => true])
             : response()->json(['result' => false]);
     }
+
+    public function addGroup() {
+        return Group::create(['group' => request('name')]);
+    }
 }

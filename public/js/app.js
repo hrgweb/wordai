@@ -65280,13 +65280,47 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     data: function data() {
-        return {};
+        return {
+            name: '',
+            form: new Form({ name: '' })
+        };
     },
     mounted: function mounted() {
         console.log('ready');
+    },
+
+    methods: {
+        onSubmit: function onSubmit() {
+            this.form.post('/admin/addGroup').then(function (data) {
+                return console.log(data);
+            });
+        }
     }
 });
 
@@ -65295,8 +65329,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('h2', [_vm._v("create group")])
-},staticRenderFns: []}
+  return _c('div', {
+    staticClass: "Group"
+  }, [_c('h2', [_vm._v("Create Group")]), _vm._v(" "), _c('form', {
+    attrs: {
+      "method": "POST",
+      "role": "form"
+    },
+    on: {
+      "submit": function($event) {
+        $event.preventDefault();
+      }
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "name"
+    }
+  }, [_vm._v("Group Name")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.name),
+      expression: "form.name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text"
+    },
+    domProps: {
+      "value": (_vm.form.name)
+    },
+    on: {
+      "keyup": function($event) {
+        if (!('button' in $event) && _vm._k($event.keyCode, "enter", 13)) { return null; }
+        _vm.onSubmit($event)
+      },
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.form.name = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _vm._m(0)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('table', {
+    staticClass: "table table-hover"
+  }, [_c('thead', [_c('tr', [_c('th', [_vm._v("#")]), _vm._v(" "), _c('th', [_vm._v("Group Name")]), _vm._v(" "), _c('th', [_vm._v("Action")]), _vm._v(" "), _c('th')])]), _vm._v(" "), _c('tbody')])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
