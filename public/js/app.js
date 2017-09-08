@@ -29937,9 +29937,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['details'],
+	data: function data() {
+		return { domainBus: DomainBus };
+	},
+
 	methods: {
 		editDetails: function editDetails(detail, index, event) {
 			this.$emit('isEdited', {
@@ -30855,6 +30866,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['group', 'index'],
@@ -30863,7 +30882,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             aboutToRemove: false,
             removeDisable: false,
             groupToRemove: '',
-            form: new Form()
+            form: new Form(),
+            domainBus: DomainBus
         };
     },
 
@@ -61359,7 +61379,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.onEdit(_vm.group, _vm.index)
       }
     }
-  }, [_vm._v("Edit")]), _vm._v(" "), _c('a', {
+  }, [_vm._v("Edit")]), _vm._v(" "), (_vm.domainBus.isAdmin) ? _c('a', {
     staticClass: "btn btn-danger",
     attrs: {
       "href": "#",
@@ -61370,7 +61390,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.onDelete(_vm.group, _vm.index)
       }
     }
-  }, [_vm._v("Remove")])]), _vm._v(" "), _c('td', [(_vm.aboutToRemove) ? _c('div', {
+  }, [_vm._v("\n            Remove\n        ")]) : _vm._e()]), _vm._v(" "), _c('td', [(_vm.aboutToRemove) ? _c('div', {
     staticClass: "delete"
   }, [_c('form', {
     staticClass: "form-inline",
@@ -62360,7 +62380,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.editDetails(detail, index, $event)
         }
       }
-    }, [_vm._v("Edit")]), _vm._v(" "), _c('button', {
+    }, [_vm._v("Edit")]), _vm._v(" "), (_vm.domainBus.isAdmin) ? _c('button', {
       staticClass: "btn btn-danger",
       attrs: {
         "type": "button"
@@ -62370,7 +62390,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.removeDetails(detail, index)
         }
       }
-    }, [_vm._v("Remove")])])])
+    }, [_vm._v("\n                            Remove\n                        ")]) : _vm._e()])])
   }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Protected Terms")]), _vm._v(" "), _c('th', [_vm._v("Synonyms")]), _vm._v(" "), _c('th', [_vm._v("Date Added")]), _vm._v(" "), _c('th', {

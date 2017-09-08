@@ -3,7 +3,15 @@
         <td>{{ group.group }}</td>
         <td>
             <a href="#" class="btn btn-info" @click="onEdit(group, index)">Edit</a>
-            <a href="#" class="btn btn-danger" :disabled="removeDisable" @click="onDelete(group, index)">Remove</a>
+            <a
+                href="#"
+                class="btn btn-danger"
+                :disabled="removeDisable"
+                v-if="domainBus.isAdmin"
+                @click="onDelete(group, index)"
+            >
+                Remove
+            </a>
         </td>
         <td>
             <div class="delete" v-if="aboutToRemove">
@@ -32,7 +40,8 @@
                 aboutToRemove: false,
                 removeDisable: false,
                 groupToRemove: '',
-                form: new Form()
+                form: new Form(),
+                domainBus: DomainBus
             }
         },
         methods: {

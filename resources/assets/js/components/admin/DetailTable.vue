@@ -18,7 +18,14 @@
 		            <td>{{ detail.created_at }}</td>
 		            <td>
 		            	<button type="button" class="btn btn-info" @click="editDetails(detail, index, $event)">Edit</button>
-		            	<button type="button" class="btn btn-danger" @click="removeDetails(detail, index)">Remove</button>
+		            	<button
+                            type="button"
+                            class="btn btn-danger"
+                            v-if="domainBus.isAdmin"
+                            @click="removeDetails(detail, index)"
+                        >
+                            Remove
+                        </button>
 		            </td>
 		        </tr>
 		    </tbody>
@@ -29,6 +36,9 @@
 <script>
 	export default {
 		props: ['details'],
+        data() {
+            return { domainBus: DomainBus };
+        },
 		methods: {
 			editDetails(detail, index, event) {
 				this.$emit('isEdited', {
