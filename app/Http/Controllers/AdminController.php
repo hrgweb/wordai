@@ -21,7 +21,7 @@ class AdminController extends Controller
     protected $toSun;
 
 	public function __construct() {
-		$this->middleware('auth');
+		$this->middleware('auth')->except('domainList');
 	}
 
     public function postDomain()
