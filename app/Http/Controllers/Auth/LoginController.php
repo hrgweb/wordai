@@ -50,8 +50,11 @@ class LoginController extends Controller
         	// login the user
         	Auth::login($request->user());
 
-            // if user is 'admin'
-            if ($request->user()->user_level_id ===2) {
+            // if user is 'admin' and 'manager'
+            if (
+                    $request->user()->user_level_id === 1 ||
+                    $request->user()->user_level_id === 2
+                ) {
                 return redirect('admin');
             }
 
