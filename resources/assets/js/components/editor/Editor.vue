@@ -25,9 +25,9 @@
             </article-to-edit>
 
             <!-- Article Edited -->
-            <article-edited
+            <!-- <article-edited
                 :articles="listEditedArticles">
-            </article-edited>
+            </article-edited> -->
 
             <!-- Article To Publish -->
             <article-to-publish

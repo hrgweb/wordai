@@ -63946,10 +63946,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "articles": _vm.listToEdit
     }
-  }), _vm._v(" "), _c('article-edited', {
-    attrs: {
-      "articles": _vm.listEditedArticles
-    }
   }), _vm._v(" "), _c('article-to-publish', {
     attrs: {
       "articles": _vm.listArticleToPublish
