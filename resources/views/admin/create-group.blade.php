@@ -1,5 +1,5 @@
 @extends('layouts.admin')
 
 @section ('content')
-    <create-group></create-group>
+    <create-group user="{{ $user }}"></create-group>
 @endsection

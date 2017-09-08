@@ -34,6 +34,7 @@
     import GroupTableResult from './GroupTableResult.vue';
 
     export default {
+        props: ['user'],
         components: { GroupTableResult },
         data() {
             return {
@@ -47,6 +48,9 @@
         },
         created() {
             this.groupList();
+        },
+        mounted() {
+            DomainBus.user = JSON.parse(this.user);
         },
         methods: {
             groupList() {

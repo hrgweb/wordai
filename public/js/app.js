@@ -29757,6 +29757,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['user'],
     components: { GroupTableResult: __WEBPACK_IMPORTED_MODULE_0__GroupTableResult_vue___default.a },
     data: function data() {
         return {
@@ -29770,6 +29771,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     created: function created() {
         this.groupList();
+    },
+    mounted: function mounted() {
+        DomainBus.user = JSON.parse(this.user);
     },
 
     methods: {
@@ -30170,8 +30174,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */]],
+	props: ['user'],
 	components: { Error: __WEBPACK_IMPORTED_MODULE_2__errors_Error_vue___default.a, DetailTable: __WEBPACK_IMPORTED_MODULE_3__DetailTable_vue___default.a },
+	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */]],
 	data: function data() {
 		return {
 			domains: [],
@@ -30207,6 +30212,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		this.listOfDomains();
 		this.domainDetails();
 		this.userList();
+	},
+	mounted: function mounted() {
+		DomainBus.user = JSON.parse(this.user);
 	},
 
 	methods: {

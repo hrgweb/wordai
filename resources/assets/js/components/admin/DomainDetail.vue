@@ -81,8 +81,9 @@
 	import User from './../../class/User.js';
 
 	export default {
-		mixins: [ CrudMixin ],
+        props: ['user'],
 		components: { Error, DetailTable },
+        mixins: [ CrudMixin ],
 		data() {
 			return {
 				domains: [],
@@ -120,6 +121,9 @@
 			this.domainDetails();
 			this.userList();
 		},
+        mounted() {
+            DomainBus.user = JSON.parse(this.user);
+        },
 		methods: {
 			listOfDomains() {
 				axios.get('/admin/domainListNotSet').then(response => this.domains = response.data);

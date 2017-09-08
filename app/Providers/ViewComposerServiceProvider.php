@@ -21,7 +21,7 @@ class ViewComposerServiceProvider extends ServiceProvider
         	'editor.*',
         	'users.articles',
         	'copyscape.*',
-            'admin.article'
+            'admin.*'
         ], function($view) {
         	$view->with('user', auth()->user());
         });
