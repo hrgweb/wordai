@@ -370,4 +370,12 @@ class WordsController extends Controller
     public function updateRespinCheckHitMax() {
         return DB::table('words')->where('id', request('word_id'))->update(['isRespinHitMax' => true]);
     }
+
+    public function listOfArticles() {
+        return Word::get([
+            'id AS word_id',
+            'domain_id',
+            'keyword'
+        ]);
+    }
 }

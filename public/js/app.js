@@ -16695,8 +16695,8 @@ var CreateArticleMixin = {
         saveArticle: function saveArticle() {
             var _this = this;
 
-            // check if domain_id is set
-            if (this.spin.domain_id !== 'select' && this.spin.domain_id !== null) {
+            // check if domain_id is set and article type
+            if (this.spin.domain_id !== 'select' && this.spin.domain_id !== null && this.spin.article_type_id != 'select') {
                 this.isLoading = true;
                 this.isValidationFail = false;
                 this.$refs.spinButton.disabled = true;
@@ -16735,8 +16735,8 @@ var CreateArticleMixin = {
                 });
             } else {
                 new Noty({
-                    type: 'warning',
-                    text: 'Please select domain name.',
+                    type: 'error',
+                    text: 'Domain name and Article Type are required.',
                     layout: 'bottomLeft',
                     timeout: 5000
                 }).show();
@@ -29124,6 +29124,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ArticleActionMixin_js__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_CreateArticleMixin_js__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__eventbus_WordaiBus_js__ = __webpack_require__(390);
 //
 //
 //
@@ -29210,13 +29211,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_1__mixins_ArticleActionMixin_js__["a" /* ArticleActionMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_CreateArticleMixin_js__["a" /* CreateArticleMixin */]]
+    data: function data() {
+        return { wordaiBus: __WEBPACK_IMPORTED_MODULE_3__eventbus_WordaiBus_js__["a" /* WordaiBus */] };
+    },
+
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_1__mixins_ArticleActionMixin_js__["a" /* ArticleActionMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_CreateArticleMixin_js__["a" /* CreateArticleMixin */]],
+    mounted: function mounted() {
+        this.wordaiBus.listOfArticles();
+    }
 });
 
 /***/ }),
@@ -65685,6 +65694,65 @@ module.exports = function listToStyles (parentId, list) {
 __webpack_require__(149);
 module.exports = __webpack_require__(150);
 
+
+/***/ }),
+/* 383 */,
+/* 384 */,
+/* 385 */,
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(14);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__class_Form_js__ = __webpack_require__(222);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WordaiBus; });
+
+
+
+var WordaiBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
+    data: function data() {
+        return {
+            form: new __WEBPACK_IMPORTED_MODULE_1__class_Form_js__["a" /* default */](),
+            articles: []
+        };
+    },
+
+    watch: {
+        articles: function articles(data) {
+            return data;
+        }
+    },
+    mounted: function mounted() {
+        this.listOfArticles();
+    },
+
+    methods: {
+        listOfArticles: function listOfArticles() {
+            var _this = this;
+
+            axios.get('/words/listOfArticles').then(function (response) {
+                var data = response.data;
+
+                if (data) {
+                    data = data.map(function (item) {
+                        return {
+                            word_id: item.word_id,
+                            domain_id: item.domain_id,
+                            keyword: item.keyword.length > 0 ? item.keyword.toLowerCase().trim() : ''
+                        };
+                    });
+
+                    _this.articles = data;
+                }
+            });
+        }
+    }
+});
 
 /***/ })
 /******/ ]);

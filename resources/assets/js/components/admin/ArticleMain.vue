@@ -88,13 +88,20 @@
     import { CrudMixin } from './../../mixins/CrudMixin.js';
     import { ArticleActionMixin } from './../../mixins/ArticleActionMixin.js';
     import { CreateArticleMixin } from './../../mixins/CreateArticleMixin.js';
+    import { WordaiBus } from './../../eventbus/WordaiBus.js';
 
     export default {
+        data() {
+            return { wordaiBus: WordaiBus };
+        },
         mixins: [
             CrudMixin,
             ArticleActionMixin,
             CreateArticleMixin
-        ]
+        ],
+        mounted() {
+            this.wordaiBus.listOfArticles();
+        }
     }
 </script>
 

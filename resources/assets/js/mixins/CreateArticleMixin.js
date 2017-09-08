@@ -10,8 +10,12 @@ export const CreateArticleMixin = {
         },
 
         saveArticle() {
-            // check if domain_id is set
-            if (this.spin.domain_id !== 'select' && this.spin.domain_id !== null) {
+            // check if domain_id is set and article type
+            if (
+                this.spin.domain_id !== 'select' &&
+                this.spin.domain_id !== null &&
+                this.spin.article_type_id != 'select'
+            ) {
                 this.isLoading = true;
                 this.isValidationFail = false;
                 this.$refs.spinButton.disabled = true;
@@ -48,8 +52,8 @@ export const CreateArticleMixin = {
                 });
             } else {
                 new Noty({
-                    type: 'warning',
-                    text: `Please select domain name.`,
+                    type: 'error',
+                    text: `Domain name and Article Type are required.`,
                     layout: 'bottomLeft',
                     timeout: 5000
                 }).show();

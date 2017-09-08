@@ -29,7 +29,8 @@ Route::prefix('words')->group(function() {
 	Route::get('generate', 'WordsController@article');
 	Route::get('rawArticles', 'WordsController@getRawArticles');
 	Route::get('domainChange', 'WordsController@domainChange');
-	Route::get('unprocessArticles', 'WordsController@unprocessArticles');
+    Route::get('unprocessArticles', 'WordsController@unprocessArticles');
+	Route::get('listOfArticles', 'WordsController@listOfArticles');
 	Route::post('/', 'WordsController@store');
 	Route::post('generateArticle', 'WordsController@generateArticle');
 	Route::post('generateParagraph', 'WordsController@generateParagraph');
