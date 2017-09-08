@@ -1,5 +1,11 @@
 <template>
     <div class="Word">
+        <!-- Keyword Alert  -->
+        <keyword-alert
+            v-if="wordaiBus.isKeywordExist"
+            @closeAlertBox="wordaiBus.isKeywordExist = false">
+        </keyword-alert>
+
         <h1>Create Article</h1><hr>
 
         <form method="POST">
@@ -79,29 +85,24 @@
             <!-- tmp -->
             <!-- <button type="submit" class="btn btn-primary" ref="spinButton" @click.prevent="saveAndProcessNow">Save & Process Now</button> -->
             &nbsp;&nbsp;&nbsp;
-            <span v-if="isLoading">LOADING....</span><br>
+            <span v-if="isLoading" id="loading">Verifying Article....</span><br>
         </form>
     </div>
 </template>
 
 <script>
     import { CrudMixin } from './../../mixins/CrudMixin.js';
-    import { ArticleActionMixin } from './../../mixins/ArticleActionMixin.js';
     import { CreateArticleMixin } from './../../mixins/CreateArticleMixin.js';
-    import { WordaiBus } from './../../eventbus/WordaiBus.js';
+    import { ArticleActionMixin } from './../../mixins/ArticleActionMixin.js';
+    import KeywordAlert from './KeywordAlert.vue';
 
     export default {
-        data() {
-            return { wordaiBus: WordaiBus };
-        },
+        components: { KeywordAlert },
         mixins: [
             CrudMixin,
-            ArticleActionMixin,
-            CreateArticleMixin
-        ],
-        mounted() {
-            this.wordaiBus.listOfArticles();
-        }
+            CreateArticleMixin,
+            ArticleActionMixin
+        ]
     }
 </script>
 

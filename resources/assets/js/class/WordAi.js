@@ -27,7 +27,7 @@ class WordAi {
 
 			output += word[uCase]();
 
-			return output;				
+			return output;
 		});
 
 		return result.join(',');

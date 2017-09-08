@@ -371,11 +371,7 @@ class WordsController extends Controller
         return DB::table('words')->where('id', request('word_id'))->update(['isRespinHitMax' => true]);
     }
 
-    public function listOfArticles() {
-        return Word::get([
-            'id AS word_id',
-            'domain_id',
-            'keyword'
-        ]);
+    public function getKeywordsAssociatedByDomain() {
+        return Word::where('domain_id', request('domain_id'))->pluck('keyword');
     }
 }

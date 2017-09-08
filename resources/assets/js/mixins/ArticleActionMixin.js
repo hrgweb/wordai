@@ -152,6 +152,18 @@ export const ArticleActionMixin = {
 			this.spin['synonym'] = synonym;
 		},
 
+        setupDomainChange(url) {
+            axios.get(url).then(response => {
+                let data = response.data;
+
+                if (data) {
+                    this.domainFillIn(false, data.protected, data.synonym);
+                } else {
+                    this.domainFillIn(true, '', '');
+                }
+            });
+        },
+
 		domainChange() {
 			let vm = this;
 			let options = $('datalist#domains').find('option');
@@ -160,15 +172,8 @@ export const ArticleActionMixin = {
 			let url = '/words/domainChange?domain_id=' + this.spin.domain_id;
 
 			if (this.spin.domain_id > 0) {
-				axios.get(url).then(response => {
-					let data = response.data;
-
-					if (data) {
-						this.domainFillIn(false, data.protected, data.synonym);
-					} else {
-						this.domainFillIn(true, '', '');
-					}
-				});
+				this.setupDomainChange(url);
+                this.wordaiBus.getKeywordsAssociatedByDomain(this.spin.domain_id);
 			} else {
 				this.spin['protected'] = '';
 				this.spin['synonym'] = '';

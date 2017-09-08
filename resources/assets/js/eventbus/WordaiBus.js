@@ -1,40 +1,28 @@
 import Vue from 'vue';
-import Form from './../class/Form.js';
 
 export const WordaiBus = new Vue({
     data() {
         return {
-            form: new Form(),
-            articles: []
+            articles: [],
+            keywords: [],
+            isKeywordExist: false
         };
     },
+
     watch: {
         articles(data) {
             return data;
+        },
+
+        keywords(data) {
+            return data;
         }
     },
-    mounted() {
-        this.listOfArticles();
-    },
+
     methods: {
-        listOfArticles() {
-            axios.get('/words/listOfArticles')
-                .then(response => {
-                    let data = response.data;
-
-                    if (data) {
-                        data = data.map(item => {
-                            return {
-                                word_id: item.word_id,
-                                domain_id: item.domain_id,
-                                keyword: item.keyword.length > 0 ? item.keyword.toLowerCase().trim() : ''
-                            };
-                        });
-
-                        this.articles = data;
-                    }
-
-                });
+        getKeywordsAssociatedByDomain(domain_id) {
+            axios.get('/words/getKeywordsAssociatedByDomain?domain_id='+domain_id)
+                .then(response => this.keywords = response.data);
         }
     }
 });

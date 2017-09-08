@@ -16180,9 +16180,20 @@ var ArticleActionMixin = {
 			this.spin['protected'] = term;
 			this.spin['synonym'] = synonym;
 		},
-		domainChange: function domainChange() {
+		setupDomainChange: function setupDomainChange(url) {
 			var _this6 = this;
 
+			axios.get(url).then(function (response) {
+				var data = response.data;
+
+				if (data) {
+					_this6.domainFillIn(false, data.protected, data.synonym);
+				} else {
+					_this6.domainFillIn(true, '', '');
+				}
+			});
+		},
+		domainChange: function domainChange() {
 			var vm = this;
 			var options = $('datalist#domains').find('option');
 			var domain_id = this.userObj.getUserId(vm, options, vm.spin.domain);
@@ -16190,15 +16201,8 @@ var ArticleActionMixin = {
 			var url = '/words/domainChange?domain_id=' + this.spin.domain_id;
 
 			if (this.spin.domain_id > 0) {
-				axios.get(url).then(function (response) {
-					var data = response.data;
-
-					if (data) {
-						_this6.domainFillIn(false, data.protected, data.synonym);
-					} else {
-						_this6.domainFillIn(true, '', '');
-					}
-				});
+				this.setupDomainChange(url);
+				this.wordaiBus.getKeywordsAssociatedByDomain(this.spin.domain_id);
 			} else {
 				this.spin['protected'] = '';
 				this.spin['synonym'] = '';
@@ -16681,8 +16685,18 @@ var UserLevel = function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__eventbus_WordaiBus_js__ = __webpack_require__(390);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CreateArticleMixin; });
+
+// import WordAi from './../class/WordAi.js';
+
 var CreateArticleMixin = {
+    data: function data() {
+        return {
+            wordaiBus: __WEBPACK_IMPORTED_MODULE_0__eventbus_WordaiBus_js__["a" /* WordaiBus */]
+        };
+    },
+
     methods: {
         resetInputFields: function resetInputFields() {
             this.spin['article'] = $('textarea#article').val('');
@@ -16692,47 +16706,94 @@ var CreateArticleMixin = {
             this.spin['lsi_terms'] = '';
             this.spin['domain_protected'] = '';
         },
+        checkIfDomainKeywordExist: function checkIfDomainKeywordExist(keywords, keyword) {
+            var isExist = false;
+
+            if (keywords.length > 0 && keyword.length > 0) {
+                // check if domain = to spin and also the keyword
+                for (var i = 0; i < keywords.length; i++) {
+                    if (keywords[i] === keyword) {
+                        isExist = true;
+                        break;
+                    } else {
+                        isExist = false;
+                    }
+                }
+            }
+
+            return isExist;
+        },
+        showNotificationKeywordNotExist: function showNotificationKeywordNotExist() {
+            new Noty({
+                type: 'info',
+                text: 'The keyword you enter does not exists yet.',
+                layout: 'bottomLeft',
+                timeout: 5000
+            }).show();
+        },
         saveArticle: function saveArticle() {
             var _this = this;
 
             // check if domain_id is set and article type
-            if (this.spin.domain_id !== 'select' && this.spin.domain_id !== null && this.spin.article_type_id != 'select') {
+            if (this.spin.domain_id > 0 && this.spin.article_type_id != 'select') {
                 this.isLoading = true;
                 this.isValidationFail = false;
-                this.$refs.spinButton.disabled = true;
+                // this.$refs.spinButton.disabled = true;
 
-                axios.post('/words', this.spin).then(function (response) {
-                    var data = response.data;
+                var keywords = this.wordaiBus.keywords;
+                var keyword = this.spin.keyword;
 
-                    _this.isLoading = false;
-                    _this.isDomainNotSet = false;
-                    _this.$refs.spinButton.disabled = false;
+                // check if keyword is exists
+                if (keyword.length > 0 && !this.checkIfDomainKeywordExist(keywords, keyword)) {
+                    // this.showNotificationKeywordNotExist();
+                    this.wordaiBus.isKeywordExist = false;
 
-                    if (data.isError) {
-                        // validation fails
-                        _this.isValidationFail = true;
-                        _this.errorType = 1;
-                        _this.errors = data.errors;
-                    } else {
-                        // validation success
-                        _this.isValidationFail = false;
+                    axios.post('/words', this.spin).then(function (response) {
+                        var data = response.data;
 
-                        // notify user article posted successfully
-                        var articleTitle = _this.spin.doc_title;
+                        _this.isLoading = false;
+                        _this.isDomainNotSet = false;
+                        _this.$refs.spinButton.disabled = false;
+
+                        if (data.isError) {
+                            // validation fails
+                            _this.isValidationFail = true;
+                            _this.errorType = 1;
+                            _this.errors = data.errors;
+                        } else {
+                            // validation success
+                            _this.isValidationFail = false;
+
+                            // notify user article posted successfully
+                            var articleTitle = _this.spin.doc_title;
+                            new Noty({
+                                type: 'success',
+                                text: '<b>' + articleTitle + '</b> article successfully saved.',
+                                layout: 'bottomLeft',
+                                timeout: 5000
+                            }).show();
+
+                            // reset spin values
+                            _this.resetInputFields();
+
+                            // animate div to top
+                            $('html, body').animate({ scrollTop: 0 });
+                        }
+                    });
+                } else {
+                    this.isLoading = false;
+
+                    if (keyword.length <= 0) {
                         new Noty({
-                            type: 'success',
-                            text: '<b>' + articleTitle + '</b> article successfully saved.',
+                            type: 'error',
+                            text: 'Keyword is required.',
                             layout: 'bottomLeft',
                             timeout: 5000
                         }).show();
-
-                        // reset spin values
-                        _this.resetInputFields();
-
-                        // animate div to top
-                        $('html, body').animate({ scrollTop: 0 });
+                    } else {
+                        this.wordaiBus.isKeywordExist = true;
                     }
-                });
+                }
             } else {
                 new Noty({
                     type: 'error',
@@ -29122,9 +29183,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_ArticleActionMixin_js__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_CreateArticleMixin_js__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__eventbus_WordaiBus_js__ = __webpack_require__(390);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_CreateArticleMixin_js__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleActionMixin_js__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__KeywordAlert_vue__ = __webpack_require__(391);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__KeywordAlert_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__KeywordAlert_vue__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -29218,14 +29286,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    data: function data() {
-        return { wordaiBus: __WEBPACK_IMPORTED_MODULE_3__eventbus_WordaiBus_js__["a" /* WordaiBus */] };
-    },
-
-    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_1__mixins_ArticleActionMixin_js__["a" /* ArticleActionMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_CreateArticleMixin_js__["a" /* CreateArticleMixin */]],
-    mounted: function mounted() {
-        this.wordaiBus.listOfArticles();
-    }
+    components: { KeywordAlert: __WEBPACK_IMPORTED_MODULE_3__KeywordAlert_vue___default.a },
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_1__mixins_CreateArticleMixin_js__["a" /* CreateArticleMixin */], __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleActionMixin_js__["a" /* ArticleActionMixin */]]
 });
 
 /***/ }),
@@ -60012,7 +60074,13 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Word"
-  }, [_c('h1', [_vm._v("Create Article")]), _c('hr'), _vm._v(" "), _c('form', {
+  }, [(_vm.wordaiBus.isKeywordExist) ? _c('keyword-alert', {
+    on: {
+      "closeAlertBox": function($event) {
+        _vm.wordaiBus.isKeywordExist = false
+      }
+    }
+  }) : _vm._e(), _vm._v(" "), _c('h1', [_vm._v("Create Article")]), _c('hr'), _vm._v(" "), _c('form', {
     attrs: {
       "method": "POST"
     }
@@ -60288,7 +60356,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.saveArticle($event)
       }
     }
-  }, [_vm._v("Save Article")]), _vm._v(" "), _vm._v("\n           \n        "), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')], 1)])
+  }, [_vm._v("Save Article")]), _vm._v(" "), _vm._v("\n           \n        "), (_vm.isLoading) ? _c('span', {
+    attrs: {
+      "id": "loading"
+    }
+  }, [_vm._v("Verifying Article....")]) : _vm._e(), _c('br')], 1)], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('textarea', {
     directives: [{
@@ -65709,50 +65781,169 @@ module.exports = __webpack_require__(150);
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__class_Form_js__ = __webpack_require__(222);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return WordaiBus; });
-
 
 
 var WordaiBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
     data: function data() {
         return {
-            form: new __WEBPACK_IMPORTED_MODULE_1__class_Form_js__["a" /* default */](),
-            articles: []
+            articles: [],
+            keywords: [],
+            isKeywordExist: false
         };
     },
+
 
     watch: {
         articles: function articles(data) {
             return data;
+        },
+        keywords: function keywords(data) {
+            return data;
         }
-    },
-    mounted: function mounted() {
-        this.listOfArticles();
     },
 
     methods: {
-        listOfArticles: function listOfArticles() {
+        getKeywordsAssociatedByDomain: function getKeywordsAssociatedByDomain(domain_id) {
             var _this = this;
 
-            axios.get('/words/listOfArticles').then(function (response) {
-                var data = response.data;
-
-                if (data) {
-                    data = data.map(function (item) {
-                        return {
-                            word_id: item.word_id,
-                            domain_id: item.domain_id,
-                            keyword: item.keyword.length > 0 ? item.keyword.toLowerCase().trim() : ''
-                        };
-                    });
-
-                    _this.articles = data;
-                }
+            axios.get('/words/getKeywordsAssociatedByDomain?domain_id=' + domain_id).then(function (response) {
+                return _this.keywords = response.data;
             });
         }
     }
 });
+
+/***/ }),
+/* 391 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(395)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(392),
+  /* template */
+  __webpack_require__(393),
+  /* scopeId */
+  "data-v-24019439",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\KeywordAlert.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] KeywordAlert.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-24019439", Component.options)
+  } else {
+    hotAPI.reload("data-v-24019439", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 392 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({});
+
+/***/ }),
+/* 393 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "overlay"
+  }, [_c('div', {
+    staticClass: "KeywordAlert"
+  }, [_c('h2', [_vm._v("Keyword Alert!")]), _vm._v(" "), _c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "alert",
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.$emit('closeAlertBox')
+      }
+    }
+  }, [_vm._v("\n            ×\n        ")]), _vm._v(" "), _c('p', [_vm._v("\n            The keyword you type in is already in used. Please provide a unique one.\n        ")])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-24019439", module.exports)
+  }
+}
+
+/***/ }),
+/* 394 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.overlay[data-v-24019439] {\n    background: rgba(0,0,0,0.7);\n    position: fixed;\n    top: 0;\n    right: 0;\n    left: 0;\n    bottom: 0;\n    z-index: 999999;\n}\n.KeywordAlert[data-v-24019439] {\n    background: #fff;\n    position: relative;\n    width: 500px;\n    margin: 10em auto;\n    padding: .1em 1em .5em;\n}\nbutton.close[data-v-24019439] {\n    opacity: 1;\n    color: red;\n    background: red;\n    color: #fff;\n    padding: 0.3em .5em;\n    top: -.5em;\n    right: -0.3em;\n}\nh2[data-v-24019439], p[data-v-24019439] { color: red;\n}\nh2[data-v-24019439] { font-size: 3em;\n}\np[data-v-24019439] { font-size: 2.5em;\n}\n", ""]);
+
+/***/ }),
+/* 395 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(394);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("4c8658e9", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-24019439\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./KeywordAlert.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-24019439\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./KeywordAlert.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);
