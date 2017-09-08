@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Repositories\Spintax;
+use App\Repositories\WordRepository;
 use App\Word;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
@@ -11,6 +12,7 @@ class Wordai extends Command
 {
 	private $article;
 	private $spin;
+    private $word_repo;
 
     /**
      * The name and signature of the console command.
@@ -31,10 +33,11 @@ class Wordai extends Command
      *
      * @return void
      */
-    public function __construct(Spintax $spin)
+    public function __construct(Spintax $spin, WordRepository $word_repo)
     {
         parent::__construct();
 		$this->spin = $spin;
+        $this->word_repo = $word_repo;
     }
 
     /**
@@ -73,7 +76,12 @@ class Wordai extends Command
 		$quality = 100;
 		$email = 'accounting@connexionsolutions.com';
 		$pass = 'privape23';
-		$protected = $article->protected;
+
+        $protected = strlen($article->keyword) > 0 ? $article->keyword . ', ' : '';                         // keyword
+        $protected .= strlen($article->lsi_terms) > 0 ? $article->lsi_terms . ', ' : '';                    // lsi tems
+        $protected .= strlen($article->domain_protected) > 0 ? $article->domain_protected . ', ' : '';      // domain_protected
+        $protected .= strlen($article->protected) > 0 ? $article->protected : '';                           // protected
+        $protected = $this->word_repo->remove_underline_and_spaces_for_terms($protected);
 		$synonyms = $article->synonym;
 
 		$quality = 'readable';

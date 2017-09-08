@@ -107,7 +107,7 @@ class WordsController extends Controller
             'doc_title' => 'required',
 	    	'keyword' => 'required',
 	    	'lsi_terms' => 'required',
-	    	// 'domain_protected' => 'required',
+	    	'domain_protected' => 'required',
 	    	'article' => 'required',
 	    	'protected' => 'required',
 	    	// 'synonyms' => 'required'
