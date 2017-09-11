@@ -31668,6 +31668,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -31737,7 +31740,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var p = div.find('p');
 
             // check if there is paragraph
-            if (p.length > 0) Vue.nextTick(function () {
+            // if (p.length > 0) Vue.nextTick(() => p.text(article.spin));
+            Vue.nextTick(function () {
                 return p.text(article.spin);
             });
         },
@@ -31920,6 +31924,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         closeTextGear: function closeTextGear() {
             this.isGrammarTrue = false;
+        },
+        resetSpinArticle: function resetSpinArticle() {
+            $('div.note-editable').find('p').html(this.article.spin);
         }
     }
 });
@@ -60713,6 +60720,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "click": _vm.processToTextGear
     }
   }, [_vm._v("Check Grammar")]), _vm._v(" "), _c('button', {
+    ref: "resetChangeBtn",
+    staticClass: "btn btn-danger",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": _vm.resetSpinArticle
+    }
+  }, [_vm._v("Reset Article")]), _vm._v(" "), _c('button', {
     staticClass: "btn btn-danger",
     attrs: {
       "type": "button",

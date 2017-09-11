@@ -66,6 +66,9 @@
                 <!-- Textgear -->
                 <button type="button" class="btn btn-info textgear" @click="processToTextGear" ref="tgButton">Check Grammar</button>
 
+                <!-- Reset Article -->
+                <button type="button" class="btn btn-danger" @click="resetSpinArticle" ref="resetChangeBtn">Reset Article</button>
+
 				<!-- Dismiss -->
 		        <button type="button" class="btn btn-danger" id="close" @click="dissmissArticle">Back to Articles</button>
 
@@ -147,7 +150,8 @@
                 let p = div.find('p');
 
                 // check if there is paragraph
-                if (p.length > 0) Vue.nextTick(() => p.text(article.spin));
+                // if (p.length > 0) Vue.nextTick(() => p.text(article.spin));
+                Vue.nextTick(() => p.text(article.spin));
             },
 
             changeCurlyColor() {
@@ -339,6 +343,10 @@
 
             closeTextGear() {
                 this.isGrammarTrue = false;
+            },
+
+            resetSpinArticle() {
+                $('div.note-editable').find('p').html(this.article.spin);
             }
 		}
 	}
