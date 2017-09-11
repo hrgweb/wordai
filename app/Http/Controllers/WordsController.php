@@ -168,7 +168,7 @@ class WordsController extends Controller
 
 	public function postSpinTax()
 	{
-		// return request()->all();
+		return request('article');
 
 		$result = auth()->user()->words()->create(request()->all());
 
@@ -347,6 +347,8 @@ class WordsController extends Controller
         /*=============== After ===============*/
 
         $spin = $this->spin->process(request('article'));
+
+        return request('article');
 
         // Update words table in spintax_copy
         $update = Word::where('id', request('word_id'))

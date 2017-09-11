@@ -143,6 +143,13 @@
                 }
             },
 
+            updateSecondSummernote(div, article) {
+                let p = div.find('p');
+
+                // check if there is paragraph
+                if (p.length > 0) Vue.nextTick(() => p.text(article.spin));
+            },
+
             changeCurlyColor() {
                 let spintax = $('div.Peditor').find('p').html();
                 let result = spintax.replace(/[{}|]/g, function(char, offset, string) {
@@ -158,6 +165,12 @@
                 });
 
                 $('div.Peditor').find('p').html(result); // format as html
+            },
+
+            removeFormatWhenPasting(e) {
+                let bufferText = ((e.originalEvent || e).clipboardData || window.clipboardData).getData('Text');
+                e.preventDefault();
+                document.execCommand('insertText', false, bufferText);
             },
 
             initSummernote() {
@@ -176,8 +189,11 @@
                             Vue.nextTick(() => vm.changeCurlyColor());
 
                             // 2nd summernote - insert text
-                            $('div.note-editable').find('p').html(article.spin);
-                            // vm.updateFirstSummernote($('div.note-editable'), article);
+                            vm.updateSecondSummernote($('div.note-editable'), article);
+                        },
+
+                        onPaste(e) {
+                            vm.removeFormatWhenPasting(e);
                         }
                     }
                 });
@@ -255,31 +271,31 @@
                 // params
                 const params = {
                     word_id: this.article.id,
-                    article: this.article.spintax_copy
+                    article: editor.find('p').html()
                 };
 
-				axios.post('/words/respinArticle', params).then(response => {
-					let data = response.data;
-					editor.slideDown(); // show editor
-					editor.html(data);
+                axios.post('/words/respinArticle', params).then(response => {
+                    let data = response.data;
+                    editor.slideDown(); // show editor
+                    editor.html(data);
 
-					this.isLoading = false;
-					this.$refs.respinBtn.disabled = false;
+                    this.isLoading = false;
+                    this.$refs.respinBtn.disabled = false;
 
                     // update article obj in vue data
                     ArticleBus.$emit('isRespinArticle', { spin: data });
 
-					// check if api response is fail
-					/*if (data.status === 'Failure') {
-						this.error = data.error;
-						this.isError = true;
-					}*/
+                    // check if api response is fail
+                    /*if (data.status === 'Failure') {
+                        this.error = data.error;
+                        this.isError = true;
+                    }*/
 
                     // check if counter = 5
                     if (this.type == 'edit-article' && this.respinCounter == 5) {
                         this.updateRespinCheckHitMax();
                     }
-				});
+                });
 			},
 
 			updateCsCheckHitMax() {

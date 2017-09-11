@@ -105,7 +105,13 @@ class EditorsController extends Controller
         $time = request('times');
         $times = [$time[0], $time[1], $time[2]];
 
-        DB::table('words')->where('id', request('word_id'))->update(['hr_spent_editor_edit_article' => $times[0], 'min_spent_editor_edit_article' => $times[1], 'sec_spent_editor_edit_article' => $times[2]]);
+        DB::table('words')
+            ->where('id', request('word_id'))
+            ->update([
+                'hr_spent_editor_edit_article' => $times[0],
+                'min_spent_editor_edit_article' => $times[1],
+                'sec_spent_editor_edit_article' => $times[2]
+            ]);
 
         return $times;
     }
