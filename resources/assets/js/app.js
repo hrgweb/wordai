@@ -32,6 +32,7 @@ import ProtectedTerm from './components/admin/ProtectedTerm.vue';
 import DomainGroup from './components/admin/DomainGroup.vue';
 import DomainDetail from './components/admin/DomainDetail.vue';
 import Copyscape from './components/admin/Copyscape.vue';
+import EditArticle from './components/admin/EditArticle.vue';
 import WordApi from './components/words/WordApi.vue';
 import WordApi2 from './components/words/WordApi2.vue';
 import CurationEdit from './components/words/CurationEdit.vue';
@@ -58,6 +59,7 @@ const app = new Vue({
         DomainGroup,
     	DomainDetail,
     	Copyscape,
+        EditArticle,
     	WordApi,
     	WordApi2,
     	CurationEdit,

@@ -23,6 +23,7 @@ Route::get('editor', 'PagesController@editor');
 Route::get('writer', 'PagesController@writer');
 Route::get('copyscape-page', 'PagesController@copyscapePage');
 Route::get('super-editor', 'PagesController@superEditor');
+Route::get('edit-article', 'PagesController@editArticle');
 
 // WordAI
 Route::prefix('words')->group(function() {

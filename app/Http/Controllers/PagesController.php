@@ -101,4 +101,8 @@ class PagesController extends Controller
     public function group() {
         return view('admin.create-group');
     }
+
+    public function editArticle() {
+        return view('admin.edit-article');
+    }
 }
