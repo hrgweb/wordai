@@ -65983,17 +65983,211 @@ module.exports = __webpack_require__(150);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue__ = __webpack_require__(403);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__editor_ArticleEditor_vue__ = __webpack_require__(144);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__editor_ArticleEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__editor_ArticleEditor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_UserArticleMixin_js__ = __webpack_require__(17);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
 //
 
+
+
+// import ArticleToEdit from './../editor/ArticleEditor.vue';
+// // import AdminArticleEdited from './AdminArticleEdited.vue';
+// import ArticleToPublish from './ArticleToPublish.vue';
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['user'],
+    components: {
+        ArticleResult: __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default.a,
+        ArticleEditor: __WEBPACK_IMPORTED_MODULE_1__editor_ArticleEditor_vue___default.a
+        // ArticleToEdit,
+        // // AdminArticleEdited,
+        // ArticleToPublish
+    },
+    mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_UserArticleMixin_js__["a" /* UserArticleMixin */]],
     data: function data() {
-        return {};
+        return {
+            isEdit: false,
+            articlesCount: 0,
+            error: '',
+            authUser: {},
+            hasPeditorAccess: false,
+            listToEdit: [],
+            listEditedArticles: [],
+            listArticleToPublish: []
+        };
+    },
+
+    watch: {
+        articles: function articles(data) {
+            this.articlesCount = data.length;
+            this.articlesToEdit(data);
+            this.editedArticles(data);
+            this.articlesToPublish(data);
+        },
+        authUser: function authUser(data) {
+            // has power editor access
+            if (data.has_peditor_access === 0) {
+                this.hasPeditorAccess = false;
+                this.error = 'You have no access to power editor feature.';
+            } else {
+                this.hasPeditorAccess = true;
+            }
+        }
+    },
+    created: function created() {
+        this.articleList();
     },
     mounted: function mounted() {
-        console.log('ready');
+        this.authUser = JSON.parse(this.user);
+        this.listenWhenPowerEditorUpdated();
+        this.updateArticleData();
+
+        // Bus
+        var vm = this;
+        ArticleBus.$on('isEditing', function (data) {
+            return vm.updateArticle(data);
+        });
+    },
+
+    methods: {
+        articleList: function articleList() {
+            var _this = this;
+
+            axios.get('/editor/articleList').then(function (response) {
+                _this.articles = response.data.map(function (item) {
+                    return {
+                        article: item.article,
+                        article_type: item.article_type,
+                        created_at: item.created_at,
+                        doc_title: item.doc_title !== null && item.doc_title.length > 50 ? item.doc_title.substr(0, 50) + '...' : item.doc_title,
+                        domain: item.domain,
+                        domain_protected: item.domain_protected,
+                        firstname: item.firstname,
+                        hr_spent_editor_edit_article: item.hr_spent_editor_edit_article,
+                        id: item.id,
+                        isCsCheckHitMax: item.isCsCheckHitMax,
+                        isEditorEdit: item.isEditorEdit,
+                        isEditorUpdateSC: item.isEditorUpdateSC,
+                        isRespinHitMax: item.isRespinHitMax,
+                        keyword: item.keyword,
+                        lastname: item.lastname,
+                        lsi_terms: item.lsi_terms,
+                        min_spent_editor_edit_article: item.min_spent_editor_edit_article,
+                        protected: item.protected !== null && item.protected.length > 100 ? item.protected.substr(0, 100) + '...' : item.protected,
+                        sec_spent_editor_edit_article: item.sec_spent_editor_edit_article,
+                        spin: item.spin,
+                        spintax: item.spintax,
+                        spintax_copy: item.spintax_copy,
+                        synonym: item.synonym,
+                        writer: item.firstname + ' ' + item.lastname
+                    };
+                });
+            });
+        },
+        updateArticle: function updateArticle(data) {
+            var _this2 = this;
+
+            this.isEdit = false;
+            this.article = data.article;
+            this.index = data.index;
+            Vue.nextTick(function () {
+                return _this2.isEdit = true;
+            });
+        },
+        updateRecord: function updateRecord(data) {
+            if (data) {
+                // this.isEdit = false;  // close the article-editor component
+                this.articles[this.index].spin = data.article;
+                this.articles[this.index].hr_spent_editor_edit_article = data.times[0];
+                this.articles[this.index].min_spent_editor_edit_article = data.times[1];
+                this.articles[this.index].sec_spent_editor_edit_article = data.times[2];
+
+                // successfully updated
+                var articleTitle = this.article.doc_title;
+                new Noty({
+                    type: 'info',
+                    text: '<b>' + articleTitle + '</b> article successfully updated.',
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
+            }
+        },
+        dismissUpdate: function dismissUpdate(payload) {
+            this.isEdit = false;
+            this.articles[this.index].hr_spent_editor_edit_article = payload[0];
+            this.articles[this.index].min_spent_editor_edit_article = payload[1];
+            this.articles[this.index].sec_spent_editor_edit_article = payload[2];
+        },
+        listenWhenPowerEditorUpdated: function listenWhenPowerEditorUpdated(data) {
+            var _this3 = this;
+
+            ArticleBus.$on('editorUpdatedSpintaxCopy', function (data) {
+                _this3.articles[_this3.index].spintax_copy = data.spintax;
+            });
+        },
+        updateArticleData: function updateArticleData() {
+            var _this4 = this;
+
+            ArticleBus.$on('isRespinArticle', function (data) {
+                _this4.articles[_this4.index].spin = data.spin;
+            });
+        },
+        articlesToEdit: function articlesToEdit(data) {
+            this.listToEdit = data.filter(function (item) {
+                return parseInt(item.hr_spent_editor_edit_article, 10) <= 0 && parseInt(item.min_spent_editor_edit_article, 10) <= 0 && parseInt(item.sec_spent_editor_edit_article, 10) <= 0;
+            });
+        },
+        editedArticles: function editedArticles(data) {
+            this.listEditedArticles = data.filter(function (item) {
+                return parseInt(item.hr_spent_editor_edit_article, 10) > 0 || parseInt(item.min_spent_editor_edit_article, 10) > 0 || parseInt(item.sec_spent_editor_edit_article, 10) > 0;
+            });
+        },
+        articlesToPublish: function articlesToPublish(data) {
+            this.listArticleToPublish = data.filter(function (item) {
+                return item.isEditorEdit === 1;
+            });
+        }
     }
 });
 
@@ -66001,13 +66195,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
+
+/* styles */
+__webpack_require__(400)
+
 var Component = __webpack_require__(1)(
   /* script */
   __webpack_require__(396),
   /* template */
   __webpack_require__(398),
   /* scopeId */
-  null,
+  "data-v-d1268f94",
   /* cssModules */
   null
 )
@@ -66036,7 +66234,29 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('h2', [_vm._v("Edit Article")])
+  return _c('div', {
+    staticClass: "Editor"
+  }, [(_vm.isEdit) ? _c('article-editor', {
+    attrs: {
+      "article": _vm.article,
+      "peditoraccess": _vm.hasPeditorAccess
+    },
+    on: {
+      "isUpdated": _vm.updateRecord,
+      "isDismiss": _vm.dismissUpdate
+    }
+  }) : _vm._e(), _vm._v(" "), (!_vm.isEdit) ? _c('div', {
+    staticClass: "Editor__table"
+  }, [_c('h2', [_vm._v("Article List "), _c('span', {
+    staticClass: "badge"
+  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), (_vm.isArticlesNotEmpty) ? _c('article-result', {
+    attrs: {
+      "articles": _vm.articles
+    },
+    on: {
+      "isEditing": _vm.updateArticle
+    }
+  }) : _vm._e()], 1) : _vm._e()], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -66044,6 +66264,516 @@ if (false) {
   if (module.hot.data) {
      require("vue-hot-reload-api").rerender("data-v-d1268f94", module.exports)
   }
+}
+
+/***/ }),
+/* 399 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.Editor[data-v-d1268f94] { padding: 0;\n}\n.Copyscape[data-v-d1268f94] { margin-top: 5em;\n}\n", ""]);
+
+/***/ }),
+/* 400 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(399);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("b2daec3c", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-d1268f94\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./EditArticle.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-d1268f94\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./EditArticle.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 401 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FilterEditor_vue__ = __webpack_require__(419);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FilterEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__FilterEditor_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+	props: ['articles'],
+	components: { FilterEditor: __WEBPACK_IMPORTED_MODULE_0__FilterEditor_vue___default.a },
+	data: function data() {
+		return {
+			index: 0
+		};
+	},
+
+	methods: {
+		editArticle: function editArticle(article, index) {
+			this.$emit('isEditing', {
+				article: article,
+				index: index
+			});
+		},
+		publishBtnState: function publishBtnState(text, state) {
+			this.$refs.btnPublish[this.index].innerText = text;
+			this.$refs.btnPublish[this.index].disabled = state;
+		},
+		publishArticle: function publishArticle(article, index) {
+			this.index = index;
+			this.publishBtnState('Publishing...', true);
+
+			var payload = {
+				domain: article.domain,
+				title: article.doc_title,
+				keyword: article.keyword,
+				article: article.spin,
+				spintax: article.spintax
+			};
+
+			var vm = this;
+			axios.post('/editor/publishArticle', payload).then(function (response) {
+				var data = response.data;
+
+				// publish button state
+				vm.publishBtnState('Publish', false);
+
+				if (data.status === 'success') {
+					// notify user successfully uploade to dropbox
+					var articleTitle = payload.title;
+					new Noty({
+						type: 'success',
+						text: '<b>' + articleTitle + '</b> article successfully uploaded to dropbox.',
+						layout: 'bottomLeft',
+						timeout: 5000
+					}).show();
+				}
+			});
+		},
+		groupByChange: function groupByChange(data) {
+			if (data) {
+				var filter = data.filter;
+
+				this.articles = this.articles.sort(function (a, b) {
+					var nameA = a[filter.orderBy];
+					var nameB = b[filter.orderBy];
+
+					if (nameA < nameB) return -1;
+					if (nameA > nameB) return 1;
+
+					return 0; // names must be equal
+				});
+			}
+		},
+		orderByChange: function orderByChange(data) {
+			if (data) {
+				var filter = data.filter;
+
+				this.articles = this.articles.sort(function (a, b) {
+					var nameA = a[filter.orderBy];
+					var nameB = b[filter.orderBy];
+
+					if (filter.sortBy === 'asc') {
+						if (nameA < nameB) return -1;
+						if (nameA > nameB) return 1;
+
+						return 0; // names must be equal
+					} else {
+						if (nameB < nameA) return -1;
+						if (nameB > nameA) return 1;
+
+						return 0; // names must be equal
+					}
+				});
+			}
+		}
+	}
+});
+
+/***/ }),
+/* 402 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\ntable tbody tr:first-child > td[data-v-353a895d]:last-child {\n    width: 200px;\n    max-width: 200px;\n}\nbutton[data-v-353a895d] { width: 90px;\n}\n", ""]);
+
+/***/ }),
+/* 403 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(405)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(401),
+  /* template */
+  __webpack_require__(404),
+  /* scopeId */
+  "data-v-353a895d",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\ArticleResult.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ArticleResult.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-353a895d", Component.options)
+  } else {
+    hotAPI.reload("data-v-353a895d", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 404 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "ArticleResult"
+  }, [_c('filter-editor', {
+    on: {
+      "hasChangeGroupBy": _vm.groupByChange,
+      "hasChangeOrderBy": _vm.orderByChange
+    }
+  }), _vm._v(" "), _c('table', {
+    staticClass: "table table-striped table-hover"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
+    return _c('tr', {
+      key: index
+    }, [_c('td', [_vm._v(_vm._s(article.writer))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.article_type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.lsi_terms))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain_protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.synonym))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-info",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.editArticle(article, index)
+        }
+      }
+    }, [_vm._v("Edit Article")]), _vm._v(" "), _c('button', {
+      ref: "btnPublish",
+      refInFor: true,
+      staticClass: "btn btn-danger",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.publishArticle(article, index)
+        }
+      }
+    }, [_vm._v("Publish")])])])
+  }))])], 1)
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Writer")]), _vm._v(" "), _c('th', [_vm._v("Article Type")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("LSI Terms")]), _vm._v(" "), _c('th', [_vm._v("Domain Protected")]), _vm._v(" "), _c('th', [_vm._v("Protected")]), _vm._v(" "), _c('th', [_vm._v("Synonym")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("Actions")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-353a895d", module.exports)
+  }
+}
+
+/***/ }),
+/* 405 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(402);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("a25ad0fe", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-353a895d\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleResult.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-353a895d\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleResult.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 406 */,
+/* 407 */,
+/* 408 */,
+/* 409 */,
+/* 410 */,
+/* 411 */,
+/* 412 */,
+/* 413 */,
+/* 414 */,
+/* 415 */,
+/* 416 */,
+/* 417 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            orderBy: ['created_at', 'domain', 'writer'],
+            sortBy: ['asc', 'desc'],
+            editorFilter: {
+                orderBy: 'created_at',
+                sortBy: 'asc'
+            }
+        };
+    },
+
+    methods: {
+        orderByChange: function orderByChange() {
+            this.$emit('hasChangeGroupBy', { filter: this.editorFilter });
+        },
+        sortByChange: function sortByChange() {
+            this.$emit('hasChangeOrderBy', { filter: this.editorFilter });
+        }
+    }
+});
+
+/***/ }),
+/* 418 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.Filter[data-v-1feed54b] {\n    /*background: #baf7c7;*/\n    padding: 1em 1em 0.7em;\n    margin-top: 2em;\n    /*border: 1px solid #71f58d;*/\n}\n.Filter div[data-v-1feed54b]:first-child {\n    float: left;\n    margin-right: 1em;\n}\n", ""]);
+
+/***/ }),
+/* 419 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(421)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(417),
+  /* template */
+  __webpack_require__(420),
+  /* scopeId */
+  "data-v-1feed54b",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\FilterEditor.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] FilterEditor.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-1feed54b", Component.options)
+  } else {
+    hotAPI.reload("data-v-1feed54b", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 420 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Filter"
+  }, [_c('div', {
+    staticClass: "order-by"
+  }, [_c('label', {
+    attrs: {
+      "for": "orderBy"
+    }
+  }, [_vm._v("Order by: ")]), _vm._v("  \n        "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editorFilter.orderBy),
+      expression: "editorFilter.orderBy"
+    }],
+    on: {
+      "change": [function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.editorFilter.orderBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.orderByChange]
+    }
+  }, _vm._l((_vm.orderBy), function(order) {
+    return _c('option', {
+      domProps: {
+        "value": order
+      }
+    }, [_vm._v(_vm._s(order.toUpperCase()))])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "sort-by"
+  }, [_c('label', {
+    attrs: {
+      "for": "sortBy"
+    }
+  }, [_vm._v("Sort by: ")]), _vm._v("  \n        "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.editorFilter.sortBy),
+      expression: "editorFilter.sortBy"
+    }],
+    on: {
+      "change": [function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.editorFilter.sortBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.sortByChange]
+    }
+  }, _vm._l((_vm.sortBy), function(sort) {
+    return _c('option', {
+      domProps: {
+        "value": sort
+      }
+    }, [_vm._v(_vm._s(sort.toUpperCase()))])
+  }))])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-1feed54b", module.exports)
+  }
+}
+
+/***/ }),
+/* 421 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(418);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("252f2f27", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1feed54b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FilterEditor.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-1feed54b\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./FilterEditor.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
 }
 
 /***/ })
