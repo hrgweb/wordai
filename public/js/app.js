@@ -31737,12 +31737,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }
         },
         updateSecondSummernote: function updateSecondSummernote(div, article) {
-            var p = div.find('p');
+            // let p = div.find('p');
+            var p = div;
 
             // check if there is paragraph
             // if (p.length > 0) Vue.nextTick(() => p.text(article.spin));
             Vue.nextTick(function () {
-                return p.text(article.spin);
+                return p.html(article.spin);
             });
         },
         changeCurlyColor: function changeCurlyColor() {
@@ -31805,7 +31806,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             var data = {
                 id: this.article.id,
-                article: $('div.note-editable').text(),
+                article: $('div.note-editable').html(),
                 times: this.times
             };
 
@@ -31855,7 +31856,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // params
             var params = {
                 word_id: this.article.id,
-                article: editor.find('p').html()
+                article: this.article.spintax_copy
             };
 
             axios.post('/words/respinArticle', params).then(function (response) {

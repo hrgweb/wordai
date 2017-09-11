@@ -147,11 +147,12 @@
             },
 
             updateSecondSummernote(div, article) {
-                let p = div.find('p');
+                // let p = div.find('p');
+                let p = div;
 
                 // check if there is paragraph
                 // if (p.length > 0) Vue.nextTick(() => p.text(article.spin));
-                Vue.nextTick(() => p.text(article.spin));
+                Vue.nextTick(() => p.html(article.spin));
             },
 
             changeCurlyColor() {
@@ -223,7 +224,7 @@
 			updateArticle() {
 				const data = {
 					id: this.article.id,
-					article: $('div.note-editable').text(),
+					article: $('div.note-editable').html(),
                     times: this.times
 				};
 
@@ -275,7 +276,7 @@
                 // params
                 const params = {
                     word_id: this.article.id,
-                    article: editor.find('p').html()
+                    article: this.article.spintax_copy
                 };
 
                 axios.post('/words/respinArticle', params).then(response => {
