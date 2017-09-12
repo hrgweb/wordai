@@ -41,7 +41,7 @@
     import ArticleResult from './ArticleResult.vue';
     import ArticleEditor from './../editor/ArticleEditor.vue';
     // import ArticleToEdit from './../editor/ArticleEditor.vue';
-    // // import AdminArticleEdited from './AdminArticleEdited.vue';
+    // import AdminArticleEdited from './AdminArticleEdited.vue';
     // import ArticleToPublish from './ArticleToPublish.vue';
     import { UserArticleMixin } from './../../mixins/UserArticleMixin.js';
 
@@ -51,7 +51,7 @@
             ArticleResult,
             ArticleEditor,
             // ArticleToEdit,
-            // // AdminArticleEdited,
+            // AdminArticleEdited,
             // ArticleToPublish
         },
         mixins: [ UserArticleMixin ],

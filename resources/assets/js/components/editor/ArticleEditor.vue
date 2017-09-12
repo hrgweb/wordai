@@ -152,7 +152,7 @@
 
                 // check if there is paragraph
                 // if (p.length > 0) Vue.nextTick(() => p.text(article.spin));
-                Vue.nextTick(() => p.html(article.spin));
+                Vue.nextTick(() => p.html(article.spin).css('white-space', 'pre-wrap'));
             },
 
             changeCurlyColor() {
