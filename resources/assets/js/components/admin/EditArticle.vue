@@ -9,7 +9,8 @@
             @isDismiss="dismissUpdate">
         </article-editor>
 
-        <div class="Editor__table" v-if="! isEdit">
+        <!-- <div class="Editor__table" v-if="! isEdit"> -->
+        <div class="Editor__table">
             <!-- Article To Edit -->
             <!-- <article-to-edit
                 :articles="listToEdit">
@@ -25,11 +26,23 @@
                 :articles="listArticleToPublish">
             </article-to-publish> -->
 
-            <h2>Article List <span class="badge">{{ articlesCount }}</span></h2>
+            <!-- Report Header -->
+            <report-header :count="noOfAllArticles">
+                <template slot="head">All Articles</template>
+            </report-header>
+
+            <div class="search-input">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Search for the article title"
+                    v-model="search"
+                    @keyup="searchArticle">
+            </div>
 
             <!-- Article Result -->
             <article-result
-                :articles="articles"
+                :articles="duplicateArticlesResult"
                 v-if="isArticlesNotEmpty"
                 @isEditing="updateArticle">
             </article-result>
@@ -40,6 +53,7 @@
 <script>
     import ArticleResult from './ArticleResult.vue';
     import ArticleEditor from './../editor/ArticleEditor.vue';
+    import ReportHeader from './ReportHeader.vue';
     // import ArticleToEdit from './../editor/ArticleEditor.vue';
     // import AdminArticleEdited from './AdminArticleEdited.vue';
     // import ArticleToPublish from './ArticleToPublish.vue';
@@ -50,6 +64,7 @@
         components: {
             ArticleResult,
             ArticleEditor,
+            ReportHeader,
             // ArticleToEdit,
             // AdminArticleEdited,
             // ArticleToPublish
@@ -64,15 +79,27 @@
                 hasPeditorAccess: false,
                 listToEdit: [],
                 listEditedArticles: [],
-                listArticleToPublish: []
-            }
+                listArticleToPublish: [],
+                articleBus: ArticleBus,
+                search: '',
+                noOfAllArticles: 0,
+                duplicateArticlesResult: []
+            };
         },
         watch: {
+            duplicateArticlesResult(data) {
+                this.noOfAllArticles = data.length;
+            },
+
             articles(data) {
-                this.articlesCount = data.length;
-                this.articlesToEdit(data);
-                this.editedArticles(data);
-                this.articlesToPublish(data);
+                this.duplicateArticlesResult = data;
+
+                // this.articlesCount = data.length;
+                // this.articlesToEdit(data);
+                // this.editedArticles(data);
+                // this.articlesToPublish(data);
+
+                return data;
             },
 
             authUser(data) {
@@ -86,10 +113,11 @@
             }
         },
         created() {
-            this.articleList();
+            this.allArticles();
         },
         mounted() {
             this.authUser = JSON.parse(this.user);
+            this.hideParagraphFromAndTo();
             this.listenWhenPowerEditorUpdated();
             this.updateArticleData();
 
@@ -98,8 +126,8 @@
             ArticleBus.$on('isEditing', data => vm.updateArticle(data));
         },
         methods: {
-            articleList() {
-                axios.get('/editor/articleList').then(response => {
+            allArticles() {
+                axios.get('/admin/allArticles').then(response => {
                     this.articles = response.data.map(item => {
                         return {
                             article: item.article,
@@ -126,7 +154,7 @@
                             spintax_copy: item.spintax_copy,
                             synonym: item.synonym,
                             writer: item.firstname + ' ' + item.lastname
-                        }
+                        };
                     });
                 });
             },
@@ -200,6 +228,24 @@
                 this.listArticleToPublish = data.filter(item => {
                     return item.isEditorEdit === 1;
                 });
+            },
+
+            hideParagraphFromAndTo() {
+                $('div.ReportHeader').find('p').hide();
+            },
+
+            searchArticle() {
+                if (this.search.length > 0) {
+                    this.duplicateArticlesResult = this.duplicateArticlesResult.filter(article => {
+                        let title = article.doc_title.trim();
+                        title = title.length > 0 ? title : '';
+
+                        return title.match(new RegExp(this.search, 'i'));
+                    });
+                } else {
+                    this.duplicateArticlesResult = this.articles;
+                    return;
+                }
             }
         }
     }
@@ -208,4 +254,10 @@
 <style scoped>
     .Editor { padding: 0; }
     .Copyscape { margin-top: 5em; }
+
+    .search-input > input {
+        padding: 1.5em 1em;
+        font-size: 1.5em;
+        margin-bottom: 3em;
+    }
 </style>

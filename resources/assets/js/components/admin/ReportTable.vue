@@ -21,8 +21,8 @@
                     <td>{{ article.keyword }}</td>
                     <td>{{ time(article.created_at).format('ll') }}</td>
                     <td>
-                        <button class="btn btn-info">Edit Spintax</button>
-                        <button class="btn btn-warning">Edit Article</button>
+                        <button type="button" class="btn btn-info" @click="editArticle(article, index)">Edit Article</button>
+                        <button type="button" class="btn btn-danger" ref="btnPublish" @click="publishArticle(article, index)">Publish</button>
                     </td>
                 </tr>
             </tbody>
@@ -35,7 +35,94 @@
         props: ['articles'],
         data() {
             return {
-                time: moment
+                time: moment,
+                index: 0
+            }
+        },
+        methods: {
+            editArticle(article, index) {
+                this.$emit('isEditing', {
+                    article: article,
+                    index: index
+                });
+            },
+
+            publishBtnState(text, state) {
+                this.$refs.btnPublish[this.index].innerText = text;
+                this.$refs.btnPublish[this.index].disabled = state;
+            },
+
+            publishArticle(article, index) {
+                this.index = index;
+                this.publishBtnState('Publishing...', true);
+
+                const payload = {
+                    domain: article.domain,
+                    title: article.doc_title,
+                    keyword: article.keyword,
+                    article: article.spin,
+                    spintax: article.spintax
+                };
+
+                let vm = this;
+                axios.post('/editor/publishArticle', payload).then(function(response) {
+                    let data = response.data;
+
+                    // publish button state
+                    vm.publishBtnState('Publish', false);
+
+                    if (data.status === 'success') {
+                        // notify user successfully uploade to dropbox
+                        let articleTitle = payload.title;
+                        new Noty({
+                            type: 'success',
+                            text: `<b>${articleTitle}</b> article successfully uploaded to dropbox.`,
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+
+                    }
+                });
+            },
+
+            groupByChange(data) {
+                if (data) {
+                    let filter = data.filter;
+
+                    this.articles = this.articles.sort((a, b) => {
+                        let nameA = a[filter.orderBy];
+                        let nameB = b[filter.orderBy];
+
+                        if (nameA < nameB) return -1;
+                        if (nameA > nameB) return 1;
+
+                        return 0; // names must be equal
+                    });
+                }
+            },
+
+            orderByChange(data) {
+                if (data) {
+                    let filter = data.filter;
+
+                    this.articles = this.articles.sort((a, b) => {
+                        let nameA = a[filter.orderBy];
+                        let nameB = b[filter.orderBy];
+
+                        if (filter.sortBy === 'asc') {
+                            if (nameA < nameB) return -1;
+                            if (nameA > nameB) return 1;
+
+                            return 0; // names must be equal
+
+                        } else {
+                            if (nameB < nameA) return -1;
+                            if (nameB > nameA) return 1;
+
+                            return 0; // names must be equal
+                        }
+                    });
+                }
             }
         }
     }

@@ -379,4 +379,37 @@ class AdminController extends Controller
     public function removeCreateGroup() {
         return Group::where('id', request('group_id'))->delete();
     }
+
+    public function allArticles() {
+        return DB::table('words')
+            ->join('users', 'users.id', '=', 'words.user_id')
+            ->join('article_types', 'article_types.id', '=', 'words.article_type_id')
+            ->join('domains', 'domains.id', '=', 'words.domain_id')
+            ->oldest()
+            ->get([
+                'words.id',
+                'users.firstname',
+                'users.lastname',
+                'article_types.article_type',
+                'domains.domain',
+                'doc_title',
+                'keyword',
+                'lsi_terms',
+                'domain_protected',
+                'article',
+                'spintax',
+                'spintax_copy',
+                'spin',
+                'protected',
+                'synonym',
+                'isEditorEdit',
+                'isEditorUpdateSC',
+                'isCsCheckHitMax',
+                'isRespinHitMax',
+                'hr_spent_editor_edit_article',
+                'min_spent_editor_edit_article',
+                'sec_spent_editor_edit_article',
+                'words.created_at'
+            ]);
+    }
 }
