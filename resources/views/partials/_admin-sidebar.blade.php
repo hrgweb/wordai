@@ -24,6 +24,11 @@
                             <em class="fa fa-pencil" aria-hidden="true"></em> Edit Article
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ url('search-article') }}">
+                            <em class="fa fa-search" aria-hidden="true"></em> Search Article
+                        </a>
+                    </li>
                 </ul>
             </li>
             <li>

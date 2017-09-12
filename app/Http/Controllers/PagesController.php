@@ -105,4 +105,8 @@ class PagesController extends Controller
     public function editArticle() {
         return view('admin.edit-article');
     }
+
+    public function searchArticle() {
+        return view('admin.search-article');
+    }
 }
