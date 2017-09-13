@@ -79,6 +79,16 @@ class EditorsController extends Controller
             ->paginate(10);
     }
 
+    public function articlesToPublish() {
+        return DB::table('words')
+            ->leftJoin('users', 'users.id', '=', 'words.user_id')
+            ->leftJoin('article_types', 'article_types.id', '=', 'words.article_type_id')
+            ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
+            ->where('words.isEditorEdit', 1)
+            ->orderBy('firstname')
+            ->paginate(10);
+    }
+
     public function updateArticle()
     {
     	$editor_id = request()->user()->id;

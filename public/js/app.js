@@ -32809,6 +32809,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate__ = __webpack_require__(416);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuejs_paginate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_EditorPaginationMixin_js__ = __webpack_require__(418);
 //
 //
 //
@@ -32830,22 +32833,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['articles', 'fromUtc', 'toUtc'],
-    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a },
-    data: function data() {
-        return {
-            articlesCount: 0,
-            time: moment
-        };
+    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a, Paginate: __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate___default.a },
+    mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_EditorPaginationMixin_js__["a" /* EditorPaginationMixin */]],
+    created: function created() {
+        this.articlesToPublish();
     },
 
-    watch: {
-        articles: function articles(data) {
-            this.articlesCount = this.articles.length;
+    methods: {
+        articlesToPublish: function articlesToPublish(data) {
+            var _this = this;
+
+            axios.get('/editor/articlesToPublish' + this.pagePath).then(function (response) {
+                var payload = response.data;
+
+                _this.articles = _this.editor.mapResultOfArticles(payload.data);
+                _this.pageCount = payload.last_page;
+                _this.urlPath = payload.path;
+            });
         }
     }
 });
@@ -64641,7 +64662,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "articles": _vm.articles,
       "isPublish": true
     }
-  })], 1)])
+  }), _vm._v(" "), _c('paginate', {
+    attrs: {
+      "page-count": _vm.pageCount,
+      "click-handler": _vm.paginatePage,
+      "prev-text": 'Prev',
+      "next-text": 'Next',
+      "container-class": 'pagination'
+    }
+  }, [_c('span', {
+    slot: "prevContent"
+  }, [_vm._v("«")]), _vm._v(" "), _c('span', {
+    slot: "nextContent"
+  }, [_vm._v("»")])])], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -65209,6 +65242,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }), _vm._v(" "), _c('article-edited', {
     attrs: {
       "articles": _vm.listEditedArticles
+    }
+  }), _vm._v(" "), _c('article-to-publish', {
+    attrs: {
+      "articles": _vm.listArticleToPublish
     }
   })], 1) : _vm._e()], 1)
 },staticRenderFns: []}

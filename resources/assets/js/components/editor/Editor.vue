@@ -31,9 +31,9 @@
             </article-edited>
 
             <!-- Article To Publish -->
-            <!-- <article-to-publish
+            <article-to-publish
                 :articles="listArticleToPublish">
-            </article-to-publish> -->
+            </article-to-publish>
 
             <!-- <h2>Article List <span class="badge">{{ articlesCount }}</span></h2> -->
 
