@@ -15,25 +15,43 @@
                 :articles="articles"
                 :isPublish="false">
             </report-table>
+
+            <paginate
+                :page-count="pageCount"
+                :click-handler="paginatePage"
+                :prev-text="'Prev'"
+                :next-text="'Next'"
+                :container-class="'pagination'">
+
+                <span slot="prevContent">&laquo;</span>
+                <span slot="nextContent">&raquo;</span>
+            </paginate>
         </div>
     </div>
 </template>
 
 <script>
     import ReportTable from './ReportTable.vue';
+    import Paginate from 'vuejs-paginate'
+    import { EditorPaginationMixin } from './../../mixins/EditorPaginationMixin.js';
+
 
     export default {
-        props: ['articles', 'fromUtc', 'toUtc'],
-        components: { ReportTable },
-        data() {
-            return {
-                articlesCount: 0,
-                time: moment
-            }
+        components: { ReportTable, Paginate },
+        mixins: [ EditorPaginationMixin ],
+        created() {
+            this.editedArticles();
         },
-        watch: {
-            articles() {
-                this.articlesCount = this.articles.length;
+        methods: {
+            editedArticles(data) {
+                axios.get('/editor/editedArticles'+this.pagePath)
+                    .then(response => {
+                        let payload = response.data;
+
+                        this.articles = this.editor.mapResultOfArticles(payload.data);
+                        this.pageCount = payload.last_page;
+                        this.urlPath = payload.path;
+                    });
             }
         }
     }

@@ -3,7 +3,7 @@
         <div class="articles-to-be-edit">
             <h2>
                 Articles Waiting To Be Edit
-                <!-- <span class="badge">{{ articlesCount }}</span> -->
+                <span class="badge">{{ articlesCount }}</span>
             </h2>
            <!--  <p>
                <span>From: <b>{{ fromUtc }}</b></span> -
@@ -33,7 +33,6 @@
 <script>
     import ReportTable from './ReportTable.vue';
     import Paginate from 'vuejs-paginate'
-    import Editor from './../../class/Editor.js';
     import { EditorPaginationMixin } from './../../mixins/EditorPaginationMixin.js';
 
     export default {

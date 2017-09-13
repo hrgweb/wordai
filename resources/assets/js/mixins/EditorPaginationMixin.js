@@ -1,6 +1,5 @@
 import Editor from './../class/Editor.js';
 
-
 export const EditorPaginationMixin = {
     data() {
         return {

@@ -32158,6 +32158,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate__ = __webpack_require__(416);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuejs_paginate__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_EditorPaginationMixin_js__ = __webpack_require__(418);
 //
 //
 //
@@ -32179,22 +32182,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['articles', 'fromUtc', 'toUtc'],
-    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a },
-    data: function data() {
-        return {
-            articlesCount: 0,
-            time: moment
-        };
+    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a, Paginate: __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate___default.a },
+    mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_EditorPaginationMixin_js__["a" /* EditorPaginationMixin */]],
+    created: function created() {
+        this.editedArticles();
     },
 
-    watch: {
-        articles: function articles() {
-            this.articlesCount = this.articles.length;
+    methods: {
+        editedArticles: function editedArticles(data) {
+            var _this = this;
+
+            axios.get('/editor/editedArticles' + this.pagePath).then(function (response) {
+                var payload = response.data;
+
+                _this.articles = _this.editor.mapResultOfArticles(payload.data);
+                _this.pageCount = payload.last_page;
+                _this.urlPath = payload.path;
+            });
         }
     }
 });
@@ -32720,8 +32741,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate__ = __webpack_require__(416);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuejs_paginate__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__class_Editor_js__ = __webpack_require__(417);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_EditorPaginationMixin_js__ = __webpack_require__(418);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_EditorPaginationMixin_js__ = __webpack_require__(418);
 //
 //
 //
@@ -32754,7 +32774,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
 
 
 
@@ -32762,7 +32781,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a, Paginate: __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate___default.a },
-    mixins: [__WEBPACK_IMPORTED_MODULE_3__mixins_EditorPaginationMixin_js__["a" /* EditorPaginationMixin */]],
+    mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_EditorPaginationMixin_js__["a" /* EditorPaginationMixin */]],
     created: function created() {
         this.articlesToEdit();
     },
@@ -61373,7 +61392,19 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "articles": _vm.articles,
       "isPublish": false
     }
-  })], 1)])
+  }), _vm._v(" "), _c('paginate', {
+    attrs: {
+      "page-count": _vm.pageCount,
+      "click-handler": _vm.paginatePage,
+      "prev-text": 'Prev',
+      "next-text": 'Next',
+      "container-class": 'pagination'
+    }
+  }, [_c('span', {
+    slot: "prevContent"
+  }, [_vm._v("«")]), _vm._v(" "), _c('span', {
+    slot: "nextContent"
+  }, [_vm._v("»")])])], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -63561,7 +63592,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_c('div', {
     staticClass: "articles-to-be-edit"
-  }, [_c('h2', [_vm._v("\n            Articles Waiting To Be Edit\n            ")]), _vm._v(" "), _c('report-table', {
+  }, [_c('h2', [_vm._v("\n            Articles Waiting To Be Edit\n            "), _c('span', {
+    staticClass: "badge"
+  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('report-table', {
     attrs: {
       "articles": _vm.articles,
       "isPublish": false
