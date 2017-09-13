@@ -37,6 +37,7 @@
     import { EditorPaginationMixin } from './../../mixins/EditorPaginationMixin.js';
 
     export default {
+        props: ['tableType'],
         components: { ReportTable, Paginate },
         mixins: [ EditorPaginationMixin ],
         created() {
@@ -51,6 +52,8 @@
                         this.articles = this.editor.mapResultOfArticles(payload.data);
                         this.pageCount = payload.last_page;
                         this.urlPath = payload.path;
+
+                        ReportingBus.$emit('isLoadedListToEdit', this.articles);
                     });
             }
         }

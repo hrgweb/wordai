@@ -32200,6 +32200,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['tableType'],
     components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a, Paginate: __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate___default.a },
     mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_EditorPaginationMixin_js__["a" /* EditorPaginationMixin */]],
     created: function created() {
@@ -32797,6 +32798,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['tableType'],
     components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a, Paginate: __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate___default.a },
     mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_EditorPaginationMixin_js__["a" /* EditorPaginationMixin */]],
     created: function created() {
@@ -32813,6 +32815,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.articles = _this.editor.mapResultOfArticles(payload.data);
                 _this.pageCount = payload.last_page;
                 _this.urlPath = payload.path;
+
+                ReportingBus.$emit('isLoadedListToEdit', _this.articles);
             });
         }
     }
@@ -33027,6 +33031,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     var vm = this;
     ArticleBus.$on('isEditing', function (data) {
       return vm.updateArticle(data);
+    });
+    ReportingBus.$on('isLoadedListToEdit', function (data) {
+      return _this.listToEdit = data;
     });
     ReportingBus.$on('isLoadedListEditedArticles', function (data) {
       return _this.listEditedArticles = data;
@@ -65288,12 +65295,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "Editor__table"
   }, [_c('article-to-edit', {
     attrs: {
-      "articles": _vm.listToEdit,
-      "paginationPath": _vm.paginationPath
+      "paginationPath": _vm.paginationPath,
+      "tableType": _vm.tableType
     }
   }), _vm._v(" "), _c('article-edited', {
     attrs: {
-      "articles": _vm.listEditedArticles
+      "tableType": _vm.tableType
     }
   }), _vm._v(" "), _c('article-to-publish', {
     attrs: {
@@ -67407,7 +67414,8 @@ var EditorPaginationMixin = {
             axios.get(this.pagePath).then(function (response) {
                 _this.articles = _this.editor.mapResultOfArticles(response.data.data);
 
-                ReportingBus.$emit('isLoadedListEditedArticles', _this.articles);
+                // check type of table
+                if (_this.tableType === 'article-to-edit') ReportingBus.$emit('isLoadedListToEdit', _this.articles);else ReportingBus.$emit('isLoadedListEditedArticles', _this.articles);
             });
         }
     }

@@ -31,7 +31,11 @@ export const EditorPaginationMixin = {
             axios.get(this.pagePath).then(response => {
                 this.articles = this.editor.mapResultOfArticles(response.data.data);
 
-                ReportingBus.$emit('isLoadedListEditedArticles', this.articles);
+                // check type of table
+                if (this.tableType === 'article-to-edit')
+                    ReportingBus.$emit('isLoadedListToEdit', this.articles);
+                else
+                    ReportingBus.$emit('isLoadedListEditedArticles', this.articles);
             });
         }
     }

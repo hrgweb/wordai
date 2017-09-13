@@ -38,6 +38,7 @@
 
 
     export default {
+        props: ['tableType'],
         components: { ReportTable, Paginate },
         mixins: [ EditorPaginationMixin ],
         created() {

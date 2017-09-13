@@ -21,13 +21,13 @@
 		<div class="Editor__table" v-show="! isEdit">
             <!-- Article To Edit -->
             <article-to-edit
-                :articles="listToEdit"
-                :paginationPath="paginationPath">
+                :paginationPath="paginationPath"
+                :tableType="tableType">
             </article-to-edit>
 
             <!-- Article Edited -->
             <article-edited
-                :articles="listEditedArticles">
+                :tableType="tableType">
             </article-edited>
 
             <!-- Article To Publish -->
@@ -113,6 +113,7 @@
             // Bus
             let vm = this;
             ArticleBus.$on('isEditing', data => vm.updateArticle(data));
+            ReportingBus.$on('isLoadedListToEdit', data => this.listToEdit = data);
             ReportingBus.$on('isLoadedListEditedArticles', data => this.listEditedArticles = data);
 		},
 		methods: {
