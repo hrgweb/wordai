@@ -20,8 +20,9 @@ class EditorsController extends Controller
     		->join('article_types', 'article_types.id', '=', 'words.article_type_id')
     		->join('domains', 'domains.id', '=', 'words.domain_id')
     		->where('words.isProcess', 1)
-    		->oldest()
-    		->get([
+    		// ->oldest()
+            ->paginate(10);
+    		/*->get([
     			'words.id',
     			'users.firstname',
     			'users.lastname',
@@ -45,7 +46,37 @@ class EditorsController extends Controller
                 'min_spent_editor_edit_article',
                 'sec_spent_editor_edit_article',
 				'words.created_at'
-    		]);
+    		]);*/
+    }
+
+    public function articlesToEdit() {
+        // DB::listen(function($query) { var_dump($query->sql); });
+
+        return DB::table('words')
+            ->leftJoin('users', 'users.id', '=', 'words.user_id')
+            ->leftJoin('article_types', 'article_types.id', '=', 'words.article_type_id')
+            ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
+            ->where([
+                ['words.hr_spent_editor_edit_article', '<=', 0],
+                ['words.min_spent_editor_edit_article', '<=', 0],
+                ['words.sec_spent_editor_edit_article', '<=', 0]
+            ])
+            ->orderBy('firstname')
+            ->paginate(10);
+    }
+
+    public function editedArticles() {
+        // DB::listen(function($query) { var_dump($query->sql); });
+
+        return DB::table('words')
+            ->leftJoin('users', 'users.id', '=', 'words.user_id')
+            ->leftJoin('article_types', 'article_types.id', '=', 'words.article_type_id')
+            ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
+            ->where('words.hr_spent_editor_edit_article', '>', 0)
+            ->orWhere('words.min_spent_editor_edit_article', '>', 0)
+            ->orWhere('words.sec_spent_editor_edit_article', '>', 0)
+            ->orderBy('firstname')
+            ->paginate(10);
     }
 
     public function updateArticle()

@@ -21,27 +21,28 @@
 		<div class="Editor__table" v-if="! isEdit">
             <!-- Article To Edit -->
             <article-to-edit
-                :articles="listToEdit">
+                :articles="listToEdit"
+                :paginationPath="paginationPath">
             </article-to-edit>
 
             <!-- Article Edited -->
-            <!-- <article-edited
+            <article-edited
                 :articles="listEditedArticles">
-            </article-edited> -->
+            </article-edited>
 
             <!-- Article To Publish -->
-            <article-to-publish
+            <!-- <article-to-publish
                 :articles="listArticleToPublish">
-            </article-to-publish>
+            </article-to-publish> -->
 
-            <h2>Article List <span class="badge">{{ articlesCount }}</span></h2>
+            <!-- <h2>Article List <span class="badge">{{ articlesCount }}</span></h2> -->
 
 			<!-- Article Result -->
-			<article-result
+			<!-- <article-result
 				:articles="articles"
 				v-if="isArticlesNotEmpty"
 				@isEditing="updateArticle">
-	 		</article-result>
+	 		</article-result> -->
 		</div>
 	</div>
 </template>
@@ -53,7 +54,8 @@
     import ArticleEdited from './ArticleEdited.vue';
 	import ArticleToPublish from './ArticleToPublish.vue';
 	import { UserArticleMixin } from './../../mixins/UserArticleMixin.js';
-	import Error from './../errors/Error.vue';
+    import Error from './../errors/Error.vue';
+	import Editor from './../../class/Editor.js';
 
 	export default {
 		props: ['user'],
@@ -75,15 +77,18 @@
 				hasPeditorAccess: false,
                 listToEdit: [],
                 listEditedArticles: [],
-                listArticleToPublish: []
+                listArticleToPublish: [],
+                paginationResult: {},
+                paginationPath: '',
+                editor: new Editor()
 			}
 		},
 		watch: {
 			articles(data) {
 				this.articlesCount = data.length;
-                this.articlesToEdit(data);
-                this.editedArticles(data);
-                this.articlesToPublish(data);
+                // this.articlesToEdit(data);
+                // this.editedArticles(data);
+                // this.articlesToPublish(data);
 			},
 
 			authUser(data) {
@@ -97,7 +102,7 @@
 			}
 		},
 		created() {
-			this.articleList();
+			// this.articleList();
 		},
 		mounted() {
 			this.authUser = JSON.parse(this.user);
@@ -111,34 +116,11 @@
 		methods: {
 			articleList() {
 				axios.get('/editor/articleList').then(response => {
-                    this.articles = response.data.map(item => {
-                        return {
-                            article: item.article,
-                            article_type: item.article_type,
-                            created_at: item.created_at,
-                            doc_title: (item.doc_title !== null && item.doc_title.length > 50) ? item.doc_title.substr(0, 50) + '...' : item.doc_title,
-                            domain: item.domain,
-                            domain_protected: item.domain_protected,
-                            firstname: item.firstname,
-                            hr_spent_editor_edit_article: item.hr_spent_editor_edit_article,
-                            id: item.id,
-                            isCsCheckHitMax: item.isCsCheckHitMax,
-                            isEditorEdit: item.isEditorEdit,
-                            isEditorUpdateSC: item.isEditorUpdateSC,
-                            isRespinHitMax: item.isRespinHitMax,
-                            keyword: item.keyword,
-                            lastname: item.lastname,
-                            lsi_terms: item.lsi_terms,
-                            min_spent_editor_edit_article: item.min_spent_editor_edit_article,
-                            protected: (item.protected !== null && item.protected.length > 100) ? item.protected.substr(0, 100) + '...' : item.protected,
-                            sec_spent_editor_edit_article: item.sec_spent_editor_edit_article,
-                            spin: item.spin,
-                            spintax: item.spintax,
-                            spintax_copy: item.spintax_copy,
-                            synonym: item.synonym,
-                            writer: item.firstname + ' ' + item.lastname
-                        }
-                    });
+                    let data = response.data;
+
+                    this.paginationResult = data;
+                    this.paginationPath = data.path;
+                    this.articles = this.editor.mapResultOfArticles(data.data);
                 });
 			},
 
