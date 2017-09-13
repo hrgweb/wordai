@@ -11,7 +11,7 @@ class Editor
                 domain_protected: item.domain_protected,
                 firstname: item.firstname,
                 hr_spent_editor_edit_article: item.hr_spent_editor_edit_article,
-                id: item.id,
+                id: item.word_id,
                 isCsCheckHitMax: item.isCsCheckHitMax,
                 isEditorEdit: item.isEditorEdit,
                 isEditorUpdateSC: item.isEditorUpdateSC,

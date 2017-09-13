@@ -13,7 +13,8 @@
             <!-- Report Table -->
             <report-table
                 :articles="articles"
-                :isPublish="false">
+                :isPublish="false"
+                tableType="article-to-edit">
             </report-table>
 
             <paginate

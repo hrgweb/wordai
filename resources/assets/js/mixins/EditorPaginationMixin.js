@@ -8,7 +8,8 @@ export const EditorPaginationMixin = {
             editor: new Editor(),
             pageCount: 0,
             pageNum: 1,
-            urlPath: ''
+            urlPath: '',
+            report: ReportingBus,
         };
     },
 
@@ -27,7 +28,11 @@ export const EditorPaginationMixin = {
     methods: {
         paginatePage(pageNum) {
             this.pageNum = pageNum;
-            axios.get(this.pagePath).then(response => this.articles = this.editor.mapResultOfArticles(response.data.data));
+            axios.get(this.pagePath).then(response => {
+                this.articles = this.editor.mapResultOfArticles(response.data.data);
+
+                ReportingBus.$emit('isLoadedListEditedArticles', this.articles);
+            });
         }
     }
 };

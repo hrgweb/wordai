@@ -349,10 +349,12 @@ class WordsController extends Controller
         $spin = $this->spin->process(request('article'));
 
         // Update words table in spintax_copy
-        $update = Word::where('id', request('word_id'))
-                    ->update(['spin' => $spin]);
+        // $update = Word::where('id', request('word_id'))
+                    // ->update(['spin' => $spin]);
 
-        if ($update) return $spin; // return response
+        // if ($update) return $spin; // return response
+
+        return $spin;
 	}
 
 	public function updateSpintaxArticle() {

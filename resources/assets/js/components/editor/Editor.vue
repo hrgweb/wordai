@@ -18,7 +18,7 @@
 			@isDismiss="dismissUpdate">
 		</article-editor>
 
-		<div class="Editor__table" v-if="! isEdit">
+		<div class="Editor__table" v-show="! isEdit">
             <!-- Article To Edit -->
             <article-to-edit
                 :articles="listToEdit"
@@ -80,7 +80,8 @@
                 listArticleToPublish: [],
                 paginationResult: {},
                 paginationPath: '',
-                editor: new Editor()
+                editor: new Editor(),
+                tableType: ''
 			}
 		},
 		watch: {
@@ -112,6 +113,7 @@
             // Bus
             let vm = this;
             ArticleBus.$on('isEditing', data => vm.updateArticle(data));
+            ReportingBus.$on('isLoadedListEditedArticles', data => this.listEditedArticles = data);
 		},
 		methods: {
 			articleList() {
@@ -128,16 +130,37 @@
 				this.isEdit = false;
 				this.article = data.article;
 				this.index = data.index;
+                this.tableType = data.tableType;
 				Vue.nextTick(() => this.isEdit = true );
 			},
 
+            setupToUpdateRecord(data) {
+                switch(this.tableType) {
+                    case 'article-to-edit':
+                        this.listToEdit[this.index].spin = data.article;
+                        this.listToEdit[this.index].hr_spent_editor_edit_article = data.times[0];
+                        this.listToEdit[this.index].min_spent_editor_edit_article = data.times[1];
+                        this.listToEdit[this.index].sec_spent_editor_edit_article = data.times[2];
+                        break;
+                    case 'article-edited':
+                        this.listEditedArticles[this.index].spin = data.article;
+                        this.listEditedArticles[this.index].hr_spent_editor_edit_article = data.times[0];
+                        this.listEditedArticles[this.index].min_spent_editor_edit_article = data.times[1];
+                        this.listEditedArticles[this.index].sec_spent_editor_edit_article = data.times[2];
+                        break;
+                };
+
+
+            },
+
 			updateRecord(data) {
 				if (data) {
+                    this.setupToUpdateRecord(data);
 					// this.isEdit = false;  // close the article-editor component
-					this.articles[this.index].spin = data.article;
-                    this.articles[this.index].hr_spent_editor_edit_article = data.times[0];
-                    this.articles[this.index].min_spent_editor_edit_article = data.times[1];
-                    this.articles[this.index].sec_spent_editor_edit_article = data.times[2];
+					// this.articles[this.index].spin = data.article;
+                    // this.articles[this.index].hr_spent_editor_edit_article = data.times[0];
+                    // this.articles[this.index].min_spent_editor_edit_article = data.times[1];
+                    // this.articles[this.index].sec_spent_editor_edit_article = data.times[2];
 
                     // successfully updated
 					let articleTitle = this.article.doc_title;
@@ -165,6 +188,7 @@
 
             updateArticleData() {
                 ArticleBus.$on('isRespinArticle', data => {
+                    console.log(data);
                     this.articles[this.index].spin = data.spin;
                 });
             },

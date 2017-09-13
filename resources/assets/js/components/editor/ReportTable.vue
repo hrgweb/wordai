@@ -38,7 +38,7 @@
 
 <script>
     export default {
-        props: ['articles', 'isPublish'],
+        props: ['articles', 'isPublish', 'tableType'],
         data() {
             return {
                 time: moment
@@ -48,7 +48,8 @@
             editArticle(article, index) {
                 ArticleBus.$emit('isEditing', {
                     article: article,
-                    index: index
+                    index: index,
+                    tableType: this.tableType
                 });
             },
 

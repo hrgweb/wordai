@@ -32193,6 +32193,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -32215,6 +32216,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.articles = _this.editor.mapResultOfArticles(payload.data);
                 _this.pageCount = payload.last_page;
                 _this.urlPath = payload.path;
+
+                ReportingBus.$emit('isLoadedListEditedArticles', _this.articles);
             });
         }
     }
@@ -32774,6 +32777,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -32812,6 +32816,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate__ = __webpack_require__(416);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vuejs_paginate__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_EditorPaginationMixin_js__ = __webpack_require__(418);
+//
 //
 //
 //
@@ -32951,140 +32956,165 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['user'],
-	components: {
-		ArticleResult: __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default.a,
-		ArticleEditor: __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue___default.a,
-		ArticleToEdit: __WEBPACK_IMPORTED_MODULE_2__ArticleToEdit_vue___default.a,
-		ArticleEdited: __WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue___default.a,
-		ArticleToPublish: __WEBPACK_IMPORTED_MODULE_4__ArticleToPublish_vue___default.a,
-		Error: __WEBPACK_IMPORTED_MODULE_6__errors_Error_vue___default.a
-	},
-	mixins: [__WEBPACK_IMPORTED_MODULE_5__mixins_UserArticleMixin_js__["a" /* UserArticleMixin */]],
-	data: function data() {
-		return {
-			isEdit: false,
-			articlesCount: 0,
-			error: '',
-			authUser: {},
-			hasPeditorAccess: false,
-			listToEdit: [],
-			listEditedArticles: [],
-			listArticleToPublish: [],
-			paginationResult: {},
-			paginationPath: '',
-			editor: new __WEBPACK_IMPORTED_MODULE_7__class_Editor_js__["a" /* default */]()
-		};
-	},
+  props: ['user'],
+  components: {
+    ArticleResult: __WEBPACK_IMPORTED_MODULE_0__ArticleResult_vue___default.a,
+    ArticleEditor: __WEBPACK_IMPORTED_MODULE_1__ArticleEditor_vue___default.a,
+    ArticleToEdit: __WEBPACK_IMPORTED_MODULE_2__ArticleToEdit_vue___default.a,
+    ArticleEdited: __WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue___default.a,
+    ArticleToPublish: __WEBPACK_IMPORTED_MODULE_4__ArticleToPublish_vue___default.a,
+    Error: __WEBPACK_IMPORTED_MODULE_6__errors_Error_vue___default.a
+  },
+  mixins: [__WEBPACK_IMPORTED_MODULE_5__mixins_UserArticleMixin_js__["a" /* UserArticleMixin */]],
+  data: function data() {
+    return {
+      isEdit: false,
+      articlesCount: 0,
+      error: '',
+      authUser: {},
+      hasPeditorAccess: false,
+      listToEdit: [],
+      listEditedArticles: [],
+      listArticleToPublish: [],
+      paginationResult: {},
+      paginationPath: '',
+      editor: new __WEBPACK_IMPORTED_MODULE_7__class_Editor_js__["a" /* default */](),
+      tableType: ''
+    };
+  },
 
-	watch: {
-		articles: function articles(data) {
-			this.articlesCount = data.length;
-			// this.articlesToEdit(data);
-			// this.editedArticles(data);
-			// this.articlesToPublish(data);
-		},
-		authUser: function authUser(data) {
-			// has power editor access
-			if (data.has_peditor_access === 0) {
-				this.hasPeditorAccess = false;
-				this.error = 'You have no access to power editor feature.';
-			} else {
-				this.hasPeditorAccess = true;
-			}
-		}
-	},
-	created: function created() {
-		// this.articleList();
-	},
-	mounted: function mounted() {
-		this.authUser = JSON.parse(this.user);
-		this.listenWhenPowerEditorUpdated();
-		this.updateArticleData();
+  watch: {
+    articles: function articles(data) {
+      this.articlesCount = data.length;
+      // this.articlesToEdit(data);
+      // this.editedArticles(data);
+      // this.articlesToPublish(data);
+    },
+    authUser: function authUser(data) {
+      // has power editor access
+      if (data.has_peditor_access === 0) {
+        this.hasPeditorAccess = false;
+        this.error = 'You have no access to power editor feature.';
+      } else {
+        this.hasPeditorAccess = true;
+      }
+    }
+  },
+  created: function created() {
+    // this.articleList();
+  },
+  mounted: function mounted() {
+    var _this = this;
 
-		// Bus
-		var vm = this;
-		ArticleBus.$on('isEditing', function (data) {
-			return vm.updateArticle(data);
-		});
-	},
+    this.authUser = JSON.parse(this.user);
+    this.listenWhenPowerEditorUpdated();
+    this.updateArticleData();
 
-	methods: {
-		articleList: function articleList() {
-			var _this = this;
+    // Bus
+    var vm = this;
+    ArticleBus.$on('isEditing', function (data) {
+      return vm.updateArticle(data);
+    });
+    ReportingBus.$on('isLoadedListEditedArticles', function (data) {
+      return _this.listEditedArticles = data;
+    });
+  },
 
-			axios.get('/editor/articleList').then(function (response) {
-				var data = response.data;
+  methods: {
+    articleList: function articleList() {
+      var _this2 = this;
 
-				_this.paginationResult = data;
-				_this.paginationPath = data.path;
-				_this.articles = _this.editor.mapResultOfArticles(data.data);
-			});
-		},
-		updateArticle: function updateArticle(data) {
-			var _this2 = this;
+      axios.get('/editor/articleList').then(function (response) {
+        var data = response.data;
 
-			this.isEdit = false;
-			this.article = data.article;
-			this.index = data.index;
-			Vue.nextTick(function () {
-				return _this2.isEdit = true;
-			});
-		},
-		updateRecord: function updateRecord(data) {
-			if (data) {
-				// this.isEdit = false;  // close the article-editor component
-				this.articles[this.index].spin = data.article;
-				this.articles[this.index].hr_spent_editor_edit_article = data.times[0];
-				this.articles[this.index].min_spent_editor_edit_article = data.times[1];
-				this.articles[this.index].sec_spent_editor_edit_article = data.times[2];
+        _this2.paginationResult = data;
+        _this2.paginationPath = data.path;
+        _this2.articles = _this2.editor.mapResultOfArticles(data.data);
+      });
+    },
+    updateArticle: function updateArticle(data) {
+      var _this3 = this;
 
-				// successfully updated
-				var articleTitle = this.article.doc_title;
-				new Noty({
-					type: 'info',
-					text: '<b>' + articleTitle + '</b> article successfully updated.',
-					layout: 'bottomLeft',
-					timeout: 5000
-				}).show();
-			}
-		},
-		dismissUpdate: function dismissUpdate(payload) {
-			this.isEdit = false;
-			this.articles[this.index].hr_spent_editor_edit_article = payload[0];
-			this.articles[this.index].min_spent_editor_edit_article = payload[1];
-			this.articles[this.index].sec_spent_editor_edit_article = payload[2];
-		},
-		listenWhenPowerEditorUpdated: function listenWhenPowerEditorUpdated(data) {
-			var _this3 = this;
+      this.isEdit = false;
+      this.article = data.article;
+      this.index = data.index;
+      this.tableType = data.tableType;
+      Vue.nextTick(function () {
+        return _this3.isEdit = true;
+      });
+    },
+    setupToUpdateRecord: function setupToUpdateRecord(data) {
+      switch (this.tableType) {
+        case 'article-to-edit':
+          this.listToEdit[this.index].spin = data.article;
+          this.listToEdit[this.index].hr_spent_editor_edit_article = data.times[0];
+          this.listToEdit[this.index].min_spent_editor_edit_article = data.times[1];
+          this.listToEdit[this.index].sec_spent_editor_edit_article = data.times[2];
+          break;
+        case 'article-edited':
+          this.listEditedArticles[this.index].spin = data.article;
+          this.listEditedArticles[this.index].hr_spent_editor_edit_article = data.times[0];
+          this.listEditedArticles[this.index].min_spent_editor_edit_article = data.times[1];
+          this.listEditedArticles[this.index].sec_spent_editor_edit_article = data.times[2];
+          break;
+      };
+    },
+    updateRecord: function updateRecord(data) {
+      if (data) {
+        this.setupToUpdateRecord(data);
+        // this.isEdit = false;  // close the article-editor component
+        // this.articles[this.index].spin = data.article;
+        // this.articles[this.index].hr_spent_editor_edit_article = data.times[0];
+        // this.articles[this.index].min_spent_editor_edit_article = data.times[1];
+        // this.articles[this.index].sec_spent_editor_edit_article = data.times[2];
 
-			ArticleBus.$on('editorUpdatedSpintaxCopy', function (data) {
-				_this3.articles[_this3.index].spintax_copy = data.spintax;
-			});
-		},
-		updateArticleData: function updateArticleData() {
-			var _this4 = this;
+        // successfully updated
+        var articleTitle = this.article.doc_title;
+        new Noty({
+          type: 'info',
+          text: '<b>' + articleTitle + '</b> article successfully updated.',
+          layout: 'bottomLeft',
+          timeout: 5000
+        }).show();
+      }
+    },
+    dismissUpdate: function dismissUpdate(payload) {
+      this.isEdit = false;
+      this.articles[this.index].hr_spent_editor_edit_article = payload[0];
+      this.articles[this.index].min_spent_editor_edit_article = payload[1];
+      this.articles[this.index].sec_spent_editor_edit_article = payload[2];
+    },
+    listenWhenPowerEditorUpdated: function listenWhenPowerEditorUpdated(data) {
+      var _this4 = this;
 
-			ArticleBus.$on('isRespinArticle', function (data) {
-				_this4.articles[_this4.index].spin = data.spin;
-			});
-		},
-		articlesToEdit: function articlesToEdit(data) {
-			this.listToEdit = data.filter(function (item) {
-				return parseInt(item.hr_spent_editor_edit_article, 10) <= 0 && parseInt(item.min_spent_editor_edit_article, 10) <= 0 && parseInt(item.sec_spent_editor_edit_article, 10) <= 0;
-			});
-		},
-		editedArticles: function editedArticles(data) {
-			this.listEditedArticles = data.filter(function (item) {
-				return parseInt(item.hr_spent_editor_edit_article, 10) > 0 || parseInt(item.min_spent_editor_edit_article, 10) > 0 || parseInt(item.sec_spent_editor_edit_article, 10) > 0;
-			});
-		},
-		articlesToPublish: function articlesToPublish(data) {
-			this.listArticleToPublish = data.filter(function (item) {
-				return item.isEditorEdit === 1;
-			});
-		}
-	}
+      ArticleBus.$on('editorUpdatedSpintaxCopy', function (data) {
+        _this4.articles[_this4.index].spintax_copy = data.spintax;
+      });
+    },
+    updateArticleData: function updateArticleData() {
+      var _this5 = this;
+
+      ArticleBus.$on('isRespinArticle', function (data) {
+        console.log(data);
+        _this5.articles[_this5.index].spin = data.spin;
+      });
+    },
+    articlesToEdit: function articlesToEdit(data) {
+      this.listToEdit = data.filter(function (item) {
+        return parseInt(item.hr_spent_editor_edit_article, 10) <= 0 && parseInt(item.min_spent_editor_edit_article, 10) <= 0 && parseInt(item.sec_spent_editor_edit_article, 10) <= 0;
+      });
+    },
+    editedArticles: function editedArticles(data) {
+      this.listEditedArticles = data.filter(function (item) {
+        return parseInt(item.hr_spent_editor_edit_article, 10) > 0 || parseInt(item.min_spent_editor_edit_article, 10) > 0 || parseInt(item.sec_spent_editor_edit_article, 10) > 0;
+      });
+    },
+    articlesToPublish: function articlesToPublish(data) {
+      this.listArticleToPublish = data.filter(function (item) {
+        return item.isEditorEdit === 1;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -33257,7 +33287,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['articles', 'isPublish'],
+    props: ['articles', 'isPublish', 'tableType'],
     data: function data() {
         return {
             time: moment
@@ -33268,7 +33298,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         editArticle: function editArticle(article, index) {
             ArticleBus.$emit('isEditing', {
                 article: article,
-                index: index
+                index: index,
+                tableType: this.tableType
             });
         },
         publishBtnState: function publishBtnState(text, state) {
@@ -61411,7 +61442,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('report-table', {
     attrs: {
       "articles": _vm.articles,
-      "isPublish": false
+      "isPublish": false,
+      "tableType": "article-edited"
     }
   }), _vm._v(" "), _c('paginate', {
     attrs: {
@@ -63618,7 +63650,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('report-table', {
     attrs: {
       "articles": _vm.articles,
-      "isPublish": false
+      "isPublish": false,
+      "tableType": "article-to-edit"
     }
   }), _vm._v(" "), _c('paginate', {
     attrs: {
@@ -64660,7 +64693,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('report-table', {
     attrs: {
       "articles": _vm.articles,
-      "isPublish": true
+      "isPublish": true,
+      "tableType": "article-to-publish"
     }
   }), _vm._v(" "), _c('paginate', {
     attrs: {
@@ -65232,7 +65266,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "isUpdated": _vm.updateRecord,
       "isDismiss": _vm.dismissUpdate
     }
-  }) : _vm._e(), _vm._v(" "), (!_vm.isEdit) ? _c('div', {
+  }) : _vm._e(), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.isEdit),
+      expression: "! isEdit"
+    }],
     staticClass: "Editor__table"
   }, [_c('article-to-edit', {
     attrs: {
@@ -65247,7 +65287,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "articles": _vm.listArticleToPublish
     }
-  })], 1) : _vm._e()], 1)
+  })], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -67286,7 +67326,7 @@ var Editor = function () {
                     domain_protected: item.domain_protected,
                     firstname: item.firstname,
                     hr_spent_editor_edit_article: item.hr_spent_editor_edit_article,
-                    id: item.id,
+                    id: item.word_id,
                     isCsCheckHitMax: item.isCsCheckHitMax,
                     isEditorEdit: item.isEditorEdit,
                     isEditorUpdateSC: item.isEditorUpdateSC,
@@ -67329,7 +67369,8 @@ var EditorPaginationMixin = {
             editor: new __WEBPACK_IMPORTED_MODULE_0__class_Editor_js__["a" /* default */](),
             pageCount: 0,
             pageNum: 1,
-            urlPath: ''
+            urlPath: '',
+            report: ReportingBus
         };
     },
 
@@ -67352,7 +67393,9 @@ var EditorPaginationMixin = {
 
             this.pageNum = pageNum;
             axios.get(this.pagePath).then(function (response) {
-                return _this.articles = _this.editor.mapResultOfArticles(response.data.data);
+                _this.articles = _this.editor.mapResultOfArticles(response.data.data);
+
+                ReportingBus.$emit('isLoadedListEditedArticles', _this.articles);
             });
         }
     }

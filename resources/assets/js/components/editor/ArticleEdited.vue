@@ -13,7 +13,8 @@
             <!-- Report Table -->
             <report-table
                 :articles="articles"
-                :isPublish="false">
+                :isPublish="false"
+                tableType="article-edited">
             </report-table>
 
             <paginate
@@ -51,6 +52,8 @@
                         this.articles = this.editor.mapResultOfArticles(payload.data);
                         this.pageCount = payload.last_page;
                         this.urlPath = payload.path;
+
+                        ReportingBus.$emit('isLoadedListEditedArticles', this.articles);
                     });
             }
         }

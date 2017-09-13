@@ -13,7 +13,8 @@
             <!-- Report Table -->
             <report-table
                 :articles="articles"
-                :isPublish="true">
+                :isPublish="true"
+                tableType="article-to-publish">
             </report-table>
 
             <paginate
