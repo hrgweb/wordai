@@ -1,7 +1,7 @@
 <template>
 	<div class="Copyscape">
 		<div class="results_title">
-			<b>{{ copy.count }}  result</b> 
+			<b>{{ copy.count }}  result</b>
 			found for the text you pasted&nbsp; ({{ copy.querywords }} words).
 		</div>
 
@@ -21,7 +21,7 @@
 		},
 		methods: {
 			articleDuplicates() {
-				let article = $('div.note-editable').find('p').html();
+				let article = $('div.note-editable').html();
 				let duplicates = article.match(/\<mark\>.+?\<\/mark\>/g);
 
 				this.$emit('updateduplicates', duplicates);
@@ -40,7 +40,7 @@
 	    font-size: 13px;
 	    border: 1px solid #CECEF0;
 	}
-	
+
 	.Copyscape__result {
 	    margin-bottom: 2em;
 	    background: #e5e8ea;

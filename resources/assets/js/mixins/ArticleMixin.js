@@ -16,7 +16,11 @@ export const ArticleMixin = {
 	},
 	watch: {
 		articleDuplicates(data) {
-			this.isDisableSpinAndCs = (this.isCsHasResult === true && data.length > 0) ? false : true;
+			this.isDisableSpinAndCs = (
+                data !== null &&
+                data.length > 0 &&
+                this.isCsHasResult === true
+            ) ? false : true;
 		}
 	},
 	methods: {
@@ -87,7 +91,7 @@ export const ArticleMixin = {
 		},
 
 		replaceSearchSenteceByMarkTag(finds) {
-			let article = $('div.note-editable').find('p')[0].innerText;
+			let article = $('div.note-editable').text();
 
 			for (let i=0; i<finds.length; i++) {
 				find = this.escapeRegExp(finds[i]);
@@ -106,7 +110,7 @@ export const ArticleMixin = {
 
 			// highlight summernote paragraph
 			this.smArticle = article;
-			$('div.note-editable').find('p').html(this.smArticle);
+			$('div.note-editable').first().html(this.smArticle);
 		},
 
 		colorDuplicatesInRed(duplicates) {

@@ -5330,7 +5330,7 @@ var ArticleMixin = {
 
 	watch: {
 		articleDuplicates: function articleDuplicates(data) {
-			this.isDisableSpinAndCs = this.isCsHasResult === true && data.length > 0 ? false : true;
+			this.isDisableSpinAndCs = data !== null && data.length > 0 && this.isCsHasResult === true ? false : true;
 		}
 	},
 	methods: {
@@ -5400,7 +5400,7 @@ var ArticleMixin = {
 			return article.replace(RegExp(find, 'gi'), '<mark>' + find + '</mark>');
 		},
 		replaceSearchSenteceByMarkTag: function replaceSearchSenteceByMarkTag(finds) {
-			var article = $('div.note-editable').find('p')[0].innerText;
+			var article = $('div.note-editable').text();
 
 			for (var i = 0; i < finds.length; i++) {
 				find = this.escapeRegExp(finds[i]);
@@ -5418,7 +5418,7 @@ var ArticleMixin = {
 
 			// highlight summernote paragraph
 			this.smArticle = article;
-			$('div.note-editable').find('p').html(this.smArticle);
+			$('div.note-editable').first().html(this.smArticle);
 		},
 		colorDuplicatesInRed: function colorDuplicatesInRed(duplicates) {
 			var paragraphs = $('div.Copyscape__result').find('p');
@@ -33966,7 +33966,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	methods: {
 		articleDuplicates: function articleDuplicates() {
-			var article = $('div.note-editable').find('p').html();
+			var article = $('div.note-editable').html();
 			var duplicates = article.match(/\<mark\>.+?\<\/mark\>/g);
 
 			this.$emit('updateduplicates', duplicates);
@@ -64297,7 +64297,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "Copyscape"
   }, [_c('div', {
     staticClass: "results_title"
-  }, [_c('b', [_vm._v(_vm._s(_vm.copy.count) + "  result")]), _vm._v(" \n\t\tfound for the text you pasted  (" + _vm._s(_vm.copy.querywords) + " words).\n\t")]), _vm._v(" "), _vm._l((_vm.copy.result), function(copy) {
+  }, [_c('b', [_vm._v(_vm._s(_vm.copy.count) + "  result")]), _vm._v("\n\t\tfound for the text you pasted  (" + _vm._s(_vm.copy.querywords) + " words).\n\t")]), _vm._v(" "), _vm._l((_vm.copy.result), function(copy) {
     return _c('div', {
       staticClass: "Copyscape__result"
     }, [_c('a', {
