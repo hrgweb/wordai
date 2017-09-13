@@ -87,7 +87,7 @@ class EditorsController extends Controller
                 ['words.sec_spent_editor_edit_article', '<=', 0]
             ])
             ->orderBy('firstname')
-            ->paginate(10);
+            ->paginate(20);
     }
 
     public function editedArticles() {
@@ -126,7 +126,7 @@ class EditorsController extends Controller
             ->orWhere('words.min_spent_editor_edit_article', '>', 0)
             ->orWhere('words.sec_spent_editor_edit_article', '>', 0)
             ->orderBy('firstname')
-            ->paginate(10);
+            ->paginate(20);
     }
 
     public function articlesToPublish() {
@@ -161,7 +161,7 @@ class EditorsController extends Controller
             )
             ->where('words.isEditorEdit', 1)
             ->orderBy('firstname')
-            ->paginate(10);
+            ->paginate(20);
     }
 
     public function updateArticle()
