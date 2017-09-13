@@ -276,7 +276,7 @@
                 // params
                 const params = {
                     word_id: this.article.id,
-                    article: this.article.spintax_copy
+                    article: this.article.isEditorUpdateSC === 1 ? this.article.spintax_copy : this.article.spintax
                 };
 
                 axios.post('/words/respinArticle', params).then(response => {
@@ -288,7 +288,10 @@
                     this.$refs.respinBtn.disabled = false;
 
                     // update article obj in vue data
-                    ArticleBus.$emit('isRespinArticle', { spin: data });
+                    /*ArticleBus.$emit('isRespinArticle', {
+                        article: data,
+                        times: []
+                    });*/
 
                     // check if api response is fail
                     /*if (data.status === 'Failure') {
@@ -333,7 +336,10 @@
                     let data = response.data;
 
                     if (data) {
-                        this.$emit('isDismiss', data);
+                        this.$emit('isDismiss', {
+                            article: $('div.note-editable').html(),
+                            times: data
+                        });
                     }
                 });
             },
@@ -347,7 +353,10 @@
             },
 
             resetSpinArticle() {
-                $('div.note-editable').find('p').html(this.article.spin);
+                let editor  = $('div.note-editable');
+
+                editor.text('');
+                Vue.nextTick(() => editor.html(this.article.spin));
             }
 		}
 	}

@@ -32512,7 +32512,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // params
             var params = {
                 word_id: this.article.id,
-                article: this.article.spintax_copy
+                article: this.article.isEditorUpdateSC === 1 ? this.article.spintax_copy : this.article.spintax
             };
 
             axios.post('/words/respinArticle', params).then(function (response) {
@@ -32524,7 +32524,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this4.$refs.respinBtn.disabled = false;
 
                 // update article obj in vue data
-                ArticleBus.$emit('isRespinArticle', { spin: data });
+                /*ArticleBus.$emit('isRespinArticle', {
+                    article: data,
+                    times: []
+                });*/
 
                 // check if api response is fail
                 /*if (data.status === 'Failure') {
@@ -32572,7 +32575,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 var data = response.data;
 
                 if (data) {
-                    _this7.$emit('isDismiss', data);
+                    _this7.$emit('isDismiss', {
+                        article: $('div.note-editable').html(),
+                        times: data
+                    });
                 }
             });
         },
@@ -32583,7 +32589,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.isGrammarTrue = false;
         },
         resetSpinArticle: function resetSpinArticle() {
-            $('div.note-editable').find('p').html(this.article.spin);
+            var _this8 = this;
+
+            var editor = $('div.note-editable');
+
+            editor.text('');
+            Vue.nextTick(function () {
+                return editor.html(_this8.article.spin);
+            });
         }
     }
 });
@@ -33047,26 +33060,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       switch (this.tableType) {
         case 'article-to-edit':
           this.listToEdit[this.index].spin = data.article;
-          this.listToEdit[this.index].hr_spent_editor_edit_article = data.times[0];
-          this.listToEdit[this.index].min_spent_editor_edit_article = data.times[1];
-          this.listToEdit[this.index].sec_spent_editor_edit_article = data.times[2];
+
+          if (data.times.length > 0) {
+            this.listToEdit[this.index].hr_spent_editor_edit_article = data.times[0];
+            this.listToEdit[this.index].min_spent_editor_edit_article = data.times[1];
+            this.listToEdit[this.index].sec_spent_editor_edit_article = data.times[2];
+          }
           break;
         case 'article-edited':
           this.listEditedArticles[this.index].spin = data.article;
-          this.listEditedArticles[this.index].hr_spent_editor_edit_article = data.times[0];
-          this.listEditedArticles[this.index].min_spent_editor_edit_article = data.times[1];
-          this.listEditedArticles[this.index].sec_spent_editor_edit_article = data.times[2];
+
+          if (data.times.length > 0) {
+            this.listEditedArticles[this.index].hr_spent_editor_edit_article = data.times[0];
+            this.listEditedArticles[this.index].min_spent_editor_edit_article = data.times[1];
+            this.listEditedArticles[this.index].sec_spent_editor_edit_article = data.times[2];
+          }
           break;
       };
     },
     updateRecord: function updateRecord(data) {
       if (data) {
         this.setupToUpdateRecord(data);
-        // this.isEdit = false;  // close the article-editor component
-        // this.articles[this.index].spin = data.article;
-        // this.articles[this.index].hr_spent_editor_edit_article = data.times[0];
-        // this.articles[this.index].min_spent_editor_edit_article = data.times[1];
-        // this.articles[this.index].sec_spent_editor_edit_article = data.times[2];
 
         // successfully updated
         var articleTitle = this.article.doc_title;
@@ -33080,9 +33094,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     dismissUpdate: function dismissUpdate(payload) {
       this.isEdit = false;
-      this.articles[this.index].hr_spent_editor_edit_article = payload[0];
-      this.articles[this.index].min_spent_editor_edit_article = payload[1];
-      this.articles[this.index].sec_spent_editor_edit_article = payload[2];
+      this.setupToUpdateRecord(payload);
     },
     listenWhenPowerEditorUpdated: function listenWhenPowerEditorUpdated(data) {
       var _this4 = this;
@@ -33095,8 +33107,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       var _this5 = this;
 
       ArticleBus.$on('isRespinArticle', function (data) {
-        console.log(data);
-        _this5.articles[_this5.index].spin = data.spin;
+        _this5.setupToUpdateRecord(data);
+        // this.articles[this.index].spin = data.spin;
       });
     },
     articlesToEdit: function articlesToEdit(data) {

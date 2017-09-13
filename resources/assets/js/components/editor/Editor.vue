@@ -138,29 +138,28 @@
                 switch(this.tableType) {
                     case 'article-to-edit':
                         this.listToEdit[this.index].spin = data.article;
-                        this.listToEdit[this.index].hr_spent_editor_edit_article = data.times[0];
-                        this.listToEdit[this.index].min_spent_editor_edit_article = data.times[1];
-                        this.listToEdit[this.index].sec_spent_editor_edit_article = data.times[2];
+
+                        if (data.times.length > 0) {
+                            this.listToEdit[this.index].hr_spent_editor_edit_article = data.times[0];
+                            this.listToEdit[this.index].min_spent_editor_edit_article = data.times[1];
+                            this.listToEdit[this.index].sec_spent_editor_edit_article = data.times[2];
+                        }
                         break;
                     case 'article-edited':
                         this.listEditedArticles[this.index].spin = data.article;
-                        this.listEditedArticles[this.index].hr_spent_editor_edit_article = data.times[0];
-                        this.listEditedArticles[this.index].min_spent_editor_edit_article = data.times[1];
-                        this.listEditedArticles[this.index].sec_spent_editor_edit_article = data.times[2];
+
+                        if (data.times.length > 0) {
+                            this.listEditedArticles[this.index].hr_spent_editor_edit_article = data.times[0];
+                            this.listEditedArticles[this.index].min_spent_editor_edit_article = data.times[1];
+                            this.listEditedArticles[this.index].sec_spent_editor_edit_article = data.times[2];
+                        }
                         break;
                 };
-
-
             },
 
 			updateRecord(data) {
 				if (data) {
                     this.setupToUpdateRecord(data);
-					// this.isEdit = false;  // close the article-editor component
-					// this.articles[this.index].spin = data.article;
-                    // this.articles[this.index].hr_spent_editor_edit_article = data.times[0];
-                    // this.articles[this.index].min_spent_editor_edit_article = data.times[1];
-                    // this.articles[this.index].sec_spent_editor_edit_article = data.times[2];
 
                     // successfully updated
 					let articleTitle = this.article.doc_title;
@@ -175,9 +174,7 @@
 
 			dismissUpdate(payload) {
 				this.isEdit = false;
-                this.articles[this.index].hr_spent_editor_edit_article = payload[0];
-                this.articles[this.index].min_spent_editor_edit_article = payload[1];
-                this.articles[this.index].sec_spent_editor_edit_article = payload[2];
+                this.setupToUpdateRecord(payload);
 			},
 
 			listenWhenPowerEditorUpdated(data) {
@@ -188,8 +185,8 @@
 
             updateArticleData() {
                 ArticleBus.$on('isRespinArticle', data => {
-                    console.log(data);
-                    this.articles[this.index].spin = data.spin;
+                    this.setupToUpdateRecord(data);
+                    // this.articles[this.index].spin = data.spin;
                 });
             },
 
