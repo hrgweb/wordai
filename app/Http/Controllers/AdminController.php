@@ -382,9 +382,9 @@ class AdminController extends Controller
 
     public function allArticles() {
         return DB::table('words')
-            ->join('users', 'users.id', '=', 'words.user_id')
-            ->join('article_types', 'article_types.id', '=', 'words.article_type_id')
-            ->join('domains', 'domains.id', '=', 'words.domain_id')
+            ->leftJoin('users', 'users.id', '=', 'words.user_id')
+            ->leftJoin('article_types', 'article_types.id', '=', 'words.article_type_id')
+            ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
             ->oldest()
             ->get([
                 'words.id',
