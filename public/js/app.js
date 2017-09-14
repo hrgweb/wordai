@@ -30111,6 +30111,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -30165,11 +30166,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         onSubmit: function onSubmit() {
             return this.isEdit ? this.updateGroup() : this.postGroup();
         },
-        onEdit: function onEdit(data, index) {
-            this.isEdit = true;
-            this.group = data;
-            this.index = --index;
-            this.form.name = data.group;
+        onEdit: function onEdit(data) {
+            this.isEdit = data.isEdit;
+            this.group = data.group;
+            this.index = data.index;
+            this.form.name = data.group.group;
         },
         updateGroup: function updateGroup() {
             var _this3 = this;
@@ -31599,6 +31600,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         dismissRemove: function dismissRemove() {
             this.removeState(false);
+        },
+        onEdit: function onEdit(data, index) {
+            this.$emit('onEdit', {
+                isEdit: true,
+                group: data,
+                index: index
+            });
         }
     }
 });
@@ -63771,7 +63779,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "index": index
       },
       on: {
-        "hasRemove": _vm.updateGroupsData
+        "hasRemove": _vm.updateGroupsData,
+        "onEdit": _vm.onEdit
       }
     })
   }))])])

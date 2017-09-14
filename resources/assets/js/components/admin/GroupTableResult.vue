@@ -84,7 +84,15 @@
 
             dismissRemove() {
                 this.removeState(false);
-            }
+            },
+
+            onEdit(data, index) {
+                this.$emit('onEdit', {
+                    isEdit: true,
+                    group: data,
+                    index: index
+                });
+            },
         }
     }
 </script>

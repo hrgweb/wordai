@@ -28,7 +28,8 @@
                 :group="group"
                 :index="index"
                 :key="group.id"
-                @hasRemove="updateGroupsData">
+                @hasRemove="updateGroupsData"
+                @onEdit="onEdit">
             </group-table-result>
         </tbody>
     </table>
@@ -89,11 +90,11 @@
                     : this.postGroup();
             },
 
-            onEdit(data, index) {
-                this.isEdit = true;
-                this.group = data;
-                this.index = --index;
-                this.form.name = data.group;
+            onEdit(data) {
+                this.isEdit = data.isEdit;
+                this.group = data.group;
+                this.index = data.index;
+                this.form.name = data.group.group;
             },
 
             updateGroup() {
