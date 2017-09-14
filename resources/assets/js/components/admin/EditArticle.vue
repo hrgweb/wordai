@@ -20,14 +20,14 @@
                 <input
                     type="text"
                     class="form-control"
-                    placeholder="Search for the article title"
+                    placeholder="Search for the article title and hit enter"
                     v-model="search"
                     @keyup.enter="searchArticle">
             </div>
 
             <!-- Loading -->
             <div class="Loading" v-if="isLoading">
-                <p class="text-center">FETCHING DATA...</p>
+                <br><br><p class="text-center">FETCHING DATA...</p>
             </div>
 
             <!-- Result -->
@@ -233,7 +233,6 @@
     .search-input > input {
         padding: 1.5em 1em;
         font-size: 1.5em;
-        margin-bottom: 3em;
     }
 
     .Loading p { font-size: 2em; }

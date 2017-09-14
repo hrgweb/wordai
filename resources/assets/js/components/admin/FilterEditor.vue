@@ -42,10 +42,17 @@
 
 <style scoped>
     .Filter {
-        /*background: #baf7c7;*/
+        background: #444444;
+        color: #fff;
         padding: 1em 1em 0.7em;
         margin-top: 2em;
-        /*border: 1px solid #71f58d;*/
+    }
+
+    .Filter select {
+        color: #000000;
+        padding: .5em 1em .5em 0.5em;
+        border: 1px solid white;
+        border-radius: 2px;
     }
 
     .Filter div:first-child {

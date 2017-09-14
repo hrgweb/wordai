@@ -38819,7 +38819,7 @@ exports.push([module.i, "\nul[data-v-1cb57eac] { padding-left: 2em;\n}\nul.alert
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.Filter[data-v-1feed54b] {\n    /*background: #baf7c7;*/\n    padding: 1em 1em 0.7em;\n    margin-top: 2em;\n    /*border: 1px solid #71f58d;*/\n}\n.Filter div[data-v-1feed54b]:first-child {\n    float: left;\n    margin-right: 1em;\n}\n", ""]);
+exports.push([module.i, "\n.Filter[data-v-1feed54b] {\n    background: #444444;\n    color: #fff;\n    padding: 1em 1em 0.7em;\n    margin-top: 2em;\n}\n.Filter select[data-v-1feed54b] {\n    color: #000000;\n    padding: .5em 1em .5em 0.5em;\n    border: 1px solid white;\n    border-radius: 2px;\n}\n.Filter div[data-v-1feed54b]:first-child {\n    float: left;\n    margin-right: 1em;\n}\n", ""]);
 
 /***/ }),
 /* 246 */
@@ -38945,7 +38945,7 @@ exports.push([module.i, "\n.Editor[data-v-c27ca10e] { padding: 0 7em;\n}\n.Copys
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.Editor[data-v-d1268f94] { padding: 0;\n}\n.Copyscape[data-v-d1268f94] { margin-top: 5em;\n}\n.search-input > input[data-v-d1268f94] {\n    padding: 1.5em 1em;\n    font-size: 1.5em;\n    margin-bottom: 3em;\n}\n.Loading p[data-v-d1268f94] { font-size: 2em;\n}\n", ""]);
+exports.push([module.i, "\n.Editor[data-v-d1268f94] { padding: 0;\n}\n.Copyscape[data-v-d1268f94] { margin-top: 5em;\n}\n.search-input > input[data-v-d1268f94] {\n    padding: 1.5em 1em;\n    font-size: 1.5em;\n}\n.Loading p[data-v-d1268f94] { font-size: 2em;\n}\n", ""]);
 
 /***/ }),
 /* 264 */
@@ -65554,7 +65554,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "form-control",
     attrs: {
       "type": "text",
-      "placeholder": "Search for the article title"
+      "placeholder": "Search for the article title and hit enter"
     },
     domProps: {
       "value": (_vm.search)
@@ -65571,7 +65571,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   })]), _vm._v(" "), (_vm.isLoading) ? _c('div', {
     staticClass: "Loading"
-  }, [_c('p', {
+  }, [_c('br'), _c('br'), _c('p', {
     staticClass: "text-center"
   }, [_vm._v("FETCHING DATA...")])]) : _c('div', {
     staticClass: "Result"
