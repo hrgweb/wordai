@@ -56,7 +56,7 @@ export const ArticleMixin = {
 
 			for (let i=0; i<results.length; i++) {
 				// duplicates.push(results[i].textsnippet.split(/(\s?)\.\.\.(\s?)/gi));
-				duplicates.push(results[i].textsnippet.match( /[^\.!\?]+/gi ));
+				duplicates.push(results[i].textsnippet.match(/[^\.!\?]+/gi));
 			}
 
 			return duplicates;
@@ -70,7 +70,7 @@ export const ArticleMixin = {
 				let secondArr = []; 			//value
 
 				for (let j=0; j<firstArr.length; j++) {
-					secondArr = firstArr[j].trim();
+					secondArr = this.escapeRegExp(firstArr[j]).trim();
 
 					// if second array value is not empty
 					if (secondArr.length > 3 && /[^\d]/.test(secondArr) && $.inArray(secondArr, finds) === -1) {
@@ -133,6 +133,22 @@ export const ArticleMixin = {
 			});
 		},
 
+        findDuplicateMatchOnArticle(finds, article) {
+            let results = [];
+
+            for (var i = 0; i < finds.length; i++) {
+                let find = finds[i].toLowerCase();
+                article = article.toLowerCase();
+
+                //  find match on article
+                let result = article.indexOf(find);
+
+                if (result > 0) results.push(find);
+            }
+
+            return results;
+        },
+
 		copyScapeData(data) {
 			let results = data;
 			let duplicates = [];
@@ -143,6 +159,9 @@ export const ArticleMixin = {
 
 			// remove empty value from duplicates
 			finds = this.removeEmptyValueFromSentence(duplicates);
+
+            // find all match on article base on result of finds var
+            finds = this.findDuplicateMatchOnArticle(finds, $('div.note-editable').text());
 
 			// prepend mark tag to search string and highlight
 			this.prependMarkTagToSearchSendtenceAndHighlight(finds);
@@ -157,6 +176,7 @@ export const ArticleMixin = {
 		copyScapeSetup(url, data) {
 			this.isLoading = true;
 			this.isError = false;
+            this.responseSuccess = false;
 			this.$refs.csButton.disabled = true;
 
 			// check if type is 'edit-article'
