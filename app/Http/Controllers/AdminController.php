@@ -220,12 +220,12 @@ class AdminController extends Controller
         if ($isSameMonth === 'false') {
             $monthMon = (int) $monthMon <= 9 ? '0'.$monthMon : $monthMon;
             $monthSun = (int) $monthSun <= 9 ? '0'.$monthSun : $monthSun;
-            $this->fromMon = $year . '-' . $monthMon . '-' . $mon . ' 00:00:00';
+            $this->fromMon = $year . '-' . $monthMon . '-' . $mon . ' 00:00:01';
             $this->toSun = $year . '-' . $monthSun . '-' . $sun  . ' 23:59:59';
 
         } else {
             $month = (int) request('curMonth') <= 9 ? '0'.request('curMonth') : request('curMonth');
-            $this->fromMon = $year . '-' . $month . '-' . $mon . ' 00:00:00';
+            $this->fromMon = $year . '-' . $month . '-' . $mon . ' 00:00:01';
             $this->toSun = $year . '-' . $month . '-' . $sun  . ' 23:59:59';
         }
     }
@@ -234,8 +234,8 @@ class AdminController extends Controller
         $this->paramsForDate();
 
         return DB::table('words AS w')
-            ->join('users AS u', 'u.id', '=', 'w.user_id')
-            ->join('domains AS d', 'd.id', '=', 'w.domain_id')
+            ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
+            ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
             ->whereBetween('w.created_at', [$this->fromMon, $this->toSun])
             ->orderBy('w.created_at')
             ->get([
