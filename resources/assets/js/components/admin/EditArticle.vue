@@ -11,24 +11,9 @@
 
         <!-- <div class="Editor__table" v-if="! isEdit"> -->
         <div class="Editor__table">
-            <!-- Article To Edit -->
-            <!-- <article-to-edit
-                :articles="listToEdit">
-            </article-to-edit> -->
-
-            <!-- Article Edited -->
-            <!-- <article-edited
-                :articles="listEditedArticles">
-            </article-edited> -->
-
-            <!-- Article To Publish -->
-            <!-- <article-to-publish
-                :articles="listArticleToPublish">
-            </article-to-publish> -->
-
             <!-- Report Header -->
             <report-header :count="noOfAllArticles">
-                <template slot="head">All Articles</template>
+                <template slot="head">List of Articles</template>
             </report-header>
 
             <div class="search-input">
@@ -37,15 +22,37 @@
                     class="form-control"
                     placeholder="Search for the article title"
                     v-model="search"
-                    @keyup="searchArticle">
+                    @keyup.enter="searchArticle">
             </div>
 
-            <!-- Article Result -->
-            <article-result
-                :articles="duplicateArticlesResult"
-                v-if="isArticlesNotEmpty"
-                @isEditing="updateArticle">
-            </article-result>
+            <!-- Loading -->
+            <div class="Loading" v-if="isLoading">
+                <p class="text-center">FETCHING DATA...</p>
+            </div>
+
+            <!-- Result -->
+            <div class="Result" v-else>
+                <div class="search-result">
+                    <article-result
+                        :articles="articles"
+                        v-if="isArticlesNotEmpty"
+                        @isEditing="updateArticle">
+                    </article-result>
+                </div>
+
+                <div class="Pagination" v-if="! isSearch">
+                    <paginate
+                        :page-count="pageCount"
+                        :click-handler="paginatePage"
+                        :prev-text="'Prev'"
+                        :next-text="'Next'"
+                        :container-class="'pagination'">
+
+                        <span slot="prevContent">&laquo;</span>
+                        <span slot="nextContent">&raquo;</span>
+                    </paginate>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -54,10 +61,9 @@
     import ArticleResult from './ArticleResult.vue';
     import ArticleEditor from './../editor/ArticleEditor.vue';
     import ReportHeader from './ReportHeader.vue';
-    // import ArticleToEdit from './../editor/ArticleEditor.vue';
-    // import AdminArticleEdited from './AdminArticleEdited.vue';
-    // import ArticleToPublish from './ArticleToPublish.vue';
+    import Paginate from 'vuejs-paginate'
     import { UserArticleMixin } from './../../mixins/UserArticleMixin.js';
+    import { EditorPaginationMixin } from './../../mixins/EditorPaginationMixin.js';
 
     export default {
         props: ['user'],
@@ -65,11 +71,9 @@
             ArticleResult,
             ArticleEditor,
             ReportHeader,
-            // ArticleToEdit,
-            // AdminArticleEdited,
-            // ArticleToPublish
+            Paginate
         },
-        mixins: [ UserArticleMixin ],
+        mixins: [ UserArticleMixin, EditorPaginationMixin ],
         data() {
             return {
                 isEdit: false,
@@ -83,21 +87,14 @@
                 articleBus: ArticleBus,
                 search: '',
                 noOfAllArticles: 0,
-                duplicateArticlesResult: []
+                isSearch: false,
+                isLoading: true
             };
         },
         watch: {
-            duplicateArticlesResult(data) {
-                this.noOfAllArticles = data.length;
-            },
-
             articles(data) {
-                this.duplicateArticlesResult = data;
-
-                // this.articlesCount = data.length;
-                // this.articlesToEdit(data);
-                // this.editedArticles(data);
-                // this.articlesToPublish(data);
+                this.noOfAllArticles = data.length;
+                this.isLoading = false;
 
                 return data;
             },
@@ -113,7 +110,7 @@
             }
         },
         created() {
-            this.allArticles();
+            this.allArticles('/admin/allArticles'+this.pagePath);
         },
         mounted() {
             this.authUser = JSON.parse(this.user);
@@ -126,36 +123,14 @@
             ArticleBus.$on('isEditing', data => vm.updateArticle(data));
         },
         methods: {
-            allArticles() {
-                axios.get('/admin/allArticles').then(response => {
-                    this.articles = response.data.map(item => {
-                        return {
-                            article: item.article,
-                            article_type: item.article_type,
-                            created_at: item.created_at,
-                            doc_title: (item.doc_title !== null && item.doc_title.length > 50) ? item.doc_title.substr(0, 50) + '...' : item.doc_title,
-                            domain: item.domain,
-                            domain_protected: item.domain_protected,
-                            firstname: item.firstname,
-                            hr_spent_editor_edit_article: item.hr_spent_editor_edit_article,
-                            id: item.id,
-                            isCsCheckHitMax: item.isCsCheckHitMax,
-                            isEditorEdit: item.isEditorEdit,
-                            isEditorUpdateSC: item.isEditorUpdateSC,
-                            isRespinHitMax: item.isRespinHitMax,
-                            keyword: item.keyword,
-                            lastname: item.lastname,
-                            lsi_terms: item.lsi_terms,
-                            min_spent_editor_edit_article: item.min_spent_editor_edit_article,
-                            protected: (item.protected !== null && item.protected.length > 100) ? item.protected.substr(0, 100) + '...' : item.protected,
-                            sec_spent_editor_edit_article: item.sec_spent_editor_edit_article,
-                            spin: item.spin,
-                            spintax: item.spintax,
-                            spintax_copy: item.spintax_copy,
-                            synonym: item.synonym,
-                            writer: item.firstname + ' ' + item.lastname
-                        };
-                    });
+            allArticles(url) {
+                axios.get(url).then(response => {
+                    let payload = response.data;
+
+                    this.articles = this.editor.mapResultOfArticles(payload.data);
+                    this.pageCount = payload.last_page;
+                    this.urlPath = payload.path;
+                    this.isLoading = false;
                 });
             },
 
@@ -235,16 +210,16 @@
             },
 
             searchArticle() {
-                if (this.search.length > 0) {
-                    this.duplicateArticlesResult = this.duplicateArticlesResult.filter(article => {
-                        let title = article.doc_title.trim();
-                        title = title.length > 0 ? title : '';
+                this.isSearch = true;
+                this.isLoading = true;
 
-                        return title.match(new RegExp(this.search, 'i'));
-                    });
+                if (this.search.length > 0) {
+                    let search = this.search.trim();
+
+                    axios.get('/admin/searchArticle?search='+search)
+                        .then(response => this.articles = this.editor.mapResultOfArticles(response.data));
                 } else {
-                    this.duplicateArticlesResult = this.articles;
-                    return;
+                    this.allArticles(this.pagePath);
                 }
             }
         }
@@ -260,4 +235,6 @@
         font-size: 1.5em;
         margin-bottom: 3em;
     }
+
+    .Loading p { font-size: 2em; }
 </style>

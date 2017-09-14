@@ -385,8 +385,7 @@ class AdminController extends Controller
             ->leftJoin('users', 'users.id', '=', 'words.user_id')
             ->leftJoin('article_types', 'article_types.id', '=', 'words.article_type_id')
             ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
-            ->oldest()
-            ->get([
+            ->select(
                 'words.id',
                 'users.firstname',
                 'users.lastname',
@@ -410,6 +409,45 @@ class AdminController extends Controller
                 'min_spent_editor_edit_article',
                 'sec_spent_editor_edit_article',
                 'words.created_at'
-            ]);
+            )
+            ->orderBy('users.firstname')
+            ->paginate(20);
+    }
+
+    public function searchArticle() {
+        // return Word::where('doc_title', 'LIKE', '%'.request('search').'%')->get();
+
+        return DB::table('words')
+            ->leftJoin('users', 'users.id', '=', 'words.user_id')
+            ->leftJoin('article_types', 'article_types.id', '=', 'words.article_type_id')
+            ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
+            ->select(
+                'words.id',
+                'users.firstname',
+                'users.lastname',
+                'article_types.article_type',
+                'domains.domain',
+                'doc_title',
+                'keyword',
+                'lsi_terms',
+                'domain_protected',
+                'article',
+                'spintax',
+                'spintax_copy',
+                'spin',
+                'protected',
+                'synonym',
+                'isEditorEdit',
+                'isEditorUpdateSC',
+                'isCsCheckHitMax',
+                'isRespinHitMax',
+                'hr_spent_editor_edit_article',
+                'min_spent_editor_edit_article',
+                'sec_spent_editor_edit_article',
+                'words.created_at'
+            )
+            ->where('words.doc_title', 'LIKE', '%'.request('search').'%')
+            ->orderBy('users.firstname')
+            ->get();
     }
 }
