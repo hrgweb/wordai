@@ -107,6 +107,7 @@ table thead th:nth-child(5) { width: 120px; }
 /*=============== Admin - table and buttons ===============*/
 
 .Report,
+.ReportTable,
 .Edited,
 .Waiting,
 .Spun,
@@ -114,8 +115,8 @@ table thead th:nth-child(5) { width: 120px; }
 .Search {
 
     table td:last-child {
-        width: 200px;
-        max-width: 200px;
+        width: 200px !important;
+        max-width: 200px !important;
 
 
         button { width: 90px; }
@@ -136,7 +137,6 @@ table thead th:nth-child(5) { width: 120px; }
     }
 }
 
-.articles-to-be-edit,
 .articles-edited-this-week {
     table td:last-child {
         width: 100px !important;
