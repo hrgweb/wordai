@@ -5,7 +5,12 @@
         <form method="POST" role="form" @submit.prevent>
             <div class="form-group">
                 <label for="name">Group Name</label>
-                <input type="text" class="form-control" v-model="form.name" @keyup.enter="onSubmit">
+                <input
+                    type="text"
+                    class="form-control"
+                    placeholder="Please enter group name and hit enter to save"
+                    v-model="form.name"
+                    @keyup.enter="onSubmit">
             </div>
         </form>
 
