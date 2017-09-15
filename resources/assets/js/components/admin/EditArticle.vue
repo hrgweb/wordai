@@ -220,6 +220,7 @@
                         .then(response => this.articles = this.editor.mapResultOfArticles(response.data));
                 } else {
                     this.allArticles(this.pagePath);
+                    this.isSearch = false;
                 }
             }
         }
