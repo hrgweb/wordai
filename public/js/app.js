@@ -16337,14 +16337,16 @@ var ArticleActionMixin = {
 		},
 		domainChange: function domainChange() {
 			var vm = this;
-			var options = $('datalist#domains').find('option');
-			var domain_id = this.userObj.getUserId(vm, options, vm.spin.domain);
-			this.spin.domain_id = domain_id.attributes[1].value;
-			var url = '/words/domainChange?domain_id=' + this.spin.domain_id;
+			// let options = $('datalist#domains').find('option');
+			// let domain_id = this.userObj.getUserId(vm, options, vm.spin.domain);
+			// this.spin.domain_id = domain_id.attributes[1].value;
 
-			if (this.spin.domain_id > 0) {
+			var domain_id = this.spin.domain_id;
+			var url = '/words/domainChange?domain_id=' + domain_id;
+
+			if (domain_id > 0) {
 				this.setupDomainChange(url);
-				this.wordaiBus.getKeywordsAssociatedByDomain(this.spin.domain_id);
+				this.wordaiBus.getKeywordsAssociatedByDomain(domain_id);
 			} else {
 				this.spin['protected'] = '';
 				this.spin['synonym'] = '';
@@ -29323,6 +29325,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleActionMixin_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__KeywordAlert_vue__ = __webpack_require__(297);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__KeywordAlert_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__KeywordAlert_vue__);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -61270,46 +61278,36 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "dom_name"
     }
-  }, [_vm._v("Domain Name")]), _vm._v("   "), (_vm.isDomainNotSet) ? _c('span', {
-    staticStyle: {
-      "color": "red"
-    }
-  }, [_vm._v("This domain not set yet.")]) : _vm._e(), _vm._v(" "), _c('input', {
+  }, [_vm._v("Domain Name")]), _vm._v("  \n            "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.spin.domain),
-      expression: "spin.domain"
+      value: (_vm.spin.domain_id),
+      expression: "spin.domain_id"
     }],
     staticClass: "form-control",
-    attrs: {
-      "type": "text",
-      "list": "domains"
-    },
-    domProps: {
-      "value": (_vm.spin.domain)
-    },
     on: {
-      "blur": _vm.domainChange,
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.spin.domain = $event.target.value
-      }
-    }
-  }), _vm._v(" "), _c('datalist', {
-    attrs: {
-      "id": "domains"
+      "change": [function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.spin.domain_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.domainChange]
     }
   }, _vm._l((_vm.domains), function(domain) {
     return _c('option', {
-      attrs: {
-        "data-domain-id": domain.id
-      },
       domProps: {
-        "value": domain.domain
+        "value": domain.id
       }
-    })
-  }))]), _vm._v(" "), _c('div', {
+    }, [_vm._v(_vm._s(domain.domain.toUpperCase()))])
+  })), _vm._v("   \n            "), _vm._v(" "), (_vm.isDomainNotSet) ? _c('span', {
+    staticStyle: {
+      "color": "red"
+    }
+  }, [_vm._v("This domain not set yet.")]) : _vm._e()]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {

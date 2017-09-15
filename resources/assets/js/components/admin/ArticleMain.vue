@@ -12,11 +12,17 @@
             <input type="hidden" name="_token" :value="token">
 
             <div class="form-group">
-                <label for="dom_name">Domain Name</label> &nbsp; <span style="color: red;" v-if="isDomainNotSet">This domain not set yet.</span>
-                <input type="text" class="form-control" list="domains" v-model="spin.domain" @blur="domainChange">
+                <!-- <input type="text" class="form-control" list="domains" v-model="spin.domain" @blur="domainChange">
                 <datalist id="domains">
                     <option v-for="domain in domains" :value="domain.domain" :data-domain-id="domain.id"></option>
-                </datalist>
+                </datalist> -->
+
+                <label for="dom_name">Domain Name</label> &nbsp;
+                <select class="form-control" v-model="spin.domain_id" @change="domainChange">
+                    <option v-for="domain in domains" :value="domain.id">{{ domain.domain.toUpperCase() }}</option>
+                </select> &nbsp;&nbsp;
+                <!-- alert -->
+                <span style="color: red;" v-if="isDomainNotSet">This domain not set yet.</span>
             </div>
 
             <div class="form-group">

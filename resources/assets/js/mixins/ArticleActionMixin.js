@@ -166,14 +166,16 @@ export const ArticleActionMixin = {
 
 		domainChange() {
 			let vm = this;
-			let options = $('datalist#domains').find('option');
-			let domain_id = this.userObj.getUserId(vm, options, vm.spin.domain);
-            this.spin.domain_id = domain_id.attributes[1].value;
-			let url = '/words/domainChange?domain_id=' + this.spin.domain_id;
+			// let options = $('datalist#domains').find('option');
+			// let domain_id = this.userObj.getUserId(vm, options, vm.spin.domain);
+            // this.spin.domain_id = domain_id.attributes[1].value;
 
-			if (this.spin.domain_id > 0) {
+            let domain_id = this.spin.domain_id;
+			let url = '/words/domainChange?domain_id=' + domain_id;
+
+			if (domain_id > 0) {
 				this.setupDomainChange(url);
-                this.wordaiBus.getKeywordsAssociatedByDomain(this.spin.domain_id);
+                this.wordaiBus.getKeywordsAssociatedByDomain(domain_id);
 			} else {
 				this.spin['protected'] = '';
 				this.spin['synonym'] = '';
