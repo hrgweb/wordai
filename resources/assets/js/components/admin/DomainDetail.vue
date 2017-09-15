@@ -15,7 +15,7 @@
 				<label for="lsi_terms">Domain</label>
 				<select class="form-control" v-model="detail.domain_id">
 					<option id="domain" value="select">Select a domain</option>
-					<option id="domain" v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
+					<option id="domain" v-for="domain in domainBus.domains" :value="domain.id">{{ domain.domain }}</option>
 				</select>
 			</div>
 
@@ -35,11 +35,23 @@
 
 			<!-- Users -->
 			<div class="form-user" v-if="hasUser">
-				<label for="user" style="margin-top: 1em;">Search for user</label>
-				<input type="text" class="form-control" list="users" v-model="detail.user">
-				<datalist id="users">
-					<option v-for="user in users" :value="user.firstname + ' ' + user.lastname" :data-user-id="user.id"></option>
-				</datalist>
+				<label for="user" style="margin-top: 1em;">Assign Users</label>
+                <multiselect
+                    v-model="detail.user"
+                    :options="users"
+                    :multiple="true"
+                    :close-on-select="true"
+                    :hide-selected="true"
+                    label="name"
+                    track-by="id"
+                >
+                    <template slot="tag" scope="props">
+                        <span class="multiselect__tag">
+                            <span>{{ props.option.name }}</span>
+                            <span class="multiselect__tag-icon" @click="props.remove(props.option)"></span>
+                        </span>
+                    </template>
+                </multiselect>
 			</div><br>
 
 			<!-- LSI Terms -->
@@ -79,10 +91,11 @@
 	import Error from './../errors/Error.vue';
 	import DetailTable from './DetailTable.vue';
 	import User from './../../class/User.js';
+    import Multiselect from 'vue-multiselect';
 
 	export default {
         props: ['user'],
-		components: { Error, DetailTable },
+		components: { Error, DetailTable, Multiselect },
         mixins: [ CrudMixin ],
 		data() {
 			return {
@@ -100,7 +113,8 @@
 				index: 0,
 				users: [],
 				hasUser: false,
-				userObj: new User()
+				userObj: new User(),
+                domainBus: DomainBus
 			}
 		},
 		watch: {
@@ -117,7 +131,7 @@
 			}
 		},
 		created() {
-			this.listOfDomains();
+			// this.listOfDomains();
 			this.domainDetails();
 			this.userList();
 		},
@@ -126,7 +140,7 @@
         },
 		methods: {
 			listOfDomains() {
-				axios.get('/admin/domainListNotSet').then(response => this.domains = response.data);
+                // axios.get('/admin/domainListNotSet').then(response => this.domains = response.data);
 			},
 
 			mapResults(data) {
@@ -265,7 +279,12 @@
 
 			userList() {
 				axios.get('/user/userList').then(response => {
-					this.users = response.data;
+					this.users = response.data.map(item => {
+                        return {
+                            id: item.id,
+                            name: item.firstname + ' ' + item.lastname
+                        }
+                    });
 				});
 			}
 		}
