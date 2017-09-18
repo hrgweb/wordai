@@ -94,11 +94,11 @@ class AdminController extends Controller
 
     public function saveDetails()
     {
-    	$user_id = request('user_id');
-    	$domain_id = request('detail.domain_id');
-    	$protected = request('detail.protected');
-    	$synonym = request('detail.synonym');
-    	$protected_terms = request('protectedTerms');
+        $domain_id = request('domain_id');
+    	$group_id = request('group_id');
+    	$protected = request('protected');
+    	$synonym = request('synonym');
+        $users = request('users');
 
     	DB::beginTransaction();
 		try {
@@ -106,33 +106,52 @@ class AdminController extends Controller
 			Domain::where('id', $domain_id)->update(['isSet' => 1]);
 
 	    	// save protected terms
-	    	// for ($i=0; $i < count($protected_terms); $i++) {
-	    		ProtectedTerm::create([
-	    			'domain_id' => $domain_id,
-	    			'user_id' => auth()->user()->id,
-	    			'terms' => $protected_terms // $protected_terms[$i]
-	    		]);
-	    	// }
+    		ProtectedTerm::create([
+    			'domain_id' => $domain_id,
+    			'user_id' => auth()->user()->id,
+    			'terms' => $protected
+    		]);
 
 	    	// save domain detail
-	    	$domain = DomainDetail::create([
-	    		'user_id' => $user_id,
-	    		'domain_id' => $domain_id,
-	    		'protected' => $protected,
-	    		'synonym' => $synonym
-	    	]);
+            $userList = [];
+            for ($i=0; $i < count($users); $i++) {
+                $domain = DomainDetail::create([
+                    'user_id' => (int) $users[$i]['id'],
+                    'domain_id' => $domain_id,
+                    'group_id' => $group_id,
+                    'protected' => $protected,
+                    'synonym' => $synonym
+                ]);
+                $domain['domain'] = strtolower(request('domain'));
+
+                // push to userList array
+                array_push($userList, $domain);
+            }
 		} catch (ValidationException $e) {
 			DB::rollback();
 			throw $e;
 		}
 		DB::commit();
 
-		return response()->json($domain);
+		return response()->json($userList);
     }
 
     public function domainDetails()
     {
-    	return DomainDetail::with('domain')->get();
+        return DB::table('domain_details AS dd')
+                    ->join('domains AS d', 'd.id', '=', 'dd.domain_id')
+                    ->select([
+                        'dd.id',
+                        'dd.domain_id',
+                        'dd.group_id',
+                        'dd.protected',
+                        'dd.synonym',
+                        'dd.created_at',
+                        'd.domain'
+                    ])
+                    ->get();
+
+    	// return DomainDetail::with('domain')->get();
     }
 
     public function updateDetails()

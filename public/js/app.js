@@ -30564,13 +30564,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__class_WordAi_js__ = __webpack_require__(234);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__errors_Error_vue__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__errors_Error_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__errors_Error_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DetailTable_vue__ = __webpack_require__(287);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__DetailTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__DetailTable_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__class_User_js__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_multiselect__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_vue_multiselect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_vue_multiselect__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DetailTable_vue__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__DetailTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__DetailTable_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__class_User_js__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_multiselect__ = __webpack_require__(150);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_vue_multiselect___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_vue_multiselect__);
 //
 //
 //
@@ -30658,7 +30656,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-
+//
+//
+//
 
 
 
@@ -30668,33 +30668,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['user'],
-	components: { Error: __WEBPACK_IMPORTED_MODULE_2__errors_Error_vue___default.a, DetailTable: __WEBPACK_IMPORTED_MODULE_3__DetailTable_vue___default.a, Multiselect: __WEBPACK_IMPORTED_MODULE_5_vue_multiselect___default.a },
+	components: { DetailTable: __WEBPACK_IMPORTED_MODULE_2__DetailTable_vue___default.a, Multiselect: __WEBPACK_IMPORTED_MODULE_4_vue_multiselect___default.a },
 	mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_CrudMixin_js__["a" /* CrudMixin */]],
 	data: function data() {
 		return {
 			domains: [],
 			detail: {
 				domain_id: 'select',
+				group_id: 'select',
 				protected: '',
 				synonym: '',
-				user: ''
+				users: []
 			},
 			wordai: new __WEBPACK_IMPORTED_MODULE_1__class_WordAi_js__["a" /* default */](),
-			isError: false,
 			isResultNotEmpty: false,
 			details: [],
 			index: 0,
 			users: [],
 			hasUser: false,
-			userObj: new __WEBPACK_IMPORTED_MODULE_4__class_User_js__["a" /* default */](),
-			domainBus: DomainBus
+			userObj: new __WEBPACK_IMPORTED_MODULE_3__class_User_js__["a" /* default */](),
+			domainBus: DomainBus,
+			groups: [],
+			isDomainChange: true
 		};
 	},
 
 	watch: {
-		errors: function errors(list) {
-			this.isError = list.length > 0 ? true : false;
-		},
 		details: function details(data) {
 			this.isResultNotEmpty = this.details.length > 0 ? true : false;
 		},
@@ -30706,6 +30705,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		// this.listOfDomains();
 		this.domainDetails();
 		this.userList();
+		this.groupList();
 	},
 	mounted: function mounted() {
 		DomainBus.user = JSON.parse(this.user);
@@ -30720,7 +30720,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				return {
 					id: item.id,
 					domain_id: item.domain_id,
-					domain: item.domain.domain,
+					group_id: item.group_id,
+					domain: item.domain,
 					protected: item.protected.length < 100 ? item.protected : item.protected.substr(0, 100) + '...',
 					synonym: item.synonym,
 					created_at: item.created_at
@@ -30746,30 +30747,48 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		saveDetails: function saveDetails() {
 			var _this2 = this;
 
-			if (this.detail.domain_id !== 'select' && this.detail.user.length > 0) {
+			if (this.detail.domain_id !== 'select' && this.detail.users.length > 0) {
 				this.detail['protected'] = this.detail.protected.length > 0 ? this.wordai.protectedTermsSetup(this.detail.protected) : '';
 				// this.detail['protected'] = 'the man,who cant,be moved,a test,sample';
 
-				var vm = this;
-				var options = $('datalist option');
+				/*let vm = this;
+    let options = $('datalist option');
+    	const data = {
+    	detail: this.detail,
+    	user_id: this.userObj.getUserId(vm, options, vm.detail.user).attributes[1].value,
+    	protectedTerms: (this.detail.protected.length > 0) ? this.extractProtectedTerms().join('|'): ''
+    };*/
 
-				var data = {
-					detail: this.detail,
-					user_id: this.userObj.getUserId(vm, options, vm.detail.user).attributes[1].value,
-					protectedTerms: this.detail.protected.length > 0 ? this.extractProtectedTerms().join('|') : ''
-				};
+				this.detail['domain'] = $("select#domain option:selected").text();
+				this.detail['protected'] = this.detail.protected.length > 0 ? this.extractProtectedTerms().join('|') : '';
+				axios.post('/admin/saveDetails', this.detail).then(function (response) {
+					var data = _this2.mapResults(response.data);
 
-				axios.post('/admin/saveDetails', data).then(function (response) {
-					_this2.isError = false;
+					if (data) {
+						for (var i = 0; i < data.length; i++) {
+							_this2.details.push(data[i]); // push to details
+						}
 
-					response.data['domain'] = $('select option[value=' + _this2.detail.domain_id + ']').text();
-					_this2.details.push(response.data); // push to details
-					_this2.clearInputs(); // clear inputs
-					_this2.removeDomain(); // remove selected domain
+						// response.data['domain'] = $('select option[value='+this.detail.domain_id+']').text();
+						// this.removeDomain();             // remove selected domain
+						_this2.clearInputs(); // clear inputs
+
+						// notify
+						new Noty({
+							type: 'success',
+							text: '1 record successfully saved.',
+							layout: 'bottomLeft',
+							timeout: 5000
+						}).show();
+					}
 				});
 			} else {
-				this.errors = 'Please select a domain name and user.';
-				this.isError = true;
+				new Noty({
+					type: 'error',
+					text: 'Please select a domain name and user.',
+					layout: 'bottomLeft',
+					timeout: 5000
+				}).show();
 			}
 		},
 		setDetail: function setDetail(data) {
@@ -30815,8 +30834,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		clearInputs: function clearInputs() {
 			this.detail = {
 				domain_id: 'select',
+				group_id: 'select',
 				protected: '',
-				synonym: ''
+				synonym: '',
+				users: []
 			};
 		},
 		cancelDetails: function cancelDetails() {
@@ -30852,6 +30873,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 						name: item.firstname + ' ' + item.lastname
 					};
 				});
+			});
+		},
+		groupList: function groupList() {
+			var _this6 = this;
+
+			axios.get('/admin/groupList').then(function (response) {
+				return _this6.groups = response.data;
 			});
 		}
 	}
@@ -39096,7 +39124,7 @@ exports.push([module.i, "\n.User__profile-controls[data-v-d84a48a8] {\n\tpositio
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\ndiv.col-xs-6[data-v-df70d70a] { padding: 0;\n}\n", ""]);
+exports.push([module.i, "\ndiv.col-xs-6[data-v-df70d70a] { padding: 0;\n}\n.Detail select[data-v-df70d70a] { text-transform: uppercase;\n}\n", ""]);
 
 /***/ }),
 /* 267 */
@@ -65865,12 +65893,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Detail"
-  }, [_c('h2', [_vm._v("Domain Details")]), _c('br'), _vm._v(" "), (_vm.isError) ? _c('error', {
-    attrs: {
-      "list": _vm.errors,
-      "type": 0
-    }
-  }) : _vm._e(), _vm._v(" "), _c('form', {
+  }, [_c('h2', [_vm._v("Domain Details")]), _c('br'), _vm._v(" "), _c('form', {
     attrs: {
       "method": "POST"
     }
@@ -65888,6 +65911,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "detail.domain_id"
     }],
     staticClass: "form-control",
+    attrs: {
+      "id": "domain"
+    },
     on: {
       "change": function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
@@ -65907,7 +65933,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Select a domain")]), _vm._v(" "), _vm._l((_vm.domainBus.domains), function(domain) {
     return _c('option', {
       attrs: {
-        "id": "domain"
+        "id": "domain",
+        "data-name": domain.domain
       },
       domProps: {
         "value": domain.id
@@ -65916,7 +65943,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })], 2)]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6",
     staticStyle: {
-      "padding-left": "1em"
+      "padding": "0 0 2em 1em"
     }
   }, [_c('label', {
     attrs: {
@@ -65955,7 +65982,48 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": domain.id
       }
     }, [_vm._v(_vm._s(domain.domain))])
-  })], 2)]), _vm._v(" "), _c('div', {
+  })], 2)]), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "group"
+    }
+  }, [_vm._v("Domain Group")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.detail.group_id),
+      expression: "detail.group_id"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.detail.group_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "id": "group",
+      "value": "select"
+    }
+  }, [_vm._v("Select a group")]), _vm._v(" "), _vm._l((_vm.groups), function(group) {
+    return _c('option', {
+      attrs: {
+        "id": "group"
+      },
+      domProps: {
+        "value": group.id
+      }
+    }, [_vm._v(_vm._s(group.group))])
+  })], 2)]), _vm._v(" "), (_vm.isDomainChange) ? _c('div', {
+    staticClass: "wrapper-div"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('b', {
     staticStyle: {
@@ -65998,11 +66066,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }]),
     model: {
-      value: (_vm.detail.user),
+      value: (_vm.detail.users),
       callback: function($$v) {
-        _vm.detail.user = $$v
+        _vm.detail.users = $$v
       },
-      expression: "detail.user"
+      expression: "detail.users"
     }
   })], 1) : _vm._e(), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6",
@@ -66088,7 +66156,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.cancelDetails
     }
-  }, [_vm._v("Cancel")])]) : _vm._e(), _vm._v("\n\t\t\t   \n\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')]), _c('hr'), _vm._v(" "), (_vm.isResultNotEmpty) ? _c('detail-table', {
+  }, [_vm._v("Cancel")])]) : _vm._e(), _vm._v("\n                   \n                "), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')]) : _vm._e()]), _c('hr'), _vm._v(" "), (_vm.isResultNotEmpty) ? _c('detail-table', {
     attrs: {
       "details": _vm.details
     },

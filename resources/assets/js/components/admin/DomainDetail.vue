@@ -2,77 +2,80 @@
 	<div class="Detail">
 		<h2>Domain Details</h2><br>
 
-		<!-- Error  -->
-		<error
-			:list="errors"
-			:type="0"
-			v-if="isError">
- 		</error>
-
 		<form method="POST">
 			<!-- Domain -->
 			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
 				<label for="lsi_terms">Domain</label>
-				<select class="form-control" v-model="detail.domain_id">
+				<select class="form-control" id="domain" v-model="detail.domain_id">
 					<option id="domain" value="select">Select a domain</option>
-					<option id="domain" v-for="domain in domainBus.domains" :value="domain.id">{{ domain.domain }}</option>
+					<option id="domain" v-for="domain in domainBus.domains" :value="domain.id" :data-name="domain.domain">{{ domain.domain }}</option>
 				</select>
 			</div>
 
 			<!-- Portfolio -->
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-left: 1em;">
+			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding: 0 0 2em 1em;">
 				<label for="portfolio">Portfolio</label>
 				<select class="form-control" v-model="detail.domain_id">
 					<option id="domain" value="select">Select a domain</option>
 					<option id="domain" v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
 				</select>
-			</div>
-
-			<!-- Edit - domain name -->
-			<div class="form-group">
-				<b id="domain" style="font-size: 1.5em;">{{ detail.domain }}</b>
-			</div>
-
-			<!-- Users -->
-			<div class="form-user" v-if="hasUser">
-				<label for="user" style="margin-top: 1em;">Assign Users</label>
-                <multiselect
-                    v-model="detail.user"
-                    :options="users"
-                    :multiple="true"
-                    :close-on-select="true"
-                    :hide-selected="true"
-                    label="name"
-                    track-by="id"
-                >
-                    <template slot="tag" scope="props">
-                        <span class="multiselect__tag">
-                            <span>{{ props.option.name }}</span>
-                            <span class="multiselect__tag-icon" @click="props.remove(props.option)"></span>
-                        </span>
-                    </template>
-                </multiselect>
 			</div><br>
 
-			<!-- LSI Terms -->
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-right: 1em;">
-				<label for="protected">Protected Terms</label>
-				<textarea class="form-control" rows="8" v-model="detail.protected"></textarea><br>
-			</div>
+            <div class="form-group">
+                <label for="group">Domain Group</label>
+                <select class="form-control" v-model="detail.group_id">
+                    <option id="group" value="select">Select a group</option>
+                    <option id="group" v-for="group in groups" :value="group.id">{{ group.group }}</option>
+                </select>
+            </div>
 
-			<!-- Synonyms -->
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-				<label for="synonyms">Synonyms</label>
-				<textarea class="form-control" rows="8" v-model="detail.synonym"></textarea><br>
-			</div>
+            <div class="wrapper-div" v-if="isDomainChange">
+                <!-- Edit - domain name -->
+                <div class="form-group">
+                    <b id="domain" style="font-size: 1.5em;">{{ detail.domain }}</b>
+                </div>
 
-			<button type="button" class="btn btn-primary" v-if="! isEdit" @click.prevent="saveDetails">Save Details</button>
-			<div class="buttons" v-if="isEdit">
-				<button type="button" class="btn btn-warning" @click="updateDetails">Update Details</button>
-				<button type="button" class="btn btn-danger" @click="cancelDetails">Cancel</button>
-			</div>
-			&nbsp;&nbsp;&nbsp;
-			<span v-if="isLoading">LOADING....</span><br>
+                <!-- Users -->
+                <div class="form-user" v-if="hasUser">
+                    <label for="user" style="margin-top: 1em;">Assign Users</label>
+                    <multiselect
+                        v-model="detail.users"
+                        :options="users"
+                        :multiple="true"
+                        :close-on-select="true"
+                        :hide-selected="true"
+                        label="name"
+                        track-by="id"
+                    >
+                        <template slot="tag" scope="props">
+                            <span class="multiselect__tag">
+                                <span>{{ props.option.name }}</span>
+                                <span class="multiselect__tag-icon" @click="props.remove(props.option)"></span>
+                            </span>
+                        </template>
+                    </multiselect>
+                </div><br>
+
+                <!-- LSI Terms -->
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-right: 1em;">
+                    <label for="protected">Protected Terms</label>
+                    <textarea class="form-control" rows="8" v-model="detail.protected"></textarea><br>
+                </div>
+
+                <!-- Synonyms -->
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <label for="synonyms">Synonyms</label>
+                    <textarea class="form-control" rows="8" v-model="detail.synonym"></textarea><br>
+                </div>
+
+                <button type="button" class="btn btn-primary" v-if="! isEdit" @click.prevent="saveDetails">Save Details</button>
+                <div class="buttons" v-if="isEdit">
+                    <button type="button" class="btn btn-warning" @click="updateDetails">Update Details</button>
+                    <button type="button" class="btn btn-danger" @click="cancelDetails">Cancel</button>
+                </div>
+                &nbsp;&nbsp;&nbsp;
+                <span v-if="isLoading">LOADING....</span><br>
+            </div>
 		</form><hr>
 
 		<!-- DetailTable -->
@@ -88,40 +91,37 @@
 <script>
 	import { CrudMixin } from './../../mixins/CrudMixin.js';
 	import WordAi from './../../class/WordAi.js';
-	import Error from './../errors/Error.vue';
 	import DetailTable from './DetailTable.vue';
 	import User from './../../class/User.js';
     import Multiselect from 'vue-multiselect';
 
 	export default {
         props: ['user'],
-		components: { Error, DetailTable, Multiselect },
+		components: { DetailTable, Multiselect },
         mixins: [ CrudMixin ],
 		data() {
 			return {
 				domains: [],
 				detail: {
 					domain_id: 'select',
+                    group_id: 'select',
 					protected: '',
 					synonym: '',
-					user: ''
+					users: []
 				},
 				wordai: new WordAi(),
-				isError: false,
 				isResultNotEmpty: false,
 				details: [],
 				index: 0,
 				users: [],
 				hasUser: false,
 				userObj: new User(),
-                domainBus: DomainBus
+                domainBus: DomainBus,
+                groups: [],
+                isDomainChange: true
 			}
 		},
 		watch: {
-			errors(list) {
-				this.isError = list.length > 0 ? true : false;
-			},
-
 			details(data) {
 				this.isResultNotEmpty = this.details.length > 0 ? true : false;
 			},
@@ -134,6 +134,7 @@
 			// this.listOfDomains();
 			this.domainDetails();
 			this.userList();
+            this.groupList();
 		},
         mounted() {
             DomainBus.user = JSON.parse(this.user);
@@ -147,8 +148,9 @@
 				return data.map((item) => {
 					return {
 						id: item.id,
-						domain_id: item.domain_id,
-						domain: item.domain.domain,
+                        domain_id: item.domain_id,
+						group_id: item.group_id,
+						domain: item.domain,
 						protected: item.protected.length < 100 ? item.protected : item.protected.substr(0, 100) + '...',
 						synonym: item.synonym,
 						created_at: item.created_at
@@ -179,30 +181,49 @@
 			},
 
 			saveDetails() {
-				if (this.detail.domain_id !== 'select' && this.detail.user.length > 0) {
+				if (this.detail.domain_id !== 'select' && this.detail.users.length > 0) {
 					this.detail['protected'] = (this.detail.protected.length > 0) ? this.wordai.protectedTermsSetup(this.detail.protected) : '';
 					// this.detail['protected'] = 'the man,who cant,be moved,a test,sample';
 
-					let vm = this;
+					/*let vm = this;
 					let options = $('datalist option');
 
 					const data = {
 						detail: this.detail,
 						user_id: this.userObj.getUserId(vm, options, vm.detail.user).attributes[1].value,
 						protectedTerms: (this.detail.protected.length > 0) ? this.extractProtectedTerms().join('|'): ''
-					};
+					};*/
 
-					axios.post('/admin/saveDetails', data).then(response => {
-						this.isError = false;
+                    this.detail['domain'] = $("select#domain option:selected").text();
+                    this.detail['protected'] = (this.detail.protected.length > 0) ? this.extractProtectedTerms().join('|'): ''
+					axios.post('/admin/saveDetails', this.detail).then(response => {
+                        let data = this.mapResults(response.data);
 
-						response.data['domain'] = $('select option[value='+this.detail.domain_id+']').text();
-						this.details.push(response.data);  	// push to details
-						this.clearInputs(); 				// clear inputs
-						this.removeDomain();				// remove selected domain
+                        if (data) {
+                            for (var i = 0; i < data.length; i++) {
+                                this.details.push(data[i]);    // push to details
+                            }
+
+						    // response.data['domain'] = $('select option[value='+this.detail.domain_id+']').text();
+                            // this.removeDomain();             // remove selected domain
+                            this.clearInputs();                 // clear inputs
+
+                            // notify
+                            new Noty({
+                                type: 'success',
+                                text: `1 record successfully saved.`,
+                                layout: 'bottomLeft',
+                                timeout: 5000
+                            }).show();
+                        }
 					});
 				} else {
-					this.errors = 'Please select a domain name and user.';
-					this.isError = true;
+                    new Noty({
+                        type: 'error',
+                        text: `Please select a domain name and user.`,
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
 				}
 			},
 
@@ -248,9 +269,11 @@
 
 			clearInputs() {
 				this.detail = {
-					domain_id: 'select',
+                    domain_id: 'select',
+					group_id: 'select',
 					protected: '',
-					synonym: ''
+					synonym: '',
+                    users: []
 				};
 			},
 
@@ -286,11 +309,16 @@
                         }
                     });
 				});
-			}
+			},
+
+            groupList() {
+                axios.get('/admin/groupList').then(response => this.groups = response.data);
+            }
 		}
 	}
 </script>
 
 <style scoped>
 	div.col-xs-6 { padding: 0; }
+    .Detail select { text-transform: uppercase; }
 </style>
