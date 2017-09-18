@@ -30435,10 +30435,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	methods: {
 		editDetails: function editDetails(detail, index, event) {
-			this.$emit('isEdited', {
-				detail: detail,
-				index: index,
-				e: event
+			var _this = this;
+
+			var url = '/admin/editDetails?detail_id=' + detail.id;
+
+			axios.get(url).then(function (response) {
+				var data = response.data;
+
+				_this.$emit('isEdited', {
+					detail: data,
+					index: index
+				});
 			});
 		},
 		removeDetails: function removeDetails(detail, index) {
@@ -30659,6 +30666,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -30723,6 +30731,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					group_id: item.group_id,
 					domain: item.domain,
 					protected: item.protected.length < 100 ? item.protected : item.protected.substr(0, 100) + '...',
+					// protected_orig: item.protected,
 					synonym: item.synonym,
 					created_at: item.created_at
 				};
@@ -30792,19 +30801,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			}
 		},
 		setDetail: function setDetail(data) {
-			var item = data.detail;
+			var detail = data.detail.detail;
+			var users = this.fullName(data.detail.users);
 
-			$('select').hide(); // hide select
+			$('select#domain').hide(); // hide select
 
 			this.isEdit = true;
 			this.index = data.index;
 			this.detail = {
-				id: item.id,
-				domain_id: item.domain_id,
-				domain: data.e.currentTarget.offsetParent.parentNode.cells[0].innerText,
-				protected: item.protected,
-				synonym: item.synonym,
-				created_at: item.created_at
+				id: detail.id,
+				domain_id: detail.domain_id,
+				group_id: detail.group_id > 0 ? detail.group_id : 'select',
+				domain: detail.domain,
+				protected: detail.protected,
+				synonym: detail.synonym,
+				created_at: detail.created_at,
+				users: users
 			};
 		},
 		updateDetails: function updateDetails() {
@@ -30863,16 +30875,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				_this4.details.splice(_this4.index, 1);
 			});
 		},
+		fullName: function fullName(data) {
+			return data.map(function (item) {
+				return {
+					id: item.id,
+					name: item.firstname + ' ' + item.lastname
+				};
+			});
+		},
 		userList: function userList() {
 			var _this5 = this;
 
 			axios.get('/user/userList').then(function (response) {
-				_this5.users = response.data.map(function (item) {
-					return {
-						id: item.id,
-						name: item.firstname + ' ' + item.lastname
-					};
-				});
+				return _this5.users = _this5.fullName(response.data);
 			});
 		},
 		groupList: function groupList() {
@@ -39124,7 +39139,7 @@ exports.push([module.i, "\n.User__profile-controls[data-v-d84a48a8] {\n\tpositio
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\ndiv.col-xs-6[data-v-df70d70a] { padding: 0;\n}\n.Detail select[data-v-df70d70a] { text-transform: uppercase;\n}\n", ""]);
+exports.push([module.i, "\ndiv.col-xs-6[data-v-df70d70a] { padding: 0;\n}\n.Detail select[data-v-df70d70a] { text-transform: uppercase;\n}\n.wrapper-div[data-v-df70d70a] { clear: both;\n}\n", ""]);
 
 /***/ }),
 /* 267 */
@@ -65940,7 +65955,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": domain.id
       }
     }, [_vm._v(_vm._s(domain.domain))])
-  })], 2)]), _vm._v(" "), _c('div', {
+  })], 2), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('b', {
+    staticStyle: {
+      "font-size": "1.5em"
+    },
+    attrs: {
+      "id": "domain"
+    }
+  }, [_vm._v(_vm._s(_vm.detail.domain))])])]), _vm._v(" "), _c('div', {
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6",
     staticStyle: {
       "padding": "0 0 2em 1em"
@@ -65982,7 +66006,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": domain.id
       }
     }, [_vm._v(_vm._s(domain.domain))])
-  })], 2)]), _c('br'), _vm._v(" "), _c('div', {
+  })], 2)]), _c('br'), _vm._v(" "), (_vm.isDomainChange) ? _c('div', {
+    staticClass: "wrapper-div"
+  }, [_c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -66021,18 +66047,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": group.id
       }
     }, [_vm._v(_vm._s(group.group))])
-  })], 2)]), _vm._v(" "), (_vm.isDomainChange) ? _c('div', {
-    staticClass: "wrapper-div"
-  }, [_c('div', {
-    staticClass: "form-group"
-  }, [_c('b', {
-    staticStyle: {
-      "font-size": "1.5em"
-    },
-    attrs: {
-      "id": "domain"
-    }
-  }, [_vm._v(_vm._s(_vm.detail.domain))])]), _vm._v(" "), (_vm.hasUser) ? _c('div', {
+  })], 2)]), _vm._v(" "), (_vm.hasUser) ? _c('div', {
     staticClass: "form-user"
   }, [_c('label', {
     staticStyle: {

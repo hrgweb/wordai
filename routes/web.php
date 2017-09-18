@@ -73,6 +73,7 @@ Route::prefix('admin')->group(function() {
     Route::get('getUsersAssociatedByDomain', 'AdminController@getUsersAssociatedByDomain');
     Route::get('allArticles', 'AdminController@allArticles');
     Route::get('searchArticle', 'AdminController@searchArticle');
+    Route::get('editDetails', 'AdminController@editDetails');
 	Route::post('postDomain', 'AdminController@postDomain');
     Route::post('saveDetails', 'AdminController@saveDetails');
     Route::post('newGroup', 'AdminController@newGroup');

@@ -41,11 +41,16 @@
         },
 		methods: {
 			editDetails(detail, index, event) {
-				this.$emit('isEdited', {
-					detail: detail,
-					index: index,
-					e: event
-				});
+                let url = '/admin/editDetails?detail_id='+detail.id;
+
+                axios.get(url).then(response => {
+                    let data = response.data;
+
+                    this.$emit('isEdited', {
+                        detail: data,
+                        index: index
+                    });
+                });
 			},
 
 			removeDetails(detail, index) {

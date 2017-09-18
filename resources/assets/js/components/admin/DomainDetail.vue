@@ -10,6 +10,11 @@
 					<option id="domain" value="select">Select a domain</option>
 					<option id="domain" v-for="domain in domainBus.domains" :value="domain.id" :data-name="domain.domain">{{ domain.domain }}</option>
 				</select>
+
+                <!-- Edit - domain name -->
+                <div class="form-group">
+                    <b id="domain" style="font-size: 1.5em;">{{ detail.domain }}</b>
+                </div>
 			</div>
 
 			<!-- Portfolio -->
@@ -21,18 +26,14 @@
 				</select>
 			</div><br>
 
-            <div class="form-group">
-                <label for="group">Domain Group</label>
-                <select class="form-control" v-model="detail.group_id">
-                    <option id="group" value="select">Select a group</option>
-                    <option id="group" v-for="group in groups" :value="group.id">{{ group.group }}</option>
-                </select>
-            </div>
-
             <div class="wrapper-div" v-if="isDomainChange">
-                <!-- Edit - domain name -->
+                <!-- Domain Group -->
                 <div class="form-group">
-                    <b id="domain" style="font-size: 1.5em;">{{ detail.domain }}</b>
+                    <label for="group">Domain Group</label>
+                    <select class="form-control" v-model="detail.group_id">
+                        <option id="group" value="select">Select a group</option>
+                        <option id="group" v-for="group in groups" :value="group.id">{{ group.group }}</option>
+                    </select>
                 </div>
 
                 <!-- Users -->
@@ -151,7 +152,8 @@
                         domain_id: item.domain_id,
 						group_id: item.group_id,
 						domain: item.domain,
-						protected: item.protected.length < 100 ? item.protected : item.protected.substr(0, 100) + '...',
+                        protected: item.protected.length < 100 ? item.protected : item.protected.substr(0, 100) + '...',
+						// protected_orig: item.protected,
 						synonym: item.synonym,
 						created_at: item.created_at
 					};
@@ -228,19 +230,22 @@
 			},
 
 			setDetail(data) {
-				let item = data.detail;
+				let detail = data.detail.detail;
+                let users = this.fullName(data.detail.users);
 
-				$('select').hide();	// hide select
+				$('select#domain').hide();	// hide select
 
 				this.isEdit = true;
 				this.index = data.index;
 				this.detail = {
-					id: item.id,
-					domain_id: item.domain_id,
-					domain: data.e.currentTarget.offsetParent.parentNode.cells[0].innerText,
-					protected: item.protected,
-					synonym: item.synonym,
-					created_at: item.created_at
+					id: detail.id,
+					domain_id: detail.domain_id,
+                    group_id: detail.group_id > 0 ? detail.group_id : 'select',
+					domain: detail.domain,
+					protected: detail.protected,
+					synonym: detail.synonym,
+					created_at: detail.created_at,
+                    users: users
 				};
 			},
 
@@ -300,15 +305,17 @@
 				});
 			},
 
+            fullName(data) {
+                return data.map(item => {
+                    return {
+                        id: item.id,
+                        name: item.firstname + ' ' + item.lastname
+                    };
+                });
+            },
+
 			userList() {
-				axios.get('/user/userList').then(response => {
-					this.users = response.data.map(item => {
-                        return {
-                            id: item.id,
-                            name: item.firstname + ' ' + item.lastname
-                        }
-                    });
-				});
+				axios.get('/user/userList').then(response => this.users = this.fullName(response.data));
 			},
 
             groupList() {
@@ -321,4 +328,5 @@
 <style scoped>
 	div.col-xs-6 { padding: 0; }
     .Detail select { text-transform: uppercase; }
+    .wrapper-div { clear: both; }
 </style>

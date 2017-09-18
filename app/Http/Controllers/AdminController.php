@@ -469,4 +469,44 @@ class AdminController extends Controller
             ->orderBy('users.firstname')
             ->get();
     }
+
+    public function editDetails()
+    {
+        $result = [];
+
+        $detail = DB::table('domain_details AS dd')
+                    ->leftJoin('domains AS d', 'd.id', '=', 'dd.domain_id')
+                    ->leftJoin('groups AS g', 'g.id', '=', 'dd.group_id')
+                    ->select([
+                        'dd.id',
+                        'dd.domain_id',
+                        'dd.group_id',
+                        'dd.user_id',
+                        'dd.protected',
+                        'dd.synonym',
+                        'dd.created_at',
+                        'd.domain',
+                        'g.group',
+                        'g.id AS group_id',
+                    ])
+                    ->where('dd.id', request('detail_id'))
+                    ->first();
+
+        // push result to array
+        array_push($result, $detail);
+
+        $group_id = (int) $detail->group_id;
+
+        // list of users id
+        $users_id = DomainDetail::where('group_id', $group_id)->pluck('user_id');
+
+        // list of users
+        $users = User::whereIn('id', $users_id)
+                    ->get(['id AS user_id', 'firstname', 'lastname']);
+
+        // push users to array
+        array_push($result, $users);
+
+        return response()->json(['detail' => $result[0], 'users' => $result[1]]);
+    }
 }
