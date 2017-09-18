@@ -30820,27 +30820,25 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			};
 		},
 		updateDetails: function updateDetails() {
-			var _this3 = this;
+			/*Vue.nextTick(() => {
+   	// this.detail['domain'] = $('select option[value='+this.detail.domain_id+']').text();
+   	this.detail['domain'] = $('b#domain').text();
+   });
+   	// clean protected terms
+   this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
+   	const data = {
+   	detail: this.detail,
+   	protectedTerms: this.extractProtectedTerms().join('|')
+   };*/
 
-			Vue.nextTick(function () {
-				// this.detail['domain'] = $('select option[value='+this.detail.domain_id+']').text();
-				_this3.detail['domain'] = $('b#domain').text();
-			});
+			axios.patch('/admin/updateDetails', this.detail).then(function (response) {
+				console.log(response.data);
 
-			// clean protected terms
-			this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
-
-			var data = {
-				detail: this.detail,
-				protectedTerms: this.extractProtectedTerms().join('|')
-			};
-
-			axios.patch('/admin/updateDetails', data).then(function (response) {
 				// override details on specific index
-				Vue.set(_this3.details, _this3.index, _this3.detail);
+				// Vue.set(this.details, this.index, this.detail);
 
 				// close buttons and clear inputs
-				_this3.cancelDetails();
+				// this.cancelDetails();
 			});
 		},
 		clearInputs: function clearInputs() {
@@ -30859,7 +30857,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.clearInputs();
 		},
 		removeDetails: function removeDetails(data) {
-			var _this4 = this;
+			var _this3 = this;
 
 			this.index = data.index;
 
@@ -30872,7 +30870,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			axios.delete('/admin/removeDetails', output).then(function (response) {
 				// remove item object in details on specific index
-				_this4.details.splice(_this4.index, 1);
+				_this3.details.splice(_this3.index, 1);
 			});
 		},
 		fullName: function fullName(data) {
@@ -30884,17 +30882,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			});
 		},
 		userList: function userList() {
-			var _this5 = this;
+			var _this4 = this;
 
 			axios.get('/user/userList').then(function (response) {
-				return _this5.users = _this5.fullName(response.data);
+				return _this4.users = _this4.fullName(response.data);
 			});
 		},
 		groupList: function groupList() {
-			var _this6 = this;
+			var _this5 = this;
 
 			axios.get('/admin/groupList').then(function (response) {
-				return _this6.groups = response.data;
+				return _this5.groups = response.data;
 			});
 		}
 	}

@@ -156,13 +156,14 @@ class AdminController extends Controller
 
     public function updateDetails()
     {
-    	// return request()->all();
+    	return request()->all();
 
-    	$id = request('detail.id');
-    	$domain_id = request('detail.domain_id');
-    	$protected = request('detail.protected');
-    	$synonym = request('detail.synonym');
-    	$protected_terms = request('protectedTerms');
+    	$id = request('id');
+        $domain_id = request('domain_id');
+        $group_id = request('group_id');
+        $protected = request('protected');
+        $synonym = request('synonym');
+        $users = request('users');
 
     	DB::beginTransaction();
 		try {
@@ -174,7 +175,7 @@ class AdminController extends Controller
 	    		ProtectedTerm::create([
 	    			'domain_id' => $domain_id,
 	    			'user_id' => auth()->user()->id,
-	    			'terms' => $protected_terms // $protected_terms[$i]
+	    			'terms' => $protected
 	    		]);
 	    	// }
 

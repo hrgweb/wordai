@@ -250,7 +250,7 @@
 			},
 
 			updateDetails() {
-				Vue.nextTick(() => {
+				/*Vue.nextTick(() => {
 					// this.detail['domain'] = $('select option[value='+this.detail.domain_id+']').text();
 					this.detail['domain'] = $('b#domain').text();
 				});
@@ -261,14 +261,16 @@
 				const data = {
 					detail: this.detail,
 					protectedTerms: this.extractProtectedTerms().join('|')
-				};
+				};*/
 
-				axios.patch('/admin/updateDetails', data).then(response => {
+				axios.patch('/admin/updateDetails', this.detail).then(response => {
+                    console.log(response.data);
+
 					// override details on specific index
-					Vue.set(this.details, this.index, this.detail);
+					// Vue.set(this.details, this.index, this.detail);
 
 					// close buttons and clear inputs
-					this.cancelDetails();
+					// this.cancelDetails();
 				});
 			},
 
