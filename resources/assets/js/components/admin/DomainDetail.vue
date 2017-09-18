@@ -197,7 +197,7 @@
 					};*/
 
                     this.detail['domain'] = $("select#domain option:selected").text();
-                    this.detail['protected'] = (this.detail.protected.length > 0) ? this.extractProtectedTerms().join('|'): ''
+                    // this.detail['protected'] = (this.detail.protected.length > 0) ? this.extractProtectedTerms().join('|'): ''
 					axios.post('/admin/saveDetails', this.detail).then(response => {
                         let data = this.mapResults(response.data);
 

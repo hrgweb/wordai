@@ -30769,7 +30769,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     };*/
 
 				this.detail['domain'] = $("select#domain option:selected").text();
-				this.detail['protected'] = this.detail.protected.length > 0 ? this.extractProtectedTerms().join('|') : '';
+				// this.detail['protected'] = (this.detail.protected.length > 0) ? this.extractProtectedTerms().join('|'): ''
 				axios.post('/admin/saveDetails', this.detail).then(function (response) {
 					var data = _this2.mapResults(response.data);
 
