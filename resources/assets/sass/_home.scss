@@ -64,6 +64,7 @@ button.close {
     font-size: 2em;
 }
 
+.RangeFilter,
 .Report,
 .Edited,
 .User,
@@ -73,6 +74,10 @@ button.close {
     margin-bottom: 5em;
 
     .header h2, .header p { color: #fff; }
+}
+
+.RangeFilter {
+    .Result > h2, .Result > p { color: #fff; }
 }
 
 .User {
@@ -87,11 +92,19 @@ button.close {
 }
 
 /*=============== admin ===============*/
+input[type=date] {
+    padding: .3em .5em;
+    border: 1px solid #fff;
+    border-radius: 0.2em;
+    margin-right: 1em;
+}
+
 .Filter {
     background: #444444;
-    color: #fff;
     padding: 1em 1em 0.7em;
     margin-top: 2em;
+
+    label { color: #fff; }
 }
 
 .Filter select {

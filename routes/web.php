@@ -77,7 +77,8 @@ Route::prefix('admin')->group(function() {
 	Route::post('postDomain', 'AdminController@postDomain');
     Route::post('saveDetails', 'AdminController@saveDetails');
     Route::post('newGroup', 'AdminController@newGroup');
-	Route::post('addGroup', 'AdminController@addGroup');
+    Route::post('addGroup', 'AdminController@addGroup');
+	Route::post('searchArticlesByRange', 'AdminController@searchArticlesByRange');
 	Route::patch('updateDomain', 'AdminController@updateDomain');
 	Route::patch('updateDetails', 'AdminController@updateDetails');
     Route::patch('updateCopyscapeSetting', 'AdminController@updateCopyscapeSetting');

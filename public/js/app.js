@@ -30355,16 +30355,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FilterBox_vue__ = __webpack_require__(295);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FilterBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__FilterBox_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ArticleReport_vue__ = __webpack_require__(279);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ArticleReport_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ArticleReport_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ArticleEdited_vue__ = __webpack_require__(277);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ArticleEdited_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ArticleEdited_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ArticleToEdit_vue__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ArticleToEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__ArticleToEdit_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ArticleSpun_vue__ = __webpack_require__(281);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ArticleSpun_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__ArticleSpun_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__PendingUser_vue__ = __webpack_require__(299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__PendingUser_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RangeFilter_vue__ = __webpack_require__(420);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RangeFilter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__RangeFilter_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ArticleReport_vue__ = __webpack_require__(279);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ArticleReport_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ArticleReport_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue__ = __webpack_require__(277);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ArticleToEdit_vue__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ArticleToEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__ArticleToEdit_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ArticleSpun_vue__ = __webpack_require__(281);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ArticleSpun_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__ArticleSpun_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__PendingUser_vue__ = __webpack_require__(299);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__PendingUser_vue__);
 //
 //
 //
@@ -30387,6 +30389,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -30399,11 +30405,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     props: ['token'],
     components: {
         FilterBox: __WEBPACK_IMPORTED_MODULE_0__FilterBox_vue___default.a,
-        ArticleReport: __WEBPACK_IMPORTED_MODULE_1__ArticleReport_vue___default.a,
-        ArticleEdited: __WEBPACK_IMPORTED_MODULE_2__ArticleEdited_vue___default.a,
-        ArticleToEdit: __WEBPACK_IMPORTED_MODULE_3__ArticleToEdit_vue___default.a,
-        ArticleSpun: __WEBPACK_IMPORTED_MODULE_4__ArticleSpun_vue___default.a,
-        PendingUser: __WEBPACK_IMPORTED_MODULE_5__PendingUser_vue___default.a
+        RangeFilter: __WEBPACK_IMPORTED_MODULE_1__RangeFilter_vue___default.a,
+        ArticleReport: __WEBPACK_IMPORTED_MODULE_2__ArticleReport_vue___default.a,
+        ArticleEdited: __WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue___default.a,
+        ArticleToEdit: __WEBPACK_IMPORTED_MODULE_4__ArticleToEdit_vue___default.a,
+        ArticleSpun: __WEBPACK_IMPORTED_MODULE_5__ArticleSpun_vue___default.a,
+        PendingUser: __WEBPACK_IMPORTED_MODULE_6__PendingUser_vue___default.a
     },
     data: function data() {
         return {
@@ -39186,7 +39193,7 @@ exports.push([module.i, "\ndiv.col-xs-6[data-v-df70d70a] { padding: 0;\n}\n.Deta
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.group-by[data-v-e55d4e46],\n.order-by[data-v-e55d4e46] {\n    float: left;\n    margin-right: 1em;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/*.group-by,\n.order-by {\n    float: left;\n    margin-right: 1em;\n}*/\n", ""]);
 
 /***/ }),
 /* 268 */
@@ -39207,7 +39214,7 @@ exports.push([module.i, "\nul.alert.alert-danger[data-v-ea02db44] { position: in
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.Dashboard[data-v-edfa7884] {\n    padding: 0 1em;\n    margin-bottom: 10em;\n}\n", ""]);
+exports.push([module.i, "\n.Dashboard[data-v-edfa7884] {\n    padding: 0 1em;\n    margin-bottom: 10em;\n}\n.Filter[data-v-edfa7884] { margin-top: 0;\n}\n", ""]);
 
 /***/ }),
 /* 271 */
@@ -66314,67 +66321,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": group.toLowerCase()
       }
     }, [_vm._v(_vm._s(group.toUpperCase()))])
-  })], 2)]), _vm._v(" "), _c('div', {
-    staticClass: "order-by"
-  }, [_c('label', {
-    attrs: {
-      "for": "orderBy"
-    }
-  }, [_vm._v("Order by")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.report.reportingFilter.orderBy),
-      expression: "report.reportingFilter.orderBy"
-    }],
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.report.reportingFilter.orderBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, _vm._l((_vm.orderBy), function(order) {
-    return _c('option', {
-      domProps: {
-        "value": order.toLowerCase()
-      }
-    }, [_vm._v(_vm._s(order.toUpperCase()))])
-  }))]), _vm._v(" "), _c('div', {
-    staticClass: "sort-by"
-  }, [_c('label', {
-    attrs: {
-      "for": "groupBy"
-    }
-  }, [_vm._v("Sort by")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.report.reportingFilter.sortBy),
-      expression: "report.reportingFilter.sortBy"
-    }],
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.report.reportingFilter.sortBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, _vm._l((_vm.sortBy), function(sort) {
-    return _c('option', {
-      domProps: {
-        "value": sort.toLowerCase()
-      }
-    }, [_vm._v(_vm._s(sort.toUpperCase()))])
-  }))])])
+  })], 2)])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -66782,7 +66729,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Dashboard"
-  }, [_c('filter-box'), _vm._v(" "), _c('article-report'), _vm._v(" "), _c('article-edited'), _vm._v(" "), _c('article-to-edit'), _vm._v(" "), _c('article-spun'), _vm._v(" "), _c('pending-user', {
+  }, [_c('range-filter'), _vm._v(" "), _c('filter-box'), _vm._v(" "), _c('article-report'), _vm._v(" "), _c('article-edited'), _vm._v(" "), _c('article-to-edit'), _vm._v(" "), _c('article-spun'), _vm._v(" "), _c('pending-user', {
     attrs: {
       "token": _vm.token
     }
@@ -67773,6 +67720,236 @@ module.exports = function listToStyles (parentId, list) {
 __webpack_require__(153);
 module.exports = __webpack_require__(154);
 
+
+/***/ }),
+/* 412 */,
+/* 413 */,
+/* 414 */,
+/* 415 */,
+/* 416 */,
+/* 417 */,
+/* 418 */,
+/* 419 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a },
+    data: function data() {
+        return {
+            articles: [],
+            articlesCount: 0,
+            form: new Form({
+                from: '',
+                to: ''
+            })
+        };
+    },
+
+    watch: {
+        articles: function articles(data) {
+            this.articlesCount = data.length;
+        }
+    },
+    mounted: function mounted() {
+        this.initSetupDate();
+    },
+
+    methods: {
+        initSetupDate: function initSetupDate() {
+            var dateObj = new Date();
+            var month = dateObj.getMonth() + 1; //months from 1-12
+            month = parseInt(month, 10) > 9 ? month : '0' + month;
+            var day = dateObj.getDate();
+            day = parseInt(day, 10) > 9 ? day : '0' + day;
+            var year = dateObj.getFullYear();
+
+            this.form['from'] = year + "-" + month + "-" + day;
+            this.form['to'] = year + "-" + month + "-" + day;
+        },
+        searchArticlesByRange: function searchArticlesByRange() {
+            var _this = this;
+
+            this.form.post('/admin/searchArticlesByRange').then(function (data) {
+                return _this.articles = data;
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 420 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(419),
+  /* template */
+  __webpack_require__(421),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\RangeFilter.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] RangeFilter.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0acd233f", Component.options)
+  } else {
+    hotAPI.reload("data-v-0acd233f", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 421 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "RangeFilter"
+  }, [_c('div', {
+    staticClass: "Filter"
+  }, [_c('form', {
+    attrs: {
+      "method": "POST"
+    }
+  }, [_c('div', {
+    staticClass: "from pull-left"
+  }, [_c('label', {
+    attrs: {
+      "for": "from"
+    }
+  }, [_vm._v("From")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.from),
+      expression: "form.from"
+    }],
+    attrs: {
+      "type": "date",
+      "id": "from"
+    },
+    domProps: {
+      "value": (_vm.form.from)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.form.from = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "to pull-left"
+  }, [_c('label', {
+    attrs: {
+      "for": "to"
+    }
+  }, [_vm._v("To")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.to),
+      expression: "form.to"
+    }],
+    attrs: {
+      "type": "date",
+      "id": "to"
+    },
+    domProps: {
+      "value": (_vm.form.to)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.form.to = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "submit"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.searchArticlesByRange($event)
+      }
+    }
+  }, [_vm._v("Search Now")])])]), _vm._v(" "), _c('a', {
+    attrs: {
+      "id": "articles_search_by_range"
+    }
+  }, [_c('div', {
+    staticClass: "Result"
+  }, [_c('h2', {
+    staticClass: "text-center"
+  }, [_vm._v("\n                Search Articles By Date Range\n                "), _c('span', {
+    staticClass: "badge"
+  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('report-table', {
+    attrs: {
+      "articles": _vm.articles
+    }
+  })], 1)])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-0acd233f", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

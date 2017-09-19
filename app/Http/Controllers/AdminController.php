@@ -525,4 +525,30 @@ class AdminController extends Controller
 
         return response()->json(['detail' => $result[0], 'users' => $result[1]]);
     }
+
+    public function searchArticlesByRange()
+    {
+        $from = request('from') . ' 00:00:00';
+        $to = request('to') . ' 23:59:59';
+
+        return DB::table('words AS w')
+            ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
+            ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
+            ->whereBetween('w.created_at', [$from, $to])
+            ->orderBy('w.created_at')
+            ->get([
+                'w.id AS word_id',
+                'w.doc_title',
+                'w.keyword',
+                'w.article',
+                'w.created_at',
+                'w.isEditorEdit',
+                'w.isProcess',
+                'd.id AS domain_id',
+                'd.domain',
+                'u.id AS user_id',
+                'u.firstname',
+                'u.lastname'
+            ]);
+    }
 }

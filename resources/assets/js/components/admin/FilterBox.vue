@@ -8,7 +8,7 @@
             </select>
         </div>
 
-        <div class="order-by">
+        <!-- <div class="order-by">
             <label for="orderBy">Order by</label>
             <select v-model="report.reportingFilter.orderBy">
                 <option v-for="order in orderBy" :value="order.toLowerCase()">{{ order.toUpperCase() }}</option>
@@ -20,7 +20,7 @@
              <select v-model="report.reportingFilter.sortBy">
                 <option v-for="sort in sortBy" :value="sort.toLowerCase()">{{ sort.toUpperCase() }}</option>
             </select>
-        </div>
+        </div> -->
     </div>
 </template>
 
@@ -38,9 +38,9 @@
 </script>
 
 <style scoped>
-    .group-by,
+    /*.group-by,
     .order-by {
         float: left;
         margin-right: 1em;
-    }
+    }*/
 </style>
