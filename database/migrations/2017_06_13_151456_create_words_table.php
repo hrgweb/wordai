@@ -18,6 +18,7 @@ class CreateWordsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->integer('article_type_id')->unsigned();
             $table->integer('domain_id');
+            $table->integer('group_id')->unsigned()->index();
             $table->string('doc_title')->index()->nullable();
             $table->string('keyword')->nullable();
             $table->string('lsi_terms')->nullable();

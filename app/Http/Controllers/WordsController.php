@@ -168,8 +168,6 @@ class WordsController extends Controller
 
 	public function postSpinTax()
 	{
-		return request('article');
-
 		$result = auth()->user()->words()->create(request()->all());
 
 		return $result;
