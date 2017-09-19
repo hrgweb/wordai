@@ -12,7 +12,8 @@
 					<option v-for="domain in domains" :value="domain.domain" :data-domain-id="domain.id"></option>
 				</datalist> -->
 
-                <select class="form-control" v-model="spin.domain" @change="domainChange">
+                <select class="form-control" v-model="spin.domain_id" @change="domainChange">
+                    <option value="select">Select a domain</option>
                     <option v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
                 </select>
 			</div>
@@ -24,6 +25,11 @@
 					<option v-for="type in articleTypes" :value="type.id">{{ type.article_type }}</option>
 				</select>
 			</div>
+
+            <div class="form-group">
+                <label for="group_name">Group Name</label>
+                <input type="text" class="form-control" disabled="disabled" v-model="spin.group_name">
+            </div>
 
 			<div class="form-group">
 				<label for="doc_title">Document Title</label>

@@ -21,7 +21,9 @@ export const ArticleActionMixin = {
 			spin: {
 				article_type_id: 'select',
 				doc_title: '',
-				domain_id: 0,
+				domain_id: 'select',
+                group_id: 0,
+                group_name: '',
 				domain: '',
 				keyword: '',
 				lsi_terms: '',
@@ -43,7 +45,7 @@ export const ArticleActionMixin = {
 
 		this.listOfArticleType();
 		this.userDomainList();
-		this.userDomainSetup();
+		// this.userDomainSetup();
 	},
 	watch: {
 		articleTypes(data) {
@@ -158,9 +160,19 @@ export const ArticleActionMixin = {
 
                 if (data) {
                     this.domainFillIn(false, data.protected, data.synonym);
+                    this.groupName('/user/groupName?group_id='+data.group_id);
                 } else {
                     this.domainFillIn(true, '', '');
                 }
+            });
+        },
+
+        groupName(url) {
+            axios.get(url).then(response => {
+                let data = response.data;
+
+                this.spin['group_id'] = data.id;
+                this.spin['group_name'] = data.group.toUpperCase();
             });
         },
 
@@ -173,12 +185,14 @@ export const ArticleActionMixin = {
             let domain_id = this.spin.domain_id;
 			let url = '/words/domainChange?domain_id=' + domain_id;
 
-			if (domain_id > 0) {
+			if (parseInt(domain_id, 10) > 0) {
 				this.setupDomainChange(url);
                 this.wordaiBus.getKeywordsAssociatedByDomain(domain_id);
 			} else {
 				this.spin['protected'] = '';
-				this.spin['synonym'] = '';
+                this.spin['synonym'] = '';
+                this.spin['group_id'] = 0;
+				this.spin['group_name'] = '';
 			}
 		},
 
@@ -197,7 +211,9 @@ export const ArticleActionMixin = {
 
         userDomainList() {
             let user_id = this.authUser.id;
-            axios.get('/user/userDomainList?user_id='+user_id).then(response => this.domains = response.data);
+            axios.get('/user/userDomainList?user_id='+user_id).then(response => {
+                this.domains = response.data;
+            });
         }
 	}
 };

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Domain;
 use App\DomainDetail;
+use App\Group;
 use App\User;
 use App\UserLevel;
 use App\Word;
@@ -142,5 +143,10 @@ class UserController extends Controller
         $domains = Domain::whereIn('id', $domain_ids)->get();
 
         return $domains;
+    }
+
+    public function groupName()
+    {
+        return Group::where('id', request('group_id'))->first(['id', 'group']);
     }
 }

@@ -99,6 +99,7 @@ Route::prefix('user')->group(function() {
 	Route::get('editArticle', 'UserController@editArticle');
     Route::get('userDomainSetup', 'UserController@userDomainSetup');
     Route::get('userDomainList', 'UserController@userDomainList');
+    Route::get('groupName', 'UserController@groupName');
 	Route::patch('verifySignup', 'UserController@verifySignup');
 	Route::patch('updateRole', 'UserController@updateRole');
 	Route::patch('suspendUser', 'UserController@suspendUser');

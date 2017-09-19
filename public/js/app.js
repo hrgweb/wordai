@@ -16287,7 +16287,9 @@ var ArticleActionMixin = {
 			spin: {
 				article_type_id: 'select',
 				doc_title: '',
-				domain_id: 0,
+				domain_id: 'select',
+				group_id: 0,
+				group_name: '',
 				domain: '',
 				keyword: '',
 				lsi_terms: '',
@@ -16309,7 +16311,7 @@ var ArticleActionMixin = {
 
 		this.listOfArticleType();
 		this.userDomainList();
-		this.userDomainSetup();
+		// this.userDomainSetup();
 	},
 
 	watch: {
@@ -16435,9 +16437,20 @@ var ArticleActionMixin = {
 
 				if (data) {
 					_this6.domainFillIn(false, data.protected, data.synonym);
+					_this6.groupName('/user/groupName?group_id=' + data.group_id);
 				} else {
 					_this6.domainFillIn(true, '', '');
 				}
+			});
+		},
+		groupName: function groupName(url) {
+			var _this7 = this;
+
+			axios.get(url).then(function (response) {
+				var data = response.data;
+
+				_this7.spin['group_id'] = data.id;
+				_this7.spin['group_name'] = data.group.toUpperCase();
 			});
 		},
 		domainChange: function domainChange() {
@@ -16449,34 +16462,36 @@ var ArticleActionMixin = {
 			var domain_id = this.spin.domain_id;
 			var url = '/words/domainChange?domain_id=' + domain_id;
 
-			if (domain_id > 0) {
+			if (parseInt(domain_id, 10) > 0) {
 				this.setupDomainChange(url);
 				this.wordaiBus.getKeywordsAssociatedByDomain(domain_id);
 			} else {
 				this.spin['protected'] = '';
 				this.spin['synonym'] = '';
+				this.spin['group_id'] = 0;
+				this.spin['group_name'] = '';
 			}
 		},
 		userDomainSetup: function userDomainSetup() {
-			var _this7 = this;
+			var _this8 = this;
 
 			axios.get('/user/userDomainSetup').then(function (response) {
 				var data = _.head(response.data);
 
 				if (data) {
-					_this7.spin['domain'] = data.domain;
-					_this7.spin['domain_id'] = data.domain_id;
-					_this7.spin['protected'] = data.protected;
-					_this7.spin['synonym'] = data.synonym;
+					_this8.spin['domain'] = data.domain;
+					_this8.spin['domain_id'] = data.domain_id;
+					_this8.spin['protected'] = data.protected;
+					_this8.spin['synonym'] = data.synonym;
 				}
 			});
 		},
 		userDomainList: function userDomainList() {
-			var _this8 = this;
+			var _this9 = this;
 
 			var user_id = this.authUser.id;
 			axios.get('/user/userDomainList?user_id=' + user_id).then(function (response) {
-				return _this8.domains = response.data;
+				_this9.domains = response.data;
 			});
 		}
 	}
@@ -34291,6 +34306,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleActionMixin_js__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_CreateArticleMixin_js__ = __webpack_require__(32);
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -66403,8 +66424,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.spin.domain),
-      expression: "spin.domain"
+      value: (_vm.spin.domain_id),
+      expression: "spin.domain_id"
     }],
     staticClass: "form-control",
     on: {
@@ -66415,16 +66436,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.spin.domain = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+        _vm.spin.domain_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }, _vm.domainChange]
     }
-  }, _vm._l((_vm.domains), function(domain) {
+  }, [_c('option', {
+    attrs: {
+      "value": "select"
+    }
+  }, [_vm._v("Select a domain")]), _vm._v(" "), _vm._l((_vm.domains), function(domain) {
     return _c('option', {
       domProps: {
         "value": domain.id
       }
     }, [_vm._v(_vm._s(domain.domain))])
-  }))]), _vm._v(" "), _c('div', {
+  })], 2)]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -66460,6 +66485,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_vm._v(_vm._s(type.article_type))])
   })], 2) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "group_name"
+    }
+  }, [_vm._v("Group Name")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.group_name),
+      expression: "spin.group_name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "disabled": "disabled"
+    },
+    domProps: {
+      "value": (_vm.spin.group_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.group_name = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
