@@ -184,6 +184,21 @@ class AdminController extends Controller
     			'protected' => $protected,
     			'synonym' => $synonym
     		]);
+
+            $userList = [];
+            for ($i=0; $i < count($users); $i++) {
+                $domain = DomainDetail::create([
+                    'user_id' => (int) $users[$i]['id'],
+                    'domain_id' => $domain_id,
+                    'group_id' => $group_id,
+                    'protected' => $protected,
+                    'synonym' => $synonym
+                ]);
+                $domain['domain'] = strtolower(request('domain'));
+
+                // push to userList array
+                array_push($userList, $domain);
+            }
 		} catch (ValidationException $e) {
 			DB::rollback();
 			throw $e;

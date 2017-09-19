@@ -42,7 +42,7 @@ export const ArticleActionMixin = {
 		this.authUser = JSON.parse(this.user);
 
 		this.listOfArticleType();
-		this.domainList();
+		this.userDomainList();
 		this.userDomainSetup();
 	},
 	watch: {
@@ -193,7 +193,11 @@ export const ArticleActionMixin = {
 					this.spin['synonym'] = data.synonym;
 				}
 			});
-		}
-	}
+		},
 
+        userDomainList() {
+            let user_id = this.authUser.id;
+            axios.get('/user/userDomainList?user_id='+user_id).then(response => this.domains = response.data);
+        }
+	}
 };

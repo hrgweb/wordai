@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Domain;
 use App\DomainDetail;
 use App\User;
 use App\UserLevel;
@@ -130,5 +131,16 @@ class UserController extends Controller
     	DB::table('users')->where('id', request('user_id'))->update(['has_peditor_access' => $peditor_val]);
 
     	return request('peditor');
+    }
+
+    public function userDomainList()
+    {
+        // get all domain_id associated by user id
+        $domain_ids = DomainDetail::where('user_id', request('user_id'))->pluck('domain_id');
+
+        // get all domains set only to that user
+        $domains = Domain::whereIn('id', $domain_ids)->get();
+
+        return $domains;
     }
 }
