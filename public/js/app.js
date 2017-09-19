@@ -29434,6 +29434,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -29579,6 +29581,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ReportFilterByUser_vue__ = __webpack_require__(301);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ReportFilterByUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ReportFilterByUser_vue__);
+//
+//
 //
 //
 //
@@ -29838,6 +29842,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -29861,6 +29867,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue__);
+//
+//
 //
 //
 //
@@ -31826,6 +31834,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
 //
 //
 //
@@ -62819,6 +62829,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "top": "3em"
     }
+  }, [_c('a', {
+    attrs: {
+      "id": "articles_edited_this_week"
+    }
   }, [_c('div', {
     staticClass: "articles-edited-this-week"
   }, [_c('div', {
@@ -62838,7 +62852,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "articles": _vm.report.editedThisWeek
     }
-  })], 1)])])])
+  })], 1)])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -64263,6 +64277,10 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Report"
+  }, [_c('a', {
+    attrs: {
+      "id": "articles_this_week"
+    }
   }, [_c('div', {
     staticClass: "articles-this-week"
   }, [_c('div', {
@@ -64298,7 +64316,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "filterByDomain": true
       }
     })
-  })) : _vm._e()])])])
+  })) : _vm._e()])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -65013,6 +65031,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "top": "5em"
     }
+  }, [_c('a', {
+    attrs: {
+      "id": "articles_to_edit_this_week"
+    }
   }, [_c('div', {
     staticClass: "articles-to-be-edit"
   }, [_c('div', {
@@ -65032,7 +65054,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "articles": _vm.report.waitingToEdit
     }
-  })], 1)])])])
+  })], 1)])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -65284,6 +65306,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "top": "5em"
     }
+  }, [_c('a', {
+    attrs: {
+      "id": "articles_spun_this_week"
+    }
   }, [_c('div', {
     staticClass: "articles-spun"
   }, [_c('div', {
@@ -65303,7 +65329,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "articles": _vm.report.spunThisWeek
     }
-  })], 1)])])])
+  })], 1)])])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -65860,9 +65886,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "top": "7em"
     }
+  }, [_c('a', {
+    attrs: {
+      "id": "pending_users"
+    }
   }, [_c('div', {
     staticClass: "User__pending"
-  }, [_c('h2', [_vm._v("\n\t\t\tPending User\n\t\t\t"), _c('span', {
+  }, [_c('h2', [_vm._v("\n    \t\t\t\tPending User\n    \t\t\t\t"), _c('span', {
     staticClass: "badge"
   }, [_vm._v(_vm._s(_vm.usersCount))])]), _vm._v(" "), _vm._l((_vm.users), function(user, index) {
     return _c('div', {
@@ -65921,7 +65951,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("Dismiss")])])])])])
-  })], 2)])
+  })], 2)])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

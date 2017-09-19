@@ -2,6 +2,12 @@ html, body { overflow-x: visible !important; }
 /*=============== Writer ===============*/
 .Writer { margin: 7em 5em; }
 
+/*=============== Misc ===============*/
+.Dashboard {
+    a[id] > div { padding-top: 5em; }
+    a[id] { text-decoration: none; color: #535050; }
+}
+
 /*=============== Curly Color ===============*/
 span.curly { color: #ff00d8; }
 span.pipe { color: #54ff00; }

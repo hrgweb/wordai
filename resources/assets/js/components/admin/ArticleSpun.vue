@@ -1,37 +1,39 @@
 <template>
     <div class="Spun" style="top: 5em;">
-        <div class="articles-spun">
-            <div class="header">
-                <!-- Report Header -->
-                <report-header :count="report.noOfArticlesSpunThisWeek">
-                    <template slot="head">Articles Spun This Week</template>
-                </report-header>
-            </div>
-            <div class="content">
-                <!-- <div v-if="isGroupByEqualSelect"> -->
-                <div>
-                    <report-table :articles="report.spunThisWeek"></report-table>
+        <a id="articles_spun_this_week">
+            <div class="articles-spun">
+                <div class="header">
+                    <!-- Report Header -->
+                    <report-header :count="report.noOfArticlesSpunThisWeek">
+                        <template slot="head">Articles Spun This Week</template>
+                    </report-header>
                 </div>
+                <div class="content">
+                    <!-- <div v-if="isGroupByEqualSelect"> -->
+                    <div>
+                        <report-table :articles="report.spunThisWeek"></report-table>
+                    </div>
 
-                <!-- <div v-else-if="isGroupByEqualUser">
-                    <report-filter-by-user
-                        v-for="creator in report.creatorOfArticles"
-                        :creator="creator"
-                        :filterByUser="true"
-                        :key="creator.user_id">
-                    </report-filter-by-user>
+                    <!-- <div v-else-if="isGroupByEqualUser">
+                        <report-filter-by-user
+                            v-for="creator in report.creatorOfArticles"
+                            :creator="creator"
+                            :filterByUser="true"
+                            :key="creator.user_id">
+                        </report-filter-by-user>
+                    </div>
+
+                    <div v-else-if="isGroupByEqualDomain">
+                        <report-filter-by-user
+                            v-for="creator in report.creatorOfArticles"
+                            :creator="creator"
+                            :filterByDomain="true"
+                            :key="creator.domain_id">
+                        </report-filter-by-user>
+                    </div> -->
                 </div>
-
-                <div v-else-if="isGroupByEqualDomain">
-                    <report-filter-by-user
-                        v-for="creator in report.creatorOfArticles"
-                        :creator="creator"
-                        :filterByDomain="true"
-                        :key="creator.domain_id">
-                    </report-filter-by-user>
-                </div> -->
             </div>
-        </div>
+        </a>
     </div>
 </template>
 
