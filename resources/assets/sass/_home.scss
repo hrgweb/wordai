@@ -67,8 +67,38 @@ button.close {
 .Report,
 .Edited,
 .User,
-.Waiting {
+.Waiting,
+.Spun {
+    background: #848484;
     margin-bottom: 5em;
+
+    .header h2, .header p { color: #fff; }
+}
+
+.User {
+    padding: 0 1em 0.1em;
+}
+
+.User__pending {
+    & > h2,
+    & > p {
+        color: #fff;
+    }
+}
+
+/*=============== admin ===============*/
+.Filter {
+    background: #444444;
+    color: #fff;
+    padding: 1em 1em 0.7em;
+    margin-top: 2em;
+}
+
+.Filter select {
+    color: #000000;
+    padding: .5em 1em .5em 0.5em;
+    border: 1px solid white;
+    border-radius: 2px;
 }
 
 /*=============== admin - reporting ===============*/

@@ -39039,7 +39039,7 @@ exports.push([module.i, "\nul[data-v-1cb57eac] { padding-left: 2em;\n}\nul.alert
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.Filter[data-v-1feed54b] {\n    background: #444444;\n    color: #fff;\n    padding: 1em 1em 0.7em;\n    margin-top: 2em;\n}\n.Filter select[data-v-1feed54b] {\n    color: #000000;\n    padding: .5em 1em .5em 0.5em;\n    border: 1px solid white;\n    border-radius: 2px;\n}\n.Filter div[data-v-1feed54b]:first-child {\n    float: left;\n    margin-right: 1em;\n}\n", ""]);
+exports.push([module.i, "\n.Filter div[data-v-1feed54b]:first-child {\n    float: left;\n    margin-right: 1em;\n}\n", ""]);
 
 /***/ }),
 /* 247 */
@@ -65898,10 +65898,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     return _c('div', {
       staticClass: "User__profile list-group"
     }, [_c('a', {
-      staticClass: "list-group-item",
-      attrs: {
-        "href": "#"
-      }
+      staticClass: "list-group-item"
     }, [_c('h4', {
       staticClass: "list-group-item-heading"
     }, [_vm._v(_vm._s(user.firstname) + " " + _vm._s(user.lastname))]), _vm._v(" "), _c('p', {

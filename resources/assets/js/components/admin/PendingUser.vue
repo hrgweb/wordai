@@ -9,7 +9,7 @@
     			</h2>
 
     			<div class="User__profile list-group" v-for="(user, index) in users">
-    				<a href="#" class="list-group-item">
+    				<a class="list-group-item">
     					<h4 class="list-group-item-heading">{{ user.firstname }} {{ user.lastname }}</h4>
     					<p class="list-group-item-text">{{ user.email }}</p>
     					<small>{{ user.created_at }}</small>

@@ -41,20 +41,6 @@
 </script>
 
 <style scoped>
-    .Filter {
-        background: #444444;
-        color: #fff;
-        padding: 1em 1em 0.7em;
-        margin-top: 2em;
-    }
-
-    .Filter select {
-        color: #000000;
-        padding: .5em 1em .5em 0.5em;
-        border: 1px solid white;
-        border-radius: 2px;
-    }
-
     .Filter div:first-child {
         float: left;
         margin-right: 1em;
