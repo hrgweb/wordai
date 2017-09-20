@@ -35,11 +35,13 @@
                         class="input-search"
                         id="input"
                         :placeholder="placeHolder"
-                        v-model="form.input"
-                        @keyup.enter="searchNow">
+                        v-model="form.input">
+                        <!-- @keyup.enter="searchNow"> -->
 
                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
                 </form>
+
+                <range-filter @searchNow="searchNow"></range-filter>
             </div>
 
             <!-- Loading -->
@@ -67,9 +69,10 @@
 
 <script>
     import ReportTable from './ReportTable.vue';
+    import RangeFilter from './RangeFilter.vue';
 
     export default {
-        components: { ReportTable },
+        components: { ReportTable, RangeFilter },
         data() {
             return {
                 articles: [],
@@ -131,7 +134,10 @@
                 this.articles = articles;
             },
 
-            searchNow() {
+            searchNow(data) {
+                this.form['from'] = data.from;
+                this.form['to'] = data.to;
+
                 if (this.form.input.length > 0) {
                     this.isLoading = true;
 
@@ -166,5 +172,6 @@
         margin-left: 1em;
     }
 
-    .search-by { display: flex; }
+    .search-by,
+    .input { display: flex; }
 </style>

@@ -184,8 +184,8 @@ class AdminController extends Controller
 	    		]);
 	    	// }
 
-	    	// update domain_details protected terms
-	    	$domain = DomainDetail::where('id', $id)->update([
+	    	// delete old domain details by domain_id
+	    	DomainDetail::where('id', $id)->update([
     			'protected' => $protected,
     			'synonym' => $synonym
     		]);
@@ -559,6 +559,11 @@ class AdminController extends Controller
 
     public function searchByUser()
     {
+        $from = request('from') . ' 00:00:00';
+        $to = request('to') . ' 23:59:59';
+
+        // DB::listen(function($query) { var_dump($query->sql); });
+
         // get the id base on name of user
         $user_id = User::whereRaw("CONCAT(firstname, ' ', lastname) LIKE '%" . request('input') . "%'")->first(['id']);
 
@@ -571,6 +576,7 @@ class AdminController extends Controller
                 ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
                 ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
                 ->where('w.user_id', $user_id)
+                ->whereBetween('w.created_at', [$from, $to])
                 ->orderBy('w.created_at')
                 ->get([
                     'w.id AS word_id',
