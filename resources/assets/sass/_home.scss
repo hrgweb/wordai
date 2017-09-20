@@ -10,6 +10,14 @@ html, body { overflow-x: visible !important; }
 
 .clear { clear: both; }
 
+.search-by {
+
+    input[type=text],
+    input[type=date] {
+        width: 150px;
+    }
+}
+
 
 /*=============== Curly Color ===============*/
 span.curly { color: #ff00d8; }

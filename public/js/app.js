@@ -68068,6 +68068,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         return _this2.setArticlesData(data);
                     });
                 }
+            } else {
+                new Noty({
+                    type: 'error',
+                    text: 'Please enter your search in the input field.',
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
             }
         },
         changeSearch: function changeSearch() {

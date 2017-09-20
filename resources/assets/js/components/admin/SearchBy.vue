@@ -146,6 +146,13 @@
                     } else if (this.searchBy === 'group') {
                         this.form.post('/admin/searchByGroup').then(data => this.setArticlesData(data));
                     }
+                } else {
+                    new Noty({
+                        type: 'error',
+                        text: `Please enter your search in the input field.`,
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
                 }
             },
 
