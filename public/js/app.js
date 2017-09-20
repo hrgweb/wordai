@@ -67998,7 +67998,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 to: '',
                 input: ''
             }),
-            search: { by: ['range', 'user', 'group'] },
+            search: { by: ['range', 'user', 'group', 'website'] },
             searchBy: 'select',
             isLoading: false
         };
@@ -68065,6 +68065,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     });
                 } else if (this.searchBy === 'group') {
                     this.form.post('/admin/searchByGroup').then(function (data) {
+                        return _this2.setArticlesData(data);
+                    });
+                } else if (this.searchBy === 'website') {
+                    this.form.post('/admin/searchByWebsite').then(function (data) {
                         return _this2.setArticlesData(data);
                     });
                 }
@@ -68234,7 +68238,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.searchArticlesByRange($event)
       }
     }
-  }, [_vm._v("Search Now")])])]) : (_vm.searchBy === 'user' || _vm.searchBy === 'group') ? _c('div', {
+  }, [_vm._v("Search Now")])])]) : (_vm.searchBy === 'user' || _vm.searchBy === 'group' || _vm.searchBy === 'website') ? _c('div', {
     staticClass: "input"
   }, [_c('form', {
     attrs: {

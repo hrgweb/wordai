@@ -562,8 +562,6 @@ class AdminController extends Controller
         $from = request('from') . ' 00:00:00';
         $to = request('to') . ' 23:59:59';
 
-        // DB::listen(function($query) { var_dump($query->sql); });
-
         // get the id base on name of user
         $user_id = User::whereRaw("CONCAT(firstname, ' ', lastname) LIKE '%" . request('input') . "%'")->first(['id']);
 
@@ -612,6 +610,42 @@ class AdminController extends Controller
                 ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
                 ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
                 ->where('w.group_id', $group_id)
+                ->whereBetween('w.created_at', [$from, $to])
+                ->orderBy('w.created_at')
+                ->get([
+                    'w.id AS word_id',
+                    'w.doc_title',
+                    'w.keyword',
+                    'w.article',
+                    'w.created_at',
+                    'w.isEditorEdit',
+                    'w.isProcess',
+                    'd.id AS domain_id',
+                    'd.domain',
+                    'u.id AS user_id',
+                    'u.firstname',
+                    'u.lastname'
+                ]);
+        }
+    }
+
+    public function searchByWebsite()
+    {
+        $from = request('from') . ' 00:00:00';
+        $to = request('to') . ' 23:59:59';
+
+        // get the id base on name of user
+        $domain_id = Domain::where('domain', request('input'))->first(['id']);
+
+        // if has result
+        if ($domain_id) {
+            $domain_id = $domain_id->id;
+
+            // get articles for this user
+            return DB::table('words AS w')
+                ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
+                ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
+                ->where('w.domain_id', $domain_id)
                 ->whereBetween('w.created_at', [$from, $to])
                 ->orderBy('w.created_at')
                 ->get([

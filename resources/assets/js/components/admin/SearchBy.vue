@@ -28,7 +28,7 @@
             </div>
 
             <!-- Input -->
-            <div class="input" v-else-if="searchBy === 'user' || searchBy === 'group'">
+            <div class="input" v-else-if="searchBy === 'user' || searchBy === 'group' || searchBy === 'website'">
                 <form method="POST" @submit.prevent>
                     <input
                         type="text"
@@ -82,7 +82,7 @@
                     to: '',
                     input: ''
                 }),
-                search: { by: ['range', 'user', 'group'] },
+                search: { by: ['range', 'user', 'group', 'website'] },
                 searchBy: 'select',
                 isLoading: false
             }
@@ -145,6 +145,8 @@
                         this.form.post('/admin/searchByUser').then(data => this.setArticlesData(data));
                     } else if (this.searchBy === 'group') {
                         this.form.post('/admin/searchByGroup').then(data => this.setArticlesData(data));
+                    } else if (this.searchBy === 'website') {
+                        this.form.post('/admin/searchByWebsite').then(data => this.setArticlesData(data));
                     }
                 } else {
                     new Noty({
