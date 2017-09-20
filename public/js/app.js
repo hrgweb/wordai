@@ -67804,6 +67804,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -67820,7 +67822,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             }),
             search: { by: ['range', 'user', 'group'] },
             searchBy: 'select',
-            input: ''
+            isLoading: false
         };
     },
 
@@ -67836,7 +67838,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             } else if (this.searchBy === 'range') {
                 text = 'Search by range data';
             } else {
-                text = 'Search by ' + this.searchBy;
+                text = 'Search by ' + this.searchBy + ': `' + this.form.input + '`';
             }
 
             return text;
@@ -67871,9 +67873,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         searchNow: function searchNow() {
-            this.form.post('/admin/searchBy').then(function (data) {
-                return console.log(data);
-            });
+            var _this2 = this;
+
+            if (this.form.input.length > 0) {
+                this.isLoading = true;
+
+                this.form.post('/admin/searchBy').then(function (data) {
+                    _this2.isLoading = false;
+                    _this2.articles = data;
+                });
+            }
         }
     }
 });
@@ -68065,7 +68074,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.form.input = $event.target.value
       }
     }
-  })])]) : _vm._e(), _vm._v(" "), _c('div', {
+  })])]) : _vm._e(), _vm._v(" "), (_vm.isLoading) ? _c('div', {
+    staticClass: "misc"
+  }, [_c('span', [_vm._v("Fetching Data...")])]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "clear"
   })]), _vm._v(" "), _c('a', {
     attrs: {
@@ -68096,7 +68107,7 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.controls[data-v-30597736] {\n    width: 170px;\n    float: left;\n    /*margin-right: 1em;*/\n}\n", ""]);
+exports.push([module.i, "\n.controls[data-v-30597736] {\n    width: 170px;\n    float: left;\n    /*margin-right: 1em;*/\n}\n.misc[data-v-30597736] {\n    color: #fff;\n    font-size: 1.3em;\n    text-transform: uppercase;\n    margin-top: 0.3em;\n    margin-left: 1em;\n}\n.search-by[data-v-30597736] { display: -webkit-box; display: -ms-flexbox; display: flex;\n}\n", ""]);
 
 /***/ }),
 /* 426 */

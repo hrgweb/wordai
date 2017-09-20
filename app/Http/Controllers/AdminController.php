@@ -554,6 +554,35 @@ class AdminController extends Controller
 
     public function searchBy()
     {
-        return request('input');
+        // DB::listen(function($query) { var_dump($query->sql); });
+
+        // get the id base on name of user
+        $user_id = User::whereRaw("CONCAT(firstname, ' ', lastname) LIKE '%" . request('input') . "%'")->first(['id']);
+
+        // if has result
+        if ($user_id) {
+            $user_id = $user_id->id;
+
+            // get articles for this user
+            return DB::table('words AS w')
+                ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
+                ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
+                ->where('w.user_id', $user_id)
+                ->orderBy('w.created_at')
+                ->get([
+                    'w.id AS word_id',
+                    'w.doc_title',
+                    'w.keyword',
+                    'w.article',
+                    'w.created_at',
+                    'w.isEditorEdit',
+                    'w.isProcess',
+                    'd.id AS domain_id',
+                    'd.domain',
+                    'u.id AS user_id',
+                    'u.firstname',
+                    'u.lastname'
+                ]);
+        }
     }
 }

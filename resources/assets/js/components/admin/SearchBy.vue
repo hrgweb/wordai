@@ -1,6 +1,7 @@
 <template>
     <div class="Search">
         <div class="search-by Filter">
+            <!-- Controls -->
             <div class="controls">
                 <label for="searchBy">Search by</label> &nbsp;
                 <select v-model="searchBy">
@@ -26,7 +27,6 @@
                 </form>
             </div>
 
-
             <!-- Input -->
             <div class="input" v-else-if="searchBy === 'user' || searchBy === 'group'">
                 <form method="POST" @submit.prevent>
@@ -42,11 +42,13 @@
                 </form>
             </div>
 
+            <!-- Loading -->
+            <div class="misc" v-if="isLoading">
+                <span>Fetching Data...</span>
+            </div>
+
             <div class="clear"></div>
         </div>
-
-
-
 
         <!-- Result -->
         <a id="articles_search_by_range">
@@ -79,7 +81,7 @@
                 }),
                 search: { by: ['range', 'user', 'group'] },
                 searchBy: 'select',
-                input: '',
+                isLoading: false
             }
         },
         computed: {
@@ -95,7 +97,7 @@
                 } else if (this.searchBy === 'range') {
                     text = 'Search by range data';
                 } else {
-                    text = 'Search by ' + this.searchBy;
+                    text = 'Search by ' + this.searchBy + ': `' + this.form.input + '`';
                 }
 
                 return text;
@@ -128,7 +130,14 @@
             },
 
             searchNow() {
-                this.form.post('/admin/searchBy').then(data => console.log(data));
+                if (this.form.input.length > 0) {
+                    this.isLoading = true;
+
+                    this.form.post('/admin/searchBy').then(data => {
+                        this.isLoading = false;
+                        this.articles = data;
+                    });
+                }
             }
         }
     }
@@ -140,4 +149,14 @@
         float: left;
         /*margin-right: 1em;*/
     }
+
+    .misc {
+        color: #fff;
+        font-size: 1.3em;
+        text-transform: uppercase;
+        margin-top: 0.3em;
+        margin-left: 1em;
+    }
+
+    .search-by { display: flex; }
 </style>
