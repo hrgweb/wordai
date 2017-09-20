@@ -67849,10 +67849,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.articlesCount = data.length;
         }
     },
-    mounted: function mounted() {
-        this.initSetupDate();
-    },
-
     methods: {
         initSetupDate: function initSetupDate() {
             var dateObj = new Date();
@@ -67872,17 +67868,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 return _this.articles = data;
             });
         },
+        setArticlesData: function setArticlesData(articles) {
+            this.isLoading = false;
+            this.articles = articles;
+        },
         searchNow: function searchNow() {
             var _this2 = this;
 
             if (this.form.input.length > 0) {
                 this.isLoading = true;
 
-                this.form.post('/admin/searchBy').then(function (data) {
-                    _this2.isLoading = false;
-                    _this2.articles = data;
-                });
+                if (this.searchBy === 'user') {
+                    this.form.post('/admin/searchByUser').then(function (data) {
+                        return _this2.setArticlesData(data);
+                    });
+                } else if (this.searchBy === 'group') {
+                    this.form.post('/admin/searchByGroup').then(function (data) {
+                        return _this2.setArticlesData(data);
+                    });
+                }
             }
+        },
+        changeSearch: function changeSearch() {
+            this.form.reset();
+            this.initSetupDate();
         }
     }
 });
@@ -67948,7 +67957,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "searchBy"
     }],
     on: {
-      "change": function($event) {
+      "change": [function($event) {
         var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
           return o.selected
         }).map(function(o) {
@@ -67956,7 +67965,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           return val
         });
         _vm.searchBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
+      }, _vm.changeSearch]
     }
   }, [_c('option', {
     attrs: {

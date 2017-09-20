@@ -552,10 +552,8 @@ class AdminController extends Controller
             ]);
     }
 
-    public function searchBy()
+    public function searchByUser()
     {
-        // DB::listen(function($query) { var_dump($query->sql); });
-
         // get the id base on name of user
         $user_id = User::whereRaw("CONCAT(firstname, ' ', lastname) LIKE '%" . request('input') . "%'")->first(['id']);
 
@@ -568,6 +566,40 @@ class AdminController extends Controller
                 ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
                 ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
                 ->where('w.user_id', $user_id)
+                ->orderBy('w.created_at')
+                ->get([
+                    'w.id AS word_id',
+                    'w.doc_title',
+                    'w.keyword',
+                    'w.article',
+                    'w.created_at',
+                    'w.isEditorEdit',
+                    'w.isProcess',
+                    'd.id AS domain_id',
+                    'd.domain',
+                    'u.id AS user_id',
+                    'u.firstname',
+                    'u.lastname'
+                ]);
+        }
+    }
+
+    public function searchByGroup()
+    {
+        // DB::listen(function($query) { var_dump($query->sql); });
+
+        // get the id base on name of user
+        $group_id = Group::where('group', request('input'))->first(['id']);
+
+        // if has result
+        if ($group_id) {
+            $group_id = $group_id->id;
+
+            // get articles for this user
+            return DB::table('words AS w')
+                ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
+                ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
+                ->where('w.group_id', $group_id)
                 ->orderBy('w.created_at')
                 ->get([
                     'w.id AS word_id',

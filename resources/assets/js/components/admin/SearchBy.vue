@@ -4,7 +4,7 @@
             <!-- Controls -->
             <div class="controls">
                 <label for="searchBy">Search by</label> &nbsp;
-                <select v-model="searchBy">
+                <select v-model="searchBy" @change="changeSearch">
                     <option value="select">SELECT</option>
                     <option v-for="search in search.by" :value="search">{{ search.toUpperCase() }}</option>
                 </select>
@@ -108,9 +108,6 @@
                 this.articlesCount = data.length;
             }
         },
-        mounted() {
-            this.initSetupDate();
-        },
         methods: {
             initSetupDate() {
                 let dateObj = new Date();
@@ -129,15 +126,26 @@
                     .then(data => this.articles = data);
             },
 
+            setArticlesData(articles) {
+                this.isLoading = false;
+                this.articles = articles;
+            },
+
             searchNow() {
                 if (this.form.input.length > 0) {
                     this.isLoading = true;
 
-                    this.form.post('/admin/searchBy').then(data => {
-                        this.isLoading = false;
-                        this.articles = data;
-                    });
+                    if (this.searchBy === 'user') {
+                        this.form.post('/admin/searchByUser').then(data => this.setArticlesData(data));
+                    } else if (this.searchBy === 'group') {
+                        this.form.post('/admin/searchByGroup').then(data => this.setArticlesData(data));
+                    }
                 }
+            },
+
+            changeSearch() {
+                this.form.reset();
+                this.initSetupDate();
             }
         }
     }
