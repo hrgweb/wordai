@@ -310,7 +310,7 @@
             fullName(data) {
                 return data.map(item => {
                     return {
-                        id: item.id,
+                        id: item.user_id,
                         name: item.firstname + ' ' + item.lastname
                     };
                 });

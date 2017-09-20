@@ -30913,7 +30913,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		fullName: function fullName(data) {
 			return data.map(function (item) {
 				return {
-					id: item.id,
+					id: item.user_id,
 					name: item.firstname + ' ' + item.lastname
 				};
 			});

@@ -140,7 +140,7 @@ class AdminController extends Controller
     {
         return DB::table('domain_details AS dd')
                     ->join('domains AS d', 'd.id', '=', 'dd.domain_id')
-                    ->groupBy('group_id')
+                    ->groupBy('domain_id')
                     ->select([
                         'dd.id',
                         'dd.domain_id',
@@ -158,7 +158,10 @@ class AdminController extends Controller
 
     public function updateDetails()
     {
-    	return request()->all();
+        // delete pt, details record
+        // save tp, details
+
+    	// return request()->all();
 
     	$id = request('id');
         $domain_id = request('domain_id');
@@ -207,7 +210,7 @@ class AdminController extends Controller
 		}
 		DB::commit();
 
-    	return $domain;
+        return response()->json($userList);
     }
 
     public function removeDetails()
