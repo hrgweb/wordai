@@ -551,4 +551,9 @@ class AdminController extends Controller
                 'u.lastname'
             ]);
     }
+
+    public function searchBy()
+    {
+        return request('input');
+    }
 }

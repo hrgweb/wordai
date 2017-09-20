@@ -67815,7 +67815,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             articlesCount: 0,
             form: new Form({
                 from: '',
-                to: ''
+                to: '',
+                input: ''
             }),
             search: { by: ['range', 'user', 'group'] },
             searchBy: 'select',
@@ -67826,6 +67827,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     computed: {
         placeHolder: function placeHolder() {
             return 'Seach for ' + this.searchBy;
+        },
+        headerCaption: function headerCaption() {
+            var text = '';
+
+            if (this.searchBy === 'select') {
+                text = 'Please select what to search';
+            } else if (this.searchBy === 'range') {
+                text = 'Search by range data';
+            } else {
+                text = 'Search by ' + this.searchBy;
+            }
+
+            return text;
         }
     },
     watch: {
@@ -67857,7 +67871,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         searchNow: function searchNow() {
-            console.log('searching...');
+            this.form.post('/admin/searchBy').then(function (data) {
+                return console.log(data);
+            });
         }
     }
 });
@@ -68027,8 +68043,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.input),
-      expression: "input"
+      value: (_vm.form.input),
+      expression: "form.input"
     }],
     staticClass: "input-search",
     attrs: {
@@ -68037,7 +68053,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "placeholder": _vm.placeHolder
     },
     domProps: {
-      "value": (_vm.input)
+      "value": (_vm.form.input)
     },
     on: {
       "keyup": function($event) {
@@ -68046,7 +68062,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.input = $event.target.value
+        _vm.form.input = $event.target.value
       }
     }
   })])]) : _vm._e(), _vm._v(" "), _c('div', {
@@ -68059,7 +68075,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "Result"
   }, [_c('h2', {
     staticClass: "text-center"
-  }, [_vm._v("\n                Search Articles By Date Range\n                "), _c('span', {
+  }, [_vm._v("\n                " + _vm._s(_vm.headerCaption) + "\n                "), _c('span', {
     staticClass: "badge"
   }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('report-table', {
     attrs: {

@@ -35,7 +35,7 @@
                         class="input-search"
                         id="input"
                         :placeholder="placeHolder"
-                        v-model="input"
+                        v-model="form.input"
                         @keyup.enter="searchNow">
 
                     <!-- <button type="submit" class="btn btn-primary">Submit</button> -->
@@ -52,7 +52,7 @@
         <a id="articles_search_by_range">
             <div class="Result">
                 <h2 class="text-center">
-                    Search Articles By Date Range
+                    {{ headerCaption }}
                     <span class="badge">{{ articlesCount }}</span>
                 </h2>
 
@@ -74,16 +74,31 @@
                 articlesCount: 0,
                 form: new Form({
                     from: '',
-                    to: ''
+                    to: '',
+                    input: ''
                 }),
                 search: { by: ['range', 'user', 'group'] },
                 searchBy: 'select',
-                input: ''
+                input: '',
             }
         },
         computed: {
             placeHolder() {
                 return 'Seach for ' + this.searchBy;
+            },
+
+            headerCaption() {
+                let text = '';
+
+                if (this.searchBy === 'select') {
+                    text = 'Please select what to search';
+                } else if (this.searchBy === 'range') {
+                    text = 'Search by range data';
+                } else {
+                    text = 'Search by ' + this.searchBy;
+                }
+
+                return text;
             }
         },
         watch: {
@@ -113,7 +128,7 @@
             },
 
             searchNow() {
-                console.log('searching...');
+                this.form.post('/admin/searchBy').then(data => console.log(data));
             }
         }
     }
