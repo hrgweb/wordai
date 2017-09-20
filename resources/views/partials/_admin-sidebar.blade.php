@@ -11,7 +11,7 @@
                 <ul class="nav sub-nav">
                     <li>
                         <a href="admin#articles_search_by_range">
-                            <em class="fa fa-newspaper-o" aria-hidden="true"></em> Search By Range
+                            <em class="fa fa-newspaper-o" aria-hidden="true"></em> Search By
                         </a>
                     </li>
                     <li>

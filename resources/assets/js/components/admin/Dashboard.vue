@@ -1,7 +1,7 @@
 <template>
     <div class="Dashboard">
         <!-- Range Filter -->
-        <range-filter></range-filter>
+        <search-by></search-by>
 
         <!-- Filter Box -->
         <filter-box></filter-box>
@@ -25,7 +25,7 @@
 
 <script>
     import FilterBox from './FilterBox.vue';
-    import RangeFilter from './RangeFilter.vue';
+    import SearchBy from './SearchBy.vue';
     import ArticleReport from './ArticleReport.vue';
     import ArticleEdited from './ArticleEdited.vue';
     import ArticleToEdit from './ArticleToEdit.vue';
@@ -36,7 +36,7 @@
         props: ['token'],
         components: {
             FilterBox,
-            RangeFilter,
+            SearchBy,
             ArticleReport,
             ArticleEdited,
             ArticleToEdit,

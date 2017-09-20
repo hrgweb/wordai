@@ -8,6 +8,9 @@ html, body { overflow-x: visible !important; }
     a[id] { text-decoration: none; color: #535050; }
 }
 
+.clear { clear: both; }
+
+
 /*=============== Curly Color ===============*/
 span.curly { color: #ff00d8; }
 span.pipe { color: #54ff00; }
@@ -64,7 +67,7 @@ button.close {
     font-size: 2em;
 }
 
-.RangeFilter,
+.Search,
 .Report,
 .Edited,
 .User,
@@ -76,7 +79,7 @@ button.close {
     .header h2, .header p { color: #fff; }
 }
 
-.RangeFilter {
+.Search {
     .Result > h2, .Result > p { color: #fff; }
 }
 
@@ -107,7 +110,8 @@ input[type=date] {
     label { color: #fff; }
 }
 
-.Filter select {
+.Filter select,
+.Filter input {
     color: #000000;
     padding: .5em 1em .5em 0.5em;
     border: 1px solid white;
