@@ -140,6 +140,7 @@ class AdminController extends Controller
     {
         return DB::table('domain_details AS dd')
                     ->join('domains AS d', 'd.id', '=', 'dd.domain_id')
+                    ->groupBy('group_id')
                     ->select([
                         'dd.id',
                         'dd.domain_id',
@@ -149,6 +150,7 @@ class AdminController extends Controller
                         'dd.created_at',
                         'd.domain'
                     ])
+                    ->orderBy('d.domain')
                     ->get();
 
     	// return DomainDetail::with('domain')->get();

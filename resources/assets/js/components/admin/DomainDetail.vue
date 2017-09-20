@@ -202,9 +202,9 @@
                         let data = this.mapResults(response.data);
 
                         if (data) {
-                            for (var i = 0; i < data.length; i++) {
-                                this.details.push(data[i]);    // push to details
-                            }
+                            // for (var i = 0; i < data.length; i++) {
+                                this.details.push(data[0]);    // push to details
+                            // }
 
 						    // response.data['domain'] = $('select option[value='+this.detail.domain_id+']').text();
                             // this.removeDomain();             // remove selected domain

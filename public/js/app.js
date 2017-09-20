@@ -30811,9 +30811,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					var data = _this2.mapResults(response.data);
 
 					if (data) {
-						for (var i = 0; i < data.length; i++) {
-							_this2.details.push(data[i]); // push to details
-						}
+						// for (var i = 0; i < data.length; i++) {
+						_this2.details.push(data[0]); // push to details
+						// }
 
 						// response.data['domain'] = $('select option[value='+this.detail.domain_id+']').text();
 						// this.removeDomain();             // remove selected domain
