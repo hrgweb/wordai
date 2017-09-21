@@ -60,7 +60,12 @@
         mixins: [ ArticleEditorMixin ],
         data() {
             return {
-                report: ReportingBus
+                report: ReportingBus,
+                searchByArticles: [],
+                thisWeek: [],
+                editedThisWeek: [],
+                toEditThisWeek: [],
+                spunThisWeek: [],
             };
         },
         mounted() {

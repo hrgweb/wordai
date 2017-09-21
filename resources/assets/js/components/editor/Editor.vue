@@ -83,6 +83,10 @@
 		created() {
 			// this.articleList();
 		},
+        mounted() {
+            ReportingBus.$on('isLoadedListToEdit', data => this.listToEdit = data);
+            ReportingBus.$on('isLoadedListEditedArticles', data => this.listEditedArticles = data);
+        },
 		methods: {
 			articleList() {
 				axios.get('/editor/articleList').then(response => {
@@ -93,29 +97,6 @@
                     this.articles = this.editor.mapResultOfArticles(data.data);
                 });
 			},
-
-            setupToUpdateRecord(data) {
-                switch(this.tableType) {
-                    case 'article-to-edit':
-                        this.listToEdit[this.index].spin = data.article;
-
-                        if (data.times.length > 0) {
-                            this.listToEdit[this.index].hr_spent_editor_edit_article = data.times[0];
-                            this.listToEdit[this.index].min_spent_editor_edit_article = data.times[1];
-                            this.listToEdit[this.index].sec_spent_editor_edit_article = data.times[2];
-                        }
-                        break;
-                    case 'article-edited':
-                        this.listEditedArticles[this.index].spin = data.article;
-
-                        if (data.times.length > 0) {
-                            this.listEditedArticles[this.index].hr_spent_editor_edit_article = data.times[0];
-                            this.listEditedArticles[this.index].min_spent_editor_edit_article = data.times[1];
-                            this.listEditedArticles[this.index].sec_spent_editor_edit_article = data.times[2];
-                        }
-                        break;
-                };
-            },
 
             articlesToEdit(data) {
                 this.listToEdit = data.filter(item => {

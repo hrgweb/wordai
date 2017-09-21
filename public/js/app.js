@@ -30435,7 +30435,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mixins: [__WEBPACK_IMPORTED_MODULE_8__mixins_ArticleEditorMixin_js__["a" /* ArticleEditorMixin */]],
     data: function data() {
         return {
-            report: ReportingBus
+            report: ReportingBus,
+            searchByArticles: [],
+            thisWeek: [],
+            editedThisWeek: [],
+            toEditThisWeek: [],
+            spunThisWeek: []
         };
     },
     mounted: function mounted() {
@@ -33595,40 +33600,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     created: function created() {
         // this.articleList();
     },
+    mounted: function mounted() {
+        var _this = this;
+
+        ReportingBus.$on('isLoadedListToEdit', function (data) {
+            return _this.listToEdit = data;
+        });
+        ReportingBus.$on('isLoadedListEditedArticles', function (data) {
+            return _this.listEditedArticles = data;
+        });
+    },
 
     methods: {
         articleList: function articleList() {
-            var _this = this;
+            var _this2 = this;
 
             axios.get('/editor/articleList').then(function (response) {
                 var data = response.data;
 
-                _this.paginationResult = data;
-                _this.paginationPath = data.path;
-                _this.articles = _this.editor.mapResultOfArticles(data.data);
+                _this2.paginationResult = data;
+                _this2.paginationPath = data.path;
+                _this2.articles = _this2.editor.mapResultOfArticles(data.data);
             });
-        },
-        setupToUpdateRecord: function setupToUpdateRecord(data) {
-            switch (this.tableType) {
-                case 'article-to-edit':
-                    this.listToEdit[this.index].spin = data.article;
-
-                    if (data.times.length > 0) {
-                        this.listToEdit[this.index].hr_spent_editor_edit_article = data.times[0];
-                        this.listToEdit[this.index].min_spent_editor_edit_article = data.times[1];
-                        this.listToEdit[this.index].sec_spent_editor_edit_article = data.times[2];
-                    }
-                    break;
-                case 'article-edited':
-                    this.listEditedArticles[this.index].spin = data.article;
-
-                    if (data.times.length > 0) {
-                        this.listEditedArticles[this.index].hr_spent_editor_edit_article = data.times[0];
-                        this.listEditedArticles[this.index].min_spent_editor_edit_article = data.times[1];
-                        this.listEditedArticles[this.index].sec_spent_editor_edit_article = data.times[2];
-                    }
-                    break;
-            };
         },
         articlesToEdit: function articlesToEdit(data) {
             this.listToEdit = data.filter(function (item) {
@@ -68332,8 +68325,6 @@ var ArticleEditorMixin = {
     mixins: [__WEBPACK_IMPORTED_MODULE_0__UserArticleMixin_js__["a" /* UserArticleMixin */]],
 
     mounted: function mounted() {
-        var _this = this;
-
         this.authUser = JSON.parse(this.user);
         this.listenWhenPowerEditorUpdated();
         this.updateArticleData();
@@ -68342,12 +68333,6 @@ var ArticleEditorMixin = {
         var vm = this;
         ArticleBus.$on('isEditing', function (data) {
             return vm.updateArticle(data);
-        });
-        ReportingBus.$on('isLoadedListToEdit', function (data) {
-            return _this.listToEdit = data;
-        });
-        ReportingBus.$on('isLoadedListEditedArticles', function (data) {
-            return _this.listEditedArticles = data;
         });
     },
 
@@ -68372,27 +68357,49 @@ var ArticleEditorMixin = {
 
     methods: {
         listenWhenPowerEditorUpdated: function listenWhenPowerEditorUpdated(data) {
-            var _this2 = this;
+            var _this = this;
 
             ArticleBus.$on('editorUpdatedSpintaxCopy', function (data) {
-                _this2.articles[_this2.index].spintax_copy = data.spintax;
+                _this.articles[_this.index].spintax_copy = data.spintax;
             });
         },
         updateArticle: function updateArticle(data) {
-            var _this3 = this;
+            var _this2 = this;
 
             this.isEdit = false;
             this.article = data.article;
             this.index = data.index;
             this.tableType = data.tableType;
             Vue.nextTick(function () {
-                return _this3.isEdit = true;
+                return _this2.isEdit = true;
             });
+        },
+        setupToUpdateRecord: function setupToUpdateRecord(data) {
+            switch (this.tableType) {
+                case 'article-to-edit':
+                    this.listToEdit[this.index].spin = data.article;
+
+                    if (data.times.length > 0) {
+                        this.listToEdit[this.index].hr_spent_editor_edit_article = data.times[0];
+                        this.listToEdit[this.index].min_spent_editor_edit_article = data.times[1];
+                        this.listToEdit[this.index].sec_spent_editor_edit_article = data.times[2];
+                    }
+                    break;
+                case 'article-edited':
+                    this.listEditedArticles[this.index].spin = data.article;
+
+                    if (data.times.length > 0) {
+                        this.listEditedArticles[this.index].hr_spent_editor_edit_article = data.times[0];
+                        this.listEditedArticles[this.index].min_spent_editor_edit_article = data.times[1];
+                        this.listEditedArticles[this.index].sec_spent_editor_edit_article = data.times[2];
+                    }
+                    break;
+                default:
+                    break;
+            };
         },
         updateRecord: function updateRecord(data) {
             if (data) {
-                this.setupToUpdateRecord(data);
-
                 // successfully updated
                 var articleTitle = this.article.doc_title;
                 new Noty({
@@ -68405,13 +68412,17 @@ var ArticleEditorMixin = {
         },
         dismissUpdate: function dismissUpdate(payload) {
             this.isEdit = false;
-            this.setupToUpdateRecord(payload);
+            if (this.tableType !== undefined) {
+                this.setupToUpdateRecord(payload);
+            } else {
+                window.location.href = '/admin'; // from admin
+            }
         },
         updateArticleData: function updateArticleData() {
-            var _this4 = this;
+            var _this3 = this;
 
             ArticleBus.$on('isRespinArticle', function (data) {
-                _this4.setupToUpdateRecord(data);
+                _this3.setupToUpdateRecord(data);
                 // this.articles[this.index].spin = data.spin;
             });
         }
