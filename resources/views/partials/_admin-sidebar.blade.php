@@ -53,11 +53,11 @@
                             <em class="fa fa-plus" aria-hidden="true"></em> Create Article
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="{{ url('edit-article') }}">
                             <em class="fa fa-pencil" aria-hidden="true"></em> Edit Article
                         </a>
-                    </li>
+                    </li> --}}
                     {{-- <li>
                         <a href="{{ url('search-article') }}">
                             <em class="fa fa-search" aria-hidden="true"></em> Search Article

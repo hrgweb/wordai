@@ -18,6 +18,13 @@ html, body { overflow-x: visible !important; }
     }
 }
 
+.Dashboard .timer-overlay {
+    right: 0;
+    bottom: 0em !important;
+    left: auto !important;
+    width: 180px;
+}
+
 
 /*=============== Curly Color ===============*/
 span.curly { color: #ff00d8; }
