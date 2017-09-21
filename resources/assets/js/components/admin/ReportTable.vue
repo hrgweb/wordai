@@ -41,7 +41,7 @@
         },
         methods: {
             editArticle(article, index) {
-                this.$emit('isEditing', {
+                ArticleBus.$emit('isEditing', {
                     article: article,
                     index: index
                 });

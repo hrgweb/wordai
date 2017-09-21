@@ -270,6 +270,35 @@ class AdminController extends Controller
         }
     }
 
+    protected function columnsNeedForArticle()
+    {
+        return [
+            'w.id AS word_id',
+            'u.firstname',
+            'u.lastname',
+            // 'article_types.article_type',
+            'd.domain',
+            'doc_title',
+            'keyword',
+            'lsi_terms',
+            'domain_protected',
+            'article',
+            'spintax',
+            'spintax_copy',
+            'spin',
+            'protected',
+            'synonym',
+            'isEditorEdit',
+            'isEditorUpdateSC',
+            'isCsCheckHitMax',
+            'isRespinHitMax',
+            'hr_spent_editor_edit_article',
+            'min_spent_editor_edit_article',
+            'sec_spent_editor_edit_article',
+            'w.created_at'
+        ];
+    }
+
     public function articlesThisWeek() {
         $this->paramsForDate();
 
@@ -278,20 +307,7 @@ class AdminController extends Controller
             ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
             ->whereBetween('w.created_at', [$this->fromMon, $this->toSun])
             ->orderBy('w.created_at')
-            ->get([
-                'w.id AS word_id',
-                'w.doc_title',
-                'w.keyword',
-                'w.article',
-                'w.created_at',
-                'w.isEditorEdit',
-                'w.isProcess',
-                'd.id AS domain_id',
-                'd.domain',
-                'u.id AS user_id',
-                'u.firstname',
-                'u.lastname'
-            ]);
+            ->get($this->columnsNeedForArticle());
     }
 
     public function articlesCreator() {
@@ -541,20 +557,7 @@ class AdminController extends Controller
             ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
             ->whereBetween('w.created_at', [$from, $to])
             ->orderBy('w.created_at')
-            ->get([
-                'w.id AS word_id',
-                'w.doc_title',
-                'w.keyword',
-                'w.article',
-                'w.created_at',
-                'w.isEditorEdit',
-                'w.isProcess',
-                'd.id AS domain_id',
-                'd.domain',
-                'u.id AS user_id',
-                'u.firstname',
-                'u.lastname'
-            ]);
+            ->get($this->columnsNeedForArticle());
     }
 
     public function searchByUser()
@@ -576,20 +579,7 @@ class AdminController extends Controller
                 ->where('w.user_id', $user_id)
                 ->whereBetween('w.created_at', [$from, $to])
                 ->orderBy('w.created_at')
-                ->get([
-                    'w.id AS word_id',
-                    'w.doc_title',
-                    'w.keyword',
-                    'w.article',
-                    'w.created_at',
-                    'w.isEditorEdit',
-                    'w.isProcess',
-                    'd.id AS domain_id',
-                    'd.domain',
-                    'u.id AS user_id',
-                    'u.firstname',
-                    'u.lastname'
-                ]);
+                ->get($this->columnsNeedForArticle());
         }
     }
 
@@ -612,20 +602,7 @@ class AdminController extends Controller
                 ->where('w.group_id', $group_id)
                 ->whereBetween('w.created_at', [$from, $to])
                 ->orderBy('w.created_at')
-                ->get([
-                    'w.id AS word_id',
-                    'w.doc_title',
-                    'w.keyword',
-                    'w.article',
-                    'w.created_at',
-                    'w.isEditorEdit',
-                    'w.isProcess',
-                    'd.id AS domain_id',
-                    'd.domain',
-                    'u.id AS user_id',
-                    'u.firstname',
-                    'u.lastname'
-                ]);
+                ->get($this->columnsNeedForArticle());
         }
     }
 
@@ -648,20 +625,7 @@ class AdminController extends Controller
                 ->where('w.domain_id', $domain_id)
                 ->whereBetween('w.created_at', [$from, $to])
                 ->orderBy('w.created_at')
-                ->get([
-                    'w.id AS word_id',
-                    'w.doc_title',
-                    'w.keyword',
-                    'w.article',
-                    'w.created_at',
-                    'w.isEditorEdit',
-                    'w.isProcess',
-                    'd.id AS domain_id',
-                    'd.domain',
-                    'u.id AS user_id',
-                    'u.firstname',
-                    'u.lastname'
-                ]);
+                ->get($this->columnsNeedForArticle());
         }
     }
 }

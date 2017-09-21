@@ -186,8 +186,9 @@ table thead th:nth-child(5) { width: 120px; }
 
 /*=============== Editor - table and buttons ===============*/
 
-.Waiting,
-.Edited {
+.EditorPage .Waiting,
+.EditorPage .Edited {
+    background: none;
 
     table td:last-child {
         width: 30px;

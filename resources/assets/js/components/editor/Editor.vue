@@ -53,7 +53,7 @@
     import ArticleToEdit from './ArticleToEdit.vue';
     import ArticleEdited from './ArticleEdited.vue';
 	import ArticleToPublish from './ArticleToPublish.vue';
-	import { UserArticleMixin } from './../../mixins/UserArticleMixin.js';
+	import { ArticleEditorMixin } from './../../mixins/ArticleEditorMixin.js';
     import Error from './../errors/Error.vue';
 	import Editor from './../../class/Editor.js';
 
@@ -67,54 +67,21 @@
             ArticleToPublish,
             Error
         },
-		mixins: [ UserArticleMixin ],
+        mixins: [ ArticleEditorMixin ],
 		data() {
 			return {
-				isEdit: false,
 				articlesCount: 0,
 				error: '',
-				authUser: {},
-				hasPeditorAccess: false,
                 listToEdit: [],
                 listEditedArticles: [],
                 listArticleToPublish: [],
                 paginationResult: {},
                 paginationPath: '',
                 editor: new Editor(),
-                tableType: ''
-			}
-		},
-		watch: {
-			articles(data) {
-				this.articlesCount = data.length;
-                // this.articlesToEdit(data);
-                // this.editedArticles(data);
-                // this.articlesToPublish(data);
-			},
-
-			authUser(data) {
-				// has power editor access
-				if (data.has_peditor_access === 0) {
-					this.hasPeditorAccess = false;
-					this.error = 'You have no access to power editor feature.';
-				} else {
-					this.hasPeditorAccess = true;
-				}
 			}
 		},
 		created() {
 			// this.articleList();
-		},
-		mounted() {
-			this.authUser = JSON.parse(this.user);
-			this.listenWhenPowerEditorUpdated();
-            this.updateArticleData();
-
-            // Bus
-            let vm = this;
-            ArticleBus.$on('isEditing', data => vm.updateArticle(data));
-            ReportingBus.$on('isLoadedListToEdit', data => this.listToEdit = data);
-            ReportingBus.$on('isLoadedListEditedArticles', data => this.listEditedArticles = data);
 		},
 		methods: {
 			articleList() {
@@ -125,14 +92,6 @@
                     this.paginationPath = data.path;
                     this.articles = this.editor.mapResultOfArticles(data.data);
                 });
-			},
-
-			updateArticle(data) {
-				this.isEdit = false;
-				this.article = data.article;
-				this.index = data.index;
-                this.tableType = data.tableType;
-				Vue.nextTick(() => this.isEdit = true );
 			},
 
             setupToUpdateRecord(data) {
@@ -156,39 +115,6 @@
                         }
                         break;
                 };
-            },
-
-			updateRecord(data) {
-				if (data) {
-                    this.setupToUpdateRecord(data);
-
-                    // successfully updated
-					let articleTitle = this.article.doc_title;
-					new Noty({
-						type: 'info',
-						text: `<b>${articleTitle}</b> article successfully updated.`,
-						layout: 'bottomLeft',
-						timeout: 5000
-					}).show();
-				}
-			},
-
-			dismissUpdate(payload) {
-				this.isEdit = false;
-                this.setupToUpdateRecord(payload);
-			},
-
-			listenWhenPowerEditorUpdated(data) {
-				ArticleBus.$on('editorUpdatedSpintaxCopy', data => {
-					this.articles[this.index].spintax_copy = data.spintax;
-				});
-			},
-
-            updateArticleData() {
-                ArticleBus.$on('isRespinArticle', data => {
-                    this.setupToUpdateRecord(data);
-                    // this.articles[this.index].spin = data.spin;
-                });
             },
 
             articlesToEdit(data) {

@@ -1,5 +1,5 @@
 @extends('layouts.admin')
 
 @section ('content')
-    <dashboard token="{{ csrf_token() }}"></dashboard>
+    <dashboard user="{{ $user }}" token="{{ csrf_token() }}"></dashboard>
 @endsection

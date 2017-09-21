@@ -1,29 +1,41 @@
 <template>
     <div class="Dashboard">
-        <!-- Range Filter -->
-        <search-by></search-by>
+        <!-- Article Editor -->
+        <article-editor
+            :article="article"
+            :peditoraccess="hasPeditorAccess"
+            v-if="isEdit"
+            @isUpdated="updateRecord"
+            @isDismiss="dismissUpdate">
+        </article-editor>
 
-        <!-- Filter Box -->
-        <filter-box></filter-box>
+        <div class="admin-search" v-show="! isEdit">
+            <!-- Range Filter -->
+            <search-by></search-by>
 
-        <!-- Article Report -->
-        <article-report></article-report>
+            <!-- Filter Box -->
+            <filter-box></filter-box>
 
-        <!-- Article Edited -->
-        <article-edited></article-edited>
+            <!-- Article Report -->
+            <article-report></article-report>
 
-        <!-- ArticleToEdit -->
-        <article-to-edit></article-to-edit>
+            <!-- Article Edited -->
+            <article-edited></article-edited>
 
-        <!-- Article Spun -->
-        <article-spun></article-spun>
+            <!-- ArticleToEdit -->
+            <article-to-edit></article-to-edit>
 
-        <!-- Pending User -->
-        <pending-user :token="token"></pending-user>
+            <!-- Article Spun -->
+            <article-spun></article-spun>
+
+            <!-- Pending User -->
+            <pending-user :token="token"></pending-user>
+        </div>
     </div>
 </template>
 
 <script>
+    import ArticleEditor from './../editor/ArticleEditor.vue';
     import FilterBox from './FilterBox.vue';
     import SearchBy from './SearchBy.vue';
     import ArticleReport from './ArticleReport.vue';
@@ -31,10 +43,12 @@
     import ArticleToEdit from './ArticleToEdit.vue';
     import ArticleSpun from './ArticleSpun.vue';
     import PendingUser from './PendingUser.vue';
+    import { ArticleEditorMixin } from './../../mixins/ArticleEditorMixin.js';
 
     export default {
-        props: ['token'],
+        props: ['user', 'token'],
         components: {
+            ArticleEditor,
             FilterBox,
             SearchBy,
             ArticleReport,
@@ -43,6 +57,7 @@
             ArticleSpun,
             PendingUser
         },
+        mixins: [ ArticleEditorMixin ],
         data() {
             return {
                 report: ReportingBus

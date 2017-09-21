@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import Editor from './../class/Editor.js'
 
 export const ReportingBus = new Vue({
 	data() {
@@ -27,7 +28,8 @@ export const ReportingBus = new Vue({
             noOfArticlesEditedThisWeek: 0,
             noOfArticlesToEditThisWeek: 0,
             noOfArticlesSpunThisWeek: 0,
-            creatorOfArticles: []
+            creatorOfArticles: [],
+            editor: new Editor()
 		};
 	},
 
@@ -103,26 +105,7 @@ export const ReportingBus = new Vue({
         articlesThisWeek() {
             let params = this.paramsForDate();
 
-            axios.get('/admin/articlesThisWeek'+params).then(response => {
-                const data = response.data;
-
-                if (data) {
-                    this.articles = data;
-
-                    // map results
-                    // this.articles = data.map(item => {
-                    //     return {
-                    //         word_id: item.id,
-                    //         doc_title: item.doc_title,
-                    //         keyword: item.keyword,
-                    //         article: item.article.substr(0, 200) + '...',
-                    //         created_at: item.created_at,
-                    //         isEditorEdit: item.isEditorEdit,
-                    //         isProcess: item.isProcess
-                    //     };
-                    // });
-                }
-            });
+            axios.get('/admin/articlesThisWeek'+params).then(response => this.articles = this.editor.mapResultOfArticles(response.data));
         },
 
         articlesEditedThisWeek() {
