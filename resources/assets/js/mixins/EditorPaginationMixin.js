@@ -1,6 +1,8 @@
+import Paginate from 'vuejs-paginate'
 import Editor from './../class/Editor.js';
 
 export const EditorPaginationMixin = {
+    components: { Paginate },
     data() {
         return {
             articlesCount: 0,

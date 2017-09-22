@@ -61,7 +61,6 @@
     import ArticleResult from './ArticleResult.vue';
     import ArticleEditor from './../editor/ArticleEditor.vue';
     import ReportHeader from './ReportHeader.vue';
-    import Paginate from 'vuejs-paginate'
     import { UserArticleMixin } from './../../mixins/UserArticleMixin.js';
     import { EditorPaginationMixin } from './../../mixins/EditorPaginationMixin.js';
 
@@ -70,8 +69,7 @@
         components: {
             ArticleResult,
             ArticleEditor,
-            ReportHeader,
-            Paginate
+            ReportHeader
         },
         mixins: [ UserArticleMixin, EditorPaginationMixin ],
         data() {
