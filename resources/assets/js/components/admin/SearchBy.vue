@@ -125,8 +125,10 @@
             },
 
             searchArticlesByRange() {
+                this.isLoading = true;
+
                 this.form.post('/admin/searchArticlesByRange')
-                    .then(data => this.articles = data);
+                    .then(data => this.setArticlesData(data));
             },
 
             setArticlesData(articles) {
