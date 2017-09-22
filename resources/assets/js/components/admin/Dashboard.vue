@@ -61,11 +61,7 @@
         data() {
             return {
                 report: ReportingBus,
-                searchByArticles: [],
-                thisWeek: [],
-                editedThisWeek: [],
-                toEditThisWeek: [],
-                spunThisWeek: [],
+                searchByArticles: []
             };
         },
         mounted() {

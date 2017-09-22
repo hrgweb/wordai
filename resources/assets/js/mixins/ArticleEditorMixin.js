@@ -56,27 +56,39 @@ export const ArticleEditorMixin = {
             Vue.nextTick(() => this.isEdit = true );
         },
 
+        setArticleAndTime(article, spin, times) {
+            article.spin = spin;
+
+            if (times.length > 0) {
+                article.hr_spent_editor_edit_article = times[0];
+                article.min_spent_editor_edit_article = times[1];
+                article.sec_spent_editor_edit_article = times[2];
+            }
+        },
+
         setupToUpdateRecord(data) {
             switch(this.tableType) {
                 case 'article-to-edit':
-                    this.listToEdit[this.index].spin = data.article;
-
-                    if (data.times.length > 0) {
-                        this.listToEdit[this.index].hr_spent_editor_edit_article = data.times[0];
-                        this.listToEdit[this.index].min_spent_editor_edit_article = data.times[1];
-                        this.listToEdit[this.index].sec_spent_editor_edit_article = data.times[2];
-                    }
+                    this.setArticleAndTime(
+                        this.listToEdit[this.index],
+                        data.article,
+                        data.times
+                    );
                     break;
                 case 'article-edited':
-                    this.listEditedArticles[this.index].spin = data.article;
-
-                    if (data.times.length > 0) {
-                        this.listEditedArticles[this.index].hr_spent_editor_edit_article = data.times[0];
-                        this.listEditedArticles[this.index].min_spent_editor_edit_article = data.times[1];
-                        this.listEditedArticles[this.index].sec_spent_editor_edit_article = data.times[2];
-                    }
+                    this.setArticleAndTime(
+                        this.listEditedArticles[this.index],
+                        data.article,
+                        data.times
+                    );
                     break;
                 default:
+                    let index = --this.index;
+                    this.setArticleAndTime(
+                        this.report.articles[index],
+                        data.article,
+                        data.times
+                    );
                     break;
             };
         },
@@ -96,11 +108,7 @@ export const ArticleEditorMixin = {
 
         dismissUpdate(payload) {
             this.isEdit = false;
-            if (this.tableType !== undefined) {
-                this.setupToUpdateRecord(payload);
-            } else {
-                window.location.href = '/admin'; // from admin
-            }
+            this.setupToUpdateRecord(payload);
         },
 
         updateArticleData() {

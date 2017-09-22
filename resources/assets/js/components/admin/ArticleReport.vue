@@ -13,7 +13,7 @@
                     <div v-if="isGroupByEqualSelect">
                         <report-table
                             :articles="report.articles"
-                            tableType="article-edited">
+                            tableType="admin-article-this-week">
                         </report-table>
                     </div>
 

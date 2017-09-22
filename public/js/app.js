@@ -17051,27 +17051,26 @@ var ArticleEditorMixin = {
                 return _this2.isEdit = true;
             });
         },
+        setArticleAndTime: function setArticleAndTime(article, spin, times) {
+            article.spin = spin;
+
+            if (times.length > 0) {
+                article.hr_spent_editor_edit_article = times[0];
+                article.min_spent_editor_edit_article = times[1];
+                article.sec_spent_editor_edit_article = times[2];
+            }
+        },
         setupToUpdateRecord: function setupToUpdateRecord(data) {
             switch (this.tableType) {
                 case 'article-to-edit':
-                    this.listToEdit[this.index].spin = data.article;
-
-                    if (data.times.length > 0) {
-                        this.listToEdit[this.index].hr_spent_editor_edit_article = data.times[0];
-                        this.listToEdit[this.index].min_spent_editor_edit_article = data.times[1];
-                        this.listToEdit[this.index].sec_spent_editor_edit_article = data.times[2];
-                    }
+                    this.setArticleAndTime(this.listToEdit[this.index], data.article, data.times);
                     break;
                 case 'article-edited':
-                    this.listEditedArticles[this.index].spin = data.article;
-
-                    if (data.times.length > 0) {
-                        this.listEditedArticles[this.index].hr_spent_editor_edit_article = data.times[0];
-                        this.listEditedArticles[this.index].min_spent_editor_edit_article = data.times[1];
-                        this.listEditedArticles[this.index].sec_spent_editor_edit_article = data.times[2];
-                    }
+                    this.setArticleAndTime(this.listEditedArticles[this.index], data.article, data.times);
                     break;
                 default:
+                    var index = --this.index;
+                    this.setArticleAndTime(this.report.articles[index], data.article, data.times);
                     break;
             };
         },
@@ -17089,11 +17088,7 @@ var ArticleEditorMixin = {
         },
         dismissUpdate: function dismissUpdate(payload) {
             this.isEdit = false;
-            if (this.tableType !== undefined) {
-                this.setupToUpdateRecord(payload);
-            } else {
-                window.location.href = '/admin'; // from admin
-            }
+            this.setupToUpdateRecord(payload);
         },
         updateArticleData: function updateArticleData() {
             var _this3 = this;
@@ -30567,11 +30562,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     data: function data() {
         return {
             report: ReportingBus,
-            searchByArticles: [],
-            thisWeek: [],
-            editedThisWeek: [],
-            toEditThisWeek: [],
-            spunThisWeek: []
+            searchByArticles: []
         };
     },
     mounted: function mounted() {
@@ -64939,7 +64930,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [(_vm.isGroupByEqualSelect) ? _c('div', [_c('report-table', {
     attrs: {
       "articles": _vm.report.articles,
-      "tableType": "article-edited"
+      "tableType": "admin-article-this-week"
     }
   })], 1) : (_vm.isGroupByEqualUser) ? _c('div', _vm._l((_vm.report.creatorOfArticles), function(creator) {
     return _c('report-filter-by-user', {
