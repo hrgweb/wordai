@@ -116,6 +116,14 @@ export const ArticleEditorMixin = {
                         data.times
                     );
                     break;
+                case 'admin-search-by':
+                    index = --this.index;
+                    this.setArticleAndTime(
+                        this.articles[index],
+                        data.article,
+                        data.times
+                    );
+                    break;
             };
         },
 

@@ -17086,6 +17086,10 @@ var ArticleEditorMixin = {
                     index = --this.index;
                     this.setArticleAndTime(this.report.spunThisWeek[index], data.article, data.times);
                     break;
+                case 'admin-search-by':
+                    index = --this.index;
+                    this.setArticleAndTime(this.articles[index], data.article, data.times);
+                    break;
             };
         },
         updateRecord: function updateRecord(data) {
@@ -32570,6 +32574,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RangeFilter_vue__ = __webpack_require__(306);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RangeFilter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__RangeFilter_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__eventbus_ReportingBus_js__ = __webpack_require__(240);
 //
 //
 //
@@ -32639,6 +32644,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -32647,102 +32656,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a, RangeFilter: __WEBPACK_IMPORTED_MODULE_1__RangeFilter_vue___default.a },
     data: function data() {
         return {
-            articles: [],
-            articlesCount: 0,
-            form: new Form({
-                from: '',
-                to: '',
-                input: ''
-            }),
             search: { by: ['range', 'user', 'group', 'website'] },
-            searchBy: 'select',
-            isLoading: false
+            report: __WEBPACK_IMPORTED_MODULE_2__eventbus_ReportingBus_js__["a" /* ReportingBus */]
         };
-    },
-
-    computed: {
-        placeHolder: function placeHolder() {
-            return 'Seach for ' + this.searchBy;
-        },
-        headerCaption: function headerCaption() {
-            var text = '';
-
-            if (this.searchBy === 'select') {
-                text = 'Please select what to search';
-            } else if (this.searchBy === 'range') {
-                text = 'Search by range data';
-            } else {
-                text = 'Search by ' + this.searchBy + ': `' + this.form.input + '`';
-            }
-
-            return text;
-        }
-    },
-    watch: {
-        articles: function articles(data) {
-            this.articlesCount = data.length;
-        }
-    },
-    methods: {
-        initSetupDate: function initSetupDate() {
-            var dateObj = new Date();
-            var month = dateObj.getMonth() + 1; //months from 1-12
-            month = parseInt(month, 10) > 9 ? month : '0' + month;
-            var day = dateObj.getDate();
-            day = parseInt(day, 10) > 9 ? day : '0' + day;
-            var year = dateObj.getFullYear();
-
-            this.form['from'] = year + "-" + month + "-" + day;
-            this.form['to'] = year + "-" + month + "-" + day;
-        },
-        searchArticlesByRange: function searchArticlesByRange() {
-            var _this = this;
-
-            this.isLoading = true;
-
-            this.form.post('/admin/searchArticlesByRange').then(function (data) {
-                return _this.setArticlesData(data);
-            });
-        },
-        setArticlesData: function setArticlesData(articles) {
-            this.isLoading = false;
-            this.articles = articles;
-        },
-        searchNow: function searchNow(data) {
-            var _this2 = this;
-
-            this.form['from'] = data.from;
-            this.form['to'] = data.to;
-
-            if (this.form.input.length > 0) {
-                this.isLoading = true;
-
-                if (this.searchBy === 'user') {
-                    this.form.post('/admin/searchByUser').then(function (data) {
-                        return _this2.setArticlesData(data);
-                    });
-                } else if (this.searchBy === 'group') {
-                    this.form.post('/admin/searchByGroup').then(function (data) {
-                        return _this2.setArticlesData(data);
-                    });
-                } else if (this.searchBy === 'website') {
-                    this.form.post('/admin/searchByWebsite').then(function (data) {
-                        return _this2.setArticlesData(data);
-                    });
-                }
-            } else {
-                new Noty({
-                    type: 'error',
-                    text: 'Please enter your search in the input field.',
-                    layout: 'bottomLeft',
-                    timeout: 5000
-                }).show();
-            }
-        },
-        changeSearch: function changeSearch() {
-            this.form.reset();
-            this.initSetupDate();
-        }
     }
 });
 
@@ -36718,7 +36634,9 @@ var DomainBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__class_Editor_js__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__class_Form_js__ = __webpack_require__(234);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ReportingBus; });
+
 
 
 
@@ -36750,10 +36668,38 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             noOfArticlesToEditThisWeek: 0,
             noOfArticlesSpunThisWeek: 0,
             creatorOfArticles: [],
-            editor: new __WEBPACK_IMPORTED_MODULE_1__class_Editor_js__["a" /* default */]()
+            editor: new __WEBPACK_IMPORTED_MODULE_1__class_Editor_js__["a" /* default */](),
+            form: new __WEBPACK_IMPORTED_MODULE_2__class_Form_js__["a" /* default */]({
+                from: '',
+                to: '',
+                input: ''
+            }),
+            searchByArticlesData: [],
+            searchByArticlesCount: 0,
+            searchBy: 'select',
+            isLoading: false
         };
     },
 
+
+    computed: {
+        placeHolder: function placeHolder() {
+            return 'Seach for ' + this.searchBy;
+        },
+        headerCaption: function headerCaption() {
+            var text = '';
+
+            if (this.searchBy === 'select') {
+                text = 'Please select what to search';
+            } else if (this.searchBy === 'range') {
+                text = 'Search by range data';
+            } else {
+                text = 'Search by ' + this.searchBy + ': `' + this.form.input + '`';
+            }
+
+            return text;
+        }
+    },
 
     watch: {
         date: function date() {
@@ -36767,6 +36713,9 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             this.articlesEditedThisWeek();
             this.articlesWaitToEdit();
             this.articlesSpunThisWeek();
+        },
+        searchByArticlesData: function searchByArticlesData(data) {
+            this.searchByArticlesCount = data.length;
         }
     },
 
@@ -36871,6 +36820,69 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
                     });
                     break;
             }
+        },
+
+
+        /*=============== Search By ===============*/
+
+        initSetupDate: function initSetupDate() {
+            var dateObj = new Date();
+            var month = dateObj.getMonth() + 1; //months from 1-12
+            month = parseInt(month, 10) > 9 ? month : '0' + month;
+            var day = dateObj.getDate();
+            day = parseInt(day, 10) > 9 ? day : '0' + day;
+            var year = dateObj.getFullYear();
+
+            this.form['from'] = year + "-" + month + "-" + day;
+            this.form['to'] = year + "-" + month + "-" + day;
+        },
+        searchArticlesByRange: function searchArticlesByRange() {
+            var _this3 = this;
+
+            this.isLoading = true;
+
+            this.form.post('/admin/searchArticlesByRange').then(function (data) {
+                return _this3.setArticlesData(data);
+            });
+        },
+        setArticlesData: function setArticlesData(articles) {
+            this.isLoading = false;
+            this.searchByArticlesData = articles;
+        },
+        searchNow: function searchNow(data) {
+            var _this4 = this;
+
+            this.form['from'] = data.from;
+            this.form['to'] = data.to;
+
+            if (this.form.input.length > 0) {
+                this.isLoading = true;
+
+                if (this.searchBy === 'user') {
+                    this.form.post('/admin/searchByUser').then(function (data) {
+                        return _this4.setArticlesData(data);
+                    });
+                } else if (this.searchBy === 'group') {
+                    this.form.post('/admin/searchByGroup').then(function (data) {
+                        return _this4.setArticlesData(data);
+                    });
+                } else if (this.searchBy === 'website') {
+                    this.form.post('/admin/searchByWebsite').then(function (data) {
+                        return _this4.setArticlesData(data);
+                    });
+                }
+            } else {
+                new Noty({
+                    type: 'error',
+                    text: 'Please enter your search in the input field.',
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
+            }
+        },
+        changeSearch: function changeSearch() {
+            this.form.reset();
+            this.initSetupDate();
         }
     }
 });
@@ -63436,8 +63448,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.searchBy),
-      expression: "searchBy"
+      value: (_vm.report.searchBy),
+      expression: "report.searchBy"
     }],
     on: {
       "change": [function($event) {
@@ -63447,8 +63459,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           var val = "_value" in o ? o._value : o.value;
           return val
         });
-        _vm.searchBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }, _vm.changeSearch]
+        _vm.report.searchBy = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }, _vm.report.changeSearch]
     }
   }, [_c('option', {
     attrs: {
@@ -63460,7 +63472,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": search
       }
     }, [_vm._v(_vm._s(search.toUpperCase()))])
-  })], 2)]), _vm._v(" "), (_vm.searchBy === 'range') ? _c('div', {
+  })], 2)]), _vm._v(" "), (_vm.report.searchBy === 'range') ? _c('div', {
     staticClass: "range-filter"
   }, [_c('form', {
     attrs: {
@@ -63476,20 +63488,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.form.from),
-      expression: "form.from"
+      value: (_vm.report.form.from),
+      expression: "report.form.from"
     }],
     attrs: {
       "type": "date",
       "id": "from"
     },
     domProps: {
-      "value": (_vm.form.from)
+      "value": (_vm.report.form.from)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.form.from = $event.target.value
+        _vm.report.form.from = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {
@@ -63502,20 +63514,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.form.to),
-      expression: "form.to"
+      value: (_vm.report.form.to),
+      expression: "report.form.to"
     }],
     attrs: {
       "type": "date",
       "id": "to"
     },
     domProps: {
-      "value": (_vm.form.to)
+      "value": (_vm.report.form.to)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.form.to = $event.target.value
+        _vm.report.form.to = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('button', {
@@ -63526,10 +63538,10 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.searchArticlesByRange($event)
+        _vm.report.searchArticlesByRange($event)
       }
     }
-  }, [_vm._v("Search Now")])])]) : (_vm.searchBy === 'user' || _vm.searchBy === 'group' || _vm.searchBy === 'website') ? _c('div', {
+  }, [_vm._v("Search Now")])])]) : (_vm.report.searchBy === 'user' || _vm.report.searchBy === 'group' || _vm.report.searchBy === 'website') ? _c('div', {
     staticClass: "input"
   }, [_c('form', {
     attrs: {
@@ -63544,29 +63556,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     directives: [{
       name: "model",
       rawName: "v-model",
-      value: (_vm.form.input),
-      expression: "form.input"
+      value: (_vm.report.form.input),
+      expression: "report.form.input"
     }],
     staticClass: "input-search",
     attrs: {
       "type": "text",
       "id": "input",
-      "placeholder": _vm.placeHolder
+      "placeholder": _vm.report.placeHolder
     },
     domProps: {
-      "value": (_vm.form.input)
+      "value": (_vm.report.form.input)
     },
     on: {
       "input": function($event) {
         if ($event.target.composing) { return; }
-        _vm.form.input = $event.target.value
+        _vm.report.form.input = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('range-filter', {
     on: {
-      "searchNow": _vm.searchNow
+      "searchNow": _vm.report.searchNow
     }
-  })], 1) : _vm._e(), _vm._v(" "), (_vm.isLoading) ? _c('div', {
+  })], 1) : _vm._e(), _vm._v(" "), (_vm.report.isLoading) ? _c('div', {
     staticClass: "misc"
   }, [_c('span', [_vm._v("Fetching Data...")])]) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "clear"
@@ -63578,11 +63590,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "Result"
   }, [_c('h2', {
     staticClass: "text-center"
-  }, [_vm._v("\n                " + _vm._s(_vm.headerCaption) + "\n                "), _c('span', {
+  }, [_vm._v("\n                " + _vm._s(_vm.report.headerCaption) + "\n                "), _c('span', {
     staticClass: "badge"
-  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('report-table', {
+  }, [_vm._v(_vm._s(_vm.report.searchByArticlesCount))])]), _vm._v(" "), _c('report-table', {
     attrs: {
-      "articles": _vm.articles
+      "articles": _vm.report.searchByArticlesData,
+      "tableType": "admin-search-by"
     }
   })], 1)])])
 },staticRenderFns: []}

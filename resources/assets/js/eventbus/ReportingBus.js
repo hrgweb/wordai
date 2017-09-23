@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Editor from './../class/Editor.js'
+import Form from './../class/Form.js'
 
 export const ReportingBus = new Vue({
 	data() {
@@ -29,9 +30,38 @@ export const ReportingBus = new Vue({
             noOfArticlesToEditThisWeek: 0,
             noOfArticlesSpunThisWeek: 0,
             creatorOfArticles: [],
-            editor: new Editor()
+            editor: new Editor(),
+            form: new Form({
+                from: '',
+                to: '',
+                input: ''
+            }),
+            searchByArticlesData: [],
+            searchByArticlesCount: 0,
+            searchBy: 'select',
+            isLoading: false,
 		};
 	},
+
+    computed: {
+        placeHolder() {
+            return 'Seach for ' + this.searchBy;
+        },
+
+        headerCaption() {
+            let text = '';
+
+            if (this.searchBy === 'select') {
+                text = 'Please select what to search';
+            } else if (this.searchBy === 'range') {
+                text = 'Search by range data';
+            } else {
+                text = 'Search by ' + this.searchBy + ': `' + this.form.input + '`';
+            }
+
+            return text;
+        }
+    },
 
     watch: {
         date() {
@@ -46,6 +76,10 @@ export const ReportingBus = new Vue({
             this.articlesEditedThisWeek();
             this.articlesWaitToEdit();
             this.articlesSpunThisWeek();
+        },
+
+        searchByArticlesData(data) {
+            this.searchByArticlesCount = data.length;
         }
     },
 
@@ -146,6 +180,61 @@ export const ReportingBus = new Vue({
                     axios.get('/admin/articlesDomain'+params).then(response => this.creatorOfArticles = response.data);
                     break;
             }
+        },
+
+        /*=============== Search By ===============*/
+
+        initSetupDate() {
+            let dateObj = new Date();
+            let month = dateObj.getMonth() + 1; //months from 1-12
+            month = parseInt(month, 10) > 9 ? month : '0' + month;
+            let day = dateObj.getDate();
+            day = parseInt(day, 10) > 9 ? day : '0' + day;
+            let year = dateObj.getFullYear();
+
+            this.form['from'] = year + "-" + month + "-" + day;
+            this.form['to'] = year + "-" + month + "-" + day;
+        },
+
+        searchArticlesByRange() {
+            this.isLoading = true;
+
+            this.form.post('/admin/searchArticlesByRange')
+                .then(data => this.setArticlesData(data));
+        },
+
+        setArticlesData(articles) {
+            this.isLoading = false;
+            this.searchByArticlesData = articles;
+        },
+
+        searchNow(data) {
+            this.form['from'] = data.from;
+            this.form['to'] = data.to;
+
+            if (this.form.input.length > 0) {
+                this.isLoading = true;
+
+                if (this.searchBy === 'user') {
+                    this.form.post('/admin/searchByUser').then(data => this.setArticlesData(data));
+                } else if (this.searchBy === 'group') {
+                    this.form.post('/admin/searchByGroup').then(data => this.setArticlesData(data));
+                } else if (this.searchBy === 'website') {
+                    this.form.post('/admin/searchByWebsite').then(data => this.setArticlesData(data));
+                }
+            } else {
+                new Noty({
+                    type: 'error',
+                    text: `Please enter your search in the input field.`,
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
+            }
+        },
+
+        changeSearch() {
+            this.form.reset();
+            this.initSetupDate();
         }
     }
 });
