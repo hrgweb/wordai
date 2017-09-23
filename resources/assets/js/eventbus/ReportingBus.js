@@ -205,7 +205,7 @@ export const ReportingBus = new Vue({
 
         setArticlesData(articles) {
             this.isLoading = false;
-            this.searchByArticlesData = articles;
+            this.searchByArticlesData =  this.editor.mapResultOfArticles(articles);
         },
 
         searchNow(data) {

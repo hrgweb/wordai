@@ -17088,7 +17088,7 @@ var ArticleEditorMixin = {
                     break;
                 case 'admin-search-by':
                     index = --this.index;
-                    this.setArticleAndTime(this.articles[index], data.article, data.times);
+                    this.setArticleAndTime(this.report.searchByArticlesData[index], data.article, data.times);
                     break;
             };
         },
@@ -36847,7 +36847,7 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         },
         setArticlesData: function setArticlesData(articles) {
             this.isLoading = false;
-            this.searchByArticlesData = articles;
+            this.searchByArticlesData = this.editor.mapResultOfArticles(articles);
         },
         searchNow: function searchNow(data) {
             var _this4 = this;

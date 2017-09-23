@@ -119,7 +119,7 @@ export const ArticleEditorMixin = {
                 case 'admin-search-by':
                     index = --this.index;
                     this.setArticleAndTime(
-                        this.articles[index],
+                        this.report.searchByArticlesData[index],
                         data.article,
                         data.times
                     );
