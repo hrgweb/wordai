@@ -11,7 +11,10 @@
                 <div class="content">
                     <!-- <div v-if="isGroupByEqualSelect"> -->
                     <div>
-                        <report-table :articles="report.editedThisWeek"></report-table>
+                        <report-table
+                            :articles="report.editedThisWeek"
+                            tableType="admin-article-edited">
+                        </report-table>
                     </div>
 
                     <!-- <div v-else-if="isGroupByEqualUser">
@@ -40,6 +43,7 @@
 <script>
     import ReportTable from './ReportTable.vue';
     import ReportHeader from './ReportHeader.vue';
+    import { ArticleEditorMixin } from './../../mixins/ArticleEditorMixin.js';
 
     export default {
         components: { ReportTable, ReportHeader },

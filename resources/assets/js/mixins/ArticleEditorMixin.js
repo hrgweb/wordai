@@ -67,6 +67,8 @@ export const ArticleEditorMixin = {
         },
 
         setupToUpdateRecord(data) {
+            let index = 0;
+
             switch(this.tableType) {
                 case 'article-to-edit':
                     this.setArticleAndTime(
@@ -82,10 +84,34 @@ export const ArticleEditorMixin = {
                         data.times
                     );
                     break;
-                default:
-                    let index = --this.index;
+                case 'admin-article-this-week':
+                    index = --this.index;
                     this.setArticleAndTime(
                         this.report.articles[index],
+                        data.article,
+                        data.times
+                    );
+                    break;
+                case 'admin-article-edited':
+                    index = --this.index;
+                    this.setArticleAndTime(
+                        this.report.editedThisWeek[index],
+                        data.article,
+                        data.times
+                    );
+                    break;
+                case 'admin-to-edit':
+                    index = --this.index;
+                    this.setArticleAndTime(
+                        this.report.waitingToEdit[index],
+                        data.article,
+                        data.times
+                    );
+                    break;
+                case 'admin-spun-article':
+                    index = --this.index;
+                    this.setArticleAndTime(
+                        this.report.spunThisWeek[index],
                         data.article,
                         data.times
                     );

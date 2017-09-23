@@ -11,7 +11,10 @@
                 <div class="content">
                     <!-- <div v-if="isGroupByEqualSelect"> -->
                     <div>
-                        <report-table :articles="report.spunThisWeek"></report-table>
+                        <report-table
+                            :articles="report.spunThisWeek"
+                            tableType="admin-spun-article">
+                        </report-table>
                     </div>
 
                     <!-- <div v-else-if="isGroupByEqualUser">

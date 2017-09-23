@@ -17061,6 +17061,8 @@ var ArticleEditorMixin = {
             }
         },
         setupToUpdateRecord: function setupToUpdateRecord(data) {
+            var index = 0;
+
             switch (this.tableType) {
                 case 'article-to-edit':
                     this.setArticleAndTime(this.listToEdit[this.index], data.article, data.times);
@@ -17068,9 +17070,21 @@ var ArticleEditorMixin = {
                 case 'article-edited':
                     this.setArticleAndTime(this.listEditedArticles[this.index], data.article, data.times);
                     break;
-                default:
-                    var index = --this.index;
+                case 'admin-article-this-week':
+                    index = --this.index;
                     this.setArticleAndTime(this.report.articles[index], data.article, data.times);
+                    break;
+                case 'admin-article-edited':
+                    index = --this.index;
+                    this.setArticleAndTime(this.report.editedThisWeek[index], data.article, data.times);
+                    break;
+                case 'admin-to-edit':
+                    index = --this.index;
+                    this.setArticleAndTime(this.report.waitingToEdit[index], data.article, data.times);
+                    break;
+                case 'admin-spun-article':
+                    index = --this.index;
+                    this.setArticleAndTime(this.report.spunThisWeek[index], data.article, data.times);
                     break;
             };
         },
@@ -29523,6 +29537,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleEditorMixin_js__ = __webpack_require__(32);
 //
 //
 //
@@ -29562,6 +29577,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+
 
 
 
@@ -29973,6 +29992,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
@@ -29996,6 +30018,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue__ = __webpack_require__(7);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ReportHeader_vue__);
+//
+//
+//
 //
 //
 //
@@ -32356,7 +32381,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['articles'],
+    props: ['articles', 'tableType'],
     data: function data() {
         return {
             time: moment,
@@ -32368,7 +32393,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         editArticle: function editArticle(article, index) {
             ArticleBus.$emit('isEditing', {
                 article: article,
-                index: index
+                index: index,
+                tableType: this.tableType
             });
         },
         publishBtnState: function publishBtnState(text, state) {
@@ -63304,7 +63330,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "content"
   }, [_c('div', [_c('report-table', {
     attrs: {
-      "articles": _vm.report.editedThisWeek
+      "articles": _vm.report.editedThisWeek,
+      "tableType": "admin-article-edited"
     }
   })], 1)])])])])
 },staticRenderFns: []}
@@ -65684,7 +65711,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "content"
   }, [_c('div', [_c('report-table', {
     attrs: {
-      "articles": _vm.report.waitingToEdit
+      "articles": _vm.report.waitingToEdit,
+      "tableType": "admin-to-edit"
     }
   })], 1)])])])])
 },staticRenderFns: []}
@@ -65959,7 +65987,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "content"
   }, [_c('div', [_c('report-table', {
     attrs: {
-      "articles": _vm.report.spunThisWeek
+      "articles": _vm.report.spunThisWeek,
+      "tableType": "admin-spun-article"
     }
   })], 1)])])])])
 },staticRenderFns: []}
