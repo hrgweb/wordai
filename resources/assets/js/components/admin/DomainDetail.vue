@@ -290,13 +290,22 @@
 				const output = {
 					params: {
 						id: data.detail.id,
-						domain_id: data.detail.domain_id
+                        domain_id: data.detail.domain_id,
+						group_id: data.detail.group_id
 					}
 				};
 
 				axios.delete('/admin/removeDetails', output).then(response => {
 					// remove item object in details on specific index
 					this.details.splice(this.index, 1);
+
+                    // notify
+                    new Noty({
+                        type: 'error',
+                        text: `1 record successfully removed.`,
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
 				});
 			},
 

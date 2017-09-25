@@ -216,18 +216,19 @@ class AdminController extends Controller
     {
     	// return request()->all();
 
-    	$domain_id = request('domain_id');
+        $domain_id = request('domain_id');
+    	$group_id = request('group_id');
 
     	DB::beginTransaction();
 		try {
 			// remove old protected terms
 	    	ProtectedTerm::where('domain_id', $domain_id)->delete();
 
-	    	// update domain isSet to true
+	    	// update domain isSet to false
 			Domain::where('id', $domain_id)->update(['isSet' => 0]);
 
 			// remove domain_details data
-			$detail = DomainDetail::where('id', request('id'))->delete();
+			$detail = DomainDetail::where(['domain_id' => request('domain_id'), 'group_id' => request('group_id')])->delete();
 		} catch (ValidationException $e) {
 			DB::rollback();
 			throw $e;

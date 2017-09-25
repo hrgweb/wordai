@@ -31502,13 +31502,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			var output = {
 				params: {
 					id: data.detail.id,
-					domain_id: data.detail.domain_id
+					domain_id: data.detail.domain_id,
+					group_id: data.detail.group_id
 				}
 			};
 
 			axios.delete('/admin/removeDetails', output).then(function (response) {
 				// remove item object in details on specific index
 				_this4.details.splice(_this4.index, 1);
+
+				// notify
+				new Noty({
+					type: 'error',
+					text: '1 record successfully removed.',
+					layout: 'bottomLeft',
+					timeout: 5000
+				}).show();
 			});
 		},
 		fullName: function fullName(data) {
