@@ -17,7 +17,7 @@
 		            <td>{{ detail.synonym }}</td>
 		            <td>{{ detail.created_at }}</td>
 		            <td>
-		            	<button type="button" class="btn btn-info" @click="editDetails(detail, index, $event)">Edit</button>
+		            	<button type="button" class="btn btn-info" @click="editDetails(detail, index)">Edit</button>
 		            	<button
                             type="button"
                             class="btn btn-danger"
@@ -41,7 +41,7 @@
         },
 		methods: {
 			editDetails(detail, index, event) {
-                let url = '/admin/editDetails?detail_id='+detail.id;
+                let url = '/admin/editDetails?detail_id='+detail.id+'&group_id='+detail.group_id;
 
                 axios.get(url).then(response => {
                     let data = response.data;

@@ -250,27 +250,20 @@
 			},
 
 			updateDetails() {
-				/*Vue.nextTick(() => {
-					// this.detail['domain'] = $('select option[value='+this.detail.domain_id+']').text();
-					this.detail['domain'] = $('b#domain').text();
-				});
-
-				// clean protected terms
-				this.detail['protected'] = this.wordai.protectedTermsSetup(this.detail.protected);
-
-				const data = {
-					detail: this.detail,
-					protectedTerms: this.extractProtectedTerms().join('|')
-				};*/
-
 				axios.patch('/admin/updateDetails', this.detail).then(response => {
-                    console.log(response.data);
+                    // update details data
+                    Vue.set(this.details, this.index, response.data);
 
-					// override details on specific index
-					// Vue.set(this.details, this.index, this.detail);
+                    // notify
+                    new Noty({
+                        type: 'info',
+                        text: `1 record successfully updated.`,
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
 
 					// close buttons and clear inputs
-					// this.cancelDetails();
+					this.cancelDetails();
 				});
 			},
 

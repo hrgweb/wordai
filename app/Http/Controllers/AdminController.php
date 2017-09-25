@@ -161,14 +161,14 @@ class AdminController extends Controller
         // delete pt, details record
         // save tp, details
 
-    	// return request()->all();
-
     	$id = request('id');
         $domain_id = request('domain_id');
         $group_id = request('group_id');
         $protected = request('protected');
         $synonym = request('synonym');
         $users = request('users');
+
+        // return request()->all();
 
     	DB::beginTransaction();
 		try {
@@ -185,11 +185,9 @@ class AdminController extends Controller
 	    	// }
 
 	    	// delete old domain details by domain_id
-	    	DomainDetail::where('id', $id)->update([
-    			'protected' => $protected,
-    			'synonym' => $synonym
-    		]);
+	    	DomainDetail::where('domain_id', $domain_id)->delete();
 
+            // save new domain details
             $userList = [];
             for ($i=0; $i < count($users); $i++) {
                 $domain = DomainDetail::create([
@@ -210,7 +208,8 @@ class AdminController extends Controller
 		}
 		DB::commit();
 
-        return response()->json($userList);
+        // get only the first result since we avoid duplicates
+        return response()->json($domain);
     }
 
     public function removeDetails()
@@ -524,7 +523,7 @@ class AdminController extends Controller
                         'dd.created_at',
                         'd.domain',
                         'g.group',
-                        'g.id AS group_id',
+                        'g.id AS group_id'
                     ])
                     ->where('dd.id', request('detail_id'))
                     ->first();
@@ -532,10 +531,11 @@ class AdminController extends Controller
         // push result to array
         array_push($result, $detail);
 
+        $domain_id = (int) $detail->domain_id;
         $group_id = (int) $detail->group_id;
 
         // list of users id
-        $users_id = DomainDetail::where('group_id', $group_id)->pluck('user_id');
+        $users_id = DomainDetail::where(['domain_id' => $domain_id, 'group_id' => $group_id])->pluck('user_id');
 
         // list of users
         $users = User::whereIn('id', $users_id)
