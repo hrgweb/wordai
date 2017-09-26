@@ -1,23 +1,16 @@
 <template>
     <div class="Dashboard">
-        <!-- Article Spun -->
-        <article-spun></article-spun>
-
         <!-- Pending User -->
         <pending-user :token="token"></pending-user>
     </div>
 </template>
 
 <script>
-    import ArticleSpun from './ArticleSpun.vue';
     import PendingUser from './PendingUser.vue';
 
     export default {
         props: ['user', 'token'],
-        components: {
-            ArticleSpun,
-            PendingUser
-        },
+        components: { PendingUser },
         data() {
             return {
                 report: ReportingBus,
