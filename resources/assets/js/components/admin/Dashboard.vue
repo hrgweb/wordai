@@ -10,9 +10,6 @@
         </article-editor>
 
         <div class="admin-search" v-show="! isEdit">
-            <!-- Range Filter -->
-            <search-by></search-by>
-
             <!-- Filter Box -->
             <filter-box></filter-box>
 
@@ -37,7 +34,6 @@
 <script>
     import ArticleEditor from './../editor/ArticleEditor.vue';
     import FilterBox from './FilterBox.vue';
-    import SearchBy from './SearchBy.vue';
     import ArticleReport from './ArticleReport.vue';
     import ArticleEdited from './ArticleEdited.vue';
     import ArticleToEdit from './ArticleToEdit.vue';
@@ -50,7 +46,6 @@
         components: {
             ArticleEditor,
             FilterBox,
-            SearchBy,
             ArticleReport,
             ArticleEdited,
             ArticleToEdit,

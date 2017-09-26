@@ -53,7 +53,7 @@
         </div>
 
         <!-- Result -->
-        <a id="articles_search_by_range">
+        <!-- <a id="articles_search_by_range"> -->
             <div class="Result">
                 <h2 class="text-center">
                     {{ report.headerCaption }}
@@ -66,7 +66,7 @@
                     tableType="admin-search-by">
                 </report-table>
             </div>
-        </a>
+        <!-- </a> -->
     </div>
 </template>
 

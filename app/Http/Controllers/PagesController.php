@@ -109,4 +109,9 @@ class PagesController extends Controller
     public function searchArticle() {
         return view('admin.search-article');
     }
+
+    public function adminSearchBy()
+    {
+        return view('admin.search-by');
+    }
 }

@@ -26,6 +26,10 @@ Route::get('super-editor', 'PagesController@superEditor');
 Route::get('edit-article', 'PagesController@editArticle');
 Route::get('search-article', 'PagesController@searchArticle');
 
+// Reports
+Route::get('report-search-by', 'PagesController@adminSearchBy');
+
+
 // WordAI
 Route::prefix('words')->group(function() {
 	Route::get('generate', 'WordsController@article');
