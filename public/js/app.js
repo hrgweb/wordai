@@ -30942,30 +30942,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__editor_ArticleEditor_vue__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__editor_ArticleEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__editor_ArticleEditor_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FilterBox_vue__ = __webpack_require__(300);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__FilterBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__FilterBox_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ArticleReport_vue__ = __webpack_require__(284);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ArticleReport_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ArticleReport_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue__ = __webpack_require__(282);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ArticleToEdit_vue__ = __webpack_require__(287);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ArticleToEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__ArticleToEdit_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ArticleSpun_vue__ = __webpack_require__(286);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ArticleSpun_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__ArticleSpun_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__PendingUser_vue__ = __webpack_require__(304);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__PendingUser_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__mixins_ArticleEditorMixin_js__ = __webpack_require__(23);
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FilterBox_vue__ = __webpack_require__(300);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__FilterBox_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__FilterBox_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ArticleReport_vue__ = __webpack_require__(284);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ArticleReport_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__ArticleReport_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ArticleEdited_vue__ = __webpack_require__(282);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ArticleEdited_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__ArticleEdited_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ArticleToEdit_vue__ = __webpack_require__(287);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ArticleToEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__ArticleToEdit_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ArticleSpun_vue__ = __webpack_require__(286);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ArticleSpun_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__ArticleSpun_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__PendingUser_vue__ = __webpack_require__(304);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__PendingUser_vue__);
 //
 //
 //
@@ -30997,21 +30985,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-
-
+// import { ArticleEditorMixin } from './../../mixins/ArticleEditorMixin.js';
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['user', 'token'],
     components: {
-        ArticleEditor: __WEBPACK_IMPORTED_MODULE_0__editor_ArticleEditor_vue___default.a,
-        FilterBox: __WEBPACK_IMPORTED_MODULE_1__FilterBox_vue___default.a,
-        ArticleReport: __WEBPACK_IMPORTED_MODULE_2__ArticleReport_vue___default.a,
-        ArticleEdited: __WEBPACK_IMPORTED_MODULE_3__ArticleEdited_vue___default.a,
-        ArticleToEdit: __WEBPACK_IMPORTED_MODULE_4__ArticleToEdit_vue___default.a,
-        ArticleSpun: __WEBPACK_IMPORTED_MODULE_5__ArticleSpun_vue___default.a,
-        PendingUser: __WEBPACK_IMPORTED_MODULE_6__PendingUser_vue___default.a
+        FilterBox: __WEBPACK_IMPORTED_MODULE_0__FilterBox_vue___default.a,
+        ArticleReport: __WEBPACK_IMPORTED_MODULE_1__ArticleReport_vue___default.a,
+        ArticleEdited: __WEBPACK_IMPORTED_MODULE_2__ArticleEdited_vue___default.a,
+        ArticleToEdit: __WEBPACK_IMPORTED_MODULE_3__ArticleToEdit_vue___default.a,
+        ArticleSpun: __WEBPACK_IMPORTED_MODULE_4__ArticleSpun_vue___default.a,
+        PendingUser: __WEBPACK_IMPORTED_MODULE_5__PendingUser_vue___default.a
     },
-    mixins: [__WEBPACK_IMPORTED_MODULE_7__mixins_ArticleEditorMixin_js__["a" /* ArticleEditorMixin */]],
+    // mixins: [ ArticleEditorMixin ],
     data: function data() {
         return {
             report: ReportingBus,
@@ -33004,7 +32990,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ReportTable_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RangeFilter_vue__ = __webpack_require__(306);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__RangeFilter_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__RangeFilter_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__eventbus_ReportingBus_js__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editor_ArticleEditor_vue__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editor_ArticleEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__editor_ArticleEditor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__eventbus_ReportingBus_js__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__mixins_ArticleEditorMixin_js__ = __webpack_require__(23);
 //
 //
 //
@@ -33077,17 +33066,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
 
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a, RangeFilter: __WEBPACK_IMPORTED_MODULE_1__RangeFilter_vue___default.a },
+    props: ['user'],
+    components: { ArticleEditor: __WEBPACK_IMPORTED_MODULE_2__editor_ArticleEditor_vue___default.a, ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a, RangeFilter: __WEBPACK_IMPORTED_MODULE_1__RangeFilter_vue___default.a },
+    mixins: [__WEBPACK_IMPORTED_MODULE_4__mixins_ArticleEditorMixin_js__["a" /* ArticleEditorMixin */]],
     data: function data() {
         return {
             search: { by: ['range', 'user', 'group', 'website'] },
-            report: __WEBPACK_IMPORTED_MODULE_2__eventbus_ReportingBus_js__["a" /* ReportingBus */]
+            report: __WEBPACK_IMPORTED_MODULE_3__eventbus_ReportingBus_js__["a" /* ReportingBus */]
         };
     }
 });
@@ -39381,7 +39384,7 @@ exports.push([module.i, "\n.overlay[data-v-24019439] {\n    background: rgba(0,0
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.controls[data-v-30597736] {\n    width: 170px;\n    float: left;\n    /*margin-right: 1em;*/\n}\n.misc[data-v-30597736] {\n    color: #fff;\n    font-size: 1.3em;\n    text-transform: uppercase;\n    margin-top: 0.3em;\n    margin-left: 1em;\n}\n.search-by[data-v-30597736],\n.input[data-v-30597736] { display: -webkit-box; display: -ms-flexbox; display: flex;\n}\n", ""]);
+exports.push([module.i, "\n.Search .ArticleEditor[data-v-30597736] {\n    background: #fff;\n    padding-top: 1em;\n    padding: 1em 1em .1em;\n}\n.controls[data-v-30597736] {\n    width: 170px;\n    float: left;\n    /*margin-right: 1em;*/\n}\n.misc[data-v-30597736] {\n    color: #fff;\n    font-size: 1.3em;\n    text-transform: uppercase;\n    margin-top: 0.3em;\n    margin-left: 1em;\n}\n.search-by[data-v-30597736],\n.input[data-v-30597736] { display: -webkit-box; display: -ms-flexbox; display: flex;\n}\n", ""]);
 
 /***/ }),
 /* 253 */
@@ -63439,6 +63442,23 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Search"
+  }, [(_vm.isEdit) ? _c('article-editor', {
+    attrs: {
+      "article": _vm.article,
+      "peditoraccess": _vm.hasPeditorAccess
+    },
+    on: {
+      "isUpdated": _vm.updateRecord,
+      "isDismiss": _vm.dismissUpdate
+    }
+  }) : _vm._e(), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.isEdit),
+      expression: "! isEdit"
+    }],
+    staticClass: "admin-search"
   }, [_c('div', {
     staticClass: "search-by Filter"
   }, [_c('div', {
@@ -63447,7 +63467,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "searchBy"
     }
-  }, [_vm._v("Search by")]), _vm._v("  \n            "), _c('select', {
+  }, [_vm._v("Search by")]), _vm._v("  \n                "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -63596,7 +63616,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "articles": _vm.report.searchByArticlesData,
       "tableType": "admin-search-by"
     }
-  })], 1)])
+  })], 1)])], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -67395,28 +67415,11 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Dashboard"
-  }, [(_vm.isEdit) ? _c('article-editor', {
-    attrs: {
-      "article": _vm.article,
-      "peditoraccess": _vm.hasPeditorAccess
-    },
-    on: {
-      "isUpdated": _vm.updateRecord,
-      "isDismiss": _vm.dismissUpdate
-    }
-  }) : _vm._e(), _vm._v(" "), _c('div', {
-    directives: [{
-      name: "show",
-      rawName: "v-show",
-      value: (!_vm.isEdit),
-      expression: "! isEdit"
-    }],
-    staticClass: "admin-search"
   }, [_c('filter-box'), _vm._v(" "), _c('article-report'), _vm._v(" "), _c('article-edited'), _vm._v(" "), _c('article-to-edit'), _vm._v(" "), _c('article-spun'), _vm._v(" "), _c('pending-user', {
     attrs: {
       "token": _vm.token
     }
-  })], 1)], 1)
+  })], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

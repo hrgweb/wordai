@@ -1,15 +1,6 @@
 <template>
     <div class="Dashboard">
-        <!-- Article Editor -->
-        <article-editor
-            :article="article"
-            :peditoraccess="hasPeditorAccess"
-            v-if="isEdit"
-            @isUpdated="updateRecord"
-            @isDismiss="dismissUpdate">
-        </article-editor>
-
-        <div class="admin-search" v-show="! isEdit">
+        <!-- <div class="admin-search" v-show="! isEdit"> -->
             <!-- Filter Box -->
             <filter-box></filter-box>
 
@@ -27,24 +18,22 @@
 
             <!-- Pending User -->
             <pending-user :token="token"></pending-user>
-        </div>
+        <!-- </div> -->
     </div>
 </template>
 
 <script>
-    import ArticleEditor from './../editor/ArticleEditor.vue';
     import FilterBox from './FilterBox.vue';
     import ArticleReport from './ArticleReport.vue';
     import ArticleEdited from './ArticleEdited.vue';
     import ArticleToEdit from './ArticleToEdit.vue';
     import ArticleSpun from './ArticleSpun.vue';
     import PendingUser from './PendingUser.vue';
-    import { ArticleEditorMixin } from './../../mixins/ArticleEditorMixin.js';
+    // import { ArticleEditorMixin } from './../../mixins/ArticleEditorMixin.js';
 
     export default {
         props: ['user', 'token'],
         components: {
-            ArticleEditor,
             FilterBox,
             ArticleReport,
             ArticleEdited,
@@ -52,7 +41,7 @@
             ArticleSpun,
             PendingUser
         },
-        mixins: [ ArticleEditorMixin ],
+        // mixins: [ ArticleEditorMixin ],
         data() {
             return {
                 report: ReportingBus,

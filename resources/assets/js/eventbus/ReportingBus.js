@@ -39,7 +39,7 @@ export const ReportingBus = new Vue({
             searchByArticlesData: [],
             searchByArticlesCount: 0,
             searchBy: 'select',
-            isLoading: false,
+            isLoading: false
 		};
 	},
 
