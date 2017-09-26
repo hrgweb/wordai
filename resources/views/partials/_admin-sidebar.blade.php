@@ -6,39 +6,44 @@
                 <a href="{{ url('admin') }}">
                     <em class="fa fa-dot-circle-o" aria-hidden="true"></em> Dashboard
                 </a>
+            </li>
+            <li>
+                <a href="{{ url('report-search-by') }}">
+                    <em class="fa fa-table" aria-hidden="true"></em> Reports
+                </a>
 
                 {{-- sub for Dashboard --}}
                 <ul class="nav sub-nav">
                     <li>
-                        <a href="admin#articles_search_by_range">
+                        <a href="report-search-by">
                             <em class="fa fa-newspaper-o" aria-hidden="true"></em> Search By
                         </a>
                     </li>
                     <li>
-                        <a href="admin#articles_this_week">
+                        <a href="report-this-week">
                             <em class="fa fa-newspaper-o" aria-hidden="true"></em> This Week
                         </a>
                     </li>
                     <li>
-                        <a href="admin#articles_edited_this_week">
+                        <a href="report-edited-this-week">
                             <em class="fa fa-newspaper-o" aria-hidden="true"></em> Edited This Week
                         </a>
                     </li>
                     <li>
-                        <a href="admin#articles_to_edit_this_week">
+                        <a href="report-toedit-this-week">
                             <em class="fa fa-newspaper-o" aria-hidden="true"></em> To Edit This Week
                         </a>
                     </li>
                     <li>
-                        <a href="admin#articles_spun_this_week">
+                        <a href="report-spun-this-week">
                             <em class="fa fa-newspaper-o" aria-hidden="true"></em> Spun This Week
                         </a>
                     </li>
-                    <li>
+                    {{-- <li>
                         <a href="admin#pending_users">
                             <em class="fa fa-user" aria-hidden="true"></em> Pending Users
                         </a>
-                    </li>
+                    </li> --}}
                 </ul>
             </li>
             <li>
