@@ -292,6 +292,7 @@ class AdminController extends Controller
             'isEditorUpdateSC',
             'isCsCheckHitMax',
             'isRespinHitMax',
+            'isProcess',
             'hr_spent_editor_edit_article',
             'min_spent_editor_edit_article',
             'sec_spent_editor_edit_article',

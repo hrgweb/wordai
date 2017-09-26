@@ -16,6 +16,7 @@ class Editor
                 isEditorEdit: item.isEditorEdit,
                 isEditorUpdateSC: item.isEditorUpdateSC,
                 isRespinHitMax: item.isRespinHitMax,
+                isProcess: item.isProcess,
                 keyword: item.keyword,
                 lastname: item.lastname,
                 lsi_terms: item.lsi_terms,
