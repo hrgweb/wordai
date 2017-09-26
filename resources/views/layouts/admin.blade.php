@@ -70,7 +70,7 @@
 
             // click sidebar Report menu
             whenClickMenu($('a#report'), $('ul#sub-report'));
-            whenClickMenu($('a#article'), $('ul#sub-article'));
+            // whenClickMenu($('a#article'), $('ul#sub-article'));
         })();
     </script>
 

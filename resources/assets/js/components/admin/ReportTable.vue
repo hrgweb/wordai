@@ -54,7 +54,8 @@
             },
 
             publishArticle(article, index) {
-                this.index = index;
+                alert('ongoing...')
+                /*this.index = index;
                 this.publishBtnState('Publishing...', true);
 
                 const payload = {
@@ -83,7 +84,7 @@
                         }).show();
 
                     }
-                });
+                });*/
             },
 
             groupByChange(data) {

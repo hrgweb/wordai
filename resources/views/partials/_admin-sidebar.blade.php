@@ -47,28 +47,32 @@
                 </ul>
             </li>
             <li>
-                <a href="#" id="article">
-                    <em class="fa fa-newspaper-o" aria-hidden="true"></em> Article
+                <a href="{{ url('article') }}">
+                    <em class="fa fa-plus" aria-hidden="true"></em> Create Article
                 </a>
 
+                {{-- <a href="#" id="article">
+                    <em class="fa fa-newspaper-o" aria-hidden="true"></em> Article
+                </a> --}}
+
                 {{-- sub for Article --}}
-                <ul class="nav sub-nav" id="sub-article">
+                {{-- <ul class="nav sub-nav" id="sub-article">
                     <li>
                         <a href="{{ url('article') }}">
                             <em class="fa fa-plus" aria-hidden="true"></em> Create Article
                         </a>
                     </li>
-                    {{-- <li>
+                    <li>
                         <a href="{{ url('edit-article') }}">
                             <em class="fa fa-pencil" aria-hidden="true"></em> Edit Article
                         </a>
-                    </li> --}}
-                    {{-- <li>
+                    </li>
+                    <li>
                         <a href="{{ url('search-article') }}">
                             <em class="fa fa-search" aria-hidden="true"></em> Search Article
                         </a>
-                    </li> --}}
-                </ul>
+                    </li>
+                </ul> --}}
             </li>
             <li>
                 <a href="{{ url('group') }}">

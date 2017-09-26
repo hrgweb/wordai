@@ -32854,35 +32854,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.$refs.btnPublish[this.index].disabled = state;
         },
         publishArticle: function publishArticle(article, index) {
-            this.index = index;
+            alert('ongoing...');
+            /*this.index = index;
             this.publishBtnState('Publishing...', true);
-
-            var payload = {
+             const payload = {
                 domain: article.domain,
                 title: article.doc_title,
                 keyword: article.keyword,
                 article: article.spin,
                 spintax: article.spintax
             };
-
-            var vm = this;
-            axios.post('/editor/publishArticle', payload).then(function (response) {
-                var data = response.data;
-
-                // publish button state
+             let vm = this;
+            axios.post('/editor/publishArticle', payload).then(function(response) {
+                let data = response.data;
+                 // publish button state
                 vm.publishBtnState('Publish', false);
-
-                if (data.status === 'success') {
+                 if (data.status === 'success') {
                     // notify user successfully uploade to dropbox
-                    var articleTitle = payload.title;
+                    let articleTitle = payload.title;
                     new Noty({
                         type: 'success',
-                        text: '<b>' + articleTitle + '</b> article successfully uploaded to dropbox.',
+                        text: `<b>${articleTitle}</b> article successfully uploaded to dropbox.`,
                         layout: 'bottomLeft',
                         timeout: 5000
                     }).show();
-                }
-            });
+                 }
+            });*/
         },
         groupByChange: function groupByChange(data) {
             if (data) {
