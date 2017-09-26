@@ -19,6 +19,7 @@ html, body { overflow-x: visible !important; }
 }
 
 .Search .ArticleEditor,
+.Edited .ArticleEditor,
 .Report .ArticleEditor {
     background: #fff;
     padding-top: 1em;
@@ -26,6 +27,7 @@ html, body { overflow-x: visible !important; }
 }
 
 .Search .timer-overlay,
+.Edited .timer-overlay,
 .Report .timer-overlay {
     right: 0;
     bottom: 0em !important;
@@ -221,11 +223,11 @@ table thead th:nth-child(5) { width: 120px; }
     }
 }
 
-.articles-edited-this-week {
+/* .articles-edited-this-week {
     table td:last-child {
         width: 100px !important;
     }
-}
+} */
 
 /*=============== home, home2 ===============*/
 .Spintax__result,

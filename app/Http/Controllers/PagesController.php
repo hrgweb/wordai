@@ -119,4 +119,9 @@ class PagesController extends Controller
     {
         return view('admin.this-week');
     }
+
+    public function adminEditedThisWeek()
+    {
+        return view('admin.edited-this-week');
+    }
 }
