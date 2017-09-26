@@ -16,6 +16,9 @@
         props: ['count'],
         data() {
             return { report: ReportingBus }
+        },
+        mounted() {
+            this.report.setDayFromMonToSun();
         }
     }
 </script>

@@ -114,4 +114,9 @@ class PagesController extends Controller
     {
         return view('admin.search-by');
     }
+
+    public function adminThisWeek()
+    {
+        return view('admin.this-week');
+    }
 }

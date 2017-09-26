@@ -35,13 +35,13 @@ import Copyscape from './components/admin/Copyscape.vue';
 import EditArticle from './components/admin/EditArticle.vue';
 import SearchArticle from './components/admin/SearchArticle.vue';
 import SearchBy from './components/admin/SearchBy.vue';
+import ArticleReport from './components/admin/ArticleReport.vue';
 import WordApi from './components/words/WordApi.vue';
 import WordApi2 from './components/words/WordApi2.vue';
 import CurationEdit from './components/words/CurationEdit.vue';
 import PasteArticle from './components/words/PasteArticle.vue';
 import CreateArticle from './components/words/CreateArticle.vue';
 import CopyscapeApiResult from './components/words/CopyscapeApiResult.vue';
-// import CurlPage from './components/words/CurlPage.vue';
 import GenerateArticle from './components/words/GenerateArticle.vue';
 import UserArticle from './components/words/UserArticle.vue';
 import Editor from './components/editor/Editor.vue';
@@ -64,13 +64,13 @@ const app = new Vue({
         EditArticle,
         SearchArticle,
         SearchBy,
+        ArticleReport,
     	WordApi,
     	WordApi2,
     	CurationEdit,
     	PasteArticle,
     	CreateArticle,
     	CopyscapeApiResult,
-    	// CurlPage,
     	GenerateArticle,
     	UserArticle,
     	Editor,

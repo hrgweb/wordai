@@ -101,12 +101,6 @@
 </script>
 
 <style scoped>
-    .Search .ArticleEditor {
-        background: #fff;
-        padding-top: 1em;
-        padding: 1em 1em .1em;
-    }
-
     .controls {
         width: 170px;
         float: left;

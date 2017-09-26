@@ -1,42 +1,52 @@
 <template>
     <div class="Report">
+        <!-- Article Editor -->
+        <article-editor
+            :article="article"
+            :peditoraccess="hasPeditorAccess"
+            v-if="isEdit"
+            @isUpdated="updateRecord"
+            @isDismiss="dismissUpdate">
+        </article-editor>
+
         <!-- New Articles This Week -->
-        <a id="articles_this_week">
-            <div class="articles-this-week">
-                <div class="header">
-                    <!-- Report Header -->
-                    <report-header :count="report.noOfArticlesThisWeek">
-                        <template slot="head">Articles This Week</template>
-                    </report-header>
+        <div class="articles-this-week" v-if="! isEdit">
+            <!-- Filter Box -->
+            <filter-box></filter-box>
+
+            <div class="header">
+                <!-- Report Header -->
+                <report-header :count="report.noOfArticlesThisWeek">
+                    <template slot="head">Articles This Week</template>
+                </report-header>
+            </div>
+            <div class="content">
+                <div v-if="isGroupByEqualSelect">
+                    <report-table
+                        :articles="report.articles"
+                        tableType="admin-article-this-week">
+                    </report-table>
                 </div>
-                <div class="content">
-                    <div v-if="isGroupByEqualSelect">
-                        <report-table
-                            :articles="report.articles"
-                            tableType="admin-article-this-week">
-                        </report-table>
-                    </div>
 
-                    <div v-else-if="isGroupByEqualUser">
-                        <report-filter-by-user
-                            v-for="creator in report.creatorOfArticles"
-                            :creator="creator"
-                            :filterByUser="true"
-                            :key="creator.user_id">
-                        </report-filter-by-user>
-                    </div>
+                <div v-else-if="isGroupByEqualUser">
+                    <report-filter-by-user
+                        v-for="creator in report.creatorOfArticles"
+                        :creator="creator"
+                        :filterByUser="true"
+                        :key="creator.user_id">
+                    </report-filter-by-user>
+                </div>
 
-                    <div v-else-if="isGroupByEqualDomain">
-                        <report-filter-by-user
-                            v-for="creator in report.creatorOfArticles"
-                            :creator="creator"
-                            :filterByDomain="true"
-                            :key="creator.domain_id">
-                        </report-filter-by-user>
-                    </div>
+                <div v-else-if="isGroupByEqualDomain">
+                    <report-filter-by-user
+                        v-for="creator in report.creatorOfArticles"
+                        :creator="creator"
+                        :filterByDomain="true"
+                        :key="creator.domain_id">
+                    </report-filter-by-user>
                 </div>
             </div>
-        </a>
+        </div>
     </div>
 </template>
 
@@ -44,9 +54,14 @@
     import ReportTable from './ReportTable.vue';
     import ReportHeader from './ReportHeader.vue';
     import ReportFilterByUser from './ReportFilterByUser.vue';
+    import ArticleEditor from './../editor/ArticleEditor.vue';
+    import FilterBox from './FilterBox.vue';
+    import { ArticleEditorMixin } from './../../mixins/ArticleEditorMixin.js';
 
     export default {
-        components: { ReportTable, ReportHeader, ReportFilterByUser },
+        props: ['user'],
+        components: { ReportTable, ReportHeader, ReportFilterByUser, ArticleEditor, FilterBox },
+        mixins: [ ArticleEditorMixin ],
         data() {
             return {
                 report: ReportingBus
