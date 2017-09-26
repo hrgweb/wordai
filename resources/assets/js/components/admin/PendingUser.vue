@@ -1,32 +1,30 @@
 <template>
 	<div class="User" style="top: 7em;">
 		<!-- <div class="User__pending" v-if="usersCount"> -->
-        <a id="pending_users">
-    		<div class="User__pending">
-    			<h2>
-    				Pending User
-    				<span class="badge">{{ usersCount }}</span>
-    			</h2>
+		<div class="User__pending">
+			<h2>
+				Pending User
+				<span class="badge">{{ usersCount }}</span>
+			</h2>
 
-    			<div class="User__profile list-group" v-for="(user, index) in users">
-    				<a class="list-group-item">
-    					<h4 class="list-group-item-heading">{{ user.firstname }} {{ user.lastname }}</h4>
-    					<p class="list-group-item-text">{{ user.email }}</p>
-    					<small>{{ user.created_at }}</small>
+			<div class="User__profile list-group" v-for="(user, index) in users">
+				<a class="list-group-item">
+					<h4 class="list-group-item-heading">{{ user.firstname }} {{ user.lastname }}</h4>
+					<p class="list-group-item-text">{{ user.email }}</p>
+					<small>{{ user.created_at }}</small>
 
-    					<form method="POST">
-    						<input type="hidden" name="_token" :value="token">
-    						<input type="hidden" name="_method" value="PATCH">
+					<form method="POST">
+						<input type="hidden" name="_token" :value="token">
+						<input type="hidden" name="_method" value="PATCH">
 
-    						<div class="User__profile-controls pull-right">
-    							<button type="submit" class="btn btn-success" @click.stop.prevent="verifySignup(user, index)">Confirm</button>
-    							<button type="submit" class="btn btn-danger" @click.stop.prevent="dissmissUser(user, index)">Dismiss</button>
-    						</div>
-    					</form>
-    				</a>
-    			</div>
-    		</div>
-        </a>
+						<div class="User__profile-controls pull-right">
+							<button type="submit" class="btn btn-success" @click.stop.prevent="verifySignup(user, index)">Confirm</button>
+							<button type="submit" class="btn btn-danger" @click.stop.prevent="dissmissUser(user, index)">Dismiss</button>
+						</div>
+					</form>
+				</a>
+			</div>
+		</div>
 	</div>
 </template>
 
@@ -82,4 +80,9 @@
 		position: relative;
 		top: -3em;
 	}
+
+    .User__pending h2 {
+        padding-top: 1em;
+        padding-bottom: 0.5em;
+    }
 </style>

@@ -32491,8 +32491,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['token'],
@@ -39544,7 +39542,7 @@ exports.push([module.i, "\n.Editor[data-v-d1268f94] { padding: 0;\n}\n.Copyscape
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.User__profile-controls[data-v-d84a48a8] {\n\tposition: relative;\n\ttop: -3em;\n}\n", ""]);
+exports.push([module.i, "\n.User__profile-controls[data-v-d84a48a8] {\n\t\tposition: relative;\n\t\ttop: -3em;\n}\n.User__pending h2[data-v-d84a48a8] {\n        padding-top: 1em;\n        padding-bottom: 0.5em;\n}\n", ""]);
 
 /***/ }),
 /* 271 */
@@ -66633,13 +66631,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "top": "7em"
     }
-  }, [_c('a', {
-    attrs: {
-      "id": "pending_users"
-    }
   }, [_c('div', {
     staticClass: "User__pending"
-  }, [_c('h2', [_vm._v("\n    \t\t\t\tPending User\n    \t\t\t\t"), _c('span', {
+  }, [_c('h2', [_vm._v("\n\t\t\tPending User\n\t\t\t"), _c('span', {
     staticClass: "badge"
   }, [_vm._v(_vm._s(_vm.usersCount))])]), _vm._v(" "), _vm._l((_vm.users), function(user, index) {
     return _c('div', {
@@ -66695,7 +66689,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         }
       }
     }, [_vm._v("Dismiss")])])])])])
-  })], 2)])])
+  })], 2)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
