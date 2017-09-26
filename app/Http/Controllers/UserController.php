@@ -34,7 +34,12 @@ class UserController extends Controller
 
     public function userList()
     {
-    	return User::all(['id AS user_id', 'firstname', 'lastname']);
+        return User::all(['id AS user_id', 'firstname', 'lastname']);
+    }
+
+    public function allUsers()
+    {
+        return User::all();
     }
 
     public function userLevelList()

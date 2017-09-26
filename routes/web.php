@@ -112,6 +112,7 @@ Route::prefix('user')->group(function() {
     Route::get('userDomainSetup', 'UserController@userDomainSetup');
     Route::get('userDomainList', 'UserController@userDomainList');
     Route::get('groupName', 'UserController@groupName');
+    Route::get('allUsers', 'UserController@allUsers');
 	Route::patch('verifySignup', 'UserController@verifySignup');
 	Route::patch('updateRole', 'UserController@updateRole');
 	Route::patch('suspendUser', 'UserController@suspendUser');

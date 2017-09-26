@@ -1,5 +1,5 @@
 <template>
-	<div class="User">
+	<div class="Users">
 		<!-- Change Role -->
 		<change-role
 			:user="user"
@@ -8,7 +8,7 @@
 			@closeRoleComponent="updateRoleDone"
 			@closeAccessComponent="updateAccessDone">
  		</change-role>
-		
+
 		<h2>User List</h2>
 
 		<table class="table table-striped table-hover">
@@ -75,12 +75,12 @@
 			}
 		},
 		created() {
-			this.userList();
+			this.allUsers();
 			this.userLevelList();
 		},
 		methods: {
-			userList() {
-				axios.get('/user/userList').then(response => this.users = response.data);
+			allUsers() {
+				axios.get('/user/allUsers').then(response => this.users = response.data);
 			},
 
 			changeRole(user, index) {
@@ -148,6 +148,6 @@
 	    top: 5px;
 	    right: 5px;
 	}
-	
-	.icon-pe img { width: 100%; } 
+
+	.icon-pe img { width: 100%; }
 </style>
