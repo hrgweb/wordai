@@ -8,12 +8,12 @@
                 </a>
             </li>
             <li>
-                <a href="{{ url('report-search-by') }}">
+                <a href="#" id="report">
                     <em class="fa fa-table" aria-hidden="true"></em> Reports
                 </a>
 
                 {{-- sub for Dashboard --}}
-                <ul class="nav sub-nav">
+                <ul class="nav sub-nav" id="sub-report">
                     <li>
                         <a href="report-search-by">
                             <em class="fa fa-newspaper-o" aria-hidden="true"></em> Search By
@@ -47,12 +47,12 @@
                 </ul>
             </li>
             <li>
-                <a href="{{ url('article') }}">
+                <a href="#" id="article">
                     <em class="fa fa-newspaper-o" aria-hidden="true"></em> Article
                 </a>
 
                 {{-- sub for Article --}}
-                <ul class="nav sub-nav">
+                <ul class="nav sub-nav" id="sub-article">
                     <li>
                         <a href="{{ url('article') }}">
                             <em class="fa fa-plus" aria-hidden="true"></em> Create Article
