@@ -37,6 +37,7 @@ import SearchArticle from './components/admin/SearchArticle.vue';
 import SearchBy from './components/admin/SearchBy.vue';
 import ArticleReport from './components/admin/ArticleReport.vue';
 import ArticleEdited from './components/admin/ArticleEdited.vue';
+import ArticleToEdit from './components/admin/ArticleToEdit.vue';
 import WordApi from './components/words/WordApi.vue';
 import WordApi2 from './components/words/WordApi2.vue';
 import CurationEdit from './components/words/CurationEdit.vue';
@@ -67,6 +68,7 @@ const app = new Vue({
         SearchBy,
         ArticleReport,
         ArticleEdited,
+        ArticleToEdit,
     	WordApi,
     	WordApi2,
     	CurationEdit,

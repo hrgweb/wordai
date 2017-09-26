@@ -30,6 +30,7 @@ Route::get('search-article', 'PagesController@searchArticle');
 Route::get('report-search-by', 'PagesController@adminSearchBy');
 Route::get('report-this-week', 'PagesController@adminThisWeek');
 Route::get('report-edited-this-week', 'PagesController@adminEditedThisWeek');
+Route::get('report-toedit-this-week', 'PagesController@adminToEditThisWeek');
 
 
 // WordAI
