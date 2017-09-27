@@ -231,7 +231,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Curl'          => Ixudra\Curl\Facades\Curl::class,
-
     ],
 
 ];

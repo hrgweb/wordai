@@ -24,7 +24,8 @@
                 <div v-if="isGroupByEqualSelect">
                     <report-table
                         :articles="report.articles"
-                        tableType="admin-article-this-week">
+                        tableType="admin-article-this-week"
+                        :token="token">
                     </report-table>
                 </div>
 
@@ -59,7 +60,7 @@
     import { ArticleEditorMixin } from './../../mixins/ArticleEditorMixin.js';
 
     export default {
-        props: ['user'],
+        props: ['user', 'token'],
         components: { ReportTable, ReportHeader, ReportFilterByUser, ArticleEditor, FilterBox },
         mixins: [ ArticleEditorMixin ],
         data() {

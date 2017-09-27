@@ -23,7 +23,22 @@
                     <td>
                         <button type="button" class="btn btn-info" @click="editArticle(article, index)">Edit Article</button>
                         <button type="button" class="btn btn-danger" ref="btnPublish" @click="publishArticle(article, index)">Publish</button>
-                        <button type="button" class="btn btn-warning" ref="btnDownload" @click="downloadArticle(article, index)">Download</button>
+                        <!-- <a href="/admin/downloadArticle">Download -->
+                        <!-- <a :href="article.srcPath" :download="article.file" > -->
+                            <button type="button" class="btn btn-warning" ref="btnDownload" @click="downloadArticle(article)">Download</button>
+                        <!-- </a> -->
+
+                        <!-- <pre>{{ article }}</pre> -->
+
+                        <!-- <form method="POST" action="/admin/downloadArticle">
+                            <input type="hidden" name="_token" :value="token">
+
+                            <input type="hidden" name="spin" :value="article.spin">
+                            <input type="hidden" name="spintax" :value="article.spintax">
+                            <input type="hidden" name="filename" :value="article.filename">
+
+                            <button type="submit" class="btn btn-warning">Download</button>
+                        </form> -->
                     </td>
                 </tr>
             </tbody>
@@ -32,8 +47,9 @@
 </template>
 
 <script>
+    import downloadjs from 'downloadjs';
     export default {
-        props: ['articles', 'tableType'],
+        props: ['articles', 'tableType', 'token'],
         data() {
             return {
                 time: moment,
@@ -128,9 +144,13 @@
                 }
             },
 
-            downloadArticle(article, index) {
-                index = --index;
-                console.log(article, index);
+            downloadArticle(article) {
+                // axios.post('/admin/downloadArticle', article).then(response => console.log(response.data));
+
+                let filename = article.domain + '-' + article.doc_title + '-' + article.keyword + '.txt';
+
+                downloadjs(article.spin, 'article_'+filename, 'text/plain');
+                downloadjs(article.spintax, 'spintax_'+filename, 'text/plain');
             }
         }
     }

@@ -13,7 +13,10 @@ use App\UserLevel;
 use App\Word;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use Maatwebsite\Excel\Facades\Excel;
 
 class AdminController extends Controller
 {
@@ -629,5 +632,42 @@ class AdminController extends Controller
                 ->orderBy('w.created_at')
                 ->get($this->columnsNeedForArticle());
         }
+    }
+
+    public function downloadArticle()
+    {
+        // $article = request('spin');
+        // $spintax = request('spintax');
+
+        $filename = request('filename');
+        $data = [
+            'article_'.$filename => request('spin'),
+            'spintax_'.$filename => request('spintax')
+        ];
+        // $folderPath = 'public/downloads/';
+        // $path = $folderPath . $filename . '.csv';
+
+        // check if folder not exist then create
+        /*if (! File::exists(storage_path('app/'.$folderPath))) {
+            Storage::makeDirectory($folderPath);
+        }*/
+
+        // store the file to disk
+        // Storage::put($path, $article);
+
+        // header('Content-type: text/csv; charset=utf-8');
+        // header('Content-Disposition: attachment; filename='.$key);
+
+        $results = [];
+        foreach ($data as $key => $value) {
+
+            array_push($results, $value);
+        }
+
+        /*$headers = [
+            'Content-type' => 'text/csv'
+        ];
+
+        return response()->download(storage_path($path, $filename, $headers));*/
     }
 }
