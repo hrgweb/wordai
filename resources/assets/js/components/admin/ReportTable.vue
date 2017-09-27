@@ -23,6 +23,7 @@
                     <td>
                         <button type="button" class="btn btn-info" @click="editArticle(article, index)">Edit Article</button>
                         <button type="button" class="btn btn-danger" ref="btnPublish" @click="publishArticle(article, index)">Publish</button>
+                        <button type="button" class="btn btn-warning" ref="btnDownload" @click="downloadArticle(article, index)">Download</button>
                     </td>
                 </tr>
             </tbody>
@@ -125,6 +126,11 @@
                         }
                     });
                 }
+            },
+
+            downloadArticle(article, index) {
+                index = --index;
+                console.log(article, index);
             }
         }
     }

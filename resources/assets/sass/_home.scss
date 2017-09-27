@@ -183,10 +183,11 @@ input[type=date] {
 .Report table thead th:last-child,
 .Edited table thead th:last-child,
 .Spun table thead th:last-child,
+.ReportTable table thead th:last-child,
 .Waiting table thead th:last-child {
     // width: 200px;
     // max-width: 200px;
-    text-align: center;
+    text-align: center !important;
 }
 
 table { background: #fff; }
@@ -204,8 +205,8 @@ table thead th:nth-child(5) { width: 120px; }
 .Search {
 
     table td:last-child {
-        width: 200px !important;
-        max-width: 200px !important;
+        width: 300px !important;
+        // max-width: 200px !important;
 
 
         button { width: 90px; }
