@@ -71,8 +71,7 @@
             },
 
             publishArticle(article, index) {
-                alert('ongoing...')
-                /*this.index = index;
+                this.index = --index;
                 this.publishBtnState('Publishing...', true);
 
                 const payload = {
@@ -91,6 +90,10 @@
                     vm.publishBtnState('Publish', false);
 
                     if (data.status === 'success') {
+
+                        // remove files
+                        axios.get('/editor/removeFiles?article='+data.files[0]+'&spintax='+data.files[1])
+
                         // notify user successfully uploade to dropbox
                         let articleTitle = payload.title;
                         new Noty({
@@ -99,9 +102,8 @@
                             layout: 'bottomLeft',
                             timeout: 5000
                         }).show();
-
                     }
-                });*/
+                });
             },
 
             groupByChange(data) {

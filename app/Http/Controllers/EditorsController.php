@@ -5,7 +5,12 @@ namespace App\Http\Controllers;
 use App\Word;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use Ixudra\Curl\Facades\Curl;
+use Kunnu\Dropbox\Dropbox;
+use Kunnu\Dropbox\DropboxApp;
+use Kunnu\Dropbox\DropboxFile;
 
 class EditorsController extends Controller
 {
@@ -192,7 +197,73 @@ class EditorsController extends Controller
     }
 
     public function publishArticle() {
-		$url = 'https://hooks.zapier.com/hooks/catch/2462016/ryantm/';
+        /*=============== DROPBOX SDK ===============*/
+
+        /**
+         * CREATE 2 FILES ARTICLE & SPINTAX
+         */
+
+        $filename = request('domain').'-'.request('title').'-'.request('keyword');
+        $domain = request('domain') . '/';
+        $folderPath = 'public/published/';
+        $path = $folderPath; // . $domain;
+
+        // check if folder not exist then create
+        if (! File::exists(storage_path('app/'.$folderPath))) {
+            Storage::makeDirectory($folderPath);
+        }
+
+        // store the file to disk
+        $articlePath = $path . 'article_'.$filename . '.txt';
+        $spintaxPath = $path . 'spintax_'.$filename . '.txt';
+
+        try {
+            Storage::put($articlePath, request('article'));
+            Storage::put($spintaxPath, request('spintax'));
+        } catch (Exception $e) {
+            // ignore
+        }
+
+        $files = ['article_'.$filename, 'spintax_'.$filename];
+
+        /**
+         * UPLOAD TO DROPBOX
+         */
+
+        define('DBX_CLIENT_ID', 'dmy4zp7f6ebghwx');
+        define('DBX_CLIENT_SECRET', 'zmwx6uvuy19y4il');
+        define('DBX_ACCESS_TOKEN', 'VpCqPkG8geAAAAAAAAAAka8klHASsdg-TR0iVy5RfcPNLENRn4KhCGkEfYgZ1406');
+
+        $app = new DropboxApp(DBX_CLIENT_ID, DBX_CLIENT_SECRET, DBX_ACCESS_TOKEN);
+        $dropbox = new Dropbox($app);
+
+        $articleToUpload = storage_path('app/'.$articlePath);
+        $spintaxToUpload = storage_path('app/'.$spintaxPath);
+
+        // File
+        $dropboxFile1 = new DropboxFile($articleToUpload);
+        $dropboxFile2 = new DropboxFile($spintaxToUpload);
+
+        $article = '/CNXCONTENTMACHINE/ARTICLES/';
+        $article = $article.$domain.$filename.'.txt';
+        $apintax = '/CNXCONTENTMACHINE/SPINS/';
+        $apintax = $apintax.$domain.$filename.'.txt';
+
+        try {
+            $file = $dropbox->upload($dropboxFile1, $article, ['mode' => 'overwrite', 'autorename' => false]);
+            $file2 = $dropbox->upload($dropboxFile2, $apintax, ['mode' => 'overwrite', 'autorename' => false]);
+        } catch (Exception $e) {
+            // ignore
+        }
+
+        return response()->json(['status' => 'success', 'files' => $files]);
+
+
+
+
+        /*=============== ZAPIER - IMPLEMENTATION ===============*/
+
+		/*$url = 'https://hooks.zapier.com/hooks/catch/2462016/ryantm/';
 
 		// folder name = domain name
 		// file name = title-keyword-domain-com.txt
@@ -214,7 +285,21 @@ class EditorsController extends Controller
     			'fileArticleContent' => $fileArticleContent,
     			'fileSpintaxContent' => $fileSpintaxContent
     		])
-    		->post();
+    		->post();*/
+    }
+
+    public function removeFiles()
+    {
+        $files = [request('article'), request('spintax')];
+        $path = 'public/published/';
+
+        // delete storage file
+        for ($i=0; $i < count($files); $i++) {
+            $file = $path.$files[$i].'.txt';
+            Storage::delete($file);
+        }
+
+        return ['status' => 'success'];
     }
 
     public function editorSpentTimeOnEditingArticle() {

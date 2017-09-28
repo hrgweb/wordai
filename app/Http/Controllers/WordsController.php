@@ -28,10 +28,7 @@ class WordsController extends Controller
 
 	public function test()
 	{
-		dd(env('COPYSCAPE_API_KEY'));
-		return \Config::get('copyscape.username');
 
-		dd(env('COPYSCAPE_USERNAME'));
 	}
 
 	private function generateSpintax(array $request, $articleOrParagraph)
