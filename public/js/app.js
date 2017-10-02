@@ -16411,9 +16411,9 @@ var Editor = function () {
         key: 'mapResultOfArticles',
         value: function mapResultOfArticles(articles) {
             return articles.map(function (item) {
-                var domain = item.domain.length !== null ? item.domain.toLowerCase().trim() : '';
-                var title = item.doc_title.length !== null ? item.doc_title.toLowerCase().trim() : '';
-                var keyword = item.keyword.length !== null ? item.keyword.toLowerCase().trim() : '';
+                var domain = item.domain !== null ? item.domain.toLowerCase().trim() : '';
+                var title = item.doc_title !== null ? item.doc_title.toLowerCase().trim() : '';
+                var keyword = item.keyword !== null ? item.keyword.toLowerCase().trim() : '';
                 var spin = item.spin !== null ? item.spin : '';
                 var spintax = item.spintax !== null ? item.spintax : '';
                 var spintax_copy = item.spintax_copy !== null ? item.spintax_copy : '';
