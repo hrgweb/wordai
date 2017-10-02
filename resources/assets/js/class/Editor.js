@@ -2,9 +2,9 @@ class Editor
 {
     mapResultOfArticles(articles) {
         return articles.map(item => {
-            let domain = item.domain.length > 0 ? item.domain.toLowerCase().trim() : '';
-            let title = item.doc_title.length > 0 ? item.doc_title.toLowerCase().trim() : '';
-            let keyword = item.keyword.length > 0 ? item.keyword.toLowerCase().trim() : '';
+            let domain = (item.domain.length !== null) ? item.domain.toLowerCase().trim() : '';
+            let title = (item.doc_title.length !== null) ? item.doc_title.toLowerCase().trim() : '';
+            let keyword = (item.keyword.length !== null) ? item.keyword.toLowerCase().trim() : '';
             let spin = item.spin !== null ? item.spin : '';
             let spintax = item.spintax !== null ? item.spintax : '';
             let spintax_copy = item.spintax_copy !== null ? item.spintax_copy : '';
