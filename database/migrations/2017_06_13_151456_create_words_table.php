@@ -36,6 +36,9 @@ class CreateWordsTable extends Migration
             $table->boolean('isRespinHitMax')->default(0);
             $table->boolean('isProcess')->default(0);
             $table->timestamp('isPublish')->nullable();
+            $table->boolean('isArticleApprove')->default(0);
+            $table->char('reasonArticleNotAprrove', 20)->nullable();
+            $table->text('reasonArticleNotAprroveBody')->nullable();
             $table->integer('hr_spent_editor_edit_article')->unsigned()->default(0);
             $table->integer('min_spent_editor_edit_article')->unsigned()->default(0);
             $table->integer('sec_spent_editor_edit_article')->unsigned()->default(0);
