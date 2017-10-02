@@ -676,13 +676,14 @@ class AdminController extends Controller
         return DB::table('words AS w')
                 ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
                 ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
+                ->select($this->columnsNeedForArticle())
                 ->where('w.isArticleApprove', 0)
                 ->orderBy('w.created_at')
                 ->paginate(20);
-                // ->get($this->columnsNeedForArticle());
+    }
 
-        // return Word::where('isArticleApprove', 0)->get();
-
-        // columnsNeedForArticle
+    public function approveArticle()
+    {
+        return Word::where('id', request('id'))->update(['isArticleApprove' => 1]);
     }
 }

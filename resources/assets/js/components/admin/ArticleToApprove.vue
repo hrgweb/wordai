@@ -73,7 +73,20 @@
             },
 
             approveArticle(article, index) {
-                console.log(article, index)
+                let title = article.doc_title;
+
+                axios.post('/admin/approveArticle', article).then(response => {
+                    // remove item after article has approved
+                    response.data && this.articles.splice(index, 1);
+
+                    // notify user
+                    new Noty({
+                        type: 'info',
+                        text: `<b>${title}</b> article successfully approved.`,
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
+                });
             },
 
             disApproveArticle(article, index) {

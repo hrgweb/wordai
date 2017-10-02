@@ -22,7 +22,10 @@ class Word extends Model
     	'protected',
     	'isUserEdit',
     	'isEditorEdit',
-    	'synonym'
+    	'synonym',
+        'isArticleApprove',
+        'reasonArticleNotAprrove',
+        'reasonArticleNotAprroveBody'
     ];
 
     public function setDocTitleAttribute($title)

@@ -91,7 +91,8 @@ Route::prefix('admin')->group(function() {
     Route::post('searchByUser', 'AdminController@searchByUser');
     Route::post('searchByGroup', 'AdminController@searchByGroup');
     Route::post('searchByWebsite', 'AdminController@searchByWebsite');
-	Route::post('downloadArticle', 'AdminController@downloadArticle');
+    Route::post('downloadArticle', 'AdminController@downloadArticle');
+	Route::post('approveArticle', 'AdminController@approveArticle');
 	Route::patch('updateDomain', 'AdminController@updateDomain');
 	Route::patch('updateDetails', 'AdminController@updateDetails');
     Route::patch('updateCopyscapeSetting', 'AdminController@updateCopyscapeSetting');

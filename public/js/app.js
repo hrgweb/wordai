@@ -68840,7 +68840,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         approveArticle: function approveArticle(article, index) {
-            console.log(article, index);
+            var _this2 = this;
+
+            var title = article.doc_title;
+
+            axios.post('/admin/approveArticle', article).then(function (response) {
+                // remove item after article has approved
+                response.data && _this2.articles.splice(index, 1);
+
+                // notify user
+                new Noty({
+                    type: 'info',
+                    text: '<b>' + title + '</b> article successfully approved.',
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
+            });
         },
         disApproveArticle: function disApproveArticle(article, index) {
             console.log(article, index);
