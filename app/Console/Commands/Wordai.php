@@ -57,7 +57,8 @@ class Wordai extends Command
      */
     protected function has_unprocess_article()
 	{
-		$this->article = Word::where(['isUserEdit' => 0, 'isProcess' => 0])->first();
+        // $this->article = Word::where(['isUserEdit' => 0, 'isProcess' => 0])->first();
+		$this->article = Word::where('isArticleApprove', 1)->first();
 
 		return count($this->article) > 0 ? true : false;
 	}

@@ -69176,7 +69176,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "overlay"
   }, [_c('div', {
     staticClass: "AdminDisapprove"
-  }, [_c('h2', [_vm._v("Disapprove Article")]), _vm._v(" "), _c('span', [_vm._v("\n            Article to disapprove:   "), _c('em', [_vm._v("\"" + _vm._s(_vm.article.data.doc_title) + "\"")])]), _c('hr'), _vm._v(" "), _c('form', {
+  }, [_c('h2', [_vm._v("Disapprove Article")]), _vm._v(" "), _c('span', [_vm._v("\n            Article:   "), _c('em', [_vm._v("\"" + _vm._s(_vm.article.data.doc_title) + "\"")])]), _c('hr'), _vm._v(" "), _c('form', {
     attrs: {
       "method": "POST"
     }

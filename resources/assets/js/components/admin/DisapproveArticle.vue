@@ -3,7 +3,7 @@
         <div class="AdminDisapprove">
             <h2>Disapprove Article</h2>
             <span>
-                Article to disapprove: &nbsp; <em>"{{ article.data.doc_title }}"</em>
+                Article: &nbsp; <em>"{{ article.data.doc_title }}"</em>
             </span><hr>
 
             <form method="POST">
