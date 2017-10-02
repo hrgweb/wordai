@@ -16699,7 +16699,8 @@ var ArticleActionMixin = {
 			var _this9 = this;
 
 			var user_id = this.authUser.id;
-			axios.get('/user/userDomainList?user_id=' + user_id).then(function (response) {
+			// axios.get('/user/userDomainList?user_id='+user_id).then(response => {
+			axios.get('/admin/domainList').then(function (response) {
 				_this9.domains = response.data;
 			});
 		}
@@ -62189,11 +62190,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "value": domain.id
       }
     }, [_vm._v(_vm._s(domain.domain.toUpperCase()))])
-  })), _vm._v("   \n            "), _vm._v(" "), (_vm.isDomainNotSet) ? _c('span', {
-    staticStyle: {
-      "color": "red"
-    }
-  }, [_vm._v("This domain not set yet.")]) : _vm._e()]), _vm._v(" "), _c('div', {
+  })), _vm._v("   \n            ")]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {

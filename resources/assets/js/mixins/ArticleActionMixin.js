@@ -211,7 +211,8 @@ export const ArticleActionMixin = {
 
         userDomainList() {
             let user_id = this.authUser.id;
-            axios.get('/user/userDomainList?user_id='+user_id).then(response => {
+            // axios.get('/user/userDomainList?user_id='+user_id).then(response => {
+            axios.get('/admin/domainList').then(response => {
                 this.domains = response.data;
             });
         }

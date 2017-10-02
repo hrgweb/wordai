@@ -22,7 +22,7 @@
                     <option v-for="domain in domains" :value="domain.id">{{ domain.domain.toUpperCase() }}</option>
                 </select> &nbsp;&nbsp;
                 <!-- alert -->
-                <span style="color: red;" v-if="isDomainNotSet">This domain not set yet.</span>
+                <!-- <span style="color: red;" v-if="isDomainNotSet">This domain not set yet.</span> -->
             </div>
 
             <div class="form-group">
