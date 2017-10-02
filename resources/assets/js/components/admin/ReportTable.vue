@@ -6,7 +6,9 @@
                     <th>#</th>
                     <th>Writer</th>
                     <th>Title</th>
-                    <th>Article</th>
+                    <th>Domain</th>
+                    <th>Keyword</th>
+                    <!-- <th>Article</th> -->
                     <th>Date Created</th>
                     <th>Actions</th>
                 </tr>
@@ -16,9 +18,11 @@
                     <td>{{ ++index }}</td>
                     <td>{{ article.firstname }} {{ article.lastname }}</td>
                     <td>{{ article.doc_title }}</td>
-                    <td>
+                    <td>{{ article.domain }}</td>
+                    <td>{{ article.keyword }}</td>
+                    <!-- <td>
                         <p>{{ (article.article.length > 100) ? article.article.substr(0, 100) + '...' : article.article }}</p>
-                    </td>
+                    </td> -->
                     <td>{{ time(article.created_at).format('ll') }}</td>
                     <td>
                         <button type="button" class="btn btn-info" @click="editArticle(article, index)">Edit Article</button>
