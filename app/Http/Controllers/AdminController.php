@@ -686,4 +686,12 @@ class AdminController extends Controller
     {
         return Word::where('id', request('id'))->update(['isArticleApprove' => 1]);
     }
+
+    public function disApproveArticle()
+    {
+        return Word::where('id', request('word_id'))->update([
+            'reasonArticleNotAprrove' => request('approveType'),
+            'reasonArticleNotAprroveBody' => request('comment')
+        ]);
+    }
 }

@@ -68762,7 +68762,9 @@ module.exports = __webpack_require__(157);
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_EditorPaginationMixin_js__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DisapproveArticle_vue__ = __webpack_require__(437);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DisapproveArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__DisapproveArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_EditorPaginationMixin_js__ = __webpack_require__(18);
 //
 //
 //
@@ -68811,15 +68813,29 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_EditorPaginationMixin_js__["a" /* EditorPaginationMixin */]],
+    components: { DisapproveArticle: __WEBPACK_IMPORTED_MODULE_0__DisapproveArticle_vue___default.a },
+    mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_EditorPaginationMixin_js__["a" /* EditorPaginationMixin */]],
     data: function data() {
         return {
             time: moment,
-            articlesToApprove: []
+            articlesToApprove: [],
+            article: { data: {}, index: 0 },
+            showDisapprovePanel: false
         };
     },
     created: function created() {
@@ -68858,7 +68874,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         disApproveArticle: function disApproveArticle(article, index) {
-            console.log(article, index);
+            // set article data and show panel
+            this.showDisapprovePanel = true;
+            this.article = {
+                data: article,
+                index: index
+            };
+        },
+        isCancelDisapprove: function isCancelDisapprove() {
+            this.showDisapprovePanel = false;
+        },
+        onSuccessSubmit: function onSuccessSubmit() {
+            this.showDisapprovePanel = false;
+            this.articles.splice(this.article.index, 1);
         }
     }
 });
@@ -68908,7 +68936,17 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "AdminApprove"
-  }, [_c('h2', [_vm._v("\n        Articles To Approve\n        "), _c('span', {
+  }, [(_vm.showDisapprovePanel) ? _c('disapprove-article', {
+    attrs: {
+      "article": _vm.article
+    },
+    on: {
+      "onSuccessSubmit": _vm.onSuccessSubmit,
+      "isCancel": _vm.isCancelDisapprove
+    }
+  }) : _vm._e(), _vm._v(" "), _c('div', {
+    staticClass: "Approve"
+  }, [_c('h2', [_vm._v("\n            Articles To Approve\n            "), _c('span', {
     staticClass: "badge"
   }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('table', {
     staticClass: "table table-hover"
@@ -68954,7 +68992,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "slot": "nextContent"
     },
     slot: "nextContent"
-  }, [_vm._v("»")])])], 1)])
+  }, [_vm._v("»")])])], 1)])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Writer")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Date Created")]), _vm._v(" "), _c('th', {
     staticClass: "text-center"
@@ -68993,6 +69031,273 @@ if(false) {
  if(!content.locals) {
    module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-f4c1807c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleToApprove.vue", function() {
      var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-f4c1807c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleToApprove.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 436 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['article'],
+    data: function data() {
+        return {
+            form: new Form({
+                approveType: 'select',
+                comment: '',
+                word_id: 0
+            }),
+            disapproveObj: {
+                reason: ['Too Long', 'Too Short', 'Wrong Content', 'Poor Quality', 'Impropper Grammar']
+            }
+        };
+    },
+
+    methods: {
+        disApproveArticle: function disApproveArticle() {
+            var _this = this;
+
+            if (this.form.approveType !== 'select') {
+                this.form['word_id'] = this.article.data.id;
+                this.form.patch('/admin/disApproveArticle').then(function (data) {
+                    if (data) {
+                        _this.$emit('onSuccessSubmit');
+
+                        // notify user
+                        var title = _this.article.data.doc_title;
+                        new Noty({
+                            type: 'info',
+                            text: '<b>' + title + '</b> article has disapproved.',
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+                    }
+                });
+            } else {
+                // notify user
+                new Noty({
+                    type: 'error',
+                    text: 'Please select reason why decline.',
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
+            }
+        },
+        onCancel: function onCancel() {
+            this.$emit('isCancel');
+        }
+    }
+});
+
+/***/ }),
+/* 437 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(440)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(436),
+  /* template */
+  __webpack_require__(438),
+  /* scopeId */
+  "data-v-46c432a1",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\DisapproveArticle.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] DisapproveArticle.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-46c432a1", Component.options)
+  } else {
+    hotAPI.reload("data-v-46c432a1", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 438 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "overlay"
+  }, [_c('div', {
+    staticClass: "AdminDisapprove"
+  }, [_c('h2', [_vm._v("Disapprove Article")]), _vm._v(" "), _c('span', [_vm._v("\n            Article to disapprove:   "), _c('em', [_vm._v("\"" + _vm._s(_vm.article.data.doc_title) + "\"")])]), _c('hr'), _vm._v(" "), _c('form', {
+    attrs: {
+      "method": "POST"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "approveType"
+    }
+  }, [_vm._v("Reason Why Decline")]), _vm._v(" "), _c('select', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.approveType),
+      expression: "form.approveType"
+    }],
+    staticClass: "form-control",
+    on: {
+      "change": function($event) {
+        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
+          return o.selected
+        }).map(function(o) {
+          var val = "_value" in o ? o._value : o.value;
+          return val
+        });
+        _vm.form.approveType = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+      }
+    }
+  }, [_c('option', {
+    attrs: {
+      "value": "select"
+    }
+  }, [_vm._v("SELECT A REASON")]), _vm._v(" "), _vm._l((_vm.disapproveObj.reason), function(reason) {
+    return _c('option', {
+      domProps: {
+        "value": reason
+      }
+    }, [_vm._v(_vm._s(reason.toUpperCase()))])
+  })], 2)]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "approveType"
+    }
+  }, [_vm._v("Your Comment")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.comment),
+      expression: "form.comment"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "10"
+    },
+    domProps: {
+      "value": (_vm.form.comment)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.form.comment = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.disApproveArticle($event)
+      }
+    }
+  }, [_vm._v("Submit")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.onCancel($event)
+      }
+    }
+  }, [_vm._v("Cancel")])])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-46c432a1", module.exports)
+  }
+}
+
+/***/ }),
+/* 439 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.overlay[data-v-46c432a1] {\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background: rgba(0,0,0,0.5);\n    z-index: 99999;\n}\n.AdminDisapprove[data-v-46c432a1] {\n    margin: 7em auto;\n    width: 400px;\n    background: #fff;\n    padding: 1em;\n}\nem[data-v-46c432a1] { font-size: 1.3em;\n}\n", ""]);
+
+/***/ }),
+/* 440 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(439);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("36bccdff", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-46c432a1\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DisapproveArticle.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-46c432a1\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DisapproveArticle.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

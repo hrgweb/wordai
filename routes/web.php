@@ -92,12 +92,13 @@ Route::prefix('admin')->group(function() {
     Route::post('searchByGroup', 'AdminController@searchByGroup');
     Route::post('searchByWebsite', 'AdminController@searchByWebsite');
     Route::post('downloadArticle', 'AdminController@downloadArticle');
-	Route::post('approveArticle', 'AdminController@approveArticle');
+    Route::post('approveArticle', 'AdminController@approveArticle');
 	Route::patch('updateDomain', 'AdminController@updateDomain');
 	Route::patch('updateDetails', 'AdminController@updateDetails');
     Route::patch('updateCopyscapeSetting', 'AdminController@updateCopyscapeSetting');
     Route::patch('updateGroup', 'AdminController@updateGroup');
 	Route::patch('updateCreateGroup', 'AdminController@updateCreateGroup');
+    Route::patch('disApproveArticle', 'AdminController@disApproveArticle');
 	Route::delete('removeDomain', 'AdminController@removeDomain');
     Route::delete('removeDetails', 'AdminController@removeDetails');
 	Route::delete('removeCreateGroup', 'AdminController@removeCreateGroup');

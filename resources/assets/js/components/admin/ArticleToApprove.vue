@@ -1,60 +1,74 @@
 <template>
     <div class="AdminApprove">
-       <h2>
-            Articles To Approve
-            <span class="badge">{{ articlesCount }}</span>
-        </h2>
+        <!-- Disapprove component -->
+        <disapprove-article
+            :article="article"
+            v-if="showDisapprovePanel"
+            @onSuccessSubmit="onSuccessSubmit"
+            @isCancel="isCancelDisapprove">
+        </disapprove-article>
 
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Writer</th>
-                    <th>Title</th>
-                    <th>Domain</th>
-                    <th>Keyword</th>
-                    <th>Date Created</th>
-                    <th class="text-center">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(article, index) in articles">
-                    <td>{{ article.firstname }} {{ article.lastname }}</td>
-                    <td>{{ article.doc_title }}</td>
-                    <td>{{ article.domain }}</td>
-                    <td>{{ article.keyword }}</td>
-                    <td>{{ time(article.created_at).format('ll') }}</td>
-                    <td>
-                        <button type="button" class="btn btn-success" @click="approveArticle(article, index)">Approve</button>
-                        <button type="button" class="btn btn-danger" @click="disApproveArticle(article, index)">Disapprove</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+        <div class="Approve">
+            <h2>
+                Articles To Approve
+                <span class="badge">{{ articlesCount }}</span>
+            </h2>
 
-        <div class="Pagination">
-            <paginate
-                :page-count="pageCount"
-                :click-handler="paginatePage"
-                :prev-text="'Prev'"
-                :next-text="'Next'"
-                :container-class="'pagination'">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Writer</th>
+                        <th>Title</th>
+                        <th>Domain</th>
+                        <th>Keyword</th>
+                        <th>Date Created</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(article, index) in articles">
+                        <td>{{ article.firstname }} {{ article.lastname }}</td>
+                        <td>{{ article.doc_title }}</td>
+                        <td>{{ article.domain }}</td>
+                        <td>{{ article.keyword }}</td>
+                        <td>{{ time(article.created_at).format('ll') }}</td>
+                        <td>
+                            <button type="button" class="btn btn-success" @click="approveArticle(article, index)">Approve</button>
+                            <button type="button" class="btn btn-danger" @click="disApproveArticle(article, index)">Disapprove</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-                <span slot="prevContent">&laquo;</span>
-                <span slot="nextContent">&raquo;</span>
-            </paginate>
+            <div class="Pagination">
+                <paginate
+                    :page-count="pageCount"
+                    :click-handler="paginatePage"
+                    :prev-text="'Prev'"
+                    :next-text="'Next'"
+                    :container-class="'pagination'">
+
+                    <span slot="prevContent">&laquo;</span>
+                    <span slot="nextContent">&raquo;</span>
+                </paginate>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+    import DisapproveArticle from './DisapproveArticle.vue';
     import { EditorPaginationMixin } from './../../mixins/EditorPaginationMixin.js';
 
     export default {
+        components: { DisapproveArticle },
         mixins: [ EditorPaginationMixin ],
         data() {
             return {
                 time: moment,
-                articlesToApprove: []
+                articlesToApprove: [],
+                article: { data: {}, index: 0},
+                showDisapprovePanel: false
             };
         },
         created() {
@@ -90,7 +104,21 @@
             },
 
             disApproveArticle(article, index) {
-                console.log(article, index)
+                // set article data and show panel
+                this.showDisapprovePanel = true;
+                this.article = {
+                    data: article,
+                    index: index
+                };
+            },
+
+            isCancelDisapprove() {
+                this.showDisapprovePanel = false;
+            },
+
+            onSuccessSubmit() {
+                this.showDisapprovePanel = false;
+                this.articles.splice(this.article.index, 1);
             }
         }
     }
