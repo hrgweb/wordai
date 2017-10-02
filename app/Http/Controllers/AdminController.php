@@ -670,4 +670,19 @@ class AdminController extends Controller
 
         return response()->download(storage_path($path, $filename, $headers));*/
     }
+
+    public function toApproveArticles()
+    {
+        return DB::table('words AS w')
+                ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
+                ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
+                ->where('w.isArticleApprove', 0)
+                ->orderBy('w.created_at')
+                ->paginate(20);
+                // ->get($this->columnsNeedForArticle());
+
+        // return Word::where('isArticleApprove', 0)->get();
+
+        // columnsNeedForArticle
+    }
 }

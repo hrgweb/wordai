@@ -31029,8 +31029,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PendingUser_vue__ = __webpack_require__(305);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__PendingUser_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArticleToApprove_vue__ = __webpack_require__(432);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArticleToApprove_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ArticleToApprove_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PendingUser_vue__ = __webpack_require__(305);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__PendingUser_vue__);
 //
 //
 //
@@ -31038,12 +31040,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['user', 'token'],
-    components: { PendingUser: __WEBPACK_IMPORTED_MODULE_0__PendingUser_vue___default.a },
+    components: { ArticleToApprove: __WEBPACK_IMPORTED_MODULE_0__ArticleToApprove_vue___default.a, PendingUser: __WEBPACK_IMPORTED_MODULE_1__PendingUser_vue___default.a },
     data: function data() {
         return {
             report: ReportingBus,
@@ -67699,7 +67705,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Dashboard"
-  }, [_c('pending-user', {
+  }, [_c('article-to-approve'), _vm._v(" "), _c('pending-user', {
     attrs: {
       "token": _vm.token
     }
@@ -68742,6 +68748,243 @@ module.exports = function listToStyles (parentId, list) {
 __webpack_require__(156);
 module.exports = __webpack_require__(157);
 
+
+/***/ }),
+/* 424 */,
+/* 425 */,
+/* 426 */,
+/* 427 */,
+/* 428 */,
+/* 429 */,
+/* 430 */,
+/* 431 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__mixins_EditorPaginationMixin_js__ = __webpack_require__(18);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    mixins: [__WEBPACK_IMPORTED_MODULE_0__mixins_EditorPaginationMixin_js__["a" /* EditorPaginationMixin */]],
+    data: function data() {
+        return {
+            time: moment,
+            articlesToApprove: []
+        };
+    },
+    created: function created() {
+        this.toApproveArticles('/admin/toApproveArticles' + this.pagePath);
+    },
+
+    methods: {
+        toApproveArticles: function toApproveArticles(url) {
+            var _this = this;
+
+            axios.get(url).then(function (response) {
+                var payload = response.data;
+
+                _this.articles = _this.editor.mapResultOfArticles(payload.data);
+                _this.pageCount = payload.last_page;
+                _this.urlPath = payload.path;
+                _this.isLoading = false;
+            });
+        },
+        approveArticle: function approveArticle(article, index) {
+            console.log(article, index);
+        },
+        disApproveArticle: function disApproveArticle(article, index) {
+            console.log(article, index);
+        }
+    }
+});
+
+/***/ }),
+/* 432 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(435)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(431),
+  /* template */
+  __webpack_require__(433),
+  /* scopeId */
+  "data-v-f4c1807c",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\ArticleToApprove.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] ArticleToApprove.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-f4c1807c", Component.options)
+  } else {
+    hotAPI.reload("data-v-f4c1807c", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 433 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "AdminApprove"
+  }, [_c('h2', [_vm._v("\n        Articles To Approve\n        "), _c('span', {
+    staticClass: "badge"
+  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('table', {
+    staticClass: "table table-hover"
+  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(article.firstname) + " " + _vm._s(article.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.time(article.created_at).format('ll')))]), _vm._v(" "), _c('td', [_c('button', {
+      staticClass: "btn btn-success",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.approveArticle(article, index)
+        }
+      }
+    }, [_vm._v("Approve")]), _vm._v(" "), _c('button', {
+      staticClass: "btn btn-danger",
+      attrs: {
+        "type": "button"
+      },
+      on: {
+        "click": function($event) {
+          _vm.disApproveArticle(article, index)
+        }
+      }
+    }, [_vm._v("Disapprove")])])])
+  }))]), _vm._v(" "), _c('div', {
+    staticClass: "Pagination"
+  }, [_c('paginate', {
+    attrs: {
+      "page-count": _vm.pageCount,
+      "click-handler": _vm.paginatePage,
+      "prev-text": 'Prev',
+      "next-text": 'Next',
+      "container-class": 'pagination'
+    }
+  }, [_c('span', {
+    attrs: {
+      "slot": "prevContent"
+    },
+    slot: "prevContent"
+  }, [_vm._v("«")]), _vm._v(" "), _c('span', {
+    attrs: {
+      "slot": "nextContent"
+    },
+    slot: "nextContent"
+  }, [_vm._v("»")])])], 1)])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Writer")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Date Created")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("Actions")])])])
+}]}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-f4c1807c", module.exports)
+  }
+}
+
+/***/ }),
+/* 434 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\nh2[data-v-f4c1807c] {\n    padding: 1em 0 0.5em 0.5em;\n    color: #fff;\n}\nbutton[data-v-f4c1807c] { width: 90px;\n}\ntable tbody td[data-v-f4c1807c]:first-child {\n    width: 100px;\n}\ntable tbody td[data-v-f4c1807c]:nth-child(6) {\n    width: 200px !important;\n}\n.Pagination[data-v-f4c1807c] { margin-left: 1em;\n}\n.Pagination ul[data-v-f4c1807c] { margin: 0 0 1em;\n}\n", ""]);
+
+/***/ }),
+/* 435 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(434);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("fc802678", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-f4c1807c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleToApprove.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-f4c1807c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleToApprove.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);

@@ -1,21 +1,25 @@
 <template>
     <div class="Dashboard">
+        <!-- Articles To Approve -->
+        <article-to-approve></article-to-approve>
+
         <!-- Pending User -->
         <pending-user :token="token"></pending-user>
     </div>
 </template>
 
 <script>
+    import ArticleToApprove from './ArticleToApprove.vue';
     import PendingUser from './PendingUser.vue';
 
     export default {
         props: ['user', 'token'],
-        components: { PendingUser },
+        components: { ArticleToApprove, PendingUser },
         data() {
             return {
                 report: ReportingBus,
                 searchByArticles: []
-            };
+            }
         }
     }
 </script>

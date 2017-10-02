@@ -82,6 +82,7 @@ Route::prefix('admin')->group(function() {
     Route::get('allArticles', 'AdminController@allArticles');
     Route::get('searchArticle', 'AdminController@searchArticle');
     Route::get('editDetails', 'AdminController@editDetails');
+    Route::get('toApproveArticles', 'AdminController@toApproveArticles');
 	Route::post('postDomain', 'AdminController@postDomain');
     Route::post('saveDetails', 'AdminController@saveDetails');
     Route::post('newGroup', 'AdminController@newGroup');
