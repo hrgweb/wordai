@@ -1,5 +1,13 @@
 <template>
 	<div class="ArticleEditor">
+        <!-- Disapprove component -->
+        <disapprove-article
+            :article="article"
+            v-if="showDisapprovePanel"
+            @onSuccessSubmit="onSuccessSubmit"
+            @isCancel="isCancelDisapprove">
+        </disapprove-article>
+
 		<h2 class="text-center">{{ article.doc_title }}</h2><hr>
 
 		<div class="Spintax__result" v-if="peditoraccess">
@@ -102,10 +110,11 @@
 	import { ArticleMixin } from './../../mixins/ArticleMixin.js';
     import Stopwatch from './../../class/Stopwatch.js';
     import TextgearResult from './../words/TextgearResult.vue';
+    import DisapproveArticle from './../admin/DisapproveArticle.vue';
 
 	export default {
 		props: ['article', 'peditoraccess'],
-		components: { PowerEditor, CopyscapeResult, TextgearResult },
+		components: { PowerEditor, CopyscapeResult, TextgearResult, DisapproveArticle },
 		mixins: [ CrudMixin, ArticleMixin ],
 		data() {
 			return {
@@ -118,7 +127,8 @@
 				respinBusinessRuleShow: false,
                 charHighlighted: '',
                 clock: {},
-                times: [0, 0, 0]
+                times: [0, 0, 0],
+                showDisapprovePanel: false
 			}
 		},
 		watch: {
@@ -385,8 +395,26 @@
             },
 
             rejectArticle() {
-                console.log(this.article);
-            }
+                if (this.article.isProcess > 0) {
+                    this.showDisapprovePanel = true;
+                } else {
+                    // notify user
+                    new Noty({
+                        type: 'info',
+                        text: `This article is not process yet with wordai. Come back later.`,
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
+                }
+            },
+
+            onSuccessSubmit() {
+                this.showDisapprovePanel = false;
+            },
+
+            isCancelDisapprove() {
+                this.showDisapprovePanel = false;
+            },
 		}
 	}
 </script>

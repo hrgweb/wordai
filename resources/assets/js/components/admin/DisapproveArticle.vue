@@ -3,7 +3,7 @@
         <div class="AdminDisapprove">
             <h2>Disapprove Article</h2>
             <span>
-                Article: &nbsp; <em>"{{ article.data.doc_title }}"</em>
+                Article: &nbsp; <em>"{{ article.doc_title }}"</em>
             </span><hr>
 
             <form method="POST">
@@ -48,13 +48,13 @@
         methods: {
             disApproveArticle() {
                 if (this.form.approveType !== 'select') {
-                    this.form['word_id'] = this.article.data.id;
+                    this.form['word_id'] = this.article.id;
                     this.form.patch('/admin/disApproveArticle').then(data => {
                         if (data) {
                             this.$emit('onSuccessSubmit');
 
                             // notify user
-                            let title = this.article.data.doc_title;
+                            let title = this.article.doc_title;
                             new Noty({
                                 type: 'info',
                                 text: `<b>${title}</b> article has disapproved.`,

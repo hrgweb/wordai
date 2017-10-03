@@ -30518,141 +30518,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 181 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DisapproveArticle_vue__ = __webpack_require__(299);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DisapproveArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__DisapproveArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_EditorPaginationMixin_js__ = __webpack_require__(12);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    components: { DisapproveArticle: __WEBPACK_IMPORTED_MODULE_0__DisapproveArticle_vue___default.a },
-    mixins: [__WEBPACK_IMPORTED_MODULE_1__mixins_EditorPaginationMixin_js__["a" /* EditorPaginationMixin */]],
-    data: function data() {
-        return {
-            time: moment,
-            articlesToApprove: [],
-            article: { data: {}, index: 0 },
-            showDisapprovePanel: false
-        };
-    },
-    created: function created() {
-        this.toApproveArticles('/admin/toApproveArticles' + this.pagePath);
-    },
-
-    methods: {
-        toApproveArticles: function toApproveArticles(url) {
-            var _this = this;
-
-            axios.get(url).then(function (response) {
-                var payload = response.data;
-
-                _this.articles = _this.editor.mapResultOfArticles(payload.data);
-                _this.pageCount = payload.last_page;
-                _this.urlPath = payload.path;
-                _this.isLoading = false;
-            });
-        },
-        approveArticle: function approveArticle(article, index) {
-            var _this2 = this;
-
-            var title = article.doc_title;
-
-            axios.post('/admin/approveArticle', article).then(function (response) {
-                // remove item after article has approved
-                response.data && _this2.articles.splice(index, 1);
-
-                // notify user
-                new Noty({
-                    type: 'info',
-                    text: '<b>' + title + '</b> article successfully approved.',
-                    layout: 'bottomLeft',
-                    timeout: 5000
-                }).show();
-            });
-        },
-        disApproveArticle: function disApproveArticle(article, index) {
-            // set article data and show panel
-            this.showDisapprovePanel = true;
-            this.article = {
-                data: article,
-                index: index
-            };
-        },
-        isCancelDisapprove: function isCancelDisapprove() {
-            this.showDisapprovePanel = false;
-        },
-        onSuccessSubmit: function onSuccessSubmit() {
-            this.showDisapprovePanel = false;
-            this.articles.splice(this.article.index, 1);
-        }
-    }
-});
-
-/***/ }),
+/* 181 */,
 /* 182 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -31165,10 +31031,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArticleToApprove_vue__ = __webpack_require__(292);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__ArticleToApprove_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__ArticleToApprove_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PendingUser_vue__ = __webpack_require__(311);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__PendingUser_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PendingUser_vue__ = __webpack_require__(311);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__PendingUser_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__PendingUser_vue__);
 //
 //
 //
@@ -31176,16 +31040,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['user', 'token'],
-    components: { ArticleToApprove: __WEBPACK_IMPORTED_MODULE_0__ArticleToApprove_vue___default.a, PendingUser: __WEBPACK_IMPORTED_MODULE_1__PendingUser_vue___default.a },
+    components: { PendingUser: __WEBPACK_IMPORTED_MODULE_0__PendingUser_vue___default.a },
     data: function data() {
         return {
             report: ReportingBus,
@@ -31325,13 +31185,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var _this = this;
 
             if (this.form.approveType !== 'select') {
-                this.form['word_id'] = this.article.data.id;
+                this.form['word_id'] = this.article.id;
                 this.form.patch('/admin/disApproveArticle').then(function (data) {
                     if (data) {
                         _this.$emit('onSuccessSubmit');
 
                         // notify user
-                        var title = _this.article.data.doc_title;
+                        var title = _this.article.doc_title;
                         new Noty({
                             type: 'info',
                             text: '<b>' + title + '</b> article has disapproved.',
@@ -33647,6 +33507,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__class_Stopwatch_js__ = __webpack_require__(238);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__words_TextgearResult_vue__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__words_TextgearResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__words_TextgearResult_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__admin_DisapproveArticle_vue__ = __webpack_require__(299);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__admin_DisapproveArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__admin_DisapproveArticle_vue__);
 //
 //
 //
@@ -33744,6 +33606,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -33754,7 +33625,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['article', 'peditoraccess'],
-    components: { PowerEditor: __WEBPACK_IMPORTED_MODULE_0__PowerEditor_vue___default.a, CopyscapeResult: __WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue___default.a, TextgearResult: __WEBPACK_IMPORTED_MODULE_5__words_TextgearResult_vue___default.a },
+    components: { PowerEditor: __WEBPACK_IMPORTED_MODULE_0__PowerEditor_vue___default.a, CopyscapeResult: __WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue___default.a, TextgearResult: __WEBPACK_IMPORTED_MODULE_5__words_TextgearResult_vue___default.a, DisapproveArticle: __WEBPACK_IMPORTED_MODULE_6__admin_DisapproveArticle_vue___default.a },
     mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_3__mixins_ArticleMixin_js__["a" /* ArticleMixin */]],
     data: function data() {
         return {
@@ -33767,7 +33638,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             respinBusinessRuleShow: false,
             charHighlighted: '',
             clock: {},
-            times: [0, 0, 0]
+            times: [0, 0, 0],
+            showDisapprovePanel: false
         };
     },
 
@@ -34032,7 +33904,23 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         rejectArticle: function rejectArticle() {
-            console.log(this.article);
+            if (this.article.isProcess > 0) {
+                this.showDisapprovePanel = true;
+            } else {
+                // notify user
+                new Noty({
+                    type: 'info',
+                    text: 'This article is not process yet with wordai. Come back later.',
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
+            }
+        },
+        onSuccessSubmit: function onSuccessSubmit() {
+            this.showDisapprovePanel = false;
+        },
+        isCancelDisapprove: function isCancelDisapprove() {
+            this.showDisapprovePanel = false;
         }
     }
 });
@@ -39893,13 +39781,7 @@ exports = module.exports = __webpack_require__(2)();
 exports.push([module.i, "\n.Dashboard[data-v-edfa7884] {\n    padding: 0 1em;\n    margin-bottom: 10em;\n}\n.Filter[data-v-edfa7884] { margin-top: 0;\n}\n", ""]);
 
 /***/ }),
-/* 279 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\nh2[data-v-f4c1807c] {\n    padding: 1em 0 0.5em 0.5em;\n    color: #fff;\n}\nbutton[data-v-f4c1807c] { width: 90px;\n}\ntable tbody td[data-v-f4c1807c]:first-child {\n    width: 100px;\n}\ntable tbody td[data-v-f4c1807c]:nth-child(6) {\n    width: 200px !important;\n}\n.Pagination[data-v-f4c1807c] { margin-left: 1em;\n}\n.Pagination ul[data-v-f4c1807c] { margin: 0 0 1em;\n}\n", ""]);
-
-/***/ }),
+/* 279 */,
 /* 280 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -60907,44 +60789,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 292 */
-/***/ (function(module, exports, __webpack_require__) {
-
-
-/* styles */
-__webpack_require__(430)
-
-var Component = __webpack_require__(1)(
-  /* script */
-  __webpack_require__(181),
-  /* template */
-  __webpack_require__(394),
-  /* scopeId */
-  "data-v-f4c1807c",
-  /* cssModules */
-  null
-)
-Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\ArticleToApprove.vue"
-if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] ArticleToApprove.vue: functional components are not supported with templates, they should use render functions.")}
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-f4c1807c", Component.options)
-  } else {
-    hotAPI.reload("data-v-f4c1807c", Component.options)
-  }
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
+/* 292 */,
 /* 293 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -63049,7 +62894,15 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "ArticleEditor"
-  }, [_c('h2', {
+  }, [(_vm.showDisapprovePanel) ? _c('disapprove-article', {
+    attrs: {
+      "article": _vm.article
+    },
+    on: {
+      "onSuccessSubmit": _vm.onSuccessSubmit,
+      "isCancel": _vm.isCancelDisapprove
+    }
+  }) : _vm._e(), _vm._v(" "), _c('h2', {
     staticClass: "text-center"
   }, [_vm._v(_vm._s(_vm.article.doc_title))]), _c('hr'), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
     staticClass: "Spintax__result"
@@ -63195,7 +63048,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "color": "red"
     }
-  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br'), _vm._v(" "), _vm._m(0)])], 1)])
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br'), _vm._v(" "), _vm._m(0)])], 1)], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "timer-overlay"
@@ -64856,7 +64709,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "overlay"
   }, [_c('div', {
     staticClass: "AdminDisapprove"
-  }, [_c('h2', [_vm._v("Disapprove Article")]), _vm._v(" "), _c('span', [_vm._v("\n            Article:   "), _c('em', [_vm._v("\"" + _vm._s(_vm.article.data.doc_title) + "\"")])]), _c('hr'), _vm._v(" "), _c('form', {
+  }, [_c('h2', [_vm._v("Disapprove Article")]), _vm._v(" "), _c('span', [_vm._v("\n            Article:   "), _c('em', [_vm._v("\"" + _vm._s(_vm.article.doc_title) + "\"")])]), _c('hr'), _vm._v(" "), _c('form', {
     attrs: {
       "method": "POST"
     }
@@ -68170,7 +68023,7 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Dashboard"
-  }, [_c('article-to-approve'), _vm._v(" "), _c('pending-user', {
+  }, [_c('pending-user', {
     attrs: {
       "token": _vm.token
     }
@@ -68185,83 +68038,7 @@ if (false) {
 }
 
 /***/ }),
-/* 394 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('div', {
-    staticClass: "AdminApprove"
-  }, [(_vm.showDisapprovePanel) ? _c('disapprove-article', {
-    attrs: {
-      "article": _vm.article
-    },
-    on: {
-      "onSuccessSubmit": _vm.onSuccessSubmit,
-      "isCancel": _vm.isCancelDisapprove
-    }
-  }) : _vm._e(), _vm._v(" "), _c('div', {
-    staticClass: "Approve"
-  }, [_c('h2', [_vm._v("\n            Articles To Approve\n            "), _c('span', {
-    staticClass: "badge"
-  }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('table', {
-    staticClass: "table table-hover"
-  }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(article.firstname) + " " + _vm._s(article.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.time(article.created_at).format('ll')))]), _vm._v(" "), _c('td', [_c('button', {
-      staticClass: "btn btn-success",
-      attrs: {
-        "type": "button"
-      },
-      on: {
-        "click": function($event) {
-          _vm.approveArticle(article, index)
-        }
-      }
-    }, [_vm._v("Approve")]), _vm._v(" "), _c('button', {
-      staticClass: "btn btn-danger",
-      attrs: {
-        "type": "button"
-      },
-      on: {
-        "click": function($event) {
-          _vm.disApproveArticle(article, index)
-        }
-      }
-    }, [_vm._v("Disapprove")])])])
-  }))]), _vm._v(" "), _c('div', {
-    staticClass: "Pagination"
-  }, [_c('paginate', {
-    attrs: {
-      "page-count": _vm.pageCount,
-      "click-handler": _vm.paginatePage,
-      "prev-text": 'Prev',
-      "next-text": 'Next',
-      "container-class": 'pagination'
-    }
-  }, [_c('span', {
-    attrs: {
-      "slot": "prevContent"
-    },
-    slot: "prevContent"
-  }, [_vm._v("«")]), _vm._v(" "), _c('span', {
-    attrs: {
-      "slot": "nextContent"
-    },
-    slot: "nextContent"
-  }, [_vm._v("»")])])], 1)])], 1)
-},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("Writer")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Date Created")]), _vm._v(" "), _c('th', {
-    staticClass: "text-center"
-  }, [_vm._v("Actions")])])])
-}]}
-module.exports.render._withStripped = true
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-f4c1807c", module.exports)
-  }
-}
-
-/***/ }),
+/* 394 */,
 /* 395 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -69251,32 +69028,7 @@ if(false) {
 }
 
 /***/ }),
-/* 430 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(279);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("fc802678", content, false);
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-f4c1807c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleToApprove.vue", function() {
-     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-f4c1807c\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./ArticleToApprove.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
+/* 430 */,
 /* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
