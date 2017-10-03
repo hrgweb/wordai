@@ -69,6 +69,14 @@
                 <!-- Reset Article -->
                 <button type="button" class="btn btn-danger" @click="resetSpinArticle" ref="resetChangeBtn">Reset Article</button>
 
+                <div class="seperator"></div>
+
+                <!-- Approve Article -->
+                <button type="button" class="btn btn-primary approve" @click="approveArticle" ref="approveBtn">Approve Article</button>
+
+                <!-- Disapprove Article -->
+                <button type="button" class="btn btn-primary disapprove" @click="rejectArticle" ref="disapproveBtn">Reject Article</button>
+
 				<!-- Dismiss -->
 		        <button type="button" class="btn btn-danger" id="close" @click="dissmissArticle">Back to Articles</button>
 
@@ -357,6 +365,14 @@
 
                 editor.text('');
                 Vue.nextTick(() => editor.html(this.article.spin));
+            },
+
+            approveArticle() {
+                console.log(this.article);
+            },
+
+            rejectArticle() {
+                console.log(this.article);
             }
 		}
 	}
@@ -386,6 +402,20 @@
         background-color: #9D7734 !important;
         border: 1px solid #936B25 !important;
     }
+
+    button.approve {
+        background: #62bb75;
+        border: 1px solid #55b369;
+    }
+    button.approve:hover { background: #5CB06E; }
+
+    button.disapprove {
+        background: #f14b69;
+        border: 1px solid #e23e5c;
+    }
+    button.disapprove:hover { background: #E5425F; }
+
+    .seperator { margin-bottom: 0.5em; }
 
 	div.first-button {
 	    float: left;
