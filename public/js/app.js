@@ -34016,7 +34016,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             });
         },
         approveArticle: function approveArticle() {
-            console.log(this.article);
+            var title = this.article.doc_title;
+
+            axios.post('/admin/approveArticle', this.article).then(function (response) {
+                // remove item after article has approved
+                // response.data && this.articles.splice(index, 1);
+
+                // notify user
+                new Noty({
+                    type: 'info',
+                    text: '<b>' + title + '</b> article successfully approved.',
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
+            });
         },
         rejectArticle: function rejectArticle() {
             console.log(this.article);
