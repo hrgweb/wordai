@@ -686,8 +686,8 @@ class AdminController extends Controller
     {
         return Word::where('id', request('id'))->update([
             'isArticleApprove' => 1,
-            'reasonArticleNotAprrove' => '',
-            'reasonArticleNotAprroveBody' => ''
+            'reasonArticleNotAprrove' => null,
+            'reasonArticleNotAprroveBody' => null
         ]);
     }
 

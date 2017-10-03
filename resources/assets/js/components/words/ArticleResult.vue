@@ -1,5 +1,12 @@
 <template>
 	<div class="ArticleResult">
+        <!-- Display Comment -->
+        <display-comment
+            :article="article"
+            v-if="isShowCommentPanel"
+            @closeCommentPanel="closeCommentPanel">
+        </display-comment>
+
 		<div class="Input">
 			<!-- Search for -->
 			<label for="searchType">Search for</label>&nbsp;
@@ -40,18 +47,18 @@
                             <div class="buttons">
                                 <!-- actions -->
                                 <div class="button-left">
-        							<button type="button" class="btn btn-info" ref="editArticle" v-if="! article.isProcess" @click="editArticle(article, index)">Edit</button>
-        							<button type="button" class="btn" ref="editArticle" disabled v-else-if="article.isArticleApprove === 1">Approved</button>
-                                    <button type="submit" class="btn btn-default comment" v-else-if="article.reasonArticleNotAprrove !== null"><i class="fa fa-commenting-o"></i></button>
+        							<button type="button" class="btn btn-info" ref="editArticle" v-if="(! article.isProcess || article.reasonArticleNotAprrove != null)" @click="editArticle(article, index)">Edit</button>
+        							<button type="button" class="btn approve" ref="editArticle" disabled v-else-if="article.isArticleApprove === 1">Approved</button>
+                                    <!-- <button type="submit" class="btn btn-default comment" v-else-if="article.reasonArticleNotAprrove !== null"><i class="fa fa-commenting-o"></i></button> -->
         							<button type="button" class="btn btn-warning" ref="editArticle" disabled v-else-if="article.isProcess === 1">Waiting For Process</button>
                                 </div>
 
                                 <!-- comment -->
-                                <!-- <div class="button-right" v-show="article.reasonArticleNotAprrove !== null">
-                                    <button type="submit" class="btn btn-default comment">
+                                <div class="button-right" v-show="article.reasonArticleNotAprrove !== null">
+                                    <button type="submit" class="btn btn-default comment" @click="showComment(article)">
                                         <i class="fa fa-commenting-o"></i>
                                     </button>
-                                </div> -->
+                                </div>
                             </div>
 						</td>
 					</tr>
@@ -62,8 +69,11 @@
 </template>
 
 <script>
+    import DisplayComment from './DisplayComment.vue';
+
 	export default {
 		props: ['articles'],
+        components: { DisplayComment },
 		data() {
 			return {
 				articleList: [],
@@ -73,7 +83,9 @@
 				sortBy: ['A-Z', 'Z-A'],
 				dateTime: moment,
 				isProcess: false,
-				index: 0
+				index: 0,
+                isShowCommentPanel: false,
+                article: {}
 			}
 		},
 		computed: {
@@ -107,10 +119,10 @@
 				}
 			},
 
-			btnStateIfArticleIsProcess() {
+			btnStateIfArticleIsProcess(text, color) {
 				this.$refs.editArticle[this.index].disabled = true;
-				this.$refs.editArticle[this.index].innerHTML = 'Waiting For Editing';
-				this.$refs.editArticle[this.index].style.backgroundColor = '#f0ad4e';
+				this.$refs.editArticle[this.index].innerHTML = text;
+				this.$refs.editArticle[this.index].style.backgroundColor = color;
 			},
 
 			editArticle(article, index) {
@@ -119,8 +131,18 @@
 				axios.get('/user/editArticle?wordId='+article.id).then(response => {
 					let data = response.data;
 
+                    // check if article is approve
+                    if (data.isArticleApprove === 1) {
+                        this.btnStateIfArticleIsProcess('Approved', '#6CDA6C');
+                    } else {
+                        this.$emit('isEdit', {
+                            data: data,
+                            index: index
+                        });
+                    }
+
 					// check if spintax is empty & isProcess is 0
-					if (data.isProcess === 0) {
+					/*if (data.isProcess === 0) {
 						this.isProcess = false;
 						this.$emit('isEdit', {
 							data: data,
@@ -142,9 +164,18 @@
 								timeout: 5000
 							}).show();
 						}
-					}
+					}*/
 				});
-			}
+			},
+
+            showComment(article) {
+                this.article = article;
+                this.isShowCommentPanel = true;
+            },
+
+            closeCommentPanel() {
+                this.isShowCommentPanel = false;
+            }
 		}
 	}
 </script>
@@ -159,8 +190,14 @@
     .buttons { display: flex; }
 
 	button { width: 150px; }
-    /*button.btn.comment {
+
+    button.approve {
+        background: #6CDA6C;
+        color: #fff;
+    }
+
+    button.btn.comment {
         width: 50px;
         margin-left: 0.5em;
-    }*/
+    }
 </style>

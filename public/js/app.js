@@ -34763,6 +34763,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DisplayComment_vue__ = __webpack_require__(442);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__DisplayComment_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__DisplayComment_vue__);
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -34827,8 +34836,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['articles'],
+	components: { DisplayComment: __WEBPACK_IMPORTED_MODULE_0__DisplayComment_vue___default.a },
 	data: function data() {
 		return {
 			articleList: [],
@@ -34838,7 +34850,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			sortBy: ['A-Z', 'Z-A'],
 			dateTime: moment,
 			isProcess: false,
-			index: 0
+			index: 0,
+			isShowCommentPanel: false,
+			article: {}
 		};
 	},
 
@@ -34876,10 +34890,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				this.articleList = this.articles;
 			}
 		},
-		btnStateIfArticleIsProcess: function btnStateIfArticleIsProcess() {
+		btnStateIfArticleIsProcess: function btnStateIfArticleIsProcess(text, color) {
 			this.$refs.editArticle[this.index].disabled = true;
-			this.$refs.editArticle[this.index].innerHTML = 'Waiting For Editing';
-			this.$refs.editArticle[this.index].style.backgroundColor = '#f0ad4e';
+			this.$refs.editArticle[this.index].innerHTML = text;
+			this.$refs.editArticle[this.index].style.backgroundColor = color;
 		},
 		editArticle: function editArticle(article, index) {
 			var _this3 = this;
@@ -34889,31 +34903,46 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			axios.get('/user/editArticle?wordId=' + article.id).then(function (response) {
 				var data = response.data;
 
-				// check if spintax is empty & isProcess is 0
-				if (data.isProcess === 0) {
-					_this3.isProcess = false;
+				// check if article is approve
+				if (data.isArticleApprove === 1) {
+					_this3.btnStateIfArticleIsProcess('Approved', '#6CDA6C');
+				} else {
 					_this3.$emit('isEdit', {
 						data: data,
 						index: index
 					});
-				} else {
-					_this3.isProcess = true;
-
-					// notify user that article has already process e.g isProcess=1
-					if (_this3.isProcess) {
-						// show waiting for edit button
-						_this3.btnStateIfArticleIsProcess();
-
-						var articleTitle = data.doc_title;
-						new Noty({
-							type: 'error',
-							text: '<b>' + articleTitle + '</b> article already processed. You can\'t process and article that is done already.',
-							layout: 'bottomLeft',
-							timeout: 5000
-						}).show();
-					}
 				}
+
+				// check if spintax is empty & isProcess is 0
+				/*if (data.isProcess === 0) {
+    	this.isProcess = false;
+    	this.$emit('isEdit', {
+    		data: data,
+    		index: index
+    	});
+    } else {
+    	this.isProcess = true;
+    		// notify user that article has already process e.g isProcess=1
+    	if (this.isProcess) {
+    		// show waiting for edit button
+    		this.btnStateIfArticleIsProcess();
+    			let articleTitle = data.doc_title;
+    		new Noty({
+    			type: 'error',
+    			text: `<b>${articleTitle}</b> article already processed. You can't process and article that is done already.`,
+    			layout: 'bottomLeft',
+    			timeout: 5000
+    		}).show();
+    	}
+    }*/
 			});
+		},
+		showComment: function showComment(article) {
+			this.article = article;
+			this.isShowCommentPanel = true;
+		},
+		closeCommentPanel: function closeCommentPanel() {
+			this.isShowCommentPanel = false;
 		}
 	}
 });
@@ -39588,7 +39617,7 @@ exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\ninput[data-v-1a643e37], select[data-v-1a643e37] {\n\t    height: 2em;\n\t    padding: 0 0.5em;\n\t    border: 1px solid silver;\n}\n.buttons[data-v-1a643e37] { display: -webkit-box; display: -ms-flexbox; display: flex;\n}\nbutton[data-v-1a643e37] { width: 150px;\n}\n    /*button.btn.comment {\n        width: 50px;\n        margin-left: 0.5em;\n    }*/\n", ""]);
+exports.push([module.i, "\ninput[data-v-1a643e37], select[data-v-1a643e37] {\n\t    height: 2em;\n\t    padding: 0 0.5em;\n\t    border: 1px solid silver;\n}\n.buttons[data-v-1a643e37] { display: -webkit-box; display: -ms-flexbox; display: flex;\n}\nbutton[data-v-1a643e37] { width: 150px;\n}\nbutton.approve[data-v-1a643e37] {\n        background: #6CDA6C;\n        color: #fff;\n}\nbutton.btn.comment[data-v-1a643e37] {\n        width: 50px;\n        margin-left: 0.5em;\n}\n", ""]);
 
 /***/ }),
 /* 250 */
@@ -39651,7 +39680,7 @@ exports.push([module.i, "\nh2[data-v-46aeeabb] { text-align: center;\n}\n.Proces
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.overlay[data-v-46c432a1] {\n    position: fixed;\n    top: 0;\n    left: 0;\n    right: 0;\n    bottom: 0;\n    background: rgba(0,0,0,0.5);\n    z-index: 99999;\n}\n.AdminDisapprove[data-v-46c432a1] {\n    margin: 7em auto;\n    width: 400px;\n    background: #fff;\n    padding: 1em;\n}\nem[data-v-46c432a1] { font-size: 1.3em;\n}\n", ""]);
+exports.push([module.i, "\nem[data-v-46c432a1] { font-size: 1.3em;\n}\n", ""]);
 
 /***/ }),
 /* 259 */
@@ -63084,7 +63113,14 @@ if (false) {
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "ArticleResult"
-  }, [_c('div', {
+  }, [(_vm.isShowCommentPanel) ? _c('display-comment', {
+    attrs: {
+      "article": _vm.article
+    },
+    on: {
+      "closeCommentPanel": _vm.closeCommentPanel
+    }
+  }) : _vm._e(), _vm._v(" "), _c('div', {
     staticClass: "Input"
   }, [_c('label', {
     attrs: {
@@ -63180,7 +63216,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       staticClass: "buttons"
     }, [_c('div', {
       staticClass: "button-left"
-    }, [(!article.isProcess) ? _c('button', {
+    }, [((!article.isProcess || article.reasonArticleNotAprrove != null)) ? _c('button', {
       ref: "editArticle",
       refInFor: true,
       staticClass: "btn btn-info",
@@ -63195,19 +63231,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("Edit")]) : (article.isArticleApprove === 1) ? _c('button', {
       ref: "editArticle",
       refInFor: true,
-      staticClass: "btn",
+      staticClass: "btn approve",
       attrs: {
         "type": "button",
         "disabled": ""
       }
-    }, [_vm._v("Approved")]) : (article.reasonArticleNotAprrove !== null) ? _c('button', {
-      staticClass: "btn btn-default comment",
-      attrs: {
-        "type": "submit"
-      }
-    }, [_c('i', {
-      staticClass: "fa fa-commenting-o"
-    })]) : (article.isProcess === 1) ? _c('button', {
+    }, [_vm._v("Approved")]) : (article.isProcess === 1) ? _c('button', {
       ref: "editArticle",
       refInFor: true,
       staticClass: "btn btn-warning",
@@ -63215,8 +63244,28 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "type": "button",
         "disabled": ""
       }
-    }, [_vm._v("Waiting For Process")]) : _vm._e()])])])])
-  }))])])])
+    }, [_vm._v("Waiting For Process")]) : _vm._e()]), _vm._v(" "), _c('div', {
+      directives: [{
+        name: "show",
+        rawName: "v-show",
+        value: (article.reasonArticleNotAprrove !== null),
+        expression: "article.reasonArticleNotAprrove !== null"
+      }],
+      staticClass: "button-right"
+    }, [_c('button', {
+      staticClass: "btn btn-default comment",
+      attrs: {
+        "type": "submit"
+      },
+      on: {
+        "click": function($event) {
+          _vm.showComment(article)
+        }
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-commenting-o"
+    })])])])])])
+  }))])])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', {
     staticClass: "text-center"
@@ -69120,6 +69169,154 @@ module.exports = function listToStyles (parentId, list) {
 __webpack_require__(156);
 module.exports = __webpack_require__(157);
 
+
+/***/ }),
+/* 434 */,
+/* 435 */,
+/* 436 */,
+/* 437 */,
+/* 438 */,
+/* 439 */,
+/* 440 */,
+/* 441 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['article']
+});
+
+/***/ }),
+/* 442 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(445)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(441),
+  /* template */
+  __webpack_require__(443),
+  /* scopeId */
+  "data-v-285f1c69",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\words\\DisplayComment.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] DisplayComment.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-285f1c69", Component.options)
+  } else {
+    hotAPI.reload("data-v-285f1c69", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 443 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "overlay"
+  }, [_c('div', {
+    staticClass: "Comment"
+  }, [_c('h2', [_vm._v("Display Comment")]), _vm._v(" "), _c('span', [_vm._v("\n            Article:   "), _c('em', [_vm._v("\"" + _vm._s(_vm.article.doc_title) + "\"")])]), _c('hr'), _vm._v(" "), _c('button', {
+    staticClass: "close",
+    attrs: {
+      "type": "button",
+      "data-dismiss": "alert",
+      "aria-hidden": "true"
+    },
+    on: {
+      "click": function($event) {
+        _vm.$emit('closeCommentPanel')
+      }
+    }
+  }, [_vm._v("×")]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('span', [_vm._v("Reason For Decline")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.article.reasonArticleNotAprrove))])]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('span', [_vm._v("Comment")]), _vm._v(" "), _c('p', [_vm._v(_vm._s(_vm.article.reasonArticleNotAprroveBody))])])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-285f1c69", module.exports)
+  }
+}
+
+/***/ }),
+/* 444 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\n.Comment p[data-v-285f1c69] { font-size: 1.2em;\n}\n", ""]);
+
+/***/ }),
+/* 445 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(444);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("647495b7", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-285f1c69\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DisplayComment.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-285f1c69\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DisplayComment.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);
