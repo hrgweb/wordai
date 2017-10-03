@@ -64,19 +64,16 @@ class UserController extends Controller
 
     public function userArticles()
     {
-    	return DB::table('words')
-    		->join('users', 'users.id', '=', 'words.user_id')
-    		->join('article_types', 'article_types.id', '=', 'words.article_type_id')
-    		->join('domains', 'domains.id', '=', 'words.domain_id')
-    		->where('words.user_id', auth()->user()->id)
-    		->latest()
-            ->take(20)
-    		->get([
-    			'words.id',
-    			'users.firstname',
-    			'users.lastname',
-    			'article_types.article_type',
-    			'domains.domain',
+    	return DB::table('words AS w')
+    		->join('users AS u', 'u.id', '=', 'w.user_id')
+    		->join('article_types AS at', 'at.id', '=', 'w.article_type_id')
+    		->join('domains AS d', 'd.id', '=', 'w.domain_id')
+    		->select([
+    			'w.id',
+    			'u.firstname',
+    			'u.lastname',
+    			'at.article_type',
+    			'd.domain',
     			'doc_title',
     			'keyword',
 				'lsi_terms',
@@ -86,15 +83,18 @@ class UserController extends Controller
 				'spin',
 				'protected',
 				'synonym',
-				'words.isUserEdit',
-				'words.isEditorEdit',
-				'words.editor_id',
-                'words.isArticleApprove',
-                'words.reasonArticleNotAprrove',
-                'words.reasonArticleNotAprroveBody',
+				'w.isUserEdit',
+				'w.isEditorEdit',
+				'w.editor_id',
+                'w.isArticleApprove',
+                'w.reasonArticleNotAprrove',
+                'w.reasonArticleNotAprroveBody',
 				'isProcess',
-				'words.created_at'
-    		]);
+				'w.created_at'
+    		])
+            ->where('w.user_id', auth()->user()->id)
+            ->orderBy('w.created_at', 'desc')
+            ->paginate(20);
     }
 
     public function editArticle()

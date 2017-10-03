@@ -1,12 +1,5 @@
 <template>
 	<div class="ArticleResult">
-        <!-- Display Comment -->
-        <display-comment
-            :article="article"
-            v-if="isShowCommentPanel"
-            @closeCommentPanel="closeCommentPanel">
-        </display-comment>
-
 		<div class="Input">
 			<!-- Search for -->
 			<label for="searchType">Search for</label>&nbsp;
@@ -27,78 +20,69 @@
 		</div>
 
 		<div class="Result">
-			<table class="table table-striped table-hover">
-			    <thead>
-			        <tr>
-			            <th>Date</th>
-			            <th>Title</th>
-			            <th>Domain</th>
-			            <th>Keyword</th>
-			            <th class="text-center">Status</th>
-			        </tr>
-			    </thead>
-			    <tbody>
-					<tr v-for="(article, index) in filterArticles">
-						<td>{{ dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a') }}</td>
-						<td>{{ article.doc_title }}</td>
-						<td>{{ article.domain }}</td>
-						<td>{{ article.keyword }}</td>
-						<td>
-                            <div class="buttons">
-                                <!-- actions -->
-                                <div class="button-left">
-        							<button type="button" class="btn btn-info" ref="editArticle" v-if="(! article.isProcess || article.reasonArticleNotAprrove != null)" @click="editArticle(article, index)">Edit</button>
-        							<button type="button" class="btn approve" ref="editArticle" disabled v-else-if="article.isArticleApprove === 1">Approved</button>
-                                    <!-- <button type="submit" class="btn btn-default comment" v-else-if="article.reasonArticleNotAprrove !== null"><i class="fa fa-commenting-o"></i></button> -->
-        							<button type="button" class="btn btn-warning" ref="editArticle" disabled v-else-if="article.isProcess === 1">Waiting For Process</button>
-                                </div>
+			<article-table
+                :articles="articles"
+                :tableType="tableType">
+            </article-table>
 
-                                <!-- comment -->
-                                <div class="button-right" v-show="article.reasonArticleNotAprrove !== null">
-                                    <button type="submit" class="btn btn-default comment" @click="showComment(article)">
-                                        <i class="fa fa-commenting-o"></i>
-                                    </button>
-                                </div>
-                            </div>
-						</td>
-					</tr>
-			    </tbody>
-			</table>
+            <paginate
+                :page-count="pageCount"
+                :click-handler="paginatePage"
+                :prev-text="'Prev'"
+                :next-text="'Next'"
+                :container-class="'pagination'">
+
+                <span slot="prevContent">&laquo;</span>
+                <span slot="nextContent">&raquo;</span>
+            </paginate>
 		</div>
 	</div>
 </template>
 
 <script>
-    import DisplayComment from './DisplayComment.vue';
+    import Paginate from 'vuejs-paginate';
+    import ArticleTable from './ArticleTable.vue';
+    import { EditorPaginationMixin } from './../../mixins/EditorPaginationMixin.js';
 
 	export default {
-		props: ['articles'],
-        components: { DisplayComment },
+        components: { Paginate, ArticleTable },
+        mixins: [ EditorPaginationMixin ],
 		data() {
 			return {
-				articleList: [],
+				articles: [],
 				search: '',
 				type: 'doc_title',
 				sort: 'a-z',
 				sortBy: ['A-Z', 'Z-A'],
-				dateTime: moment,
 				isProcess: false,
 				index: 0,
-                isShowCommentPanel: false,
-                article: {}
+                isArticlesLoaded: false,
+                tableType: 'writer-article'
 			}
 		},
-		computed: {
-			filterArticles() {
-				return this.articleList.filter((article) => {
-					return article[this.type].match(new RegExp(this.search, 'i'));
-				});
-			},
-		},
-		mounted() {
-			this.articleList = this.articles;
-		},
+        watch: {
+            articles(data) {
+                this.isArticlesLoaded = data.length > 0 ? true : false;
+
+                return data.filter((article) => {
+                    return article[this.type].match(new RegExp(this.search, 'i'));
+                });
+            }
+        },
+        created() {
+            this.userArticles('/user/userArticles'+this.pagePath);
+        },
 		methods: {
+            userArticles(url) {
+                axios.get(url).then(response => {
+                    let payload = response.data;
+
+                    this.articles = payload.data;
+                    this.pageCount = payload.last_page;
+                    this.urlPath = payload.path;
+                });
+            },
+
 			orderArticles() {
 				if (this.search.length > 0) {
 					this.articleList = this.filterArticles.sort((a, b) => {
@@ -166,16 +150,7 @@
 						}
 					}*/
 				});
-			},
-
-            showComment(article) {
-                this.article = article;
-                this.isShowCommentPanel = true;
-            },
-
-            closeCommentPanel() {
-                this.isShowCommentPanel = false;
-            }
+			}
 		}
 	}
 </script>
@@ -186,18 +161,4 @@
 	    padding: 0 0.5em;
 	    border: 1px solid silver;
 	}
-
-    .buttons { display: flex; }
-
-	button { width: 150px; }
-
-    button.approve {
-        background: #6CDA6C;
-        color: #fff;
-    }
-
-    button.btn.comment {
-        width: 50px;
-        margin-left: 0.5em;
-    }
 </style>

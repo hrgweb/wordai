@@ -13,9 +13,7 @@
 
 			<!-- Article Result -->
 			<article-result
-				:articles="articles"
-				@isEdit="updateArticle"
-				v-if="isArticlesNotEmpty">
+				@isEdit="updateArticle">
 			</article-result>
 		</div>
 	</div>
@@ -24,12 +22,10 @@
 <script>
 	import ArticleResult from './ArticleResult.vue';
 	import ArticleEditor from './ArticleEditor.vue';
-	import { UserArticleMixin } from './../../mixins/UserArticleMixin.js';
 
 	export default {
 		props: ['user'],
 		components: { ArticleResult, ArticleEditor },
-		mixins: [ UserArticleMixin ],
 		data() {
 			return {
 				authUser: {},
@@ -45,16 +41,10 @@
 				return user.firstname + ' ' + user.lastname;
 			}
 		},
-		created() {
-			this.userArticles();
-		},
 		mounted() {
 			this.authUser = JSON.parse(this.user);
 		},
 		methods: {
-			userArticles() {
-				axios.get('/user/userArticles').then(response => this.articles = response.data);
-			},
 
 			updateArticle(payload) {
 				if (payload) {
