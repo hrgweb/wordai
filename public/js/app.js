@@ -34735,7 +34735,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['data'],
+	props: ['data', 'index'],
 	data: function data() {
 		return {};
 	},
@@ -34754,8 +34754,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 			axios.patch('/user/updateArticle', data).then(function (response) {
 				if (response.data) {
-					_this.$emit('isUpdated', {
-						article: data.article
+					ArticleBus.$emit('isUpdated', {
+						article: data.article,
+						index: _this.index
 					});
 				}
 			});
@@ -34824,117 +34825,98 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	components: { Paginate: __WEBPACK_IMPORTED_MODULE_0_vuejs_paginate___default.a, ArticleTable: __WEBPACK_IMPORTED_MODULE_1__ArticleTable_vue___default.a },
-	mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_EditorPaginationMixin_js__["a" /* EditorPaginationMixin */]],
-	data: function data() {
-		return {
-			articles: [],
-			search: '',
-			type: 'doc_title',
-			sort: 'a-z',
-			sortBy: ['A-Z', 'Z-A'],
-			isProcess: false,
-			index: 0,
-			isArticlesLoaded: false,
-			tableType: 'writer-article'
-		};
-	},
+  components: { Paginate: __WEBPACK_IMPORTED_MODULE_0_vuejs_paginate___default.a, ArticleTable: __WEBPACK_IMPORTED_MODULE_1__ArticleTable_vue___default.a },
+  mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_EditorPaginationMixin_js__["a" /* EditorPaginationMixin */]],
+  data: function data() {
+    return {
+      articles: [],
+      search: '',
+      type: 'doc_title',
+      sort: 'a-z',
+      sortBy: ['A-Z', 'Z-A'],
+      isProcess: false,
+      isArticlesLoaded: false,
+      tableType: 'writer-article',
+      limitCounter: 0
+    };
+  },
 
-	watch: {
-		articles: function articles(data) {
-			var _this = this;
+  watch: {
+    articles: function articles(data) {
+      var _this = this;
 
-			this.isArticlesLoaded = data.length > 0 ? true : false;
+      return data.filter(function (article) {
+        return article[_this.type].match(new RegExp(_this.search, 'i'));
+      });
+    }
+  },
+  created: function created() {
+    this.userArticles('/user/userArticles' + this.pagePath);
+  },
+  mounted: function mounted() {
+    // event bus
+    ArticleBus.$on('isUpdated', this.updateRecord);
+  },
 
-			return data.filter(function (article) {
-				return article[_this.type].match(new RegExp(_this.search, 'i'));
-			});
-		}
-	},
-	created: function created() {
-		this.userArticles('/user/userArticles' + this.pagePath);
-	},
+  methods: {
+    userArticles: function userArticles(url) {
+      var _this2 = this;
 
-	methods: {
-		userArticles: function userArticles(url) {
-			var _this2 = this;
+      axios.get(url).then(function (response) {
+        var payload = response.data;
 
-			axios.get(url).then(function (response) {
-				var payload = response.data;
+        _this2.articles = payload.data;
+        _this2.pageCount = payload.last_page;
+        _this2.urlPath = payload.path;
+      });
+    },
+    orderArticles: function orderArticles() {
+      var _this3 = this;
 
-				_this2.articles = payload.data;
-				_this2.pageCount = payload.last_page;
-				_this2.urlPath = payload.path;
-			});
-		},
-		orderArticles: function orderArticles() {
-			var _this3 = this;
+      if (this.search.length > 0) {
+        this.articleList = this.filterArticles.sort(function (a, b) {
+          return _this3.sort === 'a-z' ? a[_this3.type] > b[_this3.type] : a[_this3.type] < b[_this3.type];
+        });
+      } else {
+        this.articleList = this.articleList.sort(function (a, b) {
+          return _this3.sort === 'a-z' ? a[_this3.type] > b[_this3.type] : a[_this3.type] < b[_this3.type];
+        });
+      }
+    },
+    goSearch: function goSearch() {
+      if (this.search.length > 0) {
+        return this.filterArticles;
+      } else {
+        this.articleList = this.articles;
+      }
+    },
+    btnStateIfArticleIsProcess: function btnStateIfArticleIsProcess(text, color) {
+      this.$refs.editArticle[this.index].disabled = true;
+      this.$refs.editArticle[this.index].innerHTML = text;
+      this.$refs.editArticle[this.index].style.backgroundColor = color;
+    },
+    updateRecord: function updateRecord(data) {
+      this.limitCounter++;
 
-			if (this.search.length > 0) {
-				this.articleList = this.filterArticles.sort(function (a, b) {
-					return _this3.sort === 'a-z' ? a[_this3.type] > b[_this3.type] : a[_this3.type] < b[_this3.type];
-				});
-			} else {
-				this.articleList = this.articleList.sort(function (a, b) {
-					return _this3.sort === 'a-z' ? a[_this3.type] > b[_this3.type] : a[_this3.type] < b[_this3.type];
-				});
-			}
-		},
-		goSearch: function goSearch() {
-			if (this.search.length > 0) {
-				return this.filterArticles;
-			} else {
-				this.articleList = this.articles;
-			}
-		},
-		btnStateIfArticleIsProcess: function btnStateIfArticleIsProcess(text, color) {
-			this.$refs.editArticle[this.index].disabled = true;
-			this.$refs.editArticle[this.index].innerHTML = text;
-			this.$refs.editArticle[this.index].style.backgroundColor = color;
-		},
-		editArticle: function editArticle(article, index) {
-			var _this4 = this;
+      if (this.limitCounter === 1 && data) {
+        this.isEdit = false;
+        this.articles[data.index].spin = data.article;
 
-			this.index = index;
+        // successfully updated
+        new Noty({
+          type: 'info',
+          text: '1 record successfully updated.',
+          layout: 'bottomLeft',
+          timeout: 5000
+        }).show();
 
-			axios.get('/user/editArticle?wordId=' + article.id).then(function (response) {
-				var data = response.data;
+        // reset limit counter
+        this.limitCounter = 0;
+      }
 
-				// check if article is approve
-				if (data.isArticleApprove === 1) {
-					_this4.btnStateIfArticleIsProcess('Approved', '#6CDA6C');
-				} else {
-					_this4.$emit('isEdit', {
-						data: data,
-						index: index
-					});
-				}
-
-				// check if spintax is empty & isProcess is 0
-				/*if (data.isProcess === 0) {
-    	this.isProcess = false;
-    	this.$emit('isEdit', {
-    		data: data,
-    		index: index
-    	});
-    } else {
-    	this.isProcess = true;
-    		// notify user that article has already process e.g isProcess=1
-    	if (this.isProcess) {
-    		// show waiting for edit button
-    		this.btnStateIfArticleIsProcess();
-    			let articleTitle = data.doc_title;
-    		new Noty({
-    			type: 'error',
-    			text: `<b>${articleTitle}</b> article already processed. You can't process and article that is done already.`,
-    			layout: 'bottomLeft',
-    			timeout: 5000
-    		}).show();
-    	}
-    }*/
-			});
-		}
-	}
+      return;
+    }
+  }
 });
 
 /***/ }),
@@ -36067,7 +36049,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -36093,6 +36074,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 	},
 	mounted: function mounted() {
 		this.authUser = JSON.parse(this.user);
+
+		// event bus
+		ArticleBus.$on('isEdit', this.updateArticle);
 	},
 
 	methods: {
@@ -36110,21 +36094,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 		},
 		dismissEdit: function dismissEdit() {
 			this.isEdit = false;
-		},
-		updateRecord: function updateRecord(data) {
-			if (data) {
-				this.isEdit = false;
-				this.articles[this.index].spin = data.article;
-				var articleTitle = this.wordObj.doc_title;
-
-				// successfully updated
-				new Noty({
-					type: 'info',
-					text: '<b>' + articleTitle + '</b> article successfully updated.',
-					layout: 'bottomLeft',
-					timeout: 5000
-				}).show();
-			}
 		}
 	}
 });
@@ -65702,19 +65671,21 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "User__editor"
   }, [_c('article-editor', {
     attrs: {
-      "data": _vm.wordObj
+      "data": _vm.wordObj,
+      "index": _vm.index
     },
     on: {
-      "cancelEdit": _vm.dismissEdit,
-      "isUpdated": _vm.updateRecord
+      "cancelEdit": _vm.dismissEdit
     }
-  })], 1) : _c('div', {
+  })], 1) : _vm._e(), _vm._v(" "), _c('div', {
+    directives: [{
+      name: "show",
+      rawName: "v-show",
+      value: (!_vm.isEdit),
+      expression: "! isEdit"
+    }],
     staticClass: "User__articles"
-  }, [_c('h2', [_vm._v(_vm._s(_vm.fullName) + "'s Articles")]), _c('hr'), _vm._v(" "), _c('article-result', {
-    on: {
-      "isEdit": _vm.updateArticle
-    }
-  })], 1)])
+  }, [_c('h2', [_vm._v(_vm._s(_vm.fullName) + "'s Articles")]), _c('hr'), _vm._v(" "), _c('article-result')], 1)])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -69315,11 +69286,54 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             dateTime: moment,
             article: {},
-            isShowCommentPanel: false
+            isShowCommentPanel: false,
+            index: 0
         };
     },
 
     methods: {
+        editArticle: function editArticle(article, index) {
+            var _this = this;
+
+            this.index = index;
+
+            axios.get('/user/editArticle?wordId=' + article.id).then(function (response) {
+                var data = response.data;
+
+                // check if article is approve
+                if (data.isArticleApprove === 1) {
+                    _this.btnStateIfArticleIsProcess('Approved', '#6CDA6C');
+                } else {
+                    ArticleBus.$emit('isEdit', {
+                        data: data,
+                        index: index
+                    });
+                }
+
+                // check if spintax is empty & isProcess is 0
+                /*if (data.isProcess === 0) {
+                    this.isProcess = false;
+                    this.$emit('isEdit', {
+                        data: data,
+                        index: index
+                    });
+                } else {
+                    this.isProcess = true;
+                     // notify user that article has already process e.g isProcess=1
+                    if (this.isProcess) {
+                        // show waiting for edit button
+                        this.btnStateIfArticleIsProcess();
+                         let articleTitle = data.doc_title;
+                        new Noty({
+                            type: 'error',
+                            text: `<b>${articleTitle}</b> article already processed. You can't process and article that is done already.`,
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+                    }
+                }*/
+            });
+        },
         showComment: function showComment(article) {
             this.article = article;
             this.isShowCommentPanel = true;

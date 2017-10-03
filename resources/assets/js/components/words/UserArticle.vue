@@ -3,18 +3,17 @@
 		<div class="User__editor" v-if="isEdit">
 			<article-editor
 				:data="wordObj"
-				@cancelEdit="dismissEdit"
-				@isUpdated="updateRecord">
+                :index="index"
+				@cancelEdit="dismissEdit">
+				<!-- @isUpdated="updateRecord"> -->
 			</article-editor>
 		</div>
 
-		<div class="User__articles" v-else>
+		<div class="User__articles" v-show="! isEdit">
 			<h2>{{ fullName }}'s Articles</h2><hr>
 
 			<!-- Article Result -->
-			<article-result
-				@isEdit="updateArticle">
-			</article-result>
+			<article-result></article-result>
 		</div>
 	</div>
 </template>
@@ -43,9 +42,11 @@
 		},
 		mounted() {
 			this.authUser = JSON.parse(this.user);
+
+            // event bus
+            ArticleBus.$on('isEdit', this.updateArticle);
 		},
 		methods: {
-
 			updateArticle(payload) {
 				if (payload) {
 					this.isEdit = false;
@@ -57,22 +58,6 @@
 
 			dismissEdit() {
 				this.isEdit = false;
-			},
-
-			updateRecord(data) {
-				if (data) {
-					this.isEdit = false;
-					this.articles[this.index].spin = data.article;
-					let articleTitle = this.wordObj.doc_title;
-
-					// successfully updated
-					new Noty({
-						type: 'info',
-						text: `<b>${articleTitle}</b> article successfully updated.`,
-						layout: 'bottomLeft',
-						timeout: 5000
-					}).show();
-				}
 			}
 		}
 	}

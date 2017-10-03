@@ -17,10 +17,9 @@
 
 <script>
 	export default {
-		props: ['data'],
+		props: ['data', 'index'],
 		data() {
 			return {
-				
 			}
 		},
 		mounted() {
@@ -35,8 +34,9 @@
 
 				axios.patch('/user/updateArticle', data).then(response => {
 					if (response.data) {
-						this.$emit('isUpdated', {
-							article: data.article
+						ArticleBus.$emit('isUpdated', {
+							article: data.article,
+                            index: this.index
 						});
 					}
 				});

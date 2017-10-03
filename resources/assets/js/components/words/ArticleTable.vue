@@ -60,9 +60,53 @@
                 dateTime: moment,
                 article: {},
                 isShowCommentPanel: false,
+                index: 0,
             }
         },
         methods: {
+            editArticle(article, index) {
+                this.index = index;
+
+                axios.get('/user/editArticle?wordId='+article.id).then(response => {
+                    let data = response.data;
+
+                    // check if article is approve
+                    if (data.isArticleApprove === 1) {
+                        this.btnStateIfArticleIsProcess('Approved', '#6CDA6C');
+                    } else {
+                        ArticleBus.$emit('isEdit', {
+                            data: data,
+                            index: index
+                        });
+                    }
+
+                    // check if spintax is empty & isProcess is 0
+                    /*if (data.isProcess === 0) {
+                        this.isProcess = false;
+                        this.$emit('isEdit', {
+                            data: data,
+                            index: index
+                        });
+                    } else {
+                        this.isProcess = true;
+
+                        // notify user that article has already process e.g isProcess=1
+                        if (this.isProcess) {
+                            // show waiting for edit button
+                            this.btnStateIfArticleIsProcess();
+
+                            let articleTitle = data.doc_title;
+                            new Noty({
+                                type: 'error',
+                                text: `<b>${articleTitle}</b> article already processed. You can't process and article that is done already.`,
+                                layout: 'bottomLeft',
+                                timeout: 5000
+                            }).show();
+                        }
+                    }*/
+                });
+            },
+
             showComment(article) {
                 this.article = article;
                 this.isShowCommentPanel = true;

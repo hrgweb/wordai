@@ -55,15 +55,13 @@
 				sort: 'a-z',
 				sortBy: ['A-Z', 'Z-A'],
 				isProcess: false,
-				index: 0,
                 isArticlesLoaded: false,
-                tableType: 'writer-article'
+                tableType: 'writer-article',
+                limitCounter: 0
 			}
 		},
         watch: {
             articles(data) {
-                this.isArticlesLoaded = data.length > 0 ? true : false;
-
                 return data.filter((article) => {
                     return article[this.type].match(new RegExp(this.search, 'i'));
                 });
@@ -71,6 +69,10 @@
         },
         created() {
             this.userArticles('/user/userArticles'+this.pagePath);
+        },
+        mounted() {
+            // event bus
+            ArticleBus.$on('isUpdated', this.updateRecord);
         },
 		methods: {
             userArticles(url) {
@@ -109,48 +111,27 @@
 				this.$refs.editArticle[this.index].style.backgroundColor = color;
 			},
 
-			editArticle(article, index) {
-				this.index = index;
+            updateRecord(data) {
+                this.limitCounter++;
 
-				axios.get('/user/editArticle?wordId='+article.id).then(response => {
-					let data = response.data;
+                if (this.limitCounter === 1 && data) {
+                    this.isEdit = false;
+                    this.articles[data.index].spin = data.article;
 
-                    // check if article is approve
-                    if (data.isArticleApprove === 1) {
-                        this.btnStateIfArticleIsProcess('Approved', '#6CDA6C');
-                    } else {
-                        this.$emit('isEdit', {
-                            data: data,
-                            index: index
-                        });
-                    }
+                    // successfully updated
+                    new Noty({
+                        type: 'info',
+                        text: `1 record successfully updated.`,
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
 
-					// check if spintax is empty & isProcess is 0
-					/*if (data.isProcess === 0) {
-						this.isProcess = false;
-						this.$emit('isEdit', {
-							data: data,
-							index: index
-						});
-					} else {
-						this.isProcess = true;
+                    // reset limit counter
+                    this.limitCounter = 0;
+                }
 
-						// notify user that article has already process e.g isProcess=1
-						if (this.isProcess) {
-							// show waiting for edit button
-							this.btnStateIfArticleIsProcess();
-
-							let articleTitle = data.doc_title;
-							new Noty({
-								type: 'error',
-								text: `<b>${articleTitle}</b> article already processed. You can't process and article that is done already.`,
-								layout: 'bottomLeft',
-								timeout: 5000
-							}).show();
-						}
-					}*/
-				});
-			}
+                return;
+            }
 		}
 	}
 </script>
