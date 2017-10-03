@@ -27,7 +27,7 @@
 			            <th>Title</th>
 			            <th>Domain</th>
 			            <th>Keyword</th>
-			            <th>Status</th>
+			            <th class="text-center">Status</th>
 			        </tr>
 			    </thead>
 			    <tbody>
@@ -37,9 +37,22 @@
 						<td>{{ article.domain }}</td>
 						<td>{{ article.keyword }}</td>
 						<td>
-							<button type="button" class="btn btn-info" ref="editArticle" v-if="! article.isProcess" @click="editArticle(article, index)">Edit</button>
-							<button type="button" class="btn" ref="editArticle" disabled v-else-if="article.isEditorEdit === 1 && article.isProcess === 1">Edited</button>
-							<button type="button" class="btn btn-warning" ref="editArticle" disabled v-else-if="article.isProcess === 1">Waiting For Editing</button>
+                            <div class="buttons">
+                                <!-- actions -->
+                                <div class="button-left">
+        							<button type="button" class="btn btn-info" ref="editArticle" v-if="! article.isProcess" @click="editArticle(article, index)">Edit</button>
+        							<button type="button" class="btn" ref="editArticle" disabled v-else-if="article.isArticleApprove === 1">Approved</button>
+                                    <button type="submit" class="btn btn-default comment" v-else-if="article.reasonArticleNotAprrove !== null"><i class="fa fa-commenting-o"></i></button>
+        							<button type="button" class="btn btn-warning" ref="editArticle" disabled v-else-if="article.isProcess === 1">Waiting For Process</button>
+                                </div>
+
+                                <!-- comment -->
+                                <!-- <div class="button-right" v-show="article.reasonArticleNotAprrove !== null">
+                                    <button type="submit" class="btn btn-default comment">
+                                        <i class="fa fa-commenting-o"></i>
+                                    </button>
+                                </div> -->
+                            </div>
 						</td>
 					</tr>
 			    </tbody>
@@ -112,7 +125,7 @@
 						this.$emit('isEdit', {
 							data: data,
 							index: index
-						}); 	
+						});
 					} else {
 						this.isProcess = true;
 
@@ -120,7 +133,7 @@
 						if (this.isProcess) {
 							// show waiting for edit button
 							this.btnStateIfArticleIsProcess();
-							
+
 							let articleTitle = data.doc_title;
 							new Noty({
 								type: 'error',
@@ -142,6 +155,12 @@
 	    padding: 0 0.5em;
 	    border: 1px solid silver;
 	}
-	
+
+    .buttons { display: flex; }
+
 	button { width: 150px; }
+    /*button.btn.comment {
+        width: 50px;
+        margin-left: 0.5em;
+    }*/
 </style>

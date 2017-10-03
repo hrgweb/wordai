@@ -69,7 +69,8 @@ class UserController extends Controller
     		->join('article_types', 'article_types.id', '=', 'words.article_type_id')
     		->join('domains', 'domains.id', '=', 'words.domain_id')
     		->where('words.user_id', auth()->user()->id)
-    		->oldest()
+    		->latest()
+            ->take(20)
     		->get([
     			'words.id',
     			'users.firstname',
@@ -88,6 +89,9 @@ class UserController extends Controller
 				'words.isUserEdit',
 				'words.isEditorEdit',
 				'words.editor_id',
+                'words.isArticleApprove',
+                'words.reasonArticleNotAprrove',
+                'words.reasonArticleNotAprroveBody',
 				'isProcess',
 				'words.created_at'
     		]);

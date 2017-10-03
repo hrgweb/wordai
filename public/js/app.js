@@ -34813,6 +34813,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['articles'],
@@ -39575,7 +39588,7 @@ exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\ninput[data-v-1a643e37], select[data-v-1a643e37] {\n    height: 2em;\n    padding: 0 0.5em;\n    border: 1px solid silver;\n}\nbutton[data-v-1a643e37] { width: 150px;\n}\n", ""]);
+exports.push([module.i, "\ninput[data-v-1a643e37], select[data-v-1a643e37] {\n\t    height: 2em;\n\t    padding: 0 0.5em;\n\t    border: 1px solid silver;\n}\n.buttons[data-v-1a643e37] { display: -webkit-box; display: -ms-flexbox; display: flex;\n}\nbutton[data-v-1a643e37] { width: 150px;\n}\n    /*button.btn.comment {\n        width: 50px;\n        margin-left: 0.5em;\n    }*/\n", ""]);
 
 /***/ }),
 /* 250 */
@@ -63077,7 +63090,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "searchType"
     }
-  }, [_vm._v("Search for")]), _vm._v(" \n\t\t"), _c('select', {
+  }, [_vm._v("Search for")]), _vm._v(" \n\t\t\t"), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -63127,7 +63140,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.search = $event.target.value
       }
     }
-  }), _vm._v("\n\t\t  \n\n\t\t"), _vm._v(" "), _c('label', {
+  }), _vm._v("\n\t\t\t  \n\n\t\t\t"), _vm._v(" "), _c('label', {
     attrs: {
       "for": "sortBy"
     }
@@ -63163,7 +63176,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('table', {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.filterArticles), function(article, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [(!article.isProcess) ? _c('button', {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(_vm.dateTime(article.created_at).format('MMMM D, YYYY @ h:mm:ss a')))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_c('div', {
+      staticClass: "buttons"
+    }, [_c('div', {
+      staticClass: "button-left"
+    }, [(!article.isProcess) ? _c('button', {
       ref: "editArticle",
       refInFor: true,
       staticClass: "btn btn-info",
@@ -63175,7 +63192,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.editArticle(article, index)
         }
       }
-    }, [_vm._v("Edit")]) : (article.isEditorEdit === 1 && article.isProcess === 1) ? _c('button', {
+    }, [_vm._v("Edit")]) : (article.isArticleApprove === 1) ? _c('button', {
       ref: "editArticle",
       refInFor: true,
       staticClass: "btn",
@@ -63183,7 +63200,14 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "type": "button",
         "disabled": ""
       }
-    }, [_vm._v("Edited")]) : (article.isProcess === 1) ? _c('button', {
+    }, [_vm._v("Approved")]) : (article.reasonArticleNotAprrove !== null) ? _c('button', {
+      staticClass: "btn btn-default comment",
+      attrs: {
+        "type": "submit"
+      }
+    }, [_c('i', {
+      staticClass: "fa fa-commenting-o"
+    })]) : (article.isProcess === 1) ? _c('button', {
       ref: "editArticle",
       refInFor: true,
       staticClass: "btn btn-warning",
@@ -63191,10 +63215,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "type": "button",
         "disabled": ""
       }
-    }, [_vm._v("Waiting For Editing")]) : _vm._e()])])
+    }, [_vm._v("Waiting For Process")]) : _vm._e()])])])])
   }))])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("Status")])])])
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Date")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', {
+    staticClass: "text-center"
+  }, [_vm._v("Status")])])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
