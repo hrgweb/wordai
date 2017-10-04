@@ -76,6 +76,7 @@ class EditorsController extends Controller
             'isEditorUpdateSC',
             'isCsCheckHitMax',
             'isRespinHitMax',
+            'isProcess',
             'hr_spent_editor_edit_article',
             'min_spent_editor_edit_article',
             'sec_spent_editor_edit_article',
@@ -92,9 +93,11 @@ class EditorsController extends Controller
             ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
             ->select($this->columnsNeedForArticle())
             ->where([
-                ['words.hr_spent_editor_edit_article', '<=', 0],
-                ['words.min_spent_editor_edit_article', '<=', 0],
-                ['words.sec_spent_editor_edit_article', '<=', 0]
+                ['isEditorEdit', '=', 0],
+                ['isProcess', '=', 1],
+                // ['words.hr_spent_editor_edit_article', '<=', 0],
+                // ['words.min_spent_editor_edit_article', '<=', 0],
+                // ['words.sec_spent_editor_edit_article', '<=', 0]
             ])
             ->orderBy('firstname')
             ->paginate(20);
