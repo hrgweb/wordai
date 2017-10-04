@@ -33622,6 +33622,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -33647,7 +33661,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             charHighlighted: '',
             clock: {},
             times: [0, 0, 0],
-            showDisapprovePanel: false
+            showDisapprovePanel: false,
+            input: {
+                protected: this.article.protected
+            }
         };
     },
 
@@ -33760,7 +33777,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var data = {
                 id: this.article.id,
                 article: $('div.note-editable').html(),
-                times: this.times
+                times: this.times,
+                input: this.input
             };
 
             this.$refs.saveChangeBtn.disabled = true;
@@ -63139,7 +63157,37 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }) : _vm._e(), _vm._v(" "), _c('h2', {
     staticClass: "text-center"
-  }, [_vm._v(_vm._s(_vm.article.doc_title))]), _c('hr'), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
+  }, [_vm._v(_vm._s(_vm.article.doc_title))]), _c('hr'), _vm._v(" "), _c('form', {
+    attrs: {
+      "method": "POST"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "protected"
+    }
+  }, [_vm._v("Protected Terms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.input.protected),
+      expression: "input.protected"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "6"
+    },
+    domProps: {
+      "value": (_vm.input.protected)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.input.protected = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
     staticClass: "Spintax__result"
   }, [_c('h3', [_vm._v("Spintax Result")]), _c('br'), _vm._v(" "), (!_vm.pEditorAccess) ? _c('div', {
     staticClass: "Peditor"
@@ -63279,11 +63327,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.dissmissArticle
     }
-  }, [_vm._v("Back to Articles")]), _vm._v(" "), _vm._v("\n\t\t           \n\t\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
+  }, [_vm._v("Back to Articles")]), _vm._v(" "), _vm._v("\n                       \n                    "), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
     staticStyle: {
       "color": "red"
     }
-  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br'), _vm._v(" "), _vm._m(0)])], 1)], 1)
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br'), _vm._v(" "), _vm._m(0)])], 1)])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "timer-overlay"

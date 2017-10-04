@@ -141,12 +141,14 @@ class EditorsController extends Controller
     	$article = request('article');
         $time = request('times');
         $times = [$time[0], $time[1], $time[2]];
+        $protected = request('input.protected');
 
     	DB::beginTransaction();
 		try {
 			// update words table set isEdit to true, editor_id to the editor & spin to new article
 			$result = Word::where('id', request('id'))->update([
 				'spin' => $article,
+                'protected' => $protected,
 				'isEditorEdit' => 1,
 				'editor_id' => $editor_id,
                 'hr_spent_editor_edit_article' => $times[0],

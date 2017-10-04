@@ -10,96 +10,110 @@
 
 		<h2 class="text-center">{{ article.doc_title }}</h2><hr>
 
-		<div class="Spintax__result" v-if="peditoraccess">
-			<h3>Spintax Result</h3><br>
+        <form method="POST">
+            <!-- <input type="hidden" name="_token" :value="token"> -->
 
-			<div class="Peditor" v-if="! pEditorAccess">
-				<p v-if="article.isEditorUpdateSC === 0">{{ article.spintax }}</p>
-				<p v-else>{{ article.spintax_copy }}</p>
-				<br>
+            <!-- protected -->
+            <div class="form-group">
+                <label for="protected">Protected Terms</label>
+                <textarea class="form-control" rows="6" v-model="input.protected"></textarea>
+            </div>
 
-				<button type="button" class="btn btn-default power-editor" @click="onPowerEditor" ref="pEditorBtn">Power Editor</button>
-			</div>
+            <!-- spintax result -->
+            <div class="Spintax__result" v-if="peditoraccess">
+                <h3>Spintax Result</h3><br>
 
-			<!-- Power Editor -->
-			<power-editor
-				:article="article"
-				v-if="pEditorAccess"
-				@isPowerEditorDismiss="dismissPowerEditor">
-			</power-editor>
-		</div>
+                <div class="Peditor" v-if="! pEditorAccess">
+                    <p v-if="article.isEditorUpdateSC === 0">{{ article.spintax }}</p>
+                    <p v-else>{{ article.spintax_copy }}</p>
+                    <br>
 
-		<div class="Process__article">
-			<h3>Processed Article</h3><br>
-			<div class="Editor">
-				<div id="editor"></div>
-				<button type="button" class="btn btn-success right-side" @click="updateArticle" ref="saveChangeBtn">Save Article Changes</button>
-			</div>
-
-            <!-- textgear -->
-            <textgear-result
-                :grammar="textgear"
-                v-if="isGrammarTrue"
-                @isClose="closeTextGear">
-            </textgear-result>
-
-            <!-- copyscape -->
-			<copyscape-result
-				:copy="copyscape"
-				@updateduplicates="updateDuplicates"
-				v-if="responseSuccess">
- 			</copyscape-result>
-
-			<div class="Actions">
-				<!-- Copyscape -->
-				<div class="first-button">
-					<div class="action" v-if="! csBusinessRuleShow">
-						<button type="button" class="btn btn-warning" @click="processToCopyscape" ref="csButton">Copyscape</button>
-					</div>
-					<div class="business-rule" v-else>
-						<button class="btn btn-business-rule" disabled>Copyscape check hits business rule</button>
-					</div>
-				</div>
-
-				<!-- Respin -->
-				<div class="first-button">
-					<div class="action" v-if="! respinBusinessRuleShow">
-			   			<button type="button" class="btn btn-info" @click="respinArticle" ref="respinBtn">Respin Article</button>
-					</div>
-					<div class="business-rule" v-else>
-						<button class="btn btn-business-rule" disabled>Respin hits business rule</button>
-					</div>
-				</div>
-
-                <!-- Textgear -->
-                <button type="button" class="btn btn-info textgear" @click="processToTextGear" ref="tgButton">Check Grammar</button>
-
-                <!-- Reset Article -->
-                <button type="button" class="btn btn-danger" @click="resetSpinArticle" ref="resetChangeBtn">Reset Article</button>
-
-                <div class="seperator"></div>
-
-                <!-- Approve Article -->
-                <button type="button" class="btn btn-primary approve" @click="approveArticle" ref="approveBtn">Approve Article</button>
-
-                <!-- Disapprove Article -->
-                <button type="button" class="btn btn-primary disapprove" @click="rejectArticle" ref="disapproveBtn">Reject Article</button>
-
-				<!-- Dismiss -->
-		        <button type="button" class="btn btn-danger" id="close" @click="dissmissArticle">Back to Articles</button>
-
-		        <!-- Misc -->
-		        &nbsp;&nbsp;&nbsp;
-				<span v-if="isLoading">LOADING....</span>
-				<span v-if="isError" style="color: red;">{{ error }}</span><br>
-
-                <!-- Stopwatch -->
-                <div class="timer-overlay">
-                    <span>Time Spent</span>
-                    <div class="stopwatch"></div>
+                    <button type="button" class="btn btn-default power-editor" @click="onPowerEditor" ref="pEditorBtn">Power Editor</button>
                 </div>
-			</div>
-		</div>
+
+                <!-- Power Editor -->
+                <power-editor
+                    :article="article"
+                    v-if="pEditorAccess"
+                    @isPowerEditorDismiss="dismissPowerEditor">
+                </power-editor>
+            </div>
+
+            <!-- spin result -->
+            <div class="Process__article">
+                <h3>Processed Article</h3><br>
+                <div class="Editor">
+                    <div id="editor"></div>
+                    <button type="button" class="btn btn-success right-side" @click="updateArticle" ref="saveChangeBtn">Save Article Changes</button>
+                </div>
+
+                <!-- textgear -->
+                <textgear-result
+                    :grammar="textgear"
+                    v-if="isGrammarTrue"
+                    @isClose="closeTextGear">
+                </textgear-result>
+
+                <!-- copyscape -->
+                <copyscape-result
+                    :copy="copyscape"
+                    @updateduplicates="updateDuplicates"
+                    v-if="responseSuccess">
+                </copyscape-result>
+
+                <div class="Actions">
+                    <!-- Copyscape -->
+                    <div class="first-button">
+                        <div class="action" v-if="! csBusinessRuleShow">
+                            <button type="button" class="btn btn-warning" @click="processToCopyscape" ref="csButton">Copyscape</button>
+                        </div>
+                        <div class="business-rule" v-else>
+                            <button class="btn btn-business-rule" disabled>Copyscape check hits business rule</button>
+                        </div>
+                    </div>
+
+                    <!-- Respin -->
+                    <div class="first-button">
+                        <div class="action" v-if="! respinBusinessRuleShow">
+                            <button type="button" class="btn btn-info" @click="respinArticle" ref="respinBtn">Respin Article</button>
+                        </div>
+                        <div class="business-rule" v-else>
+                            <button class="btn btn-business-rule" disabled>Respin hits business rule</button>
+                        </div>
+                    </div>
+
+                    <!-- Textgear -->
+                    <button type="button" class="btn btn-info textgear" @click="processToTextGear" ref="tgButton">Check Grammar</button>
+
+                    <!-- Reset Article -->
+                    <button type="button" class="btn btn-danger" @click="resetSpinArticle" ref="resetChangeBtn">Reset Article</button>
+
+                    <div class="seperator"></div>
+
+                    <!-- Approve Article -->
+                    <button type="button" class="btn btn-primary approve" @click="approveArticle" ref="approveBtn">Approve Article</button>
+
+                    <!-- Disapprove Article -->
+                    <button type="button" class="btn btn-primary disapprove" @click="rejectArticle" ref="disapproveBtn">Reject Article</button>
+
+                    <!-- Dismiss -->
+                    <button type="button" class="btn btn-danger" id="close" @click="dissmissArticle">Back to Articles</button>
+
+                    <!-- Misc -->
+                    &nbsp;&nbsp;&nbsp;
+                    <span v-if="isLoading">LOADING....</span>
+                    <span v-if="isError" style="color: red;">{{ error }}</span><br>
+
+                    <!-- Stopwatch -->
+                    <div class="timer-overlay">
+                        <span>Time Spent</span>
+                        <div class="stopwatch"></div>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+
 	</div>
 </template>
 
@@ -128,7 +142,10 @@
                 charHighlighted: '',
                 clock: {},
                 times: [0, 0, 0],
-                showDisapprovePanel: false
+                showDisapprovePanel: false,
+                input: {
+                    protected: this.article.protected
+                }
 			}
 		},
 		watch: {
@@ -243,7 +260,8 @@
 				const data = {
 					id: this.article.id,
 					article: $('div.note-editable').html(),
-                    times: this.times
+                    times: this.times,
+                    input: this.input
 				};
 
                 this.$refs.saveChangeBtn.disabled = true;
