@@ -18,7 +18,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="create-article" role="button" aria-expanded="false">
+                    <a href="editor/create-article" role="button" aria-expanded="false">
                         Create Article
                     </a>
                 </li>

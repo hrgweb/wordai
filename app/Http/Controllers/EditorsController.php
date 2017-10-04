@@ -284,4 +284,9 @@ class EditorsController extends Controller
 
         return $times;
     }
+
+    public function createArticle()
+    {
+        return view('editor.create-article');
+    }
 }

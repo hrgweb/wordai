@@ -132,7 +132,8 @@ Route::prefix('editor')->group(function() {
     Route::get('articlesToEdit', 'EditorsController@articlesToEdit');
     Route::get('editedArticles', 'EditorsController@editedArticles');
     Route::get('articlesToPublish', 'EditorsController@articlesToPublish');
-	Route::get('removeFiles', 'EditorsController@removeFiles');
+    Route::get('removeFiles', 'EditorsController@removeFiles');
+	Route::get('create-article', 'EditorsController@createArticle');
 	Route::post('publishArticle', 'EditorsController@publishArticle');
 	Route::patch('updateArticle', 'EditorsController@updateArticle');
     Route::patch('editorSpentTimeOnEditingArticle', 'EditorsController@editorSpentTimeOnEditingArticle');
