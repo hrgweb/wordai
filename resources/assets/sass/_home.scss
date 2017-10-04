@@ -227,6 +227,38 @@ table thead th:nth-child(5) { width: 120px; }
 
 .EditorPage {
 
+    .articles-to-be-edit,
+    .articles-edited-this-week,
+    .articles-to-publish {
+        h2 { color: #fff; }
+
+        padding: 3em 0.2em 0.1em;
+    }
+
+    .articles-to-be-edit {
+        background: #b37b7b;
+        border: 1px solid #794747;
+
+        button { background: #b37b7b; }
+        button:hover { background: #A46D6D; border: 1px solid #976262; }
+    }
+
+    .articles-edited-this-week {
+        background: #94b795;
+        border: 1px solid #699c6b;
+
+        button { background: #699c6b; }
+        button:hover { background: #5E8F60; border: 1px solid #527D54; }
+    }
+
+    .articles-to-publish {
+        background: #64abf5;
+        border: 1px solid #63a2e4;
+
+        button { background: #64abf5; }
+        button:hover { background: #599CE1; border: 1px solid #5392D2; }
+    }
+
     .ReportTable {
         table tbody td:nth-child(2) {  // article type
             width: 100px;

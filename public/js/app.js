@@ -66716,7 +66716,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "top": "5em"
     }
   }, [_c('div', {
-    staticClass: "articles-to-be-edit"
+    staticClass: "articles-to-publish"
   }, [_c('h2', [_vm._v("\n            Articles To Publish\n            "), _c('span', {
     staticClass: "badge"
   }, [_vm._v(_vm._s(_vm.articlesCount))])]), _vm._v(" "), _c('report-table', {

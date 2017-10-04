@@ -1,6 +1,6 @@
 <template>
     <div class="Waiting" style="top: 5em;">
-        <div class="articles-to-be-edit">
+        <div class="articles-to-publish">
             <h2>
                 Articles To Publish
                 <span class="badge">{{ articlesCount }}</span>
