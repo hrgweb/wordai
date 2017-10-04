@@ -13,11 +13,15 @@
             @else
                 <li><a href="#">{{ $user->username }}</a></li>
                 <li class="dropdown">
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+                    <a href="#" role="button" aria-expanded="false">
                         {{ Auth::user()->full_name() }}
                     </a>
                 </li>
-
+                <li>
+                    <a href="create-article" role="button" aria-expanded="false">
+                        Create Article
+                    </a>
+                </li>
                 <li>
                     {{-- <a href="{{ url('logout') }}" --}}
                     <a href="#"

@@ -163,6 +163,8 @@ export const ArticleActionMixin = {
                     this.groupName('/user/groupName?group_id='+data.group_id);
                 } else {
                     this.domainFillIn(true, '', '');
+                    this.spin['group_id'] = 0;
+                    this.spin['group_name'] = '';
                 }
             });
         },

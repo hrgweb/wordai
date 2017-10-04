@@ -16658,6 +16658,8 @@ var ArticleActionMixin = {
 					_this6.groupName('/user/groupName?group_id=' + data.group_id);
 				} else {
 					_this6.domainFillIn(true, '', '');
+					_this6.spin['group_id'] = 0;
+					_this6.spin['group_name'] = '';
 				}
 			});
 		},
