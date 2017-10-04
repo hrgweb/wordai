@@ -218,9 +218,30 @@ table thead th:nth-child(5) { width: 120px; }
 
 /*=============== Editor - table and buttons ===============*/
 
+.Editor {
+    h2 {
+        text-transform: uppercase;
+        text-align: center;
+     }
+}
+
 .EditorPage {
 
     .ReportTable {
+        table tbody td:nth-child(2) {  // article type
+            width: 100px;
+        }
+
+        table tbody td:nth-child(4) {  // title
+            width: 250px;
+            max-width: 250px;
+        }
+
+        table tbody td:nth-child(6) {  // lsi
+            width: 150px;
+            max-width: 150px;
+        }
+
         table td:last-child {
             width: 100px !important;
             // max-width: 200px !important;
@@ -256,13 +277,13 @@ table thead th:nth-child(5) { width: 120px; }
 .EditorPage .Edited {
     background: none;
 
-    table td:last-child {
+    /* table td:last-child {
         width: 30px;
     }
 
     table td:nth-child(4) {
         width: 200px;
-    }
+    } */
 }
 
 /* .articles-edited-this-week {

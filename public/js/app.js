@@ -63013,7 +63013,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
     return _c('tr', {
       key: index
-    }, [_c('td', [_vm._v(_vm._s(article.writer))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.article_type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.lsi_terms))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain_protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.synonym))]), _vm._v(" "), _c('td', [(!_vm.isPublish) ? _c('button', {
+    }, [_c('td', [_vm._v(_vm._s(article.writer))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.article_type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.lsi_terms))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.synonym))]), _vm._v(" "), _c('td', [(!_vm.isPublish) ? _c('button', {
       staticClass: "btn btn-info",
       attrs: {
         "type": "button"
@@ -63038,7 +63038,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }, [_vm._v("Publish")])])])
   }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('thead', [_c('tr', [_c('th', [_vm._v("Writer")]), _vm._v(" "), _c('th', [_vm._v("Article Type")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("LSI Terms")]), _vm._v(" "), _c('th', [_vm._v("Domain Protected")]), _vm._v(" "), _c('th', [_vm._v("Protected")]), _vm._v(" "), _c('th', [_vm._v("Synonym")]), _vm._v(" "), _c('th', {
+  return _c('thead', [_c('tr', [_c('th', [_vm._v("Writer")]), _vm._v(" "), _c('th', [_vm._v("Article Type")]), _vm._v(" "), _c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Title")]), _vm._v(" "), _c('th', [_vm._v("Keyword")]), _vm._v(" "), _c('th', [_vm._v("LSI Terms")]), _vm._v(" "), _c('th', [_vm._v("Protected")]), _vm._v(" "), _c('th', [_vm._v("Synonym")]), _vm._v(" "), _c('th', {
     staticClass: "text-center"
   }, [_vm._v("Actions")])])])
 }]}

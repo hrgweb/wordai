@@ -9,7 +9,7 @@
                     <th>Title</th>
                     <th>Keyword</th>
                     <th>LSI Terms</th>
-                    <th>Domain Protected</th>
+                    <!-- <th>Domain Protected</th> -->
                     <th>Protected</th>
                     <th>Synonym</th>
                     <th class="text-center">Actions</th>
@@ -23,7 +23,7 @@
                     <td>{{ article.doc_title }}</td>
                     <td>{{ article.keyword }}</td>
                     <td>{{ article.lsi_terms }}</td>
-                    <td>{{ article.domain_protected }}</td>
+                    <!-- <td>{{ article.domain_protected }}</td> -->
                     <td>{{ article.protected }}</td>
                     <td>{{ article.synonym }}</td>
                     <td>
