@@ -99,7 +99,8 @@ class EditorsController extends Controller
                 // ['words.min_spent_editor_edit_article', '<=', 0],
                 // ['words.sec_spent_editor_edit_article', '<=', 0]
             ])
-            ->orderBy('firstname')
+            // ->orderBy('firstname')
+            ->oldest()
             ->paginate(20);
     }
 
@@ -118,7 +119,7 @@ class EditorsController extends Controller
             // ->where('words.hr_spent_editor_edit_article', '>', 0)
             // ->orWhere('words.min_spent_editor_edit_article', '>', 0)
             // ->orWhere('words.sec_spent_editor_edit_article', '>', 0)
-            ->orderBy('firstname')
+            ->orderBy('words.updated_at')
             ->paginate(20);
     }
 
@@ -129,7 +130,8 @@ class EditorsController extends Controller
             ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
             ->select($this->columnsNeedForArticle())
             ->where('words.isEditorEdit', 1)
-            ->orderBy('firstname')
+            // ->orderBy('firstname')
+            ->oldest()
             ->paginate(20);
     }
 
