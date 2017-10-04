@@ -216,6 +216,20 @@ input[type=date] {
 table { background: #fff; }
 table thead th:nth-child(5) { width: 120px; }
 
+/*=============== Editor - table and buttons ===============*/
+
+.EditorPage {
+
+    .ReportTable {
+        table td:last-child {
+            width: 100px !important;
+            // max-width: 200px !important;
+
+
+            button { width: 90px; }
+        }
+    }
+}
 
 /*=============== Admin - table and buttons ===============*/
 
