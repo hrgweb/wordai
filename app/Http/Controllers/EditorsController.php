@@ -111,9 +111,13 @@ class EditorsController extends Controller
             ->leftJoin('article_types', 'article_types.id', '=', 'words.article_type_id')
             ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
             ->select($this->columnsNeedForArticle())
-            ->where('words.hr_spent_editor_edit_article', '>', 0)
-            ->orWhere('words.min_spent_editor_edit_article', '>', 0)
-            ->orWhere('words.sec_spent_editor_edit_article', '>', 0)
+            ->where([
+                ['isEditorEdit', '=', 1],
+                ['isProcess', '=', 1]
+            ])
+            // ->where('words.hr_spent_editor_edit_article', '>', 0)
+            // ->orWhere('words.min_spent_editor_edit_article', '>', 0)
+            // ->orWhere('words.sec_spent_editor_edit_article', '>', 0)
             ->orderBy('firstname')
             ->paginate(20);
     }
