@@ -1,4 +1,5 @@
-<section style="{{ (! $user->check_if_admin_or_manager()) ? 'margin-left: 0 !important; padding: 0 7em;' : 'margin-left: 250px !important;' }}">
+{{-- <section style="{{ (! $user->check_if_admin_or_manager()) ? 'margin-left: 0 !important; padding: 0 7em;' : 'margin-left: 250px !important;' }}"> --}}
+<section>
 	<div class="content-wrapper">
 		<h3>
 			<div class="pull-right text-center">

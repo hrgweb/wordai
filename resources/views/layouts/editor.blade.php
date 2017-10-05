@@ -35,10 +35,13 @@
     </script>
 </head>
 <body>
-    <div id="app">
+    <div id="app" class="wrapper">
         @include('partials._editor-nav')
 
-        @yield('content')
+        @if (Auth::check())
+            @include('partials._editor-sidebar')
+            @include('partials._content')
+        @endif
     </div>
 
     <!-- Scripts -->

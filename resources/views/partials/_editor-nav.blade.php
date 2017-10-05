@@ -18,11 +18,6 @@
                     </a>
                 </li>
                 <li>
-                    <a href="editor/create-article" role="button" aria-expanded="false">
-                        Create Article
-                    </a>
-                </li>
-                <li>
                     {{-- <a href="{{ url('logout') }}" --}}
                     <a href="#"
                         onclick="event.preventDefault();

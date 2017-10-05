@@ -128,6 +128,5 @@
 </script>
 
 <style scoped>
-	.Editor { padding: 0 7em; }
 	.Copyscape { margin-top: 5em; }
 </style>
