@@ -139,4 +139,24 @@ class PagesController extends Controller
     {
         return view('editor.search-by');
     }
+
+    public function editorThisWeek()
+    {
+        return view('editor.this-week');
+    }
+
+    public function editorEditedThisWeek()
+    {
+        return view('editor.edited-this-week');
+    }
+
+    public function editorToEditThisWeek()
+    {
+        return view('editor.toedit-this-week');
+    }
+
+    public function editorSpunThisWeek()
+    {
+        return view('editor.spun-this-week');
+    }
 }
