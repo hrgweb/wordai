@@ -134,4 +134,9 @@ class PagesController extends Controller
     {
         return view('admin.spun-this-week');
     }
+
+    public function editorSearchBy()
+    {
+        return view('editor.search-by');
+    }
 }

@@ -27,11 +27,22 @@ Route::get('edit-article', 'PagesController@editArticle');
 Route::get('search-article', 'PagesController@searchArticle');
 
 // Reports
+// Admin
 Route::get('report-search-by', 'PagesController@adminSearchBy');
 Route::get('report-this-week', 'PagesController@adminThisWeek');
 Route::get('report-edited-this-week', 'PagesController@adminEditedThisWeek');
 Route::get('report-toedit-this-week', 'PagesController@adminToEditThisWeek');
 Route::get('report-spun-this-week', 'PagesController@adminSpunThisWeek');
+
+// Editor
+Route::prefix('editor')->group(function() {
+    Route::get('report-search-by', 'PagesController@editorSearchBy');
+    Route::get('report-this-week', 'PagesController@editorThisWeek');
+    Route::get('report-edited-this-week', 'PagesController@editorEditedThisWeek');
+    Route::get('report-toedit-this-week', 'PagesController@editorToEditThisWeek');
+    Route::get('report-spun-this-week', 'PagesController@editorSpunThisWeek');
+});
+
 
 
 // WordAI

@@ -15,27 +15,27 @@
                 {{-- sub for Dashboard --}}
                 <ul class="nav sub-nav" id="sub-report">
                     <li>
-                        <a href="report-search-by">
+                        <a href="/editor/report-search-by">
                             <em class="fa fa-newspaper-o" aria-hidden="true"></em> Search By
                         </a>
                     </li>
                     <li>
-                        <a href="report-this-week">
+                        <a href="/editor/report-this-week">
                             <em class="fa fa-newspaper-o" aria-hidden="true"></em> This Week
                         </a>
                     </li>
                     <li>
-                        <a href="report-edited-this-week">
+                        <a href="/editor/report-edited-this-week">
                             <em class="fa fa-newspaper-o" aria-hidden="true"></em> Edited This Week
                         </a>
                     </li>
                     <li>
-                        <a href="report-toedit-this-week">
+                        <a href="/editor/report-toedit-this-week">
                             <em class="fa fa-newspaper-o" aria-hidden="true"></em> To Edit This Week
                         </a>
                     </li>
                     <li>
-                        <a href="report-spun-this-week">
+                        <a href="/editor/report-spun-this-week">
                             <em class="fa fa-newspaper-o" aria-hidden="true"></em> Spun This Week
                         </a>
                     </li>
