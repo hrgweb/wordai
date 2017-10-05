@@ -309,6 +309,7 @@ class AdminController extends Controller
         return DB::table('words AS w')
             ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
             ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
+            ->where('isProcess', 1)
             ->whereBetween('w.created_at', [$this->fromMon, $this->toSun])
             ->orderBy('w.created_at')
             ->get($this->columnsNeedForArticle());

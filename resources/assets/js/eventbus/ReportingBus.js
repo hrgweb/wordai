@@ -144,7 +144,7 @@ export const ReportingBus = new Vue({
 
         articlesEditedThisWeek() {
             let result = this.articles.filter(item => {
-                return item.isEditorEdit === 1;
+                return (item.isEditorEdit === 1 && item.isProcess === 1);
             });
 
             this.editedThisWeek = result;
@@ -153,7 +153,7 @@ export const ReportingBus = new Vue({
 
         articlesWaitToEdit() {
             let result = this.articles.filter(item => {
-                return item.isEditorEdit === 0;
+                return (item.isEditorEdit === 0 && item.isProcess === 1);
             });
 
             this.waitingToEdit = result;

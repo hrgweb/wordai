@@ -17464,7 +17464,7 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         },
         articlesEditedThisWeek: function articlesEditedThisWeek() {
             var result = this.articles.filter(function (item) {
-                return item.isEditorEdit === 1;
+                return item.isEditorEdit === 1 && item.isProcess === 1;
             });
 
             this.editedThisWeek = result;
@@ -17472,7 +17472,7 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
         },
         articlesWaitToEdit: function articlesWaitToEdit() {
             var result = this.articles.filter(function (item) {
-                return item.isEditorEdit === 0;
+                return item.isEditorEdit === 0 && item.isProcess === 1;
             });
 
             this.waitingToEdit = result;
