@@ -481,44 +481,7 @@
 	    margin-right: 0.2em;
 	}
 
-    .stopwatch {
-        font-size: 2em;
-        text-align: center;
-    }
 
-    .timer-overlay {
-        position: fixed;
-        background: #080808;
-        color: #fff;
-        right: 0;
-        bottom: 34.5em;
-        padding-top: 1em;
-        padding-left: 1.2em;
-        padding-right: .5em;
-        width: 140px;
-        text-align: center;
-        border-bottom-left-radius: 4px;
-        /* border-top-left-radius: .5em; */
-        /* border-bottom-left-radius: .5em; */
-        /* border: 5px solid #ecdfdf; */
-        /* border-left-width: 0; */
-        z-index: 999999;
-    }
-
-    .timer-overlay span {
-        font-size: 14px;
-    }
-
-    #close {
-        position: fixed;
-        top: 4.6em;
-        right: 0;
-        width: 140px;
-        padding: 1em 4em 1em 1em;
-        font-weight: bold;
-        border-top-right-radius: 0;
-        border-bottom-right-radius: 0;
-    }
 
 	/*=============== Gradient button ===============*/
 	.btn-business-rule {
