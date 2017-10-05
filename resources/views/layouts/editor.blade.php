@@ -46,6 +46,8 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    @include('partials._footer-script')
+
     @yield('footer')
 </body>
 </html>
