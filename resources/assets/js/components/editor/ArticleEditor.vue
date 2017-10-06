@@ -19,6 +19,12 @@
                 <textarea class="form-control" rows="6" v-model="input.protected"></textarea>
             </div>
 
+            <!-- original article -->
+            <div class="Original__article">
+                <h3>Original Article</h3>
+                <div id="orig-article-editor"></div>
+            </div>
+
             <!-- spintax result -->
             <div class="Spintax__result" v-if="peditoraccess">
                 <h3>Spintax Result</h3><br>
@@ -217,6 +223,10 @@
                 let vm = this;
                 let article = vm.article;
                 let div = $('div#editor');
+                let origArticle = $('div#orig-article-editor');
+
+                // Original Article summernote
+                origArticle.summernote(article);
 
                 // Setup summernote
                 div.summernote({

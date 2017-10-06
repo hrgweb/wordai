@@ -33654,6 +33654,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -33759,6 +33765,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var vm = this;
             var article = vm.article;
             var div = $('div#editor');
+            var origArticle = $('div#orig-article-editor');
+
+            // Original Article summernote
+            origArticle.summernote(article);
 
             // Setup summernote
             div.summernote({
@@ -63205,7 +63215,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.input.protected = $event.target.value
       }
     }
-  })]), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
+  })]), _vm._v(" "), _vm._m(0), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
     staticClass: "Spintax__result"
   }, [_c('h3', [_vm._v("Spintax Result")]), _c('br'), _vm._v(" "), (!_vm.pEditorAccess) ? _c('div', {
     staticClass: "Peditor"
@@ -63349,8 +63359,16 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticStyle: {
       "color": "red"
     }
-  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br'), _vm._v(" "), _vm._m(0)])], 1)])], 1)
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br'), _vm._v(" "), _vm._m(1)])], 1)])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "Original__article"
+  }, [_c('h3', [_vm._v("Original Article")]), _vm._v(" "), _c('div', {
+    attrs: {
+      "id": "orig-article-editor"
+    }
+  })])
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "timer-overlay"
   }, [_c('span', [_vm._v("Time Spent")]), _vm._v(" "), _c('div', {

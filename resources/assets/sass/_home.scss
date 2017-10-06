@@ -359,18 +359,25 @@ table thead th:nth-child(5) { width: 120px; }
 
 /*=============== home, home2 ===============*/
 .Spintax__result,
+.Original__article,
 .Process__article {
 	padding: 1em 2em 2em;
     margin-bottom: 3em;
 }
 
 .Spintax__result,
+.Original__article,
 .note-editable.panel-body {
     background: #252525;
     color: #e8e8e8;
-    font-size: 1.5em;
+    font-size: 1.2em;
     line-height: 1.6em;
     border: 1px solid #413737;
+}
+
+.Original__article {
+    background: #ff7e71;
+    border: 1px solid #d85f53;
 }
 
 .note-editable.panel-body {
