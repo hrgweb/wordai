@@ -58,13 +58,19 @@
                 </div><br>
 
                 <!-- LSI Terms -->
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding-right: 1em;">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="padding-right: 1em;">
+                    <label for="lsi">LSI Terms</label>
+                    <textarea class="form-control" rows="8" v-model="detail.lsi"></textarea><br>
+                </div>
+
+                <!-- Protected Terms -->
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="padding-right: 1em;">
                     <label for="protected">Protected Terms</label>
                     <textarea class="form-control" rows="8" v-model="detail.protected"></textarea><br>
                 </div>
 
                 <!-- Synonyms -->
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                     <label for="synonyms">Synonyms</label>
                     <textarea class="form-control" rows="8" v-model="detail.synonym"></textarea><br>
                 </div>
@@ -106,6 +112,7 @@
 				detail: {
 					domain_id: 'select',
                     group_id: 'select',
+                    lsi: '',
 					protected: '',
 					synonym: '',
 					users: []
@@ -333,4 +340,8 @@
 	div.col-xs-6 { padding: 0; }
     .Detail select { text-transform: uppercase; }
     .wrapper-div { clear: both; }
+
+    .col-xs-4.col-sm-4.col-md-4.col-lg-4 {
+        padding: 0;
+    }
 </style>

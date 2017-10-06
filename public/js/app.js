@@ -31436,6 +31436,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -31453,6 +31459,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			detail: {
 				domain_id: 'select',
 				group_id: 'select',
+				lsi: '',
 				protected: '',
 				synonym: '',
 				users: []
@@ -39931,7 +39938,7 @@ exports.push([module.i, "\n.User__profile-controls[data-v-d84a48a8] {\n\t\tposit
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\ndiv.col-xs-6[data-v-df70d70a] { padding: 0;\n}\n.Detail select[data-v-df70d70a] { text-transform: uppercase;\n}\n.wrapper-div[data-v-df70d70a] { clear: both;\n}\n", ""]);
+exports.push([module.i, "\ndiv.col-xs-6[data-v-df70d70a] { padding: 0;\n}\n.Detail select[data-v-df70d70a] { text-transform: uppercase;\n}\n.wrapper-div[data-v-df70d70a] { clear: both;\n}\n.col-xs-4.col-sm-4.col-md-4.col-lg-4[data-v-df70d70a] {\n        padding: 0;\n}\n", ""]);
 
 /***/ }),
 /* 278 */
@@ -67838,7 +67845,36 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       expression: "detail.users"
     }
   })], 1) : _vm._e(), _c('br'), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6",
+    staticClass: "col-xs-4 col-sm-4 col-md-4 col-lg-4",
+    staticStyle: {
+      "padding-right": "1em"
+    }
+  }, [_c('label', {
+    attrs: {
+      "for": "lsi"
+    }
+  }, [_vm._v("LSI Terms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.detail.lsi),
+      expression: "detail.lsi"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.detail.lsi)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.detail.lsi = $event.target.value
+      }
+    }
+  }), _c('br')]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-4 col-sm-4 col-md-4 col-lg-4",
     staticStyle: {
       "padding-right": "1em"
     }
@@ -67867,7 +67903,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }
   }), _c('br')]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+    staticClass: "col-xs-4 col-sm-4 col-md-4 col-lg-4"
   }, [_c('label', {
     attrs: {
       "for": "synonyms"
