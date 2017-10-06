@@ -16642,8 +16642,9 @@ var ArticleActionMixin = {
 				return _this5.domains = response.data;
 			});
 		},
-		domainFillIn: function domainFillIn(isSet, term, synonym) {
+		domainFillIn: function domainFillIn(isSet, lsi, term, synonym) {
 			this.isDomainNotSet = isSet;
+			this.spin['lsi_terms'] = lsi;
 			this.spin['protected'] = term;
 			this.spin['synonym'] = synonym;
 		},
@@ -16654,10 +16655,10 @@ var ArticleActionMixin = {
 				var data = response.data;
 
 				if (data) {
-					_this6.domainFillIn(false, data.protected, data.synonym);
+					_this6.domainFillIn(false, data.lsi_terms, data.protected, data.synonym);
 					_this6.groupName('/user/groupName?group_id=' + data.group_id);
 				} else {
-					_this6.domainFillIn(true, '', '');
+					_this6.domainFillIn(true, '', '', '');
 					_this6.spin['group_id'] = 0;
 					_this6.spin['group_name'] = '';
 				}

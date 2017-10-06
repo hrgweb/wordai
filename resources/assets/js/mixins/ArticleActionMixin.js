@@ -148,8 +148,9 @@ export const ArticleActionMixin = {
 			axios.get('/admin/domainList').then(response => this.domains = response.data);
 		},
 
-		domainFillIn(isSet, term, synonym) {
+		domainFillIn(isSet, lsi, term, synonym) {
 			this.isDomainNotSet = isSet;
+            this.spin['lsi_terms'] = lsi;
 			this.spin['protected'] = term;
 			this.spin['synonym'] = synonym;
 		},
@@ -159,10 +160,10 @@ export const ArticleActionMixin = {
                 let data = response.data;
 
                 if (data) {
-                    this.domainFillIn(false, data.protected, data.synonym);
+                    this.domainFillIn(false, data.lsi_terms, data.protected, data.synonym);
                     this.groupName('/user/groupName?group_id='+data.group_id);
                 } else {
-                    this.domainFillIn(true, '', '');
+                    this.domainFillIn(true, '', '', '');
                     this.spin['group_id'] = 0;
                     this.spin['group_name'] = '';
                 }
