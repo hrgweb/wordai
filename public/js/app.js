@@ -39939,7 +39939,7 @@ exports.push([module.i, "\n.User__profile-controls[data-v-d84a48a8] {\n\t\tposit
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\ndiv.col-xs-6[data-v-df70d70a] { padding: 0;\n}\n.Detail select[data-v-df70d70a] { text-transform: uppercase;\n}\n.wrapper-div[data-v-df70d70a] { clear: both;\n}\n.col-xs-4.col-sm-4.col-md-4.col-lg-4[data-v-df70d70a] {\n        padding: 0;\n}\n", ""]);
+exports.push([module.i, "\ndiv.col-xs-6[data-v-df70d70a] { padding: 0;\n}\n.Detail select[data-v-df70d70a] { text-transform: uppercase;\n}\n.wrapper-div[data-v-df70d70a] { clear: both;\n}\n.col-xs-4.col-sm-4.col-md-4.col-lg-4[data-v-df70d70a] { padding: 0;\n}\n", ""]);
 
 /***/ }),
 /* 278 */

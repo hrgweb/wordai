@@ -39,16 +39,16 @@
                             <em class="fa fa-newspaper-o" aria-hidden="true"></em> Spun This Week
                         </a>
                     </li>
-                    {{-- <li>
-                        <a href="admin#pending_users">
-                            <em class="fa fa-user" aria-hidden="true"></em> Pending Users
-                        </a>
-                    </li> --}}
                 </ul>
             </li>
             <li>
                 <a href="{{ url('editor/create-article') }}">
                     <em class="fa fa-plus" aria-hidden="true"></em> Create Article
+                </a>
+            </li>
+            <li>
+                <a href="{{ url('editor/domain-details') }}">
+                    <em class="fa fa-link" aria-hidden="true"></em> Domain Details
                 </a>
             </li>
             {{-- <li>
@@ -66,11 +66,7 @@
                     <em class="fa fa-link" aria-hidden="true"></em> Domain
                 </a>
             </li>
-            <li>
-                <a href="{{ url('domain-details') }}">
-                    <em class="fa fa-link" aria-hidden="true"></em> Domain Details
-                </a>
-            </li>
+
             <li>
                 <a href="{{ url('user') }}">
                     <em class="fa fa-user" aria-hidden="true"></em> User

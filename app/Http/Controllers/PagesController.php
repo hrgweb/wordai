@@ -159,4 +159,9 @@ class PagesController extends Controller
     {
         return view('editor.spun-this-week');
     }
+
+    public function editorDomainDetail()
+    {
+        return view('editor.domain-detail');
+    }
 }

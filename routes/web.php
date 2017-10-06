@@ -41,6 +41,7 @@ Route::prefix('editor')->group(function() {
     Route::get('report-edited-this-week', 'PagesController@editorEditedThisWeek');
     Route::get('report-toedit-this-week', 'PagesController@editorToEditThisWeek');
     Route::get('report-spun-this-week', 'PagesController@editorSpunThisWeek');
+    Route::get('domain-details', 'PagesController@editorDomainDetail');
 });
 
 

@@ -342,7 +342,5 @@
     .Detail select { text-transform: uppercase; }
     .wrapper-div { clear: both; }
 
-    .col-xs-4.col-sm-4.col-md-4.col-lg-4 {
-        padding: 0;
-    }
+    .col-xs-4.col-sm-4.col-md-4.col-lg-4 { padding: 0; }
 </style>
