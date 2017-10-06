@@ -31105,6 +31105,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
 	props: ['details'],
@@ -65843,7 +65850,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.editDetails(detail, index)
         }
       }
-    }, [_vm._v("Edit")]), _vm._v(" "), (_vm.domainBus.isAdmin) ? _c('button', {
+    }, [_vm._v("Edit")]), _vm._v(" "), _c('button', {
       staticClass: "btn btn-danger",
       attrs: {
         "type": "button"
@@ -65853,7 +65860,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
           _vm.removeDetails(detail, index)
         }
       }
-    }, [_vm._v("\n                            Remove\n                        ")]) : _vm._e()])])
+    }, [_vm._v("\n                            Remove\n                        ")])])])
   }))])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('thead', [_c('tr', [_c('th', [_vm._v("Domain")]), _vm._v(" "), _c('th', [_vm._v("Protected Terms")]), _vm._v(" "), _c('th', [_vm._v("Synonyms")]), _vm._v(" "), _c('th', [_vm._v("Date Added")]), _vm._v(" "), _c('th', {

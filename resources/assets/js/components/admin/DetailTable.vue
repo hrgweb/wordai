@@ -21,11 +21,18 @@
 		            	<button
                             type="button"
                             class="btn btn-danger"
-                            v-if="domainBus.isAdmin"
                             @click="removeDetails(detail, index)"
                         >
                             Remove
                         </button>
+                        <!-- <button
+                            type="button"
+                            class="btn btn-danger"
+                            v-if="domainBus.isAdmin"
+                            @click="removeDetails(detail, index)"
+                        >
+                            Remove
+                        </button> -->
 		            </td>
 		        </tr>
 		    </tbody>

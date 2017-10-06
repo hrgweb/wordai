@@ -330,7 +330,6 @@ table thead th:nth-child(5) { width: 120px; }
 .Edited,
 .Waiting,
 .Spun,
-.DetailTable,
 .Search {
 
     table td:last-child {
@@ -342,26 +341,21 @@ table thead th:nth-child(5) { width: 120px; }
     }
 }
 
+.DetailTable {
+    table td:last-child {
+        width: 200px !important;
+
+
+        button { width: 90px; }
+    }
+}
+
 /*=============== Editor - table and buttons ===============*/
 
 .EditorPage .Waiting,
 .EditorPage .Edited {
     background: none;
-
-    /* table td:last-child {
-        width: 30px;
-    }
-
-    table td:nth-child(4) {
-        width: 200px;
-    } */
 }
-
-/* .articles-edited-this-week {
-    table td:last-child {
-        width: 100px !important;
-    }
-} */
 
 /*=============== home, home2 ===============*/
 .Spintax__result,
