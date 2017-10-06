@@ -99,6 +99,7 @@ class AdminController extends Controller
     {
         $domain_id = request('domain_id');
     	$group_id = request('group_id');
+        $lsi = request('lsi');
     	$protected = request('protected');
     	$synonym = request('synonym');
         $users = request('users');
@@ -123,6 +124,7 @@ class AdminController extends Controller
                     'domain_id' => $domain_id,
                     'group_id' => $group_id,
                     'protected' => $protected,
+                    'lsi_terms' => $lsi,
                     'synonym' => $synonym
                 ]);
                 $domain['domain'] = strtolower(request('domain'));
@@ -167,6 +169,7 @@ class AdminController extends Controller
     	$id = request('id');
         $domain_id = request('domain_id');
         $group_id = request('group_id');
+        $lsi = request('lsi');
         $protected = request('protected');
         $synonym = request('synonym');
         $users = request('users');
@@ -198,6 +201,7 @@ class AdminController extends Controller
                     'domain_id' => $domain_id,
                     'group_id' => $group_id,
                     'protected' => $protected,
+                    'lsi_terms' => $lsi,
                     'synonym' => $synonym
                 ]);
                 $domain['domain'] = strtolower(request('domain'));
@@ -524,6 +528,7 @@ class AdminController extends Controller
                         'dd.domain_id',
                         'dd.group_id',
                         'dd.user_id',
+                        'dd.lsi_terms',
                         'dd.protected',
                         'dd.synonym',
                         'dd.created_at',

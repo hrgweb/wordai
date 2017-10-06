@@ -31589,6 +31589,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				domain_id: detail.domain_id,
 				group_id: detail.group_id > 0 ? detail.group_id : 'select',
 				domain: detail.domain,
+				lsi: detail.lsi_terms,
 				protected: detail.protected,
 				synonym: detail.synonym,
 				created_at: detail.created_at,

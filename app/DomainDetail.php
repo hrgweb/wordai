@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class DomainDetail extends Model
 {
-    protected $fillable = ['user_id', 'domain_id', 'group_id', 'protected', 'synonym'];
+    protected $fillable = ['user_id', 'domain_id', 'group_id', 'lsi_terms', 'protected', 'synonym'];
 
     public function setProtectedAttribute($protected)
     {
