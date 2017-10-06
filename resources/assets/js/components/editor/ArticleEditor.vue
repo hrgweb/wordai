@@ -23,6 +23,8 @@
             <div class="Original__article">
                 <h3>Original Article</h3>
                 <div id="orig-article-editor"></div>
+
+                <button type="button" class="btn btn-success" @click.prevent="updateOriginalArticle">Save Article Changes</button>
             </div>
 
             <!-- spintax result -->
@@ -266,12 +268,13 @@
                 this.clock.start();
             },
 
-			updateArticle() {
+			setupToUpdateArticle(article, clickType) {
 				const data = {
 					id: this.article.id,
-					article: $('div.note-editable').html(),
+					article: article,
                     times: this.times,
-                    input: this.input
+                    input: this.input,
+                    clickType: clickType
 				};
 
                 this.$refs.saveChangeBtn.disabled = true;
@@ -289,6 +292,16 @@
 					}
 				});
 			},
+
+            updateArticle() {
+                let article = $('div.Process__article').find('div.note-editable').html();
+                this.setupToUpdateArticle(article, 'process-article');
+            },
+
+            updateOriginalArticle() {
+                let article = $('div.Original__article').find('div.note-editable').html();
+                this.setupToUpdateArticle(article, 'original-article');
+            },
 
 			dissmissArticle() {
                 this.editorSpentTimeOnEditingArticle();
@@ -442,7 +455,7 @@
 
             isCancelDisapprove() {
                 this.showDisapprovePanel = false;
-            },
+            }
 		}
 	}
 </script>

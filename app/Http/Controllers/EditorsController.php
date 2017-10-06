@@ -142,19 +142,34 @@ class EditorsController extends Controller
         $time = request('times');
         $times = [$time[0], $time[1], $time[2]];
         $protected = request('input.protected');
+        $clickType = request('clickType');
 
     	DB::beginTransaction();
 		try {
-			// update words table set isEdit to true, editor_id to the editor & spin to new article
-			$result = Word::where('id', request('id'))->update([
-				'spin' => $article,
-                'protected' => $protected,
-				'isEditorEdit' => 1,
-				'editor_id' => $editor_id,
-                'hr_spent_editor_edit_article' => $times[0],
-                'min_spent_editor_edit_article' => $times[1],
-                'sec_spent_editor_edit_article' => $times[2]
-			]);
+            $result = '';
+
+            if ($clickType === 'original-article') {
+                $result = Word::where('id', request('id'))->update([
+                    'article' => $article,
+                    'protected' => $protected,
+                    'isEditorEdit' => 1,
+                    'editor_id' => $editor_id,
+                    'hr_spent_editor_edit_article' => $times[0],
+                    'min_spent_editor_edit_article' => $times[1],
+                    'sec_spent_editor_edit_article' => $times[2]
+                ]);
+            } else {
+                // update words table set isEdit to true, editor_id to the editor & spin to new article
+                $result = Word::where('id', request('id'))->update([
+                    'spin' => $article,
+                    'protected' => $protected,
+                    'isEditorEdit' => 1,
+                    'editor_id' => $editor_id,
+                    'hr_spent_editor_edit_article' => $times[0],
+                    'min_spent_editor_edit_article' => $times[1],
+                    'sec_spent_editor_edit_article' => $times[2]
+                ]);
+            }
 		} catch (ValidationException $e) {
 			DB::rollback();
 			throw $e;
