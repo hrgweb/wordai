@@ -59,7 +59,10 @@ class Wordai extends Command
 	{
         // $this->article = Word::where(['isUserEdit' => 0, 'isProcess' => 0])->first();
 		// $this->article = Word::where('isArticleApprove', 1)->first();
-        $this->article = Word::where(['isEditorEdit' => 1, 'isProcess' => 0])->first();
+        // $this->article = Word::where(['isEditorEdit' => 1, 'isProcess' => 0])->first();
+        $this->article = Word::where('isProcess', '=', 1)
+                            ->whereRaw('(isEditorUpdateSC = 1 OR isEditorEdit = 1)')
+                            ->first();
 
 		return count($this->article) > 0 ? true : false;
 	}
