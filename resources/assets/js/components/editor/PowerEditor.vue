@@ -43,24 +43,57 @@
 				this.$emit('isPowerEditorDismiss');
 			},
 
+            removeSpan(spintax) {
+                let finds = ['<span class="curly">', '<span class="pipe">', '</span>'];
+
+                return spintax.replace(finds[0], function(char, offset, string) {
+                    let span = '';
+
+                    if (char.match(finds[0])) {
+                        span = ''
+                    }
+
+                    return span;
+                });
+
+                /*for (var i = 0; i < finds.length; i++) {
+                    let result = spintax.replace(new RegExp(finds[i]), function(char, offset, string) {
+                        let span = '';
+
+                        if (char.match(new RegExp(finds[i])) {
+                            span = '<span class="curly">' + char + '</span>'
+                        } else {
+                            span = '<span class="pipe">' + char + '</span>'
+                        }
+
+                        return span;
+                    });
+                }*/
+            },
+
 			updateSpintaxArticle() {
-				const data = {
-					word_id: this.article.id,
-					spintax: $('div.note-editable').first().text()
-				};
+                this.article['spintax'] = $('div.Peditor').find('div.note-editable').first().text();
 
 				this.isLoading = true;
 				this.$refs.changesBtn.disabled = true;
 
-				axios.patch('/words/updateSpintaxArticle', data).then(response => {
+				axios.patch('/words/updateSpintaxArticle', this.article).then(response => {
 					let data = response.data;
 
 					this.isLoading = false;
 					this.$refs.changesBtn.disabled = false;
 
 					if (data) {
-						this.$emit('isPowerEditorDismiss', { spintax: data.spintax_copy });  // close the power editor component
-						ArticleBus.$emit('editorUpdatedSpintaxCopy', { spintax: data.spintax_copy });
+						this.$emit('isPowerEditorDismiss');  // close the power editor component
+						ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
+
+                        // successfully updated
+                        new Noty({
+                            type: 'info',
+                            text: `1 spintax article successfully updated.`,
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
 					}
 				});
 			}

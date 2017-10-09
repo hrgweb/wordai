@@ -14,7 +14,6 @@ export const ArticleEditorMixin = {
 
     mounted() {
         this.authUser = JSON.parse(this.user);
-        this.listenWhenPowerEditorUpdated();
         this.updateArticleData();
 
         // Bus
@@ -42,12 +41,6 @@ export const ArticleEditorMixin = {
     },
 
     methods: {
-        listenWhenPowerEditorUpdated(data) {
-            ArticleBus.$on('editorUpdatedSpintaxCopy', data => {
-                this.articles[this.index].spintax_copy = data.spintax;
-            });
-        },
-
         updateArticle(data) {
             this.isEdit = false;
             this.article = data.article;

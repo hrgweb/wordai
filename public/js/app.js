@@ -5295,7 +5295,6 @@ var ArticleEditorMixin = {
 
     mounted: function mounted() {
         this.authUser = JSON.parse(this.user);
-        this.listenWhenPowerEditorUpdated();
         this.updateArticleData();
 
         // Bus
@@ -5325,22 +5324,15 @@ var ArticleEditorMixin = {
     },
 
     methods: {
-        listenWhenPowerEditorUpdated: function listenWhenPowerEditorUpdated(data) {
-            var _this = this;
-
-            ArticleBus.$on('editorUpdatedSpintaxCopy', function (data) {
-                _this.articles[_this.index].spintax_copy = data.spintax;
-            });
-        },
         updateArticle: function updateArticle(data) {
-            var _this2 = this;
+            var _this = this;
 
             this.isEdit = false;
             this.article = data.article;
             this.index = data.index;
             this.tableType = data.tableType;
             Vue.nextTick(function () {
-                return _this2.isEdit = true;
+                return _this.isEdit = true;
             });
         },
         setArticleAndTime: function setArticleAndTime(article, spin, times) {
@@ -5401,10 +5393,10 @@ var ArticleEditorMixin = {
             this.setupToUpdateRecord(payload);
         },
         updateArticleData: function updateArticleData() {
-            var _this3 = this;
+            var _this2 = this;
 
             ArticleBus.$on('isRespinArticle', function (data) {
-                _this3.setupToUpdateRecord(data);
+                _this2.setupToUpdateRecord(data);
                 // this.articles[this.index].spin = data.spin;
             });
         }
@@ -33494,25 +33486,38 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['tableType'],
+    props: ['tableType', 'index'],
     components: { ReportTable: __WEBPACK_IMPORTED_MODULE_0__ReportTable_vue___default.a, Paginate: __WEBPACK_IMPORTED_MODULE_1_vuejs_paginate___default.a },
     mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_EditorPaginationMixin_js__["a" /* EditorPaginationMixin */]],
     created: function created() {
         this.editedArticles();
     },
+    mounted: function mounted() {
+        this.listenWhenPowerEditorUpdated();
+    },
 
     methods: {
-        editedArticles: function editedArticles(data) {
+        listenWhenPowerEditorUpdated: function listenWhenPowerEditorUpdated(data) {
             var _this = this;
+
+            ArticleBus.$on('editorUpdatedSpintaxCopy', function (data) {
+                Vue.set(_this.articles, _this.index, data);
+                // this.articles[this.index].spintax = data.spintax;  // tmp - just to update the spintax
+                // this.articles[this.index].spintax_copy = data.spintax_copy;
+                // this.articles[this.index].isEditorUpdateSC = data.isEditorUpdateSC;
+            });
+        },
+        editedArticles: function editedArticles(data) {
+            var _this2 = this;
 
             axios.get('/editor/editedArticles' + this.pagePath).then(function (response) {
                 var payload = response.data;
 
-                _this.articles = _this.editor.mapResultOfArticles(payload.data);
-                _this.pageCount = payload.last_page;
-                _this.urlPath = payload.path;
+                _this2.articles = _this2.editor.mapResultOfArticles(payload.data);
+                _this2.pageCount = payload.last_page;
+                _this2.urlPath = payload.path;
 
-                ReportingBus.$emit('isLoadedListEditedArticles', _this.articles);
+                ReportingBus.$emit('isLoadedListEditedArticles', _this2.articles);
             });
         }
     }
@@ -34350,6 +34355,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -34495,60 +34501,90 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['article'],
-	data: function data() {
-		return { isLoading: false };
-	},
-	mounted: function mounted() {
-		this.initSpintax();
-	},
+    props: ['article'],
+    data: function data() {
+        return { isLoading: false };
+    },
+    mounted: function mounted() {
+        this.initSpintax();
+    },
 
-	methods: {
-		initSummernote: function initSummernote(spintax) {
-			// summernote insert text
-			$('div#peditor').summernote('editor.insertText', spintax);
+    methods: {
+        initSummernote: function initSummernote(spintax) {
+            // summernote insert text
+            $('div#peditor').summernote('editor.insertText', spintax);
 
-			// format 1st summernote
-			Vue.nextTick(function () {
-				return $('div.Peditor').find('p').html(spintax);
-			});
-		},
-		initSpintax: function initSpintax() {
-			var article = this.article;
+            // format 1st summernote
+            Vue.nextTick(function () {
+                return $('div.Peditor').find('p').html(spintax);
+            });
+        },
+        initSpintax: function initSpintax() {
+            var article = this.article;
 
-			if (article.isEditorUpdateSC === 1) {
-				this.initSummernote(article.spintax_copy);
-			} else {
-				this.initSummernote(article.spintax);
-			}
-		},
-		dissmissSpintaxArticle: function dissmissSpintaxArticle() {
-			this.$emit('isPowerEditorDismiss');
-		},
-		updateSpintaxArticle: function updateSpintaxArticle() {
-			var _this = this;
+            if (article.isEditorUpdateSC === 1) {
+                this.initSummernote(article.spintax_copy);
+            } else {
+                this.initSummernote(article.spintax);
+            }
+        },
+        dissmissSpintaxArticle: function dissmissSpintaxArticle() {
+            this.$emit('isPowerEditorDismiss');
+        },
+        removeSpan: function removeSpan(spintax) {
+            var finds = ['<span class="curly">', '<span class="pipe">', '</span>'];
 
-			var data = {
-				word_id: this.article.id,
-				spintax: $('div.note-editable').first().text()
-			};
+            return spintax.replace(finds[0], function (char, offset, string) {
+                var span = '';
 
-			this.isLoading = true;
-			this.$refs.changesBtn.disabled = true;
+                if (char.match(finds[0])) {
+                    span = '';
+                }
 
-			axios.patch('/words/updateSpintaxArticle', data).then(function (response) {
-				var data = response.data;
+                return span;
+            });
 
-				_this.isLoading = false;
-				_this.$refs.changesBtn.disabled = false;
+            /*for (var i = 0; i < finds.length; i++) {
+                let result = spintax.replace(new RegExp(finds[i]), function(char, offset, string) {
+                    let span = '';
+                     if (char.match(new RegExp(finds[i])) {
+                        span = '<span class="curly">' + char + '</span>'
+                    } else {
+                        span = '<span class="pipe">' + char + '</span>'
+                    }
+                     return span;
+                });
+            }*/
+        },
+        updateSpintaxArticle: function updateSpintaxArticle() {
+            var _this = this;
 
-				if (data) {
-					_this.$emit('isPowerEditorDismiss', { spintax: data.spintax_copy }); // close the power editor component
-					ArticleBus.$emit('editorUpdatedSpintaxCopy', { spintax: data.spintax_copy });
-				}
-			});
-		}
-	}
+            this.article['spintax'] = $('div.Peditor').find('div.note-editable').first().text();
+
+            this.isLoading = true;
+            this.$refs.changesBtn.disabled = true;
+
+            axios.patch('/words/updateSpintaxArticle', this.article).then(function (response) {
+                var data = response.data;
+
+                _this.isLoading = false;
+                _this.$refs.changesBtn.disabled = false;
+
+                if (data) {
+                    _this.$emit('isPowerEditorDismiss'); // close the power editor component
+                    ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
+
+                    // successfully updated
+                    new Noty({
+                        type: 'info',
+                        text: '1 spintax article successfully updated.',
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
+                }
+            });
+        }
+    }
 });
 
 /***/ }),
@@ -67433,7 +67469,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }), _vm._v(" "), _c('article-edited', {
     attrs: {
-      "tableType": _vm.tableType
+      "tableType": _vm.tableType,
+      "index": _vm.index
     }
   }), _vm._v(" "), _c('article-to-publish', {
     attrs: {

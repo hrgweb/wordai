@@ -38,13 +38,25 @@
 
 
     export default {
-        props: ['tableType'],
+        props: ['tableType', 'index'],
         components: { ReportTable, Paginate },
         mixins: [ EditorPaginationMixin ],
         created() {
             this.editedArticles();
         },
+        mounted() {
+            this.listenWhenPowerEditorUpdated();
+        },
         methods: {
+            listenWhenPowerEditorUpdated(data) {
+                ArticleBus.$on('editorUpdatedSpintaxCopy', data => {
+                    Vue.set(this.articles, this.index, data);
+                    // this.articles[this.index].spintax = data.spintax;  // tmp - just to update the spintax
+                    // this.articles[this.index].spintax_copy = data.spintax_copy;
+                    // this.articles[this.index].isEditorUpdateSC = data.isEditorUpdateSC;
+                });
+            },
+
             editedArticles(data) {
                 axios.get('/editor/editedArticles'+this.pagePath)
                     .then(response => {

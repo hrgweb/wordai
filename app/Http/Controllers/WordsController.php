@@ -355,9 +355,12 @@ class WordsController extends Controller
 	public function updateSpintaxArticle() {
 		$spintax = request('spintax');
 
-		DB::table('words')->where('id', request('word_id'))->update(['spintax_copy' => $spintax, 'isEditorUpdateSC' => 1]);
+        // return $spintax;
 
-		return response()->json(['spintax_copy' => $spintax]);
+        // DB::table('words')->where('id', request('word_id'))->update(['spintax_copy' => $spintax, 'isEditorUpdateSC' => 1]);
+		Word::where('id', request('id'))->update(['spintax_copy' => $spintax, 'isEditorUpdateSC' => 1]);
+
+		return response()->json(request()->all());
 	}
 
 	public function updateCsCheckHitMax() {

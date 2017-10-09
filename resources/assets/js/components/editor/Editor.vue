@@ -27,7 +27,8 @@
 
             <!-- Article Edited -->
             <article-edited
-                :tableType="tableType">
+                :tableType="tableType"
+                :index="index">
             </article-edited>
 
             <!-- Article To Publish -->

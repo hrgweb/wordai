@@ -92,13 +92,15 @@ class EditorsController extends Controller
             ->leftJoin('article_types', 'article_types.id', '=', 'words.article_type_id')
             ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
             ->select($this->columnsNeedForArticle())
-            ->where([
+            /*->where([
                 ['isEditorEdit', '=', 0],
                 ['isProcess', '=', 1],
                 // ['words.hr_spent_editor_edit_article', '<=', 0],
                 // ['words.min_spent_editor_edit_article', '<=', 0],
                 // ['words.sec_spent_editor_edit_article', '<=', 0]
-            ])
+            ])*/
+            ->where('isProcess', '=', 1)
+            ->whereRaw('(isEditorUpdateSC = 0 OR isEditorEdit = 0)')
             // ->orderBy('firstname')
             ->oldest()
             ->paginate(20);
@@ -112,14 +114,17 @@ class EditorsController extends Controller
             ->leftJoin('article_types', 'article_types.id', '=', 'words.article_type_id')
             ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
             ->select($this->columnsNeedForArticle())
-            ->where([
+            /*->where([
                 ['isEditorEdit', '=', 1],
                 ['isProcess', '=', 1]
-            ])
+            ])*/
+            ->where('isProcess', '=', 1)
+            ->whereRaw('(isEditorUpdateSC = 1 OR isEditorEdit = 1)')
+            // ->orWhere(['isEditorUpdateSC' => 1, 'isEditorEdit' => 1])
             // ->where('words.hr_spent_editor_edit_article', '>', 0)
             // ->orWhere('words.min_spent_editor_edit_article', '>', 0)
             // ->orWhere('words.sec_spent_editor_edit_article', '>', 0)
-            ->orderBy('words.updated_at')
+            ->orderBy('words.updated_at', 'desc')
             ->paginate(20);
     }
 
