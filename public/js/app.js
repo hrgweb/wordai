@@ -33775,7 +33775,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             var origArticle = $('div#orig-article-editor');
 
             // Original Article summernote
-            origArticle.summernote(article);
+            Vue.nextTick(function () {
+                return origArticle.summernote('editor.insertText', article.article);
+            });
 
             // Setup summernote
             div.summernote({

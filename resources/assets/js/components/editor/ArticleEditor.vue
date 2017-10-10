@@ -228,7 +228,7 @@
                 let origArticle = $('div#orig-article-editor');
 
                 // Original Article summernote
-                origArticle.summernote(article);
+                Vue.nextTick(() => origArticle.summernote('editor.insertText', article.article));
 
                 // Setup summernote
                 div.summernote({
