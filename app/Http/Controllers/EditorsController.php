@@ -99,8 +99,7 @@ class EditorsController extends Controller
                 // ['words.min_spent_editor_edit_article', '<=', 0],
                 // ['words.sec_spent_editor_edit_article', '<=', 0]
             ])*/
-            ->where('isProcess', '=', 0)
-            ->whereRaw('(isEditorUpdateSC = 0 OR isEditorEdit = 0)')
+            ->whereRaw('(isProcess = 0 OR isProcess = 1) AND (isEditorUpdateSC = 0 OR isEditorEdit = 0)')
             // ->orderBy('firstname')
             ->oldest()
             ->paginate(20);
@@ -118,8 +117,7 @@ class EditorsController extends Controller
                 ['isEditorEdit', '=', 1],
                 ['isProcess', '=', 1]
             ])*/
-            ->where('isProcess', '=', 1)
-            ->whereRaw('(isEditorUpdateSC = 1 OR isEditorEdit = 1)')
+            ->whereRaw('(isProcess = 0 OR isProcess = 1) AND (isEditorUpdateSC = 1 OR isEditorEdit = 1)')
             // ->orWhere(['isEditorUpdateSC' => 1, 'isEditorEdit' => 1])
             // ->where('words.hr_spent_editor_edit_article', '>', 0)
             // ->orWhere('words.min_spent_editor_edit_article', '>', 0)
