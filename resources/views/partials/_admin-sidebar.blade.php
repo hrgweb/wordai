@@ -21,22 +21,22 @@
                     </li>
                     <li>
                         <a href="report-this-week">
-                            <em class="fa fa-newspaper-o" aria-hidden="true"></em> This Week
+                            <em class="fa fa-newspaper-o" aria-hidden="true"></em> Last 7 Days
                         </a>
                     </li>
                     <li>
                         <a href="report-edited-this-week">
-                            <em class="fa fa-newspaper-o" aria-hidden="true"></em> Edited This Week
+                            <em class="fa fa-newspaper-o" aria-hidden="true"></em> Edited Last 7 Days
                         </a>
                     </li>
                     <li>
                         <a href="report-toedit-this-week">
-                            <em class="fa fa-newspaper-o" aria-hidden="true"></em> To Edit This Week
+                            <em class="fa fa-newspaper-o" aria-hidden="true"></em> To Edit Last 7 Days
                         </a>
                     </li>
                     <li>
                         <a href="report-spun-this-week">
-                            <em class="fa fa-newspaper-o" aria-hidden="true"></em> Spun This Week
+                            <em class="fa fa-newspaper-o" aria-hidden="true"></em> Spun Last 7 Days
                         </a>
                     </li>
                     {{-- <li>
