@@ -24,7 +24,7 @@
                 <h3>Original Article</h3>
                 <div id="orig-article-editor"></div>
 
-                <button type="button" class="btn btn-success" @click.prevent="updateOriginalArticle">Save Article Changes</button>
+                <button type="button" class="btn btn-success" @click.prevent="updateOriginalArticle">PROCESS</button>
             </div>
 
             <!-- spintax result -->

@@ -63279,7 +63279,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.updateOriginalArticle($event)
       }
     }
-  }, [_vm._v("Save Article Changes")])]), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
+  }, [_vm._v("PROCESS")])]), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
     staticClass: "Spintax__result"
   }, [_c('h3', [_vm._v("Spintax Result")]), _c('br'), _vm._v(" "), (!_vm.pEditorAccess) ? _c('div', {
     staticClass: "Peditor"

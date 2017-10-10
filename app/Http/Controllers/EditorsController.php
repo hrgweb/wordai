@@ -99,10 +99,10 @@ class EditorsController extends Controller
                 // ['words.min_spent_editor_edit_article', '<=', 0],
                 // ['words.sec_spent_editor_edit_article', '<=', 0]
             ])*/
-            ->where('isProcess', '=', 1)
+            ->where('isProcess', '=', 0)
             ->whereRaw('(isEditorUpdateSC = 0 OR isEditorEdit = 0)')
             // ->orderBy('firstname')
-            ->oldest()
+            ->latest()
             ->paginate(20);
     }
 
