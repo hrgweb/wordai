@@ -66875,7 +66875,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "slot": "head"
     },
     slot: "head"
-  }, [_vm._v("Articles To Edit This Week")])], 2)], 1), _vm._v(" "), _c('div', {
+  }, [_vm._v("Articles To Edit")])], 2)], 1), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('div', [_c('report-table', {
     attrs: {
@@ -67156,7 +67156,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "slot": "head"
     },
     slot: "head"
-  }, [_vm._v("Articles Spun This Week")])], 2)], 1), _vm._v(" "), _c('div', {
+  }, [_vm._v("Articles Spun")])], 2)], 1), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('div', [_c('report-table', {
     attrs: {
