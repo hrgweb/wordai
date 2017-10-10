@@ -17413,10 +17413,12 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
             var firstday = this.fromUtc.substr(8, 3);
             var lastday = this.toUtc.substr(8, 3);
 
+            console.log(firstday, lastday);
+
             // check if month is = if not substract 1
             var month = 0;
 
-            if (firstday.toLowerCase() === lastday.toLowerCase()) {
+            /*if (firstday.toLowerCase() === lastday.toLowerCase()) {
                 this.isSameMonth = true;
                 this.date = {
                     fromMon: mon,
@@ -17429,9 +17431,46 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
                 this.date = {
                     fromMon: mon,
                     toSun: sun,
-                    curMonthMon: curr.getMonth() - 1 + 1,
+                    curMonthMon: (curr.getMonth() - 1) + 1,
                     curMonthSun: curr.getMonth() + 1,
                     curYear: curr.getFullYear()
+                };
+            }
+              this.date['monthSame'] = this.isSameMonth;*/
+        },
+        last7days: function last7days() {
+            // set data in vue
+            var date = new Date();
+            this.toUtc = moment().format('L');
+            this.fromUtc = moment().subtract(7, 'days').calendar();
+
+            // get date from start days to last 7 days
+            var dayStart = this.toUtc.substr(3, 2);
+            var dayPrev = this.fromUtc.substr(3, 2);
+
+            // get month
+            var monthStart = this.fromUtc.substr(0, 2);
+            var monthPrev = this.toUtc.substr(0, 2);
+
+            // console.log(monthStart, monthPrev)
+
+            // check if month is = if not substract 1
+            if (parseInt(monthStart, 10) === parseInt(monthPrev, 10)) {
+                this.isSameMonth = true;
+                this.date = {
+                    toSun: dayStart,
+                    fromMon: dayPrev,
+                    curMonth: date.getMonth() + 1,
+                    curYear: date.getFullYear()
+                };
+            } else {
+                this.isSameMonth = false;
+                this.date = {
+                    toSun: dayStart,
+                    fromMon: dayPrev,
+                    curMonthMon: date.getMonth() - 1 + 1,
+                    curMonthSun: date.getMonth() + 1,
+                    curYear: date.getFullYear()
                 };
             }
 
@@ -32904,6 +32943,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['count'],
@@ -32911,7 +32955,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return { report: ReportingBus };
     },
     mounted: function mounted() {
-        this.report.setDayFromMonToSun();
+        // this.report.setDayFromMonToSun();
+        this.report.last7days();
     }
 });
 
@@ -64223,7 +64268,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "slot": "head"
     },
     slot: "head"
-  }, [_vm._v("Articles Edited This Week")])], 2)], 1), _vm._v(" "), _c('div', {
+  }, [_vm._v("Articles Edited")])], 2)], 1), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [_c('div', [_c('report-table', {
     attrs: {
@@ -66070,7 +66115,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "slot": "head"
     },
     slot: "head"
-  }, [_vm._v("Articles This Week")])], 2)], 1), _vm._v(" "), _c('div', {
+  }, [_vm._v("Articles")])], 2)], 1), _vm._v(" "), _c('div', {
     staticClass: "content"
   }, [(_vm.isGroupByEqualSelect) ? _c('div', [_c('report-table', {
     attrs: {
@@ -68520,7 +68565,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "ReportHeader text-center"
   }, [_c('h2', [_vm._t("head"), _vm._v(" "), _c('span', {
     staticClass: "badge"
-  }, [_vm._v(_vm._s(_vm.count))])], 2), _vm._v(" "), _c('p', [_c('span', [_vm._v("From: "), _c('b', [_vm._v(_vm._s(_vm.report.fromUtc))])]), _vm._v(" -\n        "), _c('span', [_vm._v("To: "), _c('b', [_vm._v(_vm._s(_vm.report.toUtc))])])])])
+  }, [_vm._v(_vm._s(_vm.count))])], 2), _vm._v(" "), _c('p', [_c('span', [_vm._v("\n            Last 7 Days ("), _c('b', [_vm._v(_vm._s(_vm.report.toUtc))]), _vm._v(" - "), _c('b', [_vm._v(_vm._s(_vm.report.fromUtc))]), _vm._v(")\n        ")])])])
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {

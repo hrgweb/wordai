@@ -13,7 +13,7 @@
             <div class="header">
                 <!-- Report Header -->
                 <report-header :count="report.noOfArticlesEditedThisWeek">
-                    <template slot="head">Articles Edited This Week</template>
+                    <template slot="head">Articles Edited</template>
                 </report-header>
             </div>
             <div class="content">

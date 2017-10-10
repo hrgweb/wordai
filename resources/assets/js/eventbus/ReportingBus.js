@@ -101,10 +101,13 @@ export const ReportingBus = new Vue({
             let firstday = this.fromUtc.substr(8, 3);
             let lastday = this.toUtc.substr(8, 3);
 
+            console.log(firstday, lastday)
+
+
             // check if month is = if not substract 1
             let month = 0;
 
-            if (firstday.toLowerCase() === lastday.toLowerCase()) {
+            /*if (firstday.toLowerCase() === lastday.toLowerCase()) {
                 this.isSameMonth = true;
                 this.date = {
                     fromMon: mon,
@@ -120,6 +123,45 @@ export const ReportingBus = new Vue({
                     curMonthMon: (curr.getMonth() - 1) + 1,
                     curMonthSun: curr.getMonth() + 1,
                     curYear: curr.getFullYear()
+                };
+            }
+
+            this.date['monthSame'] = this.isSameMonth;*/
+        },
+
+        last7days() {
+            // set data in vue
+            let date = new Date();
+            this.toUtc = moment().format('L');
+            this.fromUtc = moment().subtract(7, 'days').calendar();
+
+            // get date from start days to last 7 days
+            let dayStart = this.toUtc.substr(3, 2);
+            let dayPrev = this.fromUtc.substr(3, 2);
+
+            // get month
+            let monthStart = this.fromUtc.substr(0, 2);
+            let monthPrev = this.toUtc.substr(0, 2);
+
+            // console.log(monthStart, monthPrev)
+
+            // check if month is = if not substract 1
+            if (parseInt(monthStart, 10) === parseInt(monthPrev, 10)) {
+                this.isSameMonth = true;
+                this.date = {
+                    toSun: dayStart,
+                    fromMon: dayPrev,
+                    curMonth: date.getMonth() + 1,
+                    curYear: date.getFullYear()
+                };
+            } else {
+                this.isSameMonth = false;
+                this.date = {
+                    toSun: dayStart,
+                    fromMon: dayPrev,
+                    curMonthMon: (date.getMonth() - 1) + 1,
+                    curMonthSun: date.getMonth() + 1,
+                    curYear: date.getFullYear()
                 };
             }
 
