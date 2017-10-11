@@ -159,7 +159,8 @@ class EditorsController extends Controller
                     'editor_id' => $editor_id,
                     'hr_spent_editor_edit_article' => $times[0],
                     'min_spent_editor_edit_article' => $times[1],
-                    'sec_spent_editor_edit_article' => $times[2]
+                    'sec_spent_editor_edit_article' => $times[2],
+                    'isProcess' => 0
                 ]);
             } else {
                 // update words table set isEdit to true, editor_id to the editor & spin to new article
