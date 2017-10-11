@@ -269,26 +269,31 @@
             },
 
 			setupToUpdateArticle(article, clickType) {
-				const data = {
+				/*const data = {
 					id: this.article.id,
 					article: article,
                     times: this.times,
                     input: this.input,
                     clickType: clickType
-				};
+				};*/
+
+                this.article['article'] = article;
+                this.article['times'] = this.times;
+                this.article['input'] = this.input;
+                this.article['clickType'] = clickType;
 
                 this.$refs.saveChangeBtn.disabled = true;
 
-				axios.patch('/editor/updateArticle', data).then(response => {
+				axios.patch('/editor/updateArticle', this.article).then(response => {
 					let data = response.data;
 
                     this.$refs.saveChangeBtn.disabled = false;
 
 					if (data.isSuccess) {
-						this.$emit('isUpdated', {
-                            article: data.result,
-                            times: data.times
-                        });
+                        // let result = [];
+
+                        // result.push(data.result);
+						this.$emit('isUpdated', data.result);
 					}
 				});
 			},
@@ -299,7 +304,7 @@
             },
 
             updateOriginalArticle() {
-                let article = $('div.Original__article').find('div.note-editable').html();
+                let article = $('div.Original__article').find('div.note-editable').text();
                 this.setupToUpdateArticle(article, 'original-article');
             },
 

@@ -179,7 +179,8 @@ class EditorsController extends Controller
 		}
 		DB::commit();
 
-    	return response()->json(['isSuccess' => true, 'result' => $article, 'times' => $times]);
+        // return response()->json(['isSuccess' => true, 'result' => $article, 'times' => $times]);
+    	return response()->json(['isSuccess' => true, 'result' => request()->all()]);
     }
 
     public function publishArticle() {

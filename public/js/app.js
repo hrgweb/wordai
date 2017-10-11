@@ -5277,7 +5277,9 @@ module.exports = Component.exports
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__UserArticleMixin_js__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__class_Editor_js__ = __webpack_require__(22);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ArticleEditorMixin; });
+
 
 
 var ArticleEditorMixin = {
@@ -5286,7 +5288,8 @@ var ArticleEditorMixin = {
             authUser: {},
             isEdit: false,
             hasPeditorAccess: false,
-            tableType: ''
+            tableType: '',
+            editor: new __WEBPACK_IMPORTED_MODULE_1__class_Editor_js__["a" /* default */]()
         };
     },
 
@@ -5378,6 +5381,13 @@ var ArticleEditorMixin = {
         },
         updateRecord: function updateRecord(data) {
             if (data) {
+                // update articles
+                if (this.tableType === 'article-to-edit') {
+                    Vue.set(this.listToEdit, this.index, data);
+                } else if (this.tableType === 'article-edited') {
+                    Vue.set(this.listEditedArticles, this.index, data);
+                }
+
                 // successfully updated
                 var articleTitle = this.article.doc_title;
                 new Noty({
@@ -33856,26 +33866,31 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         setupToUpdateArticle: function setupToUpdateArticle(article, clickType) {
             var _this3 = this;
 
-            var data = {
-                id: this.article.id,
-                article: article,
-                times: this.times,
-                input: this.input,
-                clickType: clickType
-            };
+            /*const data = {
+            	id: this.article.id,
+            	article: article,
+                            times: this.times,
+                            input: this.input,
+                            clickType: clickType
+            };*/
+
+            this.article['article'] = article;
+            this.article['times'] = this.times;
+            this.article['input'] = this.input;
+            this.article['clickType'] = clickType;
 
             this.$refs.saveChangeBtn.disabled = true;
 
-            axios.patch('/editor/updateArticle', data).then(function (response) {
+            axios.patch('/editor/updateArticle', this.article).then(function (response) {
                 var data = response.data;
 
                 _this3.$refs.saveChangeBtn.disabled = false;
 
                 if (data.isSuccess) {
-                    _this3.$emit('isUpdated', {
-                        article: data.result,
-                        times: data.times
-                    });
+                    // let result = [];
+
+                    // result.push(data.result);
+                    _this3.$emit('isUpdated', data.result);
                 }
             });
         },
@@ -33884,7 +33899,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.setupToUpdateArticle(article, 'process-article');
         },
         updateOriginalArticle: function updateOriginalArticle() {
-            var article = $('div.Original__article').find('div.note-editable').html();
+            var article = $('div.Original__article').find('div.note-editable').text();
             this.setupToUpdateArticle(article, 'original-article');
         },
         dissmissArticle: function dissmissArticle() {

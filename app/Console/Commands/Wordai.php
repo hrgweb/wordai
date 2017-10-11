@@ -47,7 +47,9 @@ class Wordai extends Command
      */
     public function handle()
     {
-    	$this->process_api();
+
+        dd($this->has_unprocess_article());
+    	// $this->process_api();
     }
 
     /**
@@ -64,7 +66,9 @@ class Wordai extends Command
                             ->whereRaw('(isEditorUpdateSC = 1 OR isEditorEdit = 1)')
                             ->first();
 
-		return count($this->article) > 0 ? true : false;
+		// return count($this->article) > 0 ? true : false;
+
+        return $this->article;
 	}
 
 	/**
@@ -154,6 +158,5 @@ class Wordai extends Command
             // Log - no unprocess article
             Log::info('No unprocess article at the moment.');
         }
-
 	}
 }

@@ -1,4 +1,5 @@
 import { UserArticleMixin } from './UserArticleMixin.js';
+import Editor from './../class/Editor.js';
 
 export const ArticleEditorMixin = {
     data() {
@@ -6,7 +7,8 @@ export const ArticleEditorMixin = {
             authUser: {},
             isEdit: false,
             hasPeditorAccess: false,
-            tableType: ''
+            tableType: '',
+            editor: new Editor()
         };
     },
 
@@ -122,6 +124,14 @@ export const ArticleEditorMixin = {
 
         updateRecord(data) {
             if (data) {
+                // update articles
+                if (this.tableType === 'article-to-edit') {
+                    Vue.set(this.listToEdit, this.index, data);
+                }
+                else if (this.tableType === 'article-edited') {
+                    Vue.set(this.listEditedArticles, this.index, data);
+                }
+
                 // successfully updated
                 let articleTitle = this.article.doc_title;
                 new Noty({
