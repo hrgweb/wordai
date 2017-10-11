@@ -27,6 +27,12 @@
                 <button type="button" class="btn btn-success" @click.prevent="updateOriginalArticle">PROCESS</button>
             </div>
 
+            <!-- is spintax & spin is process -->
+            <div id="info" class="alert" :class="isSpintaxAndSpinUpdated">
+                <p class="h4" v-if="article.isProcess === 0">Spintax and Process Article is not updated yet. Wait for a few minutes and reload the page.</p>
+                <p class="h4" v-else>Spintax and Process Article is now up to date.</p>
+            </div>
+
             <!-- spintax result -->
             <div class="Spintax__result" v-if="peditoraccess">
                 <h3>Spintax Result</h3><br>
@@ -156,6 +162,14 @@
                 }
 			}
 		},
+        computed: {
+            isSpintaxAndSpinUpdated() {
+                return {
+                    'alert-danger': this.article.isProcess === 0,
+                    'alert-success': this.article.isProcess === 1
+                };
+            }
+        },
 		watch: {
 			spin(data) {
                 this.csBusinessRuleShow = data.isCsCheckHitMax === 1 ? true : false;
@@ -466,6 +480,8 @@
 </script>
 
 <style scoped>
+    #info p { text-align: center; }
+
 	.ArticleEditor { margin-bottom: 3em; }
 	h3 { text-align: center; }
 	p { white-space: pre-wrap; }

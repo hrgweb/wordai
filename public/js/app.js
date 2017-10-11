@@ -33737,6 +33737,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -33769,6 +33775,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         };
     },
 
+    computed: {
+        isSpintaxAndSpinUpdated: function isSpintaxAndSpinUpdated() {
+            return {
+                'alert-danger': this.article.isProcess === 0,
+                'alert-success': this.article.isProcess === 1
+            };
+        }
+    },
     watch: {
         spin: function spin(data) {
             this.csBusinessRuleShow = data.isCsCheckHitMax === 1 ? true : false;
@@ -39885,7 +39899,7 @@ exports.push([module.i, "\n.search-input > input[data-v-14b8b558] {\n    padding
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;\n}\nh3[data-v-1a4b0ea7] { text-align: center;\n}\np[data-v-1a4b0ea7] { white-space: pre-wrap;\n}\n.Editor[data-v-1a4b0ea7] { position: relative;\n}\nbutton.right-side[data-v-1a4b0ea7] {\n\t\tposition: absolute;\n\t\tright: 0;\n}\nbutton.power-editor[data-v-1a4b0ea7] {\n\t\tbackground: #D13DD1;\n\t\tcolor: #fff;\n\t\tborder: #8c3f8c;\n}\nbutton.power-editor[data-v-1a4b0ea7]:hover { background: #BC2EBC;\n}\n.Copyscape[data-v-1a4b0ea7], .errorlist[data-v-1a4b0ea7] { margin-top: 5em;\n}\nbutton.textgear[data-v-1a4b0ea7] { background-color: #af863f !important;\n}\nbutton.textgear[data-v-1a4b0ea7]:hover {\n        background-color: #9D7734 !important;\n        border: 1px solid #936B25 !important;\n}\nbutton.approve[data-v-1a4b0ea7] {\n        background: #62bb75;\n        border: 1px solid #55b369;\n}\nbutton.approve[data-v-1a4b0ea7]:hover { background: #5CB06E;\n}\nbutton.disapprove[data-v-1a4b0ea7] {\n        background: #f14b69;\n        border: 1px solid #e23e5c;\n}\nbutton.disapprove[data-v-1a4b0ea7]:hover { background: #E5425F;\n}\n.seperator[data-v-1a4b0ea7] { margin-bottom: 0.5em;\n}\ndiv.first-button[data-v-1a4b0ea7] {\n\t    float: left;\n\t    margin-right: 0.2em;\n}\n\n\n\n\t/*=============== Gradient button ===============*/\n.btn-business-rule[data-v-1a4b0ea7] {\n\t\tbackground-color: hsl(0, 0%, 13%) !important;\n\t\tbackground-repeat: repeat-x;\n\t\tfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#bababa\", endColorstr=\"#212121\");\n\t\tbackground-image: -khtml-gradient(linear, left top, left bottom, from(#bababa), to(#212121));\n\t\tbackground-image: linear-gradient(#bababa, #212121);\n\t\tborder: 1px solid #7d7d7d;\n\t\tcolor: #fff !important;\n\t\ttext-shadow: 0 -1px 0 rgba(0, 0, 0, 0.99);\n\t\t-webkit-font-smoothing: antialiased;\n}\n", ""]);
+exports.push([module.i, "\n#info p[data-v-1a4b0ea7] { text-align: center;\n}\n.ArticleEditor[data-v-1a4b0ea7] { margin-bottom: 3em;\n}\nh3[data-v-1a4b0ea7] { text-align: center;\n}\np[data-v-1a4b0ea7] { white-space: pre-wrap;\n}\n.Editor[data-v-1a4b0ea7] { position: relative;\n}\nbutton.right-side[data-v-1a4b0ea7] {\n\t\tposition: absolute;\n\t\tright: 0;\n}\nbutton.power-editor[data-v-1a4b0ea7] {\n\t\tbackground: #D13DD1;\n\t\tcolor: #fff;\n\t\tborder: #8c3f8c;\n}\nbutton.power-editor[data-v-1a4b0ea7]:hover { background: #BC2EBC;\n}\n.Copyscape[data-v-1a4b0ea7], .errorlist[data-v-1a4b0ea7] { margin-top: 5em;\n}\nbutton.textgear[data-v-1a4b0ea7] { background-color: #af863f !important;\n}\nbutton.textgear[data-v-1a4b0ea7]:hover {\n        background-color: #9D7734 !important;\n        border: 1px solid #936B25 !important;\n}\nbutton.approve[data-v-1a4b0ea7] {\n        background: #62bb75;\n        border: 1px solid #55b369;\n}\nbutton.approve[data-v-1a4b0ea7]:hover { background: #5CB06E;\n}\nbutton.disapprove[data-v-1a4b0ea7] {\n        background: #f14b69;\n        border: 1px solid #e23e5c;\n}\nbutton.disapprove[data-v-1a4b0ea7]:hover { background: #E5425F;\n}\n.seperator[data-v-1a4b0ea7] { margin-bottom: 0.5em;\n}\ndiv.first-button[data-v-1a4b0ea7] {\n\t    float: left;\n\t    margin-right: 0.2em;\n}\n\n\n\n\t/*=============== Gradient button ===============*/\n.btn-business-rule[data-v-1a4b0ea7] {\n\t\tbackground-color: hsl(0, 0%, 13%) !important;\n\t\tbackground-repeat: repeat-x;\n\t\tfilter: progid:DXImageTransform.Microsoft.gradient(startColorstr=\"#bababa\", endColorstr=\"#212121\");\n\t\tbackground-image: -khtml-gradient(linear, left top, left bottom, from(#bababa), to(#212121));\n\t\tbackground-image: linear-gradient(#bababa, #212121);\n\t\tborder: 1px solid #7d7d7d;\n\t\tcolor: #fff !important;\n\t\ttext-shadow: 0 -1px 0 rgba(0, 0, 0, 0.99);\n\t\t-webkit-font-smoothing: antialiased;\n}\n", ""]);
 
 /***/ }),
 /* 250 */
@@ -63356,7 +63370,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.updateOriginalArticle($event)
       }
     }
-  }, [_vm._v("PROCESS")])]), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
+  }, [_vm._v("PROCESS")])]), _vm._v(" "), _c('div', {
+    staticClass: "alert",
+    class: _vm.isSpintaxAndSpinUpdated,
+    attrs: {
+      "id": "info"
+    }
+  }, [(_vm.article.isProcess === 0) ? _c('p', {
+    staticClass: "h4"
+  }, [_vm._v("Spintax and Process Article is not updated yet. Wait for a few minutes and reload the page.")]) : _c('p', {
+    staticClass: "h4"
+  }, [_vm._v("Spintax and Process Article is now up to date.")])]), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
     staticClass: "Spintax__result"
   }, [_c('h3', [_vm._v("Spintax Result")]), _c('br'), _vm._v(" "), (!_vm.pEditorAccess) ? _c('div', {
     staticClass: "Peditor"
