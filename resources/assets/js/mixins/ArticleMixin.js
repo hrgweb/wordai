@@ -181,7 +181,7 @@ export const ArticleMixin = {
 
 			// check if type is 'edit-article'
 			if (this.type === 'edit-article') {
-				this.csCounter++; 	// track cs checks counter
+				this.csCounter--; 	// track cs checks counter
 			}
 
 			axios.post(url, data).then(response => {
@@ -212,7 +212,7 @@ export const ArticleMixin = {
 				}
 
 				// check if counter = 5
-				if (this.type == 'edit-article' && this.csCounter == 5) {
+				if (this.type == 'edit-article' && this.csCounter == 0) {
 					this.updateCsCheckHitMax();
 				}
 			});

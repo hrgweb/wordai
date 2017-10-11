@@ -113,6 +113,10 @@
                     <!-- Dismiss -->
                     <button type="button" class="btn btn-danger" id="close" @click="dissmissArticle">Back to Articles</button>
 
+                    <!-- Counter -->
+                    <!-- <span>Copyscape <b>{{ this.csCounter }}</b></span> &nbsp;
+                    <span>Respin <b>{{ this.respinCounter }}</b></span> &nbsp; -->
+
                     <!-- Misc -->
                     &nbsp;&nbsp;&nbsp;
                     <span v-if="isLoading">LOADING....</span>
@@ -126,8 +130,6 @@
                 </div>
             </div>
         </form>
-
-
 	</div>
 </template>
 
@@ -149,8 +151,8 @@
 				type: 'edit-article',
 				spin: {},
 				pEditorAccess: false,
-				csCounter: 0,
-                respinCounter: 0,
+				csCounter: 5,
+                respinCounter: 5,
 				csBusinessRuleShow: false,
 				respinBusinessRuleShow: false,
                 charHighlighted: '',
@@ -341,7 +343,7 @@
 
                 // check if type is 'edit-article'
                 if (this.type === 'edit-article') {
-                    this.respinCounter++;   // increment respinCounter
+                    this.respinCounter--;   // increment respinCounter
                 }
 
 				let editor = $('div.note-editable');
@@ -374,7 +376,7 @@
                     }*/
 
                     // check if counter = 5
-                    if (this.type == 'edit-article' && this.respinCounter == 5) {
+                    if (this.type == 'edit-article' && this.respinCounter == 0) {
                         this.updateRespinCheckHitMax();
                     }
                 });

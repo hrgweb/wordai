@@ -5686,7 +5686,7 @@ var ArticleMixin = {
 
 			// check if type is 'edit-article'
 			if (this.type === 'edit-article') {
-				this.csCounter++; // track cs checks counter
+				this.csCounter--; // track cs checks counter
 			}
 
 			axios.post(url, data).then(function (response) {
@@ -5717,7 +5717,7 @@ var ArticleMixin = {
 				}
 
 				// check if counter = 5
-				if (_this3.type == 'edit-article' && _this3.csCounter == 5) {
+				if (_this3.type == 'edit-article' && _this3.csCounter == 0) {
 					_this3.updateCsCheckHitMax();
 				}
 			});
@@ -33743,6 +33743,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -33761,8 +33763,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             type: 'edit-article',
             spin: {},
             pEditorAccess: false,
-            csCounter: 0,
-            respinCounter: 0,
+            csCounter: 5,
+            respinCounter: 5,
             csBusinessRuleShow: false,
             respinBusinessRuleShow: false,
             charHighlighted: '',
@@ -33949,7 +33951,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             // check if type is 'edit-article'
             if (this.type === 'edit-article') {
-                this.respinCounter++; // increment respinCounter
+                this.respinCounter--; // increment respinCounter
             }
 
             var editor = $('div.note-editable');
@@ -33982,7 +33984,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 }*/
 
                 // check if counter = 5
-                if (_this4.type == 'edit-article' && _this4.respinCounter == 5) {
+                if (_this4.type == 'edit-article' && _this4.respinCounter == 0) {
                     _this4.updateRespinCheckHitMax();
                 }
             });
