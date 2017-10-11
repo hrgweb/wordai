@@ -5379,13 +5379,28 @@ var ArticleEditorMixin = {
                     break;
             };
         },
+        updateRecordsByIndex: function updateRecordsByIndex(records, data) {
+            var index = records.findIndex(function (item) {
+                return item.id === data.id;
+            });
+
+            if (index !== null && index >= 0) {
+                Vue.set(records, index, data);
+            }
+        },
         updateRecord: function updateRecord(data) {
             if (data) {
                 // update articles
                 if (this.tableType === 'article-to-edit') {
                     Vue.set(this.listToEdit, this.index, data);
+
+                    // find the result object to articles edited and update the value
+                    this.updateRecordsByIndex(this.listEditedArticles, data);
                 } else if (this.tableType === 'article-edited') {
                     Vue.set(this.listEditedArticles, this.index, data);
+
+                    // find the result object to articles edited and update the value
+                    this.updateRecordsByIndex(this.listToEdit, data);
                 }
 
                 // successfully updated
