@@ -159,7 +159,8 @@
                 showDisapprovePanel: false,
                 input: {
                     protected: this.article.protected
-                }
+                },
+                newArticle: {}
 			}
 		},
         computed: {
@@ -181,6 +182,9 @@
             }
 		},
 		mounted() {
+            // vars
+            this.newArticle = this.article;
+
 			this.spin = this.article;
             this.initSummernote();
             this.initStopwatch();
@@ -283,30 +287,22 @@
             },
 
 			setupToUpdateArticle(article, clickType) {
-				/*const data = {
-					id: this.article.id,
-					article: article,
-                    times: this.times,
-                    input: this.input,
-                    clickType: clickType
-				};*/
-
-                this.article['article'] = article;
-                this.article['times'] = this.times;
-                this.article['input'] = this.input;
-                this.article['clickType'] = clickType;
+                this.newArticle['article'] = article;
+                this.newArticle['times'] = this.times;
+                this.newArticle['input'] = this.input;
+                this.newArticle['clickType'] = clickType;
 
                 this.$refs.saveChangeBtn.disabled = true;
 
-				axios.patch('/editor/updateArticle', this.article).then(response => {
+				axios.patch('/editor/updateArticle', this.newArticle).then(response => {
 					let data = response.data;
 
                     this.$refs.saveChangeBtn.disabled = false;
 
 					if (data.isSuccess) {
-                        // let result = [];
+                        this.newArticle['isProcess'] = 0; // info change to alert-danger
 
-                        // result.push(data.result);
+                        data.result['isProcess'] = 0;
 						this.$emit('isUpdated', data.result);
 					}
 				});

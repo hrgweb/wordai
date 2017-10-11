@@ -33771,7 +33771,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             showDisapprovePanel: false,
             input: {
                 protected: this.article.protected
-            }
+            },
+            newArticle: {}
         };
     },
 
@@ -33797,6 +33798,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         }
     },
     mounted: function mounted() {
+        // vars
+        this.newArticle = this.article;
+
         this.spin = this.article;
         this.initSummernote();
         this.initStopwatch();
@@ -33895,30 +33899,22 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         setupToUpdateArticle: function setupToUpdateArticle(article, clickType) {
             var _this3 = this;
 
-            /*const data = {
-            	id: this.article.id,
-            	article: article,
-                            times: this.times,
-                            input: this.input,
-                            clickType: clickType
-            };*/
-
-            this.article['article'] = article;
-            this.article['times'] = this.times;
-            this.article['input'] = this.input;
-            this.article['clickType'] = clickType;
+            this.newArticle['article'] = article;
+            this.newArticle['times'] = this.times;
+            this.newArticle['input'] = this.input;
+            this.newArticle['clickType'] = clickType;
 
             this.$refs.saveChangeBtn.disabled = true;
 
-            axios.patch('/editor/updateArticle', this.article).then(function (response) {
+            axios.patch('/editor/updateArticle', this.newArticle).then(function (response) {
                 var data = response.data;
 
                 _this3.$refs.saveChangeBtn.disabled = false;
 
                 if (data.isSuccess) {
-                    // let result = [];
+                    _this3.newArticle['isProcess'] = 0; // info change to alert-danger
 
-                    // result.push(data.result);
+                    data.result['isProcess'] = 0;
                     _this3.$emit('isUpdated', data.result);
                 }
             });
