@@ -5689,6 +5689,9 @@ var ArticleMixin = {
 				this.csCounter--; // track cs checks counter
 			}
 
+			// add csCounter new value
+			this.article['csCounter'] = this.csCounter;
+
 			axios.post(url, data).then(function (response) {
 				var data = response.data;
 
@@ -16326,9 +16329,11 @@ var Editor = function () {
                     hr_spent_editor_edit_article: item.hr_spent_editor_edit_article,
                     id: item.word_id,
                     isCsCheckHitMax: item.isCsCheckHitMax,
+                    csCounter: item.csCounter,
                     isEditorEdit: item.isEditorEdit,
                     isEditorUpdateSC: item.isEditorUpdateSC,
                     isRespinHitMax: item.isRespinHitMax,
+                    respinCounter: item.respinCounter,
                     isProcess: item.isProcess,
                     keyword: keyword,
                     lastname: item.lastname,
@@ -33763,8 +33768,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             type: 'edit-article',
             spin: {},
             pEditorAccess: false,
-            csCounter: 5,
-            respinCounter: 5,
+            csCounter: 0,
+            respinCounter: 0,
             csBusinessRuleShow: false,
             respinBusinessRuleShow: false,
             charHighlighted: '',
@@ -33802,6 +33807,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mounted: function mounted() {
         // vars
         this.newArticle = this.article;
+        this.csCounter = this.article.csCounter;
+        this.respinCounter = this.article.respinCounter;
 
         this.spin = this.article;
         this.initSummernote();
@@ -63518,7 +63525,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.dissmissArticle
     }
-  }, [_vm._v("Back to Articles")]), _vm._v(" "), _c('span', [_vm._v("Copyscape "), _c('b', [_vm._v(_vm._s(this.csCounter))])]), _vm._v("  \n                    "), _c('span', [_vm._v("Respin "), _c('b', [_vm._v(_vm._s(this.respinCounter))])]), _vm._v("  \n\n                    "), _vm._v("\n                       \n                    "), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
+  }, [_vm._v("Back to Articles")]), _vm._v(" "), _c('span', [_vm._v("Copyscape "), _c('b', [_vm._v(_vm._s(_vm.article.csCounter))])]), _vm._v("  \n                    "), _c('span', [_vm._v("Respin "), _c('b', [_vm._v(_vm._s(_vm.article.respinCounter))])]), _vm._v("  \n\n                    "), _vm._v("\n                       \n                    "), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
     staticStyle: {
       "color": "red"
     }

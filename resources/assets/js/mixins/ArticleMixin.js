@@ -184,6 +184,9 @@ export const ArticleMixin = {
 				this.csCounter--; 	// track cs checks counter
 			}
 
+            // add csCounter new value
+            this.article['csCounter'] = this.csCounter;
+
 			axios.post(url, data).then(response => {
 				let data = response.data;
 

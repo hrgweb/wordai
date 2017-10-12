@@ -114,8 +114,8 @@
                     <button type="button" class="btn btn-danger" id="close" @click="dissmissArticle">Back to Articles</button>
 
                     <!-- Counter -->
-                    <span>Copyscape <b>{{ this.csCounter }}</b></span> &nbsp;
-                    <span>Respin <b>{{ this.respinCounter }}</b></span> &nbsp;
+                    <span>Copyscape <b>{{ article.csCounter }}</b></span> &nbsp;
+                    <span>Respin <b>{{ article.respinCounter }}</b></span> &nbsp;
 
                     <!-- Misc -->
                     &nbsp;&nbsp;&nbsp;
@@ -151,8 +151,8 @@
 				type: 'edit-article',
 				spin: {},
 				pEditorAccess: false,
-				csCounter: 5,
-                respinCounter: 5,
+				csCounter: 0,
+                respinCounter: 0,
 				csBusinessRuleShow: false,
 				respinBusinessRuleShow: false,
                 charHighlighted: '',
@@ -186,6 +186,8 @@
 		mounted() {
             // vars
             this.newArticle = this.article;
+            this.csCounter = this.article.csCounter;
+            this.respinCounter = this.article.respinCounter;
 
 			this.spin = this.article;
             this.initSummernote();

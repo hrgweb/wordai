@@ -235,6 +235,8 @@ class WordsController extends Controller
 		$result = '';
 		$articleType = '';
 
+        // return request()->all();
+
 		switch ($type) {
 			case 'article':
 				$articleType = $article;
@@ -258,6 +260,9 @@ class WordsController extends Controller
 			$settings->c,
 			$settings->o
 		);
+
+        // update csCounter column in words table
+        Word::where('id', request('id'))->update(['csCounter' => request('csCounter')]);
 
 		return response()->json($result);
 	}
