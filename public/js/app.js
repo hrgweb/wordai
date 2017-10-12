@@ -33967,7 +33967,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // params
             var params = {
                 word_id: this.article.id,
-                article: this.article.isEditorUpdateSC === 1 ? this.article.spintax_copy : this.article.spintax
+                article: this.article.isEditorUpdateSC === 1 ? this.article.spintax_copy : this.article.spintax,
+                respinCounter: this.respinCounter
             };
 
             axios.post('/words/respinArticle', params).then(function (response) {
@@ -63525,7 +63526,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.dissmissArticle
     }
-  }, [_vm._v("Back to Articles")]), _vm._v(" "), _c('span', [_vm._v("Copyscape "), _c('b', [_vm._v(_vm._s(_vm.article.csCounter))])]), _vm._v("  \n                    "), _c('span', [_vm._v("Respin "), _c('b', [_vm._v(_vm._s(_vm.article.respinCounter))])]), _vm._v("  \n\n                    "), _vm._v("\n                       \n                    "), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
+  }, [_vm._v("Back to Articles")]), _vm._v(" "), _c('span', [_vm._v("Copyscape "), _c('b', [_vm._v(_vm._s(_vm.csCounter))])]), _vm._v("  \n                    "), _c('span', [_vm._v("Respin "), _c('b', [_vm._v(_vm._s(_vm.respinCounter))])]), _vm._v("  \n\n                    "), _vm._v("\n                       \n                    "), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
     staticStyle: {
       "color": "red"
     }

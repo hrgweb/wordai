@@ -354,6 +354,9 @@ class WordsController extends Controller
 
         // if ($update) return $spin; // return response
 
+        // update respinCounter column in words table
+        Word::where('id', request('word_id'))->update(['respinCounter' => request('respinCounter')]);
+
         return $spin;
 	}
 

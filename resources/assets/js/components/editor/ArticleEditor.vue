@@ -114,8 +114,8 @@
                     <button type="button" class="btn btn-danger" id="close" @click="dissmissArticle">Back to Articles</button>
 
                     <!-- Counter -->
-                    <span>Copyscape <b>{{ article.csCounter }}</b></span> &nbsp;
-                    <span>Respin <b>{{ article.respinCounter }}</b></span> &nbsp;
+                    <span>Copyscape <b>{{ csCounter }}</b></span> &nbsp;
+                    <span>Respin <b>{{ respinCounter }}</b></span> &nbsp;
 
                     <!-- Misc -->
                     &nbsp;&nbsp;&nbsp;
@@ -354,7 +354,8 @@
                 // params
                 const params = {
                     word_id: this.article.id,
-                    article: this.article.isEditorUpdateSC === 1 ? this.article.spintax_copy : this.article.spintax
+                    article: this.article.isEditorUpdateSC === 1 ? this.article.spintax_copy : this.article.spintax,
+                    respinCounter: this.respinCounter
                 };
 
                 axios.post('/words/respinArticle', params).then(response => {
