@@ -114,8 +114,8 @@
                     <button type="button" class="btn btn-danger" id="close" @click="dissmissArticle">Back to Articles</button>
 
                     <!-- Counter -->
-                    <!-- <span>Copyscape <b>{{ this.csCounter }}</b></span> &nbsp;
-                    <span>Respin <b>{{ this.respinCounter }}</b></span> &nbsp; -->
+                    <span>Copyscape <b>{{ this.csCounter }}</b></span> &nbsp;
+                    <span>Respin <b>{{ this.respinCounter }}</b></span> &nbsp;
 
                     <!-- Misc -->
                     &nbsp;&nbsp;&nbsp;

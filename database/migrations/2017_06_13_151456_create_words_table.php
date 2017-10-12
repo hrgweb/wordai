@@ -29,11 +29,14 @@ class CreateWordsTable extends Migration
             $table->text('spin')->nullable();
             $table->text('protected')->nullable();
             $table->string('synonym')->nullable();
+            $table->text('citation')->nullable();
             $table->boolean('isUserEdit')->default(0);
             $table->boolean('isEditorEdit')->default(0);
             $table->integer('editor_id')->unsigned();
             $table->boolean('isCsCheckHitMax')->default(0);
+            $table->integer('csCounter')->default(5);
             $table->boolean('isRespinHitMax')->default(0);
+            $table->integer('respinCounter')->default(5);
             $table->boolean('isProcess')->default(0);
             $table->timestamp('isPublish')->nullable();
             $table->boolean('isArticleApprove')->default(0);
