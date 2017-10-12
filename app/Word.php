@@ -23,6 +23,7 @@ class Word extends Model
     	'isUserEdit',
     	'isEditorEdit',
     	'synonym',
+        'citation',
         'isArticleApprove',
         'reasonArticleNotAprrove',
         'reasonArticleNotAprroveBody'

@@ -16536,7 +16536,8 @@ var ArticleActionMixin = {
 				domain_protected: '',
 				article: '',
 				protected: '',
-				synonym: ''
+				synonym: '',
+				citation: ''
 			},
 			articleTypes: [],
 			isCurated: false,
@@ -35543,6 +35544,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__mixins_CrudMixin_js__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__mixins_ArticleActionMixin_js__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__mixins_CreateArticleMixin_js__ = __webpack_require__(35);
+//
+//
+//
+//
 //
 //
 //
@@ -68573,7 +68578,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "article"
     }
-  }, [_vm._v("Original Article")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.isValidationFail) ? _c('error', {
+  }, [_vm._v("Original Article")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('br'), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "citation"
+    }
+  }, [_vm._v("Citation")]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.isValidationFail) ? _c('error', {
     attrs: {
       "type": _vm.errorType,
       "list": _vm.errors
@@ -68614,6 +68623,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.spin.article = $event.target.value
+      }
+    }
+  })
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.citation),
+      expression: "spin.citation"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "citation",
+      "rows": "10"
+    },
+    domProps: {
+      "value": (_vm.spin.citation)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.citation = $event.target.value
       }
     }
   })

@@ -72,6 +72,10 @@
 			<textarea class="form-control" id="article" rows="40" v-once v-model="spin.article" @keyup="wordCount"></textarea>
 			<br>
 
+            <label for="citation">Citation</label>
+            <textarea class="form-control" id="citation" rows="10" v-once v-model="spin.citation"></textarea>
+            <br>
+
 			<!-- Erorr component -->
 			<error
 				:type="errorType"

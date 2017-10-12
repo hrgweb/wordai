@@ -30,7 +30,8 @@ export const ArticleActionMixin = {
 				domain_protected: '',
 				article: '',
 				protected: '',
-				synonym: ''
+				synonym: '',
+                citation: ''
 			},
 			articleTypes: [],
 			isCurated: false,
