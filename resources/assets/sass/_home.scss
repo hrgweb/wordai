@@ -388,8 +388,17 @@ table thead th:nth-child(5) { width: 120px; }
 .Process__article {
     background: #87f394;
     border: 1px solid #6cd879;
+    position: relative;
 
     h3 { color: #fff; }
+
+
+    span.counter {
+        font-size: 1.1em;
+        margin-right: .5em;
+
+        b { font-size: 1em; }
+    }
 }
 
 .Word {

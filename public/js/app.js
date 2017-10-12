@@ -33750,6 +33750,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -63497,7 +63499,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.resetSpinArticle
     }
-  }, [_vm._v("Reset Article")]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Reset Article")]), _vm._v(" "), _vm._v("\n                     \n                    "), _c('span', {
+    staticClass: "counter"
+  }, [_vm._v("Copyscape "), _c('b', {
+    staticClass: "label label-warning"
+  }, [_vm._v(_vm._s(_vm.csCounter))])]), _vm._v(" "), _c('span', {
+    staticClass: "counter"
+  }, [_vm._v("Respin "), _c('b', {
+    staticClass: "label label-info"
+  }, [_vm._v(_vm._s(_vm.respinCounter))])]), _vm._v(" "), _c('div', {
     staticClass: "seperator"
   }), _vm._v(" "), _c('button', {
     ref: "approveBtn",
@@ -63526,7 +63536,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": _vm.dissmissArticle
     }
-  }, [_vm._v("Back to Articles")]), _vm._v(" "), _c('span', [_vm._v("Copyscape "), _c('b', [_vm._v(_vm._s(_vm.csCounter))])]), _vm._v("  \n                    "), _c('span', [_vm._v("Respin "), _c('b', [_vm._v(_vm._s(_vm.respinCounter))])]), _vm._v("  \n\n                    "), _vm._v("\n                       \n                    "), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
+  }, [_vm._v("Back to Articles")]), _vm._v(" "), _vm._v("\n                       \n                    "), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
     staticStyle: {
       "color": "red"
     }

@@ -102,6 +102,12 @@
                     <!-- Reset Article -->
                     <button type="button" class="btn btn-danger" @click="resetSpinArticle" ref="resetChangeBtn">Reset Article</button>
 
+
+                    <!-- Counter -->
+                    &nbsp;
+                    <span class="counter">Copyscape <b class="label label-warning">{{ csCounter }}</b></span>
+                    <span class="counter">Respin <b class="label label-info">{{ respinCounter }}</b></span>
+
                     <div class="seperator"></div>
 
                     <!-- Approve Article -->
@@ -112,10 +118,6 @@
 
                     <!-- Dismiss -->
                     <button type="button" class="btn btn-danger" id="close" @click="dissmissArticle">Back to Articles</button>
-
-                    <!-- Counter -->
-                    <span>Copyscape <b>{{ csCounter }}</b></span> &nbsp;
-                    <span>Respin <b>{{ respinCounter }}</b></span> &nbsp;
 
                     <!-- Misc -->
                     &nbsp;&nbsp;&nbsp;
