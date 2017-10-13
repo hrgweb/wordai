@@ -22,6 +22,30 @@
             <!-- original article -->
             <div class="Original__article">
                 <h3>Original Article</h3>
+
+                <div class="find row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="company">Company</label>
+                            <input type="text" class="form-control" id="company" name="company" v-model="input.company">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" class="form-control" id="city" name="city" v-model="input.city">
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="state">State</label>
+                            <input type="text" class="form-control" id="state" name="state" v-model="input.state">
+                        </div>
+                    </div>
+                </div>
+
                 <div id="orig-article-editor"></div>
 
                 <button type="button" class="btn btn-success" @click.prevent="updateOriginalArticle">PROCESS</button>

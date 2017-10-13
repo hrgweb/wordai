@@ -33753,6 +33753,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -63369,6 +63393,98 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })]), _vm._v(" "), _c('div', {
     staticClass: "Original__article"
   }, [_c('h3', [_vm._v("Original Article")]), _vm._v(" "), _c('div', {
+    staticClass: "find row"
+  }, [_c('div', {
+    staticClass: "col-md-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "company"
+    }
+  }, [_vm._v("Company")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.input.company),
+      expression: "input.company"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "company",
+      "name": "company"
+    },
+    domProps: {
+      "value": (_vm.input.company)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.input.company = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "city"
+    }
+  }, [_vm._v("City")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.input.city),
+      expression: "input.city"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "city",
+      "name": "city"
+    },
+    domProps: {
+      "value": (_vm.input.city)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.input.city = $event.target.value
+      }
+    }
+  })])]), _vm._v(" "), _c('div', {
+    staticClass: "col-md-4"
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "state"
+    }
+  }, [_vm._v("State")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.input.state),
+      expression: "input.state"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "id": "state",
+      "name": "state"
+    },
+    domProps: {
+      "value": (_vm.input.state)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.input.state = $event.target.value
+      }
+    }
+  })])])]), _vm._v(" "), _c('div', {
     attrs: {
       "id": "orig-article-editor"
     }
