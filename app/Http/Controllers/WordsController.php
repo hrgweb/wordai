@@ -367,7 +367,7 @@ class WordsController extends Controller
         // return $spintax;
 
         // DB::table('words')->where('id', request('word_id'))->update(['spintax_copy' => $spintax, 'isEditorUpdateSC' => 1]);
-		Word::where('id', request('id'))->update(['spintax_copy' => $spintax, 'isEditorUpdateSC' => 1]);
+		Word::where('id', request('id'))->update(['spintax_copy' => $spintax, 'isEditorUpdateSC' => 1, 'isProcess' => 0]);
 
 		return response()->json(request()->all());
 	}

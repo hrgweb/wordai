@@ -13,15 +13,10 @@
 
 <script>
 	export default {
-		props: ['article'],
+		props: ['article', 'inputs'],
 		data() {
 			return {
                 isLoading: false,
-                input: {
-                    company: '',
-                    city: '',
-                    state: ''
-                },
                 newArticle: {}
             };
 		},
@@ -81,15 +76,54 @@
                 }*/
             },
 
+            protectedVars(article, terms) {
+                let finds = ['%company%', '%city%', '%state%'];
+                let vars = [];
+
+                for (var i = 0; i < finds.length; i++) {
+                    if (article.indexOf(finds[i]) >= 0) {
+                        vars.push(finds[i]);
+                    }
+                }
+
+                // combine result of vars and protected terms into 1 array
+                let protected_terms = vars.concat(terms);
+
+
+                return protected_terms.join();
+            },
+
+            replaceVarsWithData(article, vars) {
+                let finds = ['%company%', '%city%', '%state%'];
+
+                for (var i = 0; i < finds.length; i++) {
+                    if (article.indexOf(finds[i]) >= 0) {
+                        article = article.replace(finds[i], vars[i]);
+                    }
+                }
+
+                return article;
+
+                /*return article.match(new RegExp(finds, 'gi'), function(word, a,b,c,d,e,f,g) {
+                    console.log(word,a,b,c,d,e,f,g)
+                });*/
+            },
+
 			updateSpintaxArticle() {
                 // this.article['spintax'] = $('div.Peditor').find('div.note-editable').first().text();
 
                 this.newArticle['spintax'] = $('div.Peditor').find('div.note-editable').first().text();
-                this.newArticle['input'] = this.input;
+                this.newArticle['input'] = this.inputs;
                 // this.newArticle['clickType'] = clickType;
 
 				this.isLoading = true;
 				this.$refs.changesBtn.disabled = true;
+
+                let input = this.newArticle.input;
+                let vars = [input.company, input.city, input.state];
+
+                // replace vars values
+                this.newArticle['spintax'] = this.replaceVarsWithData(this.newArticle.spintax, vars);
 
 				axios.patch('/words/updateSpintaxArticle', this.newArticle).then(response => {
 					let data = response.data;
@@ -97,7 +131,7 @@
 					this.isLoading = false;
 					this.$refs.changesBtn.disabled = false;
 
-					/*if (data) {
+					if (data) {
 						this.$emit('isPowerEditorDismiss');  // close the power editor component
 						ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
 
@@ -108,7 +142,7 @@
                             layout: 'bottomLeft',
                             timeout: 5000
                         }).show();
-					}*/
+					}
 				});
 			}
 		}

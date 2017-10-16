@@ -33776,6 +33776,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -34627,15 +34628,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['article'],
+    props: ['article', 'inputs'],
     data: function data() {
         return {
             isLoading: false,
-            input: {
-                company: '',
-                city: '',
-                state: ''
-            },
             newArticle: {}
         };
     },
@@ -34692,17 +34688,53 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 });
             }*/
         },
+        protectedVars: function protectedVars(article, terms) {
+            var finds = ['%company%', '%city%', '%state%'];
+            var vars = [];
+
+            for (var i = 0; i < finds.length; i++) {
+                if (article.indexOf(finds[i]) >= 0) {
+                    vars.push(finds[i]);
+                }
+            }
+
+            // combine result of vars and protected terms into 1 array
+            var protected_terms = vars.concat(terms);
+
+            return protected_terms.join();
+        },
+        replaceVarsWithData: function replaceVarsWithData(article, vars) {
+            var finds = ['%company%', '%city%', '%state%'];
+
+            for (var i = 0; i < finds.length; i++) {
+                if (article.indexOf(finds[i]) >= 0) {
+                    article = article.replace(finds[i], vars[i]);
+                }
+            }
+
+            return article;
+
+            /*return article.match(new RegExp(finds, 'gi'), function(word, a,b,c,d,e,f,g) {
+                console.log(word,a,b,c,d,e,f,g)
+            });*/
+        },
         updateSpintaxArticle: function updateSpintaxArticle() {
             var _this = this;
 
             // this.article['spintax'] = $('div.Peditor').find('div.note-editable').first().text();
 
             this.newArticle['spintax'] = $('div.Peditor').find('div.note-editable').first().text();
-            this.newArticle['input'] = this.input;
+            this.newArticle['input'] = this.inputs;
             // this.newArticle['clickType'] = clickType;
 
             this.isLoading = true;
             this.$refs.changesBtn.disabled = true;
+
+            var input = this.newArticle.input;
+            var vars = [input.company, input.city, input.state];
+
+            // replace vars values
+            this.newArticle['spintax'] = this.replaceVarsWithData(this.newArticle.spintax, vars);
 
             axios.patch('/words/updateSpintaxArticle', this.newArticle).then(function (response) {
                 var data = response.data;
@@ -34710,17 +34742,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.isLoading = false;
                 _this.$refs.changesBtn.disabled = false;
 
-                /*if (data) {
-                	this.$emit('isPowerEditorDismiss');  // close the power editor component
-                	ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
-                                    // successfully updated
-                                   new Noty({
-                                       type: 'info',
-                                       text: `1 spintax article successfully updated.`,
-                                       layout: 'bottomLeft',
-                                       timeout: 5000
-                                   }).show();
-                }*/
+                if (data) {
+                    _this.$emit('isPowerEditorDismiss'); // close the power editor component
+                    ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
+
+                    // successfully updated
+                    new Noty({
+                        type: 'info',
+                        text: '1 spintax article successfully updated.',
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
+                }
             });
         }
     }
@@ -63539,7 +63572,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }, [_vm._v("Power Editor")])]) : _vm._e(), _vm._v(" "), (_vm.pEditorAccess) ? _c('power-editor', {
     attrs: {
-      "article": _vm.article
+      "article": _vm.article,
+      "inputs": _vm.input
     },
     on: {
       "isPowerEditorDismiss": _vm.dismissPowerEditor

@@ -78,15 +78,18 @@ class Wordai extends Command
 		// article object
 		$article = $this->article;
 
-		$text = $article->article;
+        // check if isEditorUpdateSC = 0, that means spintax not updated yet
+		$text = ($article->isEditorUpdateSC === 0) ? $article->article : $article->spintax_copy;
 		$quality = 100;
 		$email = 'accounting@connexionsolutions.com';
 		$pass = 'privape23';
+
 
         $protected = strlen($article->keyword) > 0 ? $article->keyword . ', ' : '';                         // keyword
         $protected .= strlen($article->lsi_terms) > 0 ? $article->lsi_terms . ', ' : '';                    // lsi tems
         $protected .= strlen($article->domain_protected) > 0 ? $article->domain_protected . ', ' : '';      // domain_protected
         $protected .= strlen($article->protected) > 0 ? $article->protected : '';                           // protected
+        $protected .= $protected . ',' . $article->company . ',' . $article->city . ',' . $article->state;
         $protected = $this->word_repo->remove_underline_and_spaces_for_terms($protected);
 		$synonyms = $article->synonym;
 

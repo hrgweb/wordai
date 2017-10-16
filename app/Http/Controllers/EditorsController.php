@@ -157,7 +157,11 @@ class EditorsController extends Controller
                 $result = Word::where('id', request('id'))->update([
                     'article' => $article,
                     'protected' => $protected,
+                    'company' => '%company%',
+                    'city' => '%city%',
+                    'state' => '%state%',
                     'isEditorEdit' => 1,
+                    'isEditorUpdateSC' => 0,
                     'editor_id' => $editor_id,
                     'hr_spent_editor_edit_article' => $times[0],
                     'min_spent_editor_edit_article' => $times[1],
@@ -169,7 +173,11 @@ class EditorsController extends Controller
                 $result = Word::where('id', request('id'))->update([
                     'spin' => $article,
                     'protected' => $protected,
+                    'company' => '%company%',
+                    'city' => '%city%',
+                    'state' => '%state%',
                     'isEditorEdit' => 1,
+                    'isEditorUpdateSC' => 0,
                     'editor_id' => $editor_id,
                     'hr_spent_editor_edit_article' => $times[0],
                     'min_spent_editor_edit_article' => $times[1],

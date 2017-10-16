@@ -28,6 +28,9 @@ class CreateWordsTable extends Migration
             $table->text('spintax_copy')->nullable();
             $table->text('spin')->nullable();
             $table->text('protected')->nullable();
+            $table->string('company')->default('%company%');
+            $table->string('city')->default('%city%');
+            $table->string('state')->default('%state%');
             $table->string('synonym')->nullable();
             $table->text('citation')->nullable();
             $table->boolean('isUserEdit')->default(0);

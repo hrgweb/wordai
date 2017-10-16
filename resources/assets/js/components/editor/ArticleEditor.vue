@@ -71,6 +71,7 @@
                 <!-- Power Editor -->
                 <power-editor
                     :article="article"
+                    :inputs="input"
                     v-if="pEditorAccess"
                     @isPowerEditorDismiss="dismissPowerEditor">
                 </power-editor>
