@@ -33776,7 +33776,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
 
 
 
@@ -33804,7 +33803,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             times: [0, 0, 0],
             showDisapprovePanel: false,
             input: {
-                protected: this.article.protected
+                protected: this.article.protected,
+                company: '',
+                city: '',
+                state: ''
             },
             newArticle: {}
         };
@@ -34627,9 +34629,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['article'],
     data: function data() {
-        return { isLoading: false };
+        return {
+            isLoading: false,
+            input: {
+                company: '',
+                city: '',
+                state: ''
+            },
+            newArticle: {}
+        };
     },
     mounted: function mounted() {
+        this.newArticle = this.article;
+
         this.initSpintax();
     },
 
@@ -34683,29 +34695,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         updateSpintaxArticle: function updateSpintaxArticle() {
             var _this = this;
 
-            this.article['spintax'] = $('div.Peditor').find('div.note-editable').first().text();
+            // this.article['spintax'] = $('div.Peditor').find('div.note-editable').first().text();
+
+            this.newArticle['spintax'] = $('div.Peditor').find('div.note-editable').first().text();
+            this.newArticle['input'] = this.input;
+            // this.newArticle['clickType'] = clickType;
 
             this.isLoading = true;
             this.$refs.changesBtn.disabled = true;
 
-            axios.patch('/words/updateSpintaxArticle', this.article).then(function (response) {
+            axios.patch('/words/updateSpintaxArticle', this.newArticle).then(function (response) {
                 var data = response.data;
 
                 _this.isLoading = false;
                 _this.$refs.changesBtn.disabled = false;
 
-                if (data) {
-                    _this.$emit('isPowerEditorDismiss'); // close the power editor component
-                    ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
-
-                    // successfully updated
-                    new Noty({
-                        type: 'info',
-                        text: '1 spintax article successfully updated.',
-                        layout: 'bottomLeft',
-                        timeout: 5000
-                    }).show();
-                }
+                /*if (data) {
+                	this.$emit('isPowerEditorDismiss');  // close the power editor component
+                	ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
+                                    // successfully updated
+                                   new Noty({
+                                       type: 'info',
+                                       text: `1 spintax article successfully updated.`,
+                                       layout: 'bottomLeft',
+                                       timeout: 5000
+                                   }).show();
+                }*/
             });
         }
     }
@@ -63393,6 +63408,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   })]), _vm._v(" "), _c('div', {
     staticClass: "Original__article"
   }, [_c('h3', [_vm._v("Original Article")]), _vm._v(" "), _c('div', {
+    attrs: {
+      "id": "orig-article-editor"
+    }
+  }), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.updateOriginalArticle($event)
+      }
+    }
+  }, [_vm._v("PROCESS")])]), _vm._v(" "), _c('div', {
+    staticClass: "alert",
+    class: _vm.isSpintaxAndSpinUpdated,
+    attrs: {
+      "id": "info"
+    }
+  }, [(_vm.article.isProcess === 0) ? _c('p', {
+    staticClass: "h4"
+  }, [_vm._v("Spintax and Process Article is not updated yet. Wait for a few minutes and reload the page.")]) : _c('p', {
+    staticClass: "h4"
+  }, [_vm._v("Spintax and Process Article is now up to date.")])]), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
+    staticClass: "Spintax__result"
+  }, [_c('h3', [_vm._v("Spintax Result")]), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "find row"
   }, [_c('div', {
     staticClass: "col-md-4"
@@ -63484,34 +63526,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.input.state = $event.target.value
       }
     }
-  })])])]), _vm._v(" "), _c('div', {
-    attrs: {
-      "id": "orig-article-editor"
-    }
-  }), _vm._v(" "), _c('button', {
-    staticClass: "btn btn-success",
-    attrs: {
-      "type": "button"
-    },
-    on: {
-      "click": function($event) {
-        $event.preventDefault();
-        _vm.updateOriginalArticle($event)
-      }
-    }
-  }, [_vm._v("PROCESS")])]), _vm._v(" "), _c('div', {
-    staticClass: "alert",
-    class: _vm.isSpintaxAndSpinUpdated,
-    attrs: {
-      "id": "info"
-    }
-  }, [(_vm.article.isProcess === 0) ? _c('p', {
-    staticClass: "h4"
-  }, [_vm._v("Spintax and Process Article is not updated yet. Wait for a few minutes and reload the page.")]) : _c('p', {
-    staticClass: "h4"
-  }, [_vm._v("Spintax and Process Article is now up to date.")])]), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
-    staticClass: "Spintax__result"
-  }, [_c('h3', [_vm._v("Spintax Result")]), _c('br'), _vm._v(" "), (!_vm.pEditorAccess) ? _c('div', {
+  })])])]), _vm._v(" "), (!_vm.pEditorAccess) ? _c('div', {
     staticClass: "Peditor"
   }, [(_vm.article.isEditorUpdateSC === 0) ? _c('p', [_vm._v(_vm._s(_vm.article.spintax))]) : _c('p', [_vm._v(_vm._s(_vm.article.spintax_copy))]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
     ref: "pEditorBtn",

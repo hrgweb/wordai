@@ -15,9 +15,19 @@
 	export default {
 		props: ['article'],
 		data() {
-			return { isLoading: false };
+			return {
+                isLoading: false,
+                input: {
+                    company: '',
+                    city: '',
+                    state: ''
+                },
+                newArticle: {}
+            };
 		},
 		mounted() {
+            this.newArticle = this.article;
+
 			this.initSpintax();
 		},
 		methods: {
@@ -72,18 +82,22 @@
             },
 
 			updateSpintaxArticle() {
-                this.article['spintax'] = $('div.Peditor').find('div.note-editable').first().text();
+                // this.article['spintax'] = $('div.Peditor').find('div.note-editable').first().text();
+
+                this.newArticle['spintax'] = $('div.Peditor').find('div.note-editable').first().text();
+                this.newArticle['input'] = this.input;
+                // this.newArticle['clickType'] = clickType;
 
 				this.isLoading = true;
 				this.$refs.changesBtn.disabled = true;
 
-				axios.patch('/words/updateSpintaxArticle', this.article).then(response => {
+				axios.patch('/words/updateSpintaxArticle', this.newArticle).then(response => {
 					let data = response.data;
 
 					this.isLoading = false;
 					this.$refs.changesBtn.disabled = false;
 
-					if (data) {
+					/*if (data) {
 						this.$emit('isPowerEditorDismiss');  // close the power editor component
 						ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
 
@@ -94,7 +108,7 @@
                             layout: 'bottomLeft',
                             timeout: 5000
                         }).show();
-					}
+					}*/
 				});
 			}
 		}

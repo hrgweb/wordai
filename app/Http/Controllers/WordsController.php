@@ -363,8 +363,7 @@ class WordsController extends Controller
 	public function updateSpintaxArticle() {
 		$spintax = request('spintax');
 
-        dd('test');
-        return request()->all();
+        // return request()->all();
         // return $spintax;
 
         // DB::table('words')->where('id', request('word_id'))->update(['spintax_copy' => $spintax, 'isEditorUpdateSC' => 1]);

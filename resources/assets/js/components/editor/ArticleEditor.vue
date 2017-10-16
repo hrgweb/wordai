@@ -22,6 +22,20 @@
             <!-- original article -->
             <div class="Original__article">
                 <h3>Original Article</h3>
+                <div id="orig-article-editor"></div>
+
+                <button type="button" class="btn btn-success" @click.prevent="updateOriginalArticle">PROCESS</button>
+            </div>
+
+            <!-- is spintax & spin is process -->
+            <div id="info" class="alert" :class="isSpintaxAndSpinUpdated">
+                <p class="h4" v-if="article.isProcess === 0">Spintax and Process Article is not updated yet. Wait for a few minutes and reload the page.</p>
+                <p class="h4" v-else>Spintax and Process Article is now up to date.</p>
+            </div>
+
+            <!-- spintax result -->
+            <div class="Spintax__result" v-if="peditoraccess">
+                <h3>Spintax Result</h3><br>
 
                 <div class="find row">
                     <div class="col-md-4">
@@ -45,21 +59,6 @@
                         </div>
                     </div>
                 </div>
-
-                <div id="orig-article-editor"></div>
-
-                <button type="button" class="btn btn-success" @click.prevent="updateOriginalArticle">PROCESS</button>
-            </div>
-
-            <!-- is spintax & spin is process -->
-            <div id="info" class="alert" :class="isSpintaxAndSpinUpdated">
-                <p class="h4" v-if="article.isProcess === 0">Spintax and Process Article is not updated yet. Wait for a few minutes and reload the page.</p>
-                <p class="h4" v-else>Spintax and Process Article is now up to date.</p>
-            </div>
-
-            <!-- spintax result -->
-            <div class="Spintax__result" v-if="peditoraccess">
-                <h3>Spintax Result</h3><br>
 
                 <div class="Peditor" v-if="! pEditorAccess">
                     <p v-if="article.isEditorUpdateSC === 0">{{ article.spintax }}</p>
@@ -186,7 +185,10 @@
                 times: [0, 0, 0],
                 showDisapprovePanel: false,
                 input: {
-                    protected: this.article.protected
+                    protected: this.article.protected,
+                    company: '',
+                    city: '',
+                    state: ''
                 },
                 newArticle: {}
 			}
