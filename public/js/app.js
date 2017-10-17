@@ -17676,10 +17676,10 @@ var CreateArticleMixin = {
 
             return isExist;
         },
-        showNotificationKeywordNotExist: function showNotificationKeywordNotExist() {
+        showNotificationKeywordNotExist: function showNotificationKeywordNotExist(type, msg) {
             new Noty({
-                type: 'info',
-                text: 'The keyword you enter does not exists yet.',
+                type: type,
+                text: msg,
                 layout: 'bottomLeft',
                 timeout: 5000
             }).show();
@@ -17734,18 +17734,24 @@ var CreateArticleMixin = {
                         }
                     });
                 } else {
-                    this.isLoading = false;
+                    var msg = '\n                        <h4>Possible reason for error</h4>\n                        <ul>\n                            <li>Make sure keyword is not empty.</li>\n                            <li>Make sure keyword must unique and not use by the domain selected.</li>\n                        </ul>\n                    ';
 
-                    if (keyword.length <= 0) {
+                    this.isLoading = false;
+                    this.showNotificationKeywordNotExist('error', msg);
+                    this.wordaiBus.isKeywordExist = true;
+
+                    /*if (keyword.length <= 0) {
+                        console.log('exist if')
                         new Noty({
                             type: 'error',
-                            text: 'Keyword is required.',
+                            text: `Keyword is required.`,
                             layout: 'bottomLeft',
                             timeout: 5000
                         }).show();
                     } else {
+                        console.log('exist else')
                         this.wordaiBus.isKeywordExist = true;
-                    }
+                    }*/
                 }
             } else {
                 new Noty({

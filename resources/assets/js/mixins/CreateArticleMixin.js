@@ -35,10 +35,10 @@ export const CreateArticleMixin = {
             return isExist;
         },
 
-        showNotificationKeywordNotExist() {
+        showNotificationKeywordNotExist(type, msg) {
             new Noty({
-                type: 'info',
-                text: `The keyword you enter does not exists yet.`,
+                type: type,
+                text: msg,
                 layout: 'bottomLeft',
                 timeout: 5000
             }).show();
@@ -93,9 +93,20 @@ export const CreateArticleMixin = {
                         }
                     });
                 } else {
-                    this.isLoading = false;
+                    let msg = `
+                        <h4>Possible reason for error</h4>
+                        <ul>
+                            <li>Make sure keyword is not empty.</li>
+                            <li>Make sure keyword must unique and not use by the domain selected.</li>
+                        </ul>
+                    `;
 
-                    if (keyword.length <= 0) {
+                    this.isLoading = false;
+                    this.showNotificationKeywordNotExist('error', msg);
+                    this.wordaiBus.isKeywordExist = true;
+
+                    /*if (keyword.length <= 0) {
+                        console.log('exist if')
                         new Noty({
                             type: 'error',
                             text: `Keyword is required.`,
@@ -103,8 +114,9 @@ export const CreateArticleMixin = {
                             timeout: 5000
                         }).show();
                     } else {
+                        console.log('exist else')
                         this.wordaiBus.isKeywordExist = true;
-                    }
+                    }*/
                 }
             } else {
                 new Noty({
