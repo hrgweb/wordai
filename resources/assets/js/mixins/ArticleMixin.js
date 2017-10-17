@@ -110,7 +110,7 @@ export const ArticleMixin = {
 
 			// highlight summernote paragraph
 			this.smArticle = article;
-			$('div.note-editable').first().html(this.smArticle);
+			$('div.Process__article').find('div.note-editable').html(this.smArticle);
 		},
 
 		colorDuplicatesInRed(duplicates) {
@@ -161,7 +161,8 @@ export const ArticleMixin = {
 			finds = this.removeEmptyValueFromSentence(duplicates);
 
             // find all match on article base on result of finds var
-            finds = this.findDuplicateMatchOnArticle(finds, $('div.note-editable').text());
+            let article = $('div.Process__article').find('div.note-editable').text();
+            finds = this.findDuplicateMatchOnArticle(finds, article);
 
 			// prepend mark tag to search string and highlight
 			this.prependMarkTagToSearchSendtenceAndHighlight(finds);
@@ -207,8 +208,8 @@ export const ArticleMixin = {
 				} else {
 					// find all duplicate occurences
                     if (data.hasOwnProperty('result')) {
-                        this.copyScapeData(data.result);
                         this.isCsHasResult = true;
+                        Vue.nextTick(() => this.copyScapeData(data.result));
                     } else {
                         this.isCsHasResult = false;
                     }
@@ -361,7 +362,7 @@ export const ArticleMixin = {
 						let text = data.text;
 
 						// this.spintaxResult = text;
-						console.log(text);
+						// console.log(text);
 
 						// article is now the spintax result
 						// display finish full article

@@ -5613,7 +5613,7 @@ var ArticleMixin = {
 
 			// highlight summernote paragraph
 			this.smArticle = article;
-			$('div.note-editable').first().html(this.smArticle);
+			$('div.Process__article').find('div.note-editable').html(this.smArticle);
 		},
 		colorDuplicatesInRed: function colorDuplicatesInRed(duplicates) {
 			var paragraphs = $('div.Copyscape__result').find('p');
@@ -5663,7 +5663,8 @@ var ArticleMixin = {
 			finds = this.removeEmptyValueFromSentence(duplicates);
 
 			// find all match on article base on result of finds var
-			finds = this.findDuplicateMatchOnArticle(finds, $('div.note-editable').text());
+			var article = $('div.Process__article').find('div.note-editable').text();
+			finds = this.findDuplicateMatchOnArticle(finds, article);
 
 			// prepend mark tag to search string and highlight
 			this.prependMarkTagToSearchSendtenceAndHighlight(finds);
@@ -5712,8 +5713,10 @@ var ArticleMixin = {
 				} else {
 					// find all duplicate occurences
 					if (data.hasOwnProperty('result')) {
-						_this3.copyScapeData(data.result);
 						_this3.isCsHasResult = true;
+						Vue.nextTick(function () {
+							return _this3.copyScapeData(data.result);
+						});
 					} else {
 						_this3.isCsHasResult = false;
 					}
@@ -5857,7 +5860,7 @@ var ArticleMixin = {
 					var text = data.text;
 
 					// this.spintaxResult = text;
-					console.log(text);
+					// console.log(text);
 
 					// article is now the spintax result
 					// display finish full article
@@ -35603,7 +35606,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 	methods: {
 		articleDuplicates: function articleDuplicates() {
-			var article = $('div.note-editable').html();
+			var article = $('div.Process__article').find('div.note-editable').html();
 			var duplicates = article.match(/\<mark\>.+?\<\/mark\>/g);
 
 			this.$emit('updateduplicates', duplicates);

@@ -21,7 +21,7 @@
 		},
 		methods: {
 			articleDuplicates() {
-				let article = $('div.note-editable').html();
+				let article = $('div.Process__article').find('div.note-editable').html();
 				let duplicates = article.match(/\<mark\>.+?\<\/mark\>/g);
 
 				this.$emit('updateduplicates', duplicates);
