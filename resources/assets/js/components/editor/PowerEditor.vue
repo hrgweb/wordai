@@ -13,11 +13,12 @@
 
 <script>
 	export default {
-		props: ['article', 'inputs'],
+		props: ['article', 'inputs', 'tableType'],
 		data() {
 			return {
                 isLoading: false,
-                newArticle: {}
+                newArticle: {},
+                hasReplaceVars: false
             };
 		},
 		mounted() {
@@ -95,18 +96,19 @@
 
             replaceVarsWithData(article, vars) {
                 let finds = ['%company%', '%city%', '%state%'];
+                let counter = 0;
 
                 for (var i = 0; i < finds.length; i++) {
                     if (article.indexOf(finds[i]) >= 0) {
                         article = article.replace(finds[i], vars[i]);
+                        counter++;
                     }
                 }
 
-                return article;
+                // check if has replace one value or more to vars
+                this.hasReplaceVars = counter > 0 ? true : false;
 
-                /*return article.match(new RegExp(finds, 'gi'), function(word, a,b,c,d,e,f,g) {
-                    console.log(word,a,b,c,d,e,f,g)
-                });*/
+                return article;
             },
 
 			updateSpintaxArticle() {
@@ -125,25 +127,35 @@
                 // replace vars values
                 this.newArticle['spintax'] = this.replaceVarsWithData(this.newArticle.spintax, vars);
 
-				axios.patch('/words/updateSpintaxArticle', this.newArticle).then(response => {
-					let data = response.data;
+                // check if has replace value from vars
+                // if (this.hasReplaceVars) {
+                    axios.patch('/words/updateSpintaxArticle', this.newArticle).then(response => {
+                        let data = response.data;
 
-					this.isLoading = false;
-					this.$refs.changesBtn.disabled = false;
+                        this.isLoading = false;
+                        this.$refs.changesBtn.disabled = false;
 
-					if (data) {
-						this.$emit('isPowerEditorDismiss');  // close the power editor component
-						ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
+                        if (data) {
+                            this.$emit('isPowerEditorDismiss');  // close the power editor component
+                            ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
 
-                        // successfully updated
-                        new Noty({
-                            type: 'info',
-                            text: `1 spintax article successfully updated.`,
-                            layout: 'bottomLeft',
-                            timeout: 5000
-                        }).show();
-					}
-				});
+                            // successfully updated
+                            new Noty({
+                                type: 'info',
+                                text: `1 spintax article successfully updated.`,
+                                layout: 'bottomLeft',
+                                timeout: 5000
+                            }).show();
+                        }
+                    });
+                /*} else {
+                    new Noty({
+                        type: 'error',
+                        text: `Nothing replace can't find placeholder. Please update yor article and add placeholder to change.`,
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
+                }*/
 			}
 		}
 	}

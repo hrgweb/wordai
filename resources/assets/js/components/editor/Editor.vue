@@ -12,6 +12,7 @@
 		<!-- Article Editor -->
 		<article-editor
 			:article="article"
+            :tableType="tableType"
 			:peditoraccess="hasPeditorAccess"
 			v-if="isEdit"
 			@isUpdated="updateRecord"
@@ -87,6 +88,7 @@
         mounted() {
             ReportingBus.$on('isLoadedListToEdit', data => this.listToEdit = data);
             ReportingBus.$on('isLoadedListEditedArticles', data => this.listEditedArticles = data);
+            ArticleBus.$on('editorUpdatedSpintaxCopy', data => this.updateRecord(data));
         },
 		methods: {
 			articleList() {

@@ -145,15 +145,6 @@ export const ArticleEditorMixin = {
                     // find the result object to articles edited and update the value
                     this.updateRecordsByIndex(this.listToEdit, data);
                 }
-
-                // successfully updated
-                let articleTitle = this.article.doc_title;
-                new Noty({
-                    type: 'info',
-                    text: `<b>${articleTitle}</b> article successfully updated.`,
-                    layout: 'bottomLeft',
-                    timeout: 5000
-                }).show();
             }
         },
 

@@ -5402,15 +5402,6 @@ var ArticleEditorMixin = {
                     // find the result object to articles edited and update the value
                     this.updateRecordsByIndex(this.listToEdit, data);
                 }
-
-                // successfully updated
-                var articleTitle = this.article.doc_title;
-                new Noty({
-                    type: 'info',
-                    text: '<b>' + articleTitle + '</b> article successfully updated.',
-                    layout: 'bottomLeft',
-                    timeout: 5000
-                }).show();
             }
         },
         dismissUpdate: function dismissUpdate(payload) {
@@ -33786,6 +33777,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -33796,7 +33788,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['article', 'peditoraccess'],
+    props: ['article', 'tableType', 'peditoraccess'],
     components: { PowerEditor: __WEBPACK_IMPORTED_MODULE_0__PowerEditor_vue___default.a, CopyscapeResult: __WEBPACK_IMPORTED_MODULE_1__words_CopyscapeResult_vue___default.a, TextgearResult: __WEBPACK_IMPORTED_MODULE_5__words_TextgearResult_vue___default.a, DisapproveArticle: __WEBPACK_IMPORTED_MODULE_6__admin_DisapproveArticle_vue___default.a },
     mixins: [__WEBPACK_IMPORTED_MODULE_2__mixins_CrudMixin_js__["a" /* CrudMixin */], __WEBPACK_IMPORTED_MODULE_3__mixins_ArticleMixin_js__["a" /* ArticleMixin */]],
     data: function data() {
@@ -33961,6 +33953,15 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 if (data.isSuccess) {
                     _this3.newArticle['isProcess'] = 0; // info change to alert-danger
+
+                    // successfully updated
+                    var articleTitle = _this3.article.doc_title;
+                    new Noty({
+                        type: 'info',
+                        text: '<b>' + articleTitle + '</b> article successfully updated.',
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
 
                     data.result['isProcess'] = 0;
                     _this3.$emit('isUpdated', data.result);
@@ -34492,6 +34493,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -34536,6 +34538,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         });
         ReportingBus.$on('isLoadedListEditedArticles', function (data) {
             return _this.listEditedArticles = data;
+        });
+        ArticleBus.$on('editorUpdatedSpintaxCopy', function (data) {
+            return _this.updateRecord(data);
         });
     },
 
@@ -34637,11 +34642,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-    props: ['article', 'inputs'],
+    props: ['article', 'inputs', 'tableType'],
     data: function data() {
         return {
             isLoading: false,
-            newArticle: {}
+            newArticle: {},
+            hasReplaceVars: false
         };
     },
     mounted: function mounted() {
@@ -34714,18 +34720,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         replaceVarsWithData: function replaceVarsWithData(article, vars) {
             var finds = ['%company%', '%city%', '%state%'];
+            var counter = 0;
 
             for (var i = 0; i < finds.length; i++) {
                 if (article.indexOf(finds[i]) >= 0) {
                     article = article.replace(finds[i], vars[i]);
+                    counter++;
                 }
             }
 
-            return article;
+            // check if has replace one value or more to vars
+            this.hasReplaceVars = counter > 0 ? true : false;
 
-            /*return article.match(new RegExp(finds, 'gi'), function(word, a,b,c,d,e,f,g) {
-                console.log(word,a,b,c,d,e,f,g)
-            });*/
+            return article;
         },
         updateSpintaxArticle: function updateSpintaxArticle() {
             var _this = this;
@@ -34745,6 +34752,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             // replace vars values
             this.newArticle['spintax'] = this.replaceVarsWithData(this.newArticle.spintax, vars);
 
+            // check if has replace value from vars
+            // if (this.hasReplaceVars) {
             axios.patch('/words/updateSpintaxArticle', this.newArticle).then(function (response) {
                 var data = response.data;
 
@@ -34764,6 +34773,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }).show();
                 }
             });
+            /*} else {
+                new Noty({
+                    type: 'error',
+                    text: `Nothing replace can't find placeholder. Please update yor article and add placeholder to change.`,
+                    layout: 'bottomLeft',
+                    timeout: 5000
+                }).show();
+            }*/
         }
     }
 });
@@ -63582,7 +63599,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._v("Power Editor")])]) : _vm._e(), _vm._v(" "), (_vm.pEditorAccess) ? _c('power-editor', {
     attrs: {
       "article": _vm.article,
-      "inputs": _vm.input
+      "inputs": _vm.input,
+      "tableType": _vm.tableType
     },
     on: {
       "isPowerEditorDismiss": _vm.dismissPowerEditor
@@ -67744,6 +67762,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }) : _vm._e()], 1), _vm._v(" "), (_vm.isEdit) ? _c('article-editor', {
     attrs: {
       "article": _vm.article,
+      "tableType": _vm.tableType,
       "peditoraccess": _vm.hasPeditorAccess
     },
     on: {

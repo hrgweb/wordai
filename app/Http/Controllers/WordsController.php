@@ -362,12 +362,21 @@ class WordsController extends Controller
 
 	public function updateSpintaxArticle() {
 		$spintax = request('spintax');
+        $company = (request('input.company') !== null) ? request('input.company') : '%company%';
+        $city = (request('input.city') !== null) ? request('input.city') : '%city%';
+        $state = (request('input.state') !== null) ? request('input.state') : '%state%';
 
         // return request()->all();
         // return $spintax;
 
         // DB::table('words')->where('id', request('word_id'))->update(['spintax_copy' => $spintax, 'isEditorUpdateSC' => 1]);
-		Word::where('id', request('id'))->update(['spintax_copy' => $spintax, 'isEditorUpdateSC' => 1, 'isProcess' => 0]);
+		Word::where('id', request('id'))->update([
+            'spintax_copy' => $spintax,
+            'company' => $company,
+            'city' => $city,
+            'state' => $state,
+            'isEditorUpdateSC' => 1
+        ]);
 
 		return response()->json(request()->all());
 	}

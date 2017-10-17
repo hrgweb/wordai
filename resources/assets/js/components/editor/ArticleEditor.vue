@@ -72,6 +72,7 @@
                 <power-editor
                     :article="article"
                     :inputs="input"
+                    :tableType="tableType"
                     v-if="pEditorAccess"
                     @isPowerEditorDismiss="dismissPowerEditor">
                 </power-editor>
@@ -169,7 +170,7 @@
     import DisapproveArticle from './../admin/DisapproveArticle.vue';
 
 	export default {
-		props: ['article', 'peditoraccess'],
+		props: ['article', 'tableType', 'peditoraccess'],
 		components: { PowerEditor, CopyscapeResult, TextgearResult, DisapproveArticle },
 		mixins: [ CrudMixin, ArticleMixin ],
 		data() {
@@ -334,6 +335,15 @@
 
 					if (data.isSuccess) {
                         this.newArticle['isProcess'] = 0; // info change to alert-danger
+
+                        // successfully updated
+                        let articleTitle = this.article.doc_title;
+                        new Noty({
+                            type: 'info',
+                            text: `<b>${articleTitle}</b> article successfully updated.`,
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
 
                         data.result['isProcess'] = 0;
 						this.$emit('isUpdated', data.result);
