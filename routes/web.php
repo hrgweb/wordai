@@ -53,6 +53,7 @@ Route::prefix('words')->group(function() {
 	Route::get('domainChange', 'WordsController@domainChange');
     Route::get('unprocessArticles', 'WordsController@unprocessArticles');
 	Route::get('getKeywordsAssociatedByDomain', 'WordsController@getKeywordsAssociatedByDomain');
+    Route::get('generateFullArticle', 'WordsController@generateFullArticle');
 	Route::post('/', 'WordsController@store');
 	Route::post('generateArticle', 'WordsController@generateArticle');
 	Route::post('generateParagraph', 'WordsController@generateParagraph');

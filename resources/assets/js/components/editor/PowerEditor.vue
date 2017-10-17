@@ -135,9 +135,11 @@
                         this.isLoading = false;
                         this.$refs.changesBtn.disabled = false;
 
-                        if (data) {
+                        if (data.result) {
+                            data.result['spin'] = data.spun;
+
                             this.$emit('isPowerEditorDismiss');  // close the power editor component
-                            ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
+                            ArticleBus.$emit('editorUpdatedSpintaxCopy', data.result);
 
                             // successfully updated
                             new Noty({

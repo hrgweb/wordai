@@ -34760,9 +34760,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.isLoading = false;
                 _this.$refs.changesBtn.disabled = false;
 
-                if (data) {
+                if (data.result) {
+                    data.result['spin'] = data.spun;
+
                     _this.$emit('isPowerEditorDismiss'); // close the power editor component
-                    ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
+                    ArticleBus.$emit('editorUpdatedSpintaxCopy', data.result);
 
                     // successfully updated
                     new Noty({

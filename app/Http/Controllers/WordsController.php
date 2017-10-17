@@ -369,6 +369,7 @@ class WordsController extends Controller
         // return request()->all();
         // return $spintax;
 
+        // update words
         // DB::table('words')->where('id', request('word_id'))->update(['spintax_copy' => $spintax, 'isEditorUpdateSC' => 1]);
 		Word::where('id', request('id'))->update([
             'spintax_copy' => $spintax,
@@ -378,7 +379,10 @@ class WordsController extends Controller
             'isEditorUpdateSC' => 1
         ]);
 
-		return response()->json(request()->all());
+        // generate spun article
+        $spun = $this->spin->process($spintax);
+
+		return response()->json(['result' => request()->all(), 'spun' => $spun]);
 	}
 
 	public function updateCsCheckHitMax() {
