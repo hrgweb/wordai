@@ -99,7 +99,7 @@
                 let counter = 0;
 
                 for (var i = 0; i < finds.length; i++) {
-                    if (article.indexOf(finds[i]) >= 0) {
+                    if (article.indexOf(finds[i]) !== -1) {
                         article = article.replace(finds[i], vars[i]);
                         counter++;
                     }
@@ -128,7 +128,7 @@
                 this.newArticle['spintax'] = this.replaceVarsWithData(this.newArticle.spintax, vars);
 
                 // check if has replace value from vars
-                // if (this.hasReplaceVars) {
+                if (this.hasReplaceVars) {
                     axios.patch('/words/updateSpintaxArticle', this.newArticle).then(response => {
                         let data = response.data;
 
@@ -151,14 +151,17 @@
                             }).show();
                         }
                     });
-                /*} else {
+                } else {
+                    this.isLoading = false;
+                    this.$refs.changesBtn.disabled = false;
+
                     new Noty({
                         type: 'error',
                         text: `Nothing replace can't find placeholder. Please update yor article and add placeholder to change.`,
                         layout: 'bottomLeft',
                         timeout: 5000
                     }).show();
-                }*/
+                }
 			}
 		}
 	}
