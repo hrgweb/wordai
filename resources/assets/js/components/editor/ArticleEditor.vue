@@ -455,15 +455,17 @@
 
                     if (data) {
                         this.$emit('isDismiss', {
-                            article: $('div.note-editable').html(),
+                            // article: $('div.note-editable').html(),
+                            article: $('div.Process__article').find('div.note-editable').html(),
                             times: data
                         });
                     }
                 });
             },
 
-            dismissPowerEditor() {
+            dismissPowerEditor(data) {
                 this.pEditorAccess = false;
+                this.newArticle = data;
             },
 
             closeTextGear() {

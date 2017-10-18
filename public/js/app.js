@@ -34072,14 +34072,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
                 if (data) {
                     _this7.$emit('isDismiss', {
-                        article: $('div.note-editable').html(),
+                        // article: $('div.note-editable').html(),
+                        article: $('div.Process__article').find('div.note-editable').html(),
                         times: data
                     });
                 }
             });
         },
-        dismissPowerEditor: function dismissPowerEditor() {
+        dismissPowerEditor: function dismissPowerEditor(data) {
             this.pEditorAccess = false;
+            this.newArticle = data;
         },
         closeTextGear: function closeTextGear() {
             this.isGrammarTrue = false;
@@ -34763,7 +34765,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 if (data.result) {
                     data.result['spin'] = data.spun;
 
-                    _this.$emit('isPowerEditorDismiss'); // close the power editor component
+                    $('div.Process__article').find('div.note-editable').html(data.spun); // update spun
+                    _this.$emit('isPowerEditorDismiss', data.result); // close the power editor component
                     ArticleBus.$emit('editorUpdatedSpintaxCopy', data.result);
 
                     // successfully updated

@@ -138,7 +138,8 @@
                         if (data.result) {
                             data.result['spin'] = data.spun;
 
-                            this.$emit('isPowerEditorDismiss');  // close the power editor component
+                            $('div.Process__article').find('div.note-editable').html(data.spun); // update spun
+                            this.$emit('isPowerEditorDismiss', data.result);  // close the power editor component
                             ArticleBus.$emit('editorUpdatedSpintaxCopy', data.result);
 
                             // successfully updated
