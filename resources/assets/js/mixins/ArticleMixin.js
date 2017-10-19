@@ -238,7 +238,7 @@ export const ArticleMixin = {
 					this.copyScapeSetup(url, this.spin);
 					break;
 				case 'edit-article':
-					this.spin['article'] = $('div.note-editable').text();
+					this.spin['article'] = $('div.Process__article').find('div.note-editable').text();
 					this.copyScapeSetup(url, this.spin);
 					break;
 			}
