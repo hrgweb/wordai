@@ -22,6 +22,7 @@ class Word extends Model
     	'protected',
     	'isUserEdit',
     	'isEditorEdit',
+        'isProcess',
     	'synonym',
         'citation',
         'isArticleApprove',

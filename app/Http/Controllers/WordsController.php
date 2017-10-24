@@ -128,13 +128,16 @@ class WordsController extends Controller
             return response()->json(['isError' => true, 'errors' => $validator->errors()]);
         }
 
+        // add isProcess to request
+        $request['isProcess'] = 1;
+
         // if validation success, generate spintax
         $spintax = $this->generateSpintax($request->all(), $request->article);
         $spintax = json_decode($spintax);
 
         if (strtolower($spintax->status) === 'success') {
             $request['spintax'] = $spintax->text;
-            $result = $this->postSpinTax();     // post article
+            $result = $this->postSpinTax(request()->all());     // post article
 
             return response()->json(['isError' => false, 'spintaxStatus' => true, 'result' => $result]);
 
@@ -186,9 +189,9 @@ class WordsController extends Controller
 		return $this->generateSpintaxParagraph(request()->all(), request('paragraph'));
 	}
 
-	public function postSpinTax()
+	public function postSpinTax($request)
 	{
-		$result = auth()->user()->words()->create(request()->all());
+		$result = auth()->user()->words()->create($request);
 
 		return $result;
 	}
