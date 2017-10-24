@@ -128,15 +128,15 @@ class WordsController extends Controller
             return response()->json(['isError' => true, 'errors' => $validator->errors()]);
         }
 
-        // add isProcess to request
-        $request['isProcess'] = 1;
-
         // if validation success, generate spintax
         $spintax = $this->generateSpintax($request->all(), $request->article);
         $spintax = json_decode($spintax);
 
         if (strtolower($spintax->status) === 'success') {
-            $request['spintax'] = $spintax->text;
+            $request['spintax'] = $spintax->text;  // spintax result
+            $request['isProcess'] = 1; // add isProcess to request
+            $request['spin'] = $this->spin->process($spintax->text); // spin result
+
             $result = $this->postSpinTax(request()->all());     // post article
 
             return response()->json(['isError' => false, 'spintaxStatus' => true, 'result' => $result]);
