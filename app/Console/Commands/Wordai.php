@@ -48,7 +48,7 @@ class Wordai extends Command
     public function handle()
     {
 
-    	$this->process_api();
+    	// $this->process_api();
     }
 
     /**
