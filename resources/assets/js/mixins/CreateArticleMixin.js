@@ -52,7 +52,7 @@ export const CreateArticleMixin = {
             ) {
                 this.isLoading = true;
                 this.isValidationFail = false;
-                // this.$refs.spinButton.disabled = true;
+                this.$refs.spinButton.disabled = true;
 
                 let keywords = this.wordaiBus.keywords;
                 let keyword = this.spin.keyword;
@@ -69,30 +69,37 @@ export const CreateArticleMixin = {
                         this.isDomainNotSet = false;
                         this.$refs.spinButton.disabled = false;
 
-                        /*if (data.isError) { // validation fails
+                        if (data.isError) { // validation fails
                             this.isValidationFail = true;
                             this.errorType = 1;
                             this.errors = data.errors;
                         } else { // validation success
                             this.isValidationFail = false;
 
-                            // notify user article posted successfully
-                            let articleTitle = this.spin.doc_title;
-                            new Noty({
-                                type: 'success',
-                                text: `<b>${articleTitle}</b> article successfully saved.`,
-                                layout: 'bottomLeft',
-                                timeout: 5000
-                            }).show();
+                            if (data.spintaxStatus) {
+                                this.isValidationFail = false;
 
-                            // reset spin values
-                            this.resetInputFields();
+                                // notify user article posted successfully
+                                let articleTitle = this.spin.doc_title;
+                                new Noty({
+                                    type: 'success',
+                                    text: `<b>${articleTitle}</b> article successfully saved.`,
+                                    layout: 'bottomLeft',
+                                    timeout: 5000
+                                }).show();
 
-                            // animate div to top
-                            $('html, body').animate({ scrollTop: 0 });
-                        }*/
+                                // reset spin values
+                                this.resetInputFields();
 
-                        console.log(data)
+                                // animate div to top
+                                $('html, body').animate({ scrollTop: 0 });
+
+                            } else { // check if spintax is error
+                                this.isValidationFail = true;
+                                this.errorType = 0;
+                                this.errors = data.result.error;
+                            }
+                        }
                     });
                 } else {
                     let msg = `
@@ -104,6 +111,7 @@ export const CreateArticleMixin = {
                     `;
 
                     this.isLoading = false;
+                    this.$refs.spinButton.disabled = false;
                     this.showNotificationKeywordNotExist('error', msg);
                     this.wordaiBus.isKeywordExist = true;
 

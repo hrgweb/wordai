@@ -136,10 +136,10 @@ class WordsController extends Controller
             $request['spintax'] = $spintax->text;
             $result = $this->postSpinTax();     // post article
 
-            return response()->json(['isError' => false, 'result' => $result]);
+            return response()->json(['isError' => false, 'spintaxStatus' => true, 'result' => $result]);
 
         } else {
-            return response()->json(['isError' => true, 'result' => json_encode($spintax)]);
+            return response()->json(['isError' => false, 'spintaxStatus' => false, 'result' => $spintax]);
         }
 
         // return response()->json(['isError' => false, 'result' => $result]);

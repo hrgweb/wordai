@@ -17685,7 +17685,7 @@ var CreateArticleMixin = {
             if (this.spin.domain_id > 0 && this.spin.article_type_id != 'select') {
                 this.isLoading = true;
                 this.isValidationFail = false;
-                // this.$refs.spinButton.disabled = true;
+                this.$refs.spinButton.disabled = true;
 
                 var keywords = this.wordaiBus.keywords;
                 var keyword = this.spin.keyword;
@@ -17702,32 +17702,45 @@ var CreateArticleMixin = {
                         _this.isDomainNotSet = false;
                         _this.$refs.spinButton.disabled = false;
 
-                        /*if (data.isError) { // validation fails
-                            this.isValidationFail = true;
-                            this.errorType = 1;
-                            this.errors = data.errors;
-                        } else { // validation success
-                            this.isValidationFail = false;
-                              // notify user article posted successfully
-                            let articleTitle = this.spin.doc_title;
-                            new Noty({
-                                type: 'success',
-                                text: `<b>${articleTitle}</b> article successfully saved.`,
-                                layout: 'bottomLeft',
-                                timeout: 5000
-                            }).show();
-                              // reset spin values
-                            this.resetInputFields();
-                              // animate div to top
-                            $('html, body').animate({ scrollTop: 0 });
-                        }*/
+                        if (data.isError) {
+                            // validation fails
+                            _this.isValidationFail = true;
+                            _this.errorType = 1;
+                            _this.errors = data.errors;
+                        } else {
+                            // validation success
+                            _this.isValidationFail = false;
 
-                        console.log(data);
+                            if (data.spintaxStatus) {
+                                _this.isValidationFail = false;
+
+                                // notify user article posted successfully
+                                var articleTitle = _this.spin.doc_title;
+                                new Noty({
+                                    type: 'success',
+                                    text: '<b>' + articleTitle + '</b> article successfully saved.',
+                                    layout: 'bottomLeft',
+                                    timeout: 5000
+                                }).show();
+
+                                // reset spin values
+                                _this.resetInputFields();
+
+                                // animate div to top
+                                $('html, body').animate({ scrollTop: 0 });
+                            } else {
+                                // check if spintax is error
+                                _this.isValidationFail = true;
+                                _this.errorType = 0;
+                                _this.errors = data.result.error;
+                            }
+                        }
                     });
                 } else {
                     var msg = '\n                        <h4>Possible reason for error</h4>\n                        <ul>\n                            <li>Make sure keyword is not empty.</li>\n                            <li>Make sure keyword must unique and not use by the domain selected.</li>\n                        </ul>\n                    ';
 
                     this.isLoading = false;
+                    this.$refs.spinButton.disabled = false;
                     this.showNotificationKeywordNotExist('error', msg);
                     this.wordaiBus.isKeywordExist = true;
 
