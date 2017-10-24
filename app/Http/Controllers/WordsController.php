@@ -37,20 +37,11 @@ class WordsController extends Controller
 
 		$word = $this->word;
 
-		$request['keyword'] = $word->remove_underline_and_spaces_for_terms(request('keyword'));
-		$request['lsi_terms'] = $word->remove_underline_and_spaces_for_terms(request('lsi_terms'));
-		$request['domain_protected'] = $word->remove_underline_and_spaces_for_terms(request('domain_protected'));
-		$request['protected'] = $word->remove_underline_and_spaces_for_terms(request('protected'));
-
-		$terms_protected =  $request['keyword'] . ',' . $request['lsi_terms'] . ',' . $request['domain_protected'] . ',' . $request['protected'];
-		$terms_protected = $word->remove_underline_and_spaces_for_terms($terms_protected);
-
 		// api - vars
-		// $text = stripslashes($request['article']);
+		$text = $articleOrParagraph;
 		$quality = 100;
-		$email = 'accounting@connexionsolutions.com';
-		$pass = 'privape23';
-		$protected = $request['protected'];
+        $email = 'accounting@connexionsolutions.com';
+        $pass = 'privape23';
 		$synonyms = $request['synonym'];
 
 		$quality = 'readable';
@@ -60,14 +51,36 @@ class WordsController extends Controller
 		$title = 'off';
 		$nooriginal = 'on';
 
+        // default for db values
+        $company = '%company%';
+        $city = '%city%';
+        $state = '%state%';
+
+        $protected = strlen($request['keyword']) > 0 ? $request['keyword'] . ', ' : '';                         // keyword
+        $protected .= strlen($request['lsi_terms']) > 0 ? $request['lsi_terms'] . ', ' : '';                    // lsi tems
+        $protected .= strlen($request['domain_protected']) > 0 ? $request['domain_protected'] . ', ' : '';      // domain_protected
+        $protected .= strlen($request['protected']) > 0 ? $request['protected'] : '';                           // protected
+        $protected .= $protected . ',' . $company . ',' . $city . ',' . $state;
+        $protected = $this->word->remove_underline_and_spaces_for_terms($protected);
+        $synonyms = $request['synonym'];
+
+        // OLD CODE
+        // $request['keyword'] = $word->remove_underline_and_spaces_for_terms(request('keyword'));
+        // $request['lsi_terms'] = $word->remove_underline_and_spaces_for_terms(request('lsi_terms'));
+        // $request['domain_protected'] = $word->remove_underline_and_spaces_for_terms(request('domain_protected'));
+        // $request['protected'] = $word->remove_underline_and_spaces_for_terms(request('protected'));
+
+        // $terms_protected =  $request['keyword'] . ',' . $request['lsi_terms'] . ',' . $request['domain_protected'] . ',' . $request['protected'];
+        // $terms_protected = $word->remove_underline_and_spaces_for_terms($terms_protected);
+
 		// $paragraphs = $word->split_article_into_paragraph($request->article);
 
 		$result = $this->api(
-			stripslashes($articleOrParagraph),
+			$text,
 			$quality,
 			$email,
 			$pass,
-			$terms_protected,
+			$protected,
 			$synonyms,
 			$nonested,
 			$sentence,
@@ -115,11 +128,21 @@ class WordsController extends Controller
             return response()->json(['isError' => true, 'errors' => $validator->errors()]);
         }
 
-        // if validation success the post article
-        $result = $this->postSpinTax();
+        // if validation success, generate spintax
+        $spintax = $this->generateSpintax($request->all(), $request->article);
+        $spintax = json_decode($spintax);
 
-        return response()->json(['isError' => false, 'result' => $result]);
-        // return $this->generateSpintax($request->all(), $request->article);
+        if (strtolower($spintax->status) === 'success') {
+            $request['spintax'] = $spintax->text;
+            $result = $this->postSpinTax();     // post article
+
+            return response()->json(['isError' => false, 'result' => $result]);
+
+        } else {
+            return response()->json(['isError' => true, 'result' => json_encode($spintax)]);
+        }
+
+        // return response()->json(['isError' => false, 'result' => $result]);
 	}
 
     public function saveAndProcessNow(Request $request) {

@@ -17702,30 +17702,27 @@ var CreateArticleMixin = {
                         _this.isDomainNotSet = false;
                         _this.$refs.spinButton.disabled = false;
 
-                        if (data.isError) {
-                            // validation fails
-                            _this.isValidationFail = true;
-                            _this.errorType = 1;
-                            _this.errors = data.errors;
-                        } else {
-                            // validation success
-                            _this.isValidationFail = false;
-
-                            // notify user article posted successfully
-                            var articleTitle = _this.spin.doc_title;
+                        /*if (data.isError) { // validation fails
+                            this.isValidationFail = true;
+                            this.errorType = 1;
+                            this.errors = data.errors;
+                        } else { // validation success
+                            this.isValidationFail = false;
+                              // notify user article posted successfully
+                            let articleTitle = this.spin.doc_title;
                             new Noty({
                                 type: 'success',
-                                text: '<b>' + articleTitle + '</b> article successfully saved.',
+                                text: `<b>${articleTitle}</b> article successfully saved.`,
                                 layout: 'bottomLeft',
                                 timeout: 5000
                             }).show();
-
-                            // reset spin values
-                            _this.resetInputFields();
-
-                            // animate div to top
+                              // reset spin values
+                            this.resetInputFields();
+                              // animate div to top
                             $('html, body').animate({ scrollTop: 0 });
-                        }
+                        }*/
+
+                        console.log(data);
                     });
                 } else {
                     var msg = '\n                        <h4>Possible reason for error</h4>\n                        <ul>\n                            <li>Make sure keyword is not empty.</li>\n                            <li>Make sure keyword must unique and not use by the domain selected.</li>\n                        </ul>\n                    ';

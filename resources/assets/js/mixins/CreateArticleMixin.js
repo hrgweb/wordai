@@ -69,7 +69,7 @@ export const CreateArticleMixin = {
                         this.isDomainNotSet = false;
                         this.$refs.spinButton.disabled = false;
 
-                        if (data.isError) { // validation fails
+                        /*if (data.isError) { // validation fails
                             this.isValidationFail = true;
                             this.errorType = 1;
                             this.errors = data.errors;
@@ -90,7 +90,9 @@ export const CreateArticleMixin = {
 
                             // animate div to top
                             $('html, body').animate({ scrollTop: 0 });
-                        }
+                        }*/
+
+                        console.log(data)
                     });
                 } else {
                     let msg = `
