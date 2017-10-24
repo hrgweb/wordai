@@ -34,10 +34,10 @@
             </div>
 
             <!-- is spintax & spin is process -->
-            <div id="info" class="alert" :class="isSpintaxAndSpinUpdated">
+            <!-- <div id="info" class="alert" :class="isSpintaxAndSpinUpdated">
                 <p class="h4" v-if="article.isProcess === 0">Spintax and Process Article is not updated yet. Wait for a few minutes and reload the page.</p>
                 <p class="h4" v-else>Spintax and Process Article is now up to date.</p>
-            </div>
+            </div> -->
 
             <!-- spintax result -->
             <div class="Spintax__result" v-if="peditoraccess">
@@ -550,6 +550,10 @@
                             layout: 'bottomLeft',
                             timeout: 5000
                         }).show();
+
+                        // reload the page
+                        window.setTimeout(() => window.location.href = '/editor', 3000);
+
 
                         // this.$emit('afterWordai', data.result);
 

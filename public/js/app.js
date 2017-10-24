@@ -34180,6 +34180,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         timeout: 5000
                     }).show();
 
+                    // reload the page
+                    window.setTimeout(function () {
+                        return window.location.href = '/editor';
+                    }, 3000);
+
                     // this.$emit('afterWordai', data.result);
                 } else {
                     // check if spintax is error
@@ -63560,17 +63565,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "color": "#940a0a",
       "font-size": ".9em"
     }
-  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br')]), _vm._v(" "), _c('div', {
-    staticClass: "alert",
-    class: _vm.isSpintaxAndSpinUpdated,
-    attrs: {
-      "id": "info"
-    }
-  }, [(_vm.article.isProcess === 0) ? _c('p', {
-    staticClass: "h4"
-  }, [_vm._v("Spintax and Process Article is not updated yet. Wait for a few minutes and reload the page.")]) : _c('p', {
-    staticClass: "h4"
-  }, [_vm._v("Spintax and Process Article is now up to date.")])]), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br')]), _vm._v(" "), (_vm.peditoraccess) ? _c('div', {
     staticClass: "Spintax__result"
   }, [_c('h3', [_vm._v("Spintax Result")]), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "find row"
