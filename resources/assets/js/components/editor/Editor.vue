@@ -16,7 +16,8 @@
 			:peditoraccess="hasPeditorAccess"
 			v-if="isEdit"
 			@isUpdated="updateRecord"
-			@isDismiss="dismissUpdate">
+			@isDismiss="dismissUpdate"
+            @afterWordai="afterWordai">
 		</article-editor>
 
 		<div class="Editor__table" v-show="! isEdit">
@@ -125,6 +126,14 @@
                 this.listArticleToPublish = data.filter(item => {
                     return item.isEditorEdit === 1;
                 });
+            },
+
+            afterWordai(payload) {
+                if (payload) {
+                    if (this.tableType === 'article-to-edit') {
+                        Vue.set(this.listToEdit, this.index, payload);
+                    }
+                }
             }
 		}
 	}

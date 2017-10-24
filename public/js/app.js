@@ -5569,6 +5569,7 @@ var ArticleMixin = {
 
 				for (var j = 0; j < firstArr.length; j++) {
 					secondArr = this.escapeRegExp(firstArr[j]).trim();
+					secondArr = this.escapeRegExpWithData(secondArr, '');
 
 					// if second array value is not empty
 					if (secondArr.length > 3 && /[^\d]/.test(secondArr) && $.inArray(secondArr, finds) === -1) {
@@ -5582,11 +5583,14 @@ var ArticleMixin = {
 		escapeRegExp: function escapeRegExp(str) {
 			return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 		},
+		escapeRegExpWithData: function escapeRegExpWithData(str, replace) {
+			return str.replace(/[\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, replace);
+		},
 		setMarkTag: function setMarkTag(article, find) {
 			return article.replace(RegExp(find, 'gi'), '<mark>' + find + '</mark>');
 		},
-		replaceSearchSenteceByMarkTag: function replaceSearchSenteceByMarkTag(finds) {
-			var article = $('div.note-editable').text();
+		replaceSearchSenteceByMarkTag: function replaceSearchSenteceByMarkTag(article, finds) {
+			// let article = $('div.note-editable').text();
 
 			for (var i = 0; i < finds.length; i++) {
 				find = this.escapeRegExp(finds[i]);
@@ -5595,12 +5599,12 @@ var ArticleMixin = {
 
 			return article;
 		},
-		prependMarkTagToSearchSendtenceAndHighlight: function prependMarkTagToSearchSendtenceAndHighlight(finds) {
+		prependMarkTagToSearchSendtenceAndHighlight: function prependMarkTagToSearchSendtenceAndHighlight(article, finds) {
 			var find = '';
-			var article = '';
+			// let article = '';
 
 			// replace search sentence by mark tag
-			article = this.replaceSearchSenteceByMarkTag(finds);
+			article = this.replaceSearchSenteceByMarkTag(article, finds);
 
 			// highlight summernote paragraph
 			this.smArticle = article;
@@ -5658,7 +5662,7 @@ var ArticleMixin = {
 			finds = this.findDuplicateMatchOnArticle(finds, article);
 
 			// prepend mark tag to search string and highlight
-			this.prependMarkTagToSearchSendtenceAndHighlight(finds);
+			this.prependMarkTagToSearchSendtenceAndHighlight(article, finds);
 
 			// replace duplicates and color by red
 			Vue.nextTick(function () {
@@ -33788,6 +33792,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -34140,6 +34150,43 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         },
         isCancelDisapprove: function isCancelDisapprove() {
             this.showDisapprovePanel = false;
+        },
+        runWordai: function runWordai() {
+            var _this9 = this;
+
+            this.isLoading = true;
+            this.isError = false;
+            this.$refs.wordaiBtn.disabled = true;
+
+            // modify newArticle data
+            this.newArticle['article'] = $('div.Original__article').find('.note-editable').text();
+
+            axios.post('/words/runWordai', this.newArticle).then(function (response) {
+                var data = response.data;
+
+                _this9.isLoading = false;
+                _this9.isDomainNotSet = false;
+                _this9.$refs.wordaiBtn.disabled = false;
+
+                if (data.spintaxStatus) {
+                    _this9.isError = false;
+
+                    // notify user article posted successfully
+                    var articleTitle = _this9.spin.doc_title;
+                    new Noty({
+                        type: 'info',
+                        text: '<b>' + articleTitle + '</b> article successfully updated.',
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
+
+                    // this.$emit('afterWordai', data.result);
+                } else {
+                    // check if spintax is error
+                    _this9.isError = true;
+                    _this9.error = data.result.error;
+                }
+            });
         }
     }
 });
@@ -34506,6 +34553,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -34582,6 +34630,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.listArticleToPublish = data.filter(function (item) {
                 return item.isEditorEdit === 1;
             });
+        },
+        afterWordai: function afterWordai(payload) {
+            if (payload) {
+                if (this.tableType === 'article-to-edit') {
+                    Vue.set(this.listToEdit, this.index, payload);
+                }
+            }
         }
     }
 });
@@ -63489,6 +63544,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "id": "orig-article-editor"
     }
   }), _vm._v(" "), _c('button', {
+    ref: "wordaiBtn",
     staticClass: "btn btn-success",
     attrs: {
       "type": "button"
@@ -63496,10 +63552,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     on: {
       "click": function($event) {
         $event.preventDefault();
-        _vm.updateOriginalArticle($event)
+        _vm.runWordai($event)
       }
     }
-  }, [_vm._v("PROCESS")])]), _vm._v(" "), _c('div', {
+  }, [_vm._v("Run WordAI")]), _vm._v(" "), _vm._v("\n                   \n                "), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
+    staticStyle: {
+      "color": "#940a0a",
+      "font-size": ".9em"
+    }
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br')]), _vm._v(" "), _c('div', {
     staticClass: "alert",
     class: _vm.isSpintaxAndSpinUpdated,
     attrs: {
@@ -67785,7 +67846,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     },
     on: {
       "isUpdated": _vm.updateRecord,
-      "isDismiss": _vm.dismissUpdate
+      "isDismiss": _vm.dismissUpdate,
+      "afterWordai": _vm.afterWordai
     }
   }) : _vm._e(), _vm._v(" "), _c('div', {
     directives: [{

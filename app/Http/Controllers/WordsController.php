@@ -148,6 +148,38 @@ class WordsController extends Controller
         // return response()->json(['isError' => false, 'result' => $result]);
 	}
 
+    public function runWordai(Request $request)
+    {
+        // if validation success, generate spintax
+        $spintax = $this->generateSpintax($request->all(), $request->article);
+        $spintax = json_decode($spintax);
+
+        if (strtolower($spintax->status) === 'success') {
+            $spin = $this->spin->process($spintax->text); // spin result
+
+            // update article record
+            $result = Word::where('id', request('id'))->update([
+                'article' => request('article'),
+                'spintax' => $spintax->text,
+                'spin' => $spin,
+                'isProcess' => 1
+            ]);
+
+            // update request data
+            $request['article'] = $request->article;
+            $request['spintax'] = $spintax->text;
+            $request['spin'] = $spin;
+            $request['isProcess'] = 1;
+
+            if ($result) {
+                return response()->json(['isError' => false, 'spintaxStatus' => true, 'result' => $request->all()]);
+            }
+
+        } else {
+            return response()->json(['isError' => false, 'spintaxStatus' => false, 'result' => $spintax]);
+        }
+    }
+
     public function saveAndProcessNow(Request $request) {
         $validator = Validator::make($request->all(), [
             'doc_title' => 'required',

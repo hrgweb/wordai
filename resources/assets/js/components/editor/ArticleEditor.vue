@@ -24,7 +24,13 @@
                 <h3>Original Article</h3>
                 <div id="orig-article-editor"></div>
 
-                <button type="button" class="btn btn-success" @click.prevent="updateOriginalArticle">PROCESS</button>
+                <!-- <button type="button" class="btn btn-success" @click.prevent="updateOriginalArticle">PROCESS</button> -->
+                <button type="button" class="btn btn-success" ref="wordaiBtn" @click.prevent="runWordai">Run WordAI</button>
+
+                <!-- Misc -->
+                &nbsp;&nbsp;&nbsp;
+                <span v-if="isLoading">LOADING....</span>
+                <span v-if="isError" style="color: #940a0a; font-size: .9em;">{{ error }}</span><br>
             </div>
 
             <!-- is spintax & spin is process -->
@@ -516,6 +522,42 @@
 
             isCancelDisapprove() {
                 this.showDisapprovePanel = false;
+            },
+
+            runWordai() {
+                this.isLoading = true;
+                this.isError = false;
+                this.$refs.wordaiBtn.disabled = true;
+
+                // modify newArticle data
+                this.newArticle['article'] = $('div.Original__article').find('.note-editable').text();
+
+                axios.post('/words/runWordai', this.newArticle).then(response => {
+                    let data = response.data;
+
+                    this.isLoading = false;
+                    this.isDomainNotSet = false;
+                    this.$refs.wordaiBtn.disabled = false;
+
+                    if (data.spintaxStatus) {
+                        this.isError = false;
+
+                        // notify user article posted successfully
+                        let articleTitle = this.spin.doc_title;
+                        new Noty({
+                            type: 'info',
+                            text: `<b>${articleTitle}</b> article successfully updated.`,
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+
+                        // this.$emit('afterWordai', data.result);
+
+                    } else { // check if spintax is error
+                        this.isError = true;
+                        this.error = data.result.error;
+                    }
+                });
             }
 		}
 	}

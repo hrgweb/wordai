@@ -65,6 +65,7 @@ Route::prefix('words')->group(function() {
 	Route::post('processTextGrammar', 'WordsController@processTextGrammar');
     Route::post('respinArticle', 'WordsController@respinArticle');
 	Route::post('saveAndProcessNow', 'WordsController@saveAndProcessNow');
+    Route::post('runWordai', 'WordsController@runWordai');
 	Route::patch('updateSpintaxArticle', 'WordsController@updateSpintaxArticle');
     Route::patch('updateCsCheckHitMax', 'WordsController@updateCsCheckHitMax');
     Route::patch('updateRespinCheckHitMax', 'WordsController@updateRespinCheckHitMax');

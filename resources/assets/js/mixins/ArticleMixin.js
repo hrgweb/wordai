@@ -71,6 +71,7 @@ export const ArticleMixin = {
 
 				for (let j=0; j<firstArr.length; j++) {
 					secondArr = this.escapeRegExp(firstArr[j]).trim();
+                    secondArr = this.escapeRegExpWithData(secondArr, '');
 
 					// if second array value is not empty
 					if (secondArr.length > 3 && /[^\d]/.test(secondArr) && $.inArray(secondArr, finds) === -1) {
@@ -86,12 +87,16 @@ export const ArticleMixin = {
 			return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 		},
 
+        escapeRegExpWithData(str, replace) {
+            return str.replace(/[\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, replace);
+        },
+
 		setMarkTag(article, find) {
 			return article.replace(RegExp(find, 'gi'), '<mark>' + find + '</mark>');
 		},
 
-		replaceSearchSenteceByMarkTag(finds) {
-			let article = $('div.note-editable').text();
+		replaceSearchSenteceByMarkTag(article, finds) {
+			// let article = $('div.note-editable').text();
 
 			for (let i=0; i<finds.length; i++) {
 				find = this.escapeRegExp(finds[i]);
@@ -101,12 +106,12 @@ export const ArticleMixin = {
 			return article;
 		},
 
-		prependMarkTagToSearchSendtenceAndHighlight(finds) {
+		prependMarkTagToSearchSendtenceAndHighlight(article, finds) {
 			let find = '';
-			let article = '';
+			// let article = '';
 
 			// replace search sentence by mark tag
-			article = this.replaceSearchSenteceByMarkTag(finds);
+			article = this.replaceSearchSenteceByMarkTag(article, finds);
 
 			// highlight summernote paragraph
 			this.smArticle = article;
@@ -165,7 +170,7 @@ export const ArticleMixin = {
             finds = this.findDuplicateMatchOnArticle(finds, article);
 
 			// prepend mark tag to search string and highlight
-			this.prependMarkTagToSearchSendtenceAndHighlight(finds);
+			this.prependMarkTagToSearchSendtenceAndHighlight(article, finds);
 
 			// replace duplicates and color by red
 			Vue.nextTick(() => this.colorDuplicatesInRed(finds));
