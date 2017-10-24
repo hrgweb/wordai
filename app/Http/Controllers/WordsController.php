@@ -44,7 +44,7 @@ class WordsController extends Controller
         $pass = 'privape23';
 		$synonyms = $request['synonym'];
 
-		$quality = 'Very Readable'; //'readable';
+		$quality = 'Readable'; // 'Very Readable';
 		$nonested = 'off';
 		$sentence = 'on';
 		$paragraph = 'on';
