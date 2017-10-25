@@ -51,13 +51,15 @@ export const ArticleMixin = {
 			});
 		},
 
-		splitResultBySentence(results) {
+		splitResultBySentence(csResult) {
 			let duplicates = [];
 
-			for (let i=0; i<results.length; i++) {
+			/*for (let i=0; i<results.length; i++) {
 				// duplicates.push(results[i].textsnippet.split(/(\s?)\.\.\.(\s?)/gi));
 				duplicates.push(results[i].textsnippet.match(/[^\.!\?]+/gi));
-			}
+			}*/
+
+            duplicates = csResult.alltextmatched.match(/[^\.!\?]+/gi);
 
 			return duplicates;
 		},
@@ -65,7 +67,8 @@ export const ArticleMixin = {
 		removeEmptyValueFromSentence(duplicates) {
 			let finds = [];
 
-			for (let i=0; i<duplicates.length; i++) {
+            // orig
+			/*for (let i=0; i<duplicates.length; i++) {
 				let firstArr = duplicates[i]; 	// index
 				let secondArr = []; 			//value
 
@@ -78,7 +81,18 @@ export const ArticleMixin = {
 						finds.push(secondArr);
 					}
 				}
-			}
+			}*/
+
+            // new
+            for (let i=0; i<duplicates.length; i++)  {
+                let value = duplicates[i] !== null ? duplicates[i].trim() : '';
+
+                // if second array value is not empty
+                // if (value.length > 3 && /[^\d]/.test(value) && $.inArray(value, finds) === -1) {
+                if ($.inArray(value, finds) === -1) {
+                    finds.push(value);
+                }
+            }
 
 			return finds;
 		},
@@ -88,18 +102,21 @@ export const ArticleMixin = {
 		},
 
         escapeRegExpWithData(str, replace) {
-            return str.replace(/[\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, replace);
+            return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, replace);
         },
 
 		setMarkTag(article, find) {
-			return article.replace(RegExp(find, 'gi'), '<mark>' + find + '</mark>');
+            // return article.replace(RegExp(find, 'gi'), '<mark>' + find + '</mark>');
+			return article.replace(find, '<mark>' + find + '</mark>');
 		},
 
 		replaceSearchSenteceByMarkTag(article, finds) {
 			// let article = $('div.note-editable').text();
 
 			for (let i=0; i<finds.length; i++) {
-				find = this.escapeRegExp(finds[i]);
+                // find = this.escapeRegExp(finds[i]);
+                find = finds[i];
+				// find = this.escapeRegExpWithData(find, '');
 				article = this.setMarkTag(article, find);
 			}
 
@@ -162,12 +179,16 @@ export const ArticleMixin = {
 			// split to sentence
 			duplicates = this.splitResultBySentence(results);
 
+            console.log(duplicates)
+
 			// remove empty value from duplicates
 			finds = this.removeEmptyValueFromSentence(duplicates);
 
+            console.log(finds)
+
             // find all match on article base on result of finds var
             let article = $('div.Process__article').find('div.note-editable').text();
-            finds = this.findDuplicateMatchOnArticle(finds, article);
+            // finds = this.findDuplicateMatchOnArticle(finds, article);
 
 			// prepend mark tag to search string and highlight
 			this.prependMarkTagToSearchSendtenceAndHighlight(article, finds);
@@ -214,7 +235,8 @@ export const ArticleMixin = {
 					// find all duplicate occurences
                     if (data.hasOwnProperty('result')) {
                         this.isCsHasResult = true;
-                        Vue.nextTick(() => this.copyScapeData(data.result));
+                        // Vue.nextTick(() => this.copyScapeData(data.result));
+                        Vue.nextTick(() => this.copyScapeData(data));
                     } else {
                         this.isCsHasResult = false;
                     }

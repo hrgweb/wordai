@@ -5550,31 +5550,43 @@ var ArticleMixin = {
 				}
 			});
 		},
-		splitResultBySentence: function splitResultBySentence(results) {
+		splitResultBySentence: function splitResultBySentence(csResult) {
 			var duplicates = [];
 
-			for (var i = 0; i < results.length; i++) {
-				// duplicates.push(results[i].textsnippet.split(/(\s?)\.\.\.(\s?)/gi));
-				duplicates.push(results[i].textsnippet.match(/[^\.!\?]+/gi));
-			}
+			/*for (let i=0; i<results.length; i++) {
+   	// duplicates.push(results[i].textsnippet.split(/(\s?)\.\.\.(\s?)/gi));
+   	duplicates.push(results[i].textsnippet.match(/[^\.!\?]+/gi));
+   }*/
+
+			duplicates = csResult.alltextmatched.match(/[^\.!\?]+/gi);
 
 			return duplicates;
 		},
 		removeEmptyValueFromSentence: function removeEmptyValueFromSentence(duplicates) {
 			var finds = [];
 
+			// orig
+			/*for (let i=0; i<duplicates.length; i++) {
+   	let firstArr = duplicates[i]; 	// index
+   	let secondArr = []; 			//value
+   			for (let j=0; j<firstArr.length; j++) {
+   		secondArr = this.escapeRegExp(firstArr[j]).trim();
+                    secondArr = this.escapeRegExpWithData(secondArr, '');
+   				// if second array value is not empty
+   		if (secondArr.length > 3 && /[^\d]/.test(secondArr) && $.inArray(secondArr, finds) === -1) {
+   			finds.push(secondArr);
+   		}
+   	}
+   }*/
+
+			// new
 			for (var i = 0; i < duplicates.length; i++) {
-				var firstArr = duplicates[i]; // index
-				var secondArr = []; //value
+				var value = duplicates[i] !== null ? duplicates[i].trim() : '';
 
-				for (var j = 0; j < firstArr.length; j++) {
-					secondArr = this.escapeRegExp(firstArr[j]).trim();
-					secondArr = this.escapeRegExpWithData(secondArr, '');
-
-					// if second array value is not empty
-					if (secondArr.length > 3 && /[^\d]/.test(secondArr) && $.inArray(secondArr, finds) === -1) {
-						finds.push(secondArr);
-					}
+				// if second array value is not empty
+				// if (value.length > 3 && /[^\d]/.test(value) && $.inArray(value, finds) === -1) {
+				if ($.inArray(value, finds) === -1) {
+					finds.push(value);
 				}
 			}
 
@@ -5584,16 +5596,19 @@ var ArticleMixin = {
 			return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 		},
 		escapeRegExpWithData: function escapeRegExpWithData(str, replace) {
-			return str.replace(/[\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, replace);
+			return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, replace);
 		},
 		setMarkTag: function setMarkTag(article, find) {
-			return article.replace(RegExp(find, 'gi'), '<mark>' + find + '</mark>');
+			// return article.replace(RegExp(find, 'gi'), '<mark>' + find + '</mark>');
+			return article.replace(find, '<mark>' + find + '</mark>');
 		},
 		replaceSearchSenteceByMarkTag: function replaceSearchSenteceByMarkTag(article, finds) {
 			// let article = $('div.note-editable').text();
 
 			for (var i = 0; i < finds.length; i++) {
-				find = this.escapeRegExp(finds[i]);
+				// find = this.escapeRegExp(finds[i]);
+				find = finds[i];
+				// find = this.escapeRegExpWithData(find, '');
 				article = this.setMarkTag(article, find);
 			}
 
@@ -5654,12 +5669,16 @@ var ArticleMixin = {
 			// split to sentence
 			duplicates = this.splitResultBySentence(results);
 
+			console.log(duplicates);
+
 			// remove empty value from duplicates
 			finds = this.removeEmptyValueFromSentence(duplicates);
 
+			console.log(finds);
+
 			// find all match on article base on result of finds var
 			var article = $('div.Process__article').find('div.note-editable').text();
-			finds = this.findDuplicateMatchOnArticle(finds, article);
+			// finds = this.findDuplicateMatchOnArticle(finds, article);
 
 			// prepend mark tag to search string and highlight
 			this.prependMarkTagToSearchSendtenceAndHighlight(article, finds);
@@ -5709,8 +5728,9 @@ var ArticleMixin = {
 					// find all duplicate occurences
 					if (data.hasOwnProperty('result')) {
 						_this3.isCsHasResult = true;
+						// Vue.nextTick(() => this.copyScapeData(data.result));
 						Vue.nextTick(function () {
-							return _this3.copyScapeData(data.result);
+							return _this3.copyScapeData(data);
 						});
 					} else {
 						_this3.isCsHasResult = false;
