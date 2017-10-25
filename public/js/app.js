@@ -5667,12 +5667,12 @@ var ArticleMixin = {
 			// split to sentence
 			duplicates = this.splitResultBySentence(results);
 
-			console.log(duplicates);
+			// console.log(duplicates)
 
 			// remove empty value from duplicates
 			finds = this.removeEmptyValueFromSentence(duplicates);
 
-			console.log(finds);
+			// console.log(finds)
 
 			// find all match on article base on result of finds var
 			var article = $('div.Process__article').find('div.note-editable').text();
