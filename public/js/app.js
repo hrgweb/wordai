@@ -5660,8 +5660,6 @@ var ArticleMixin = {
 			return results;
 		},
 		copyScapeData: function copyScapeData(data) {
-			var _this2 = this;
-
 			var results = data;
 			var duplicates = [];
 			var finds = [];
@@ -5684,15 +5682,13 @@ var ArticleMixin = {
 			this.prependMarkTagToSearchSendtenceAndHighlight(article, finds);
 
 			// replace duplicates and color by red
-			Vue.nextTick(function () {
-				return _this2.colorDuplicatesInRed(finds);
-			});
+			// Vue.nextTick(() => this.colorDuplicatesInRed(finds));
 
 			// store as result in vue data
 			this.duplicates = finds;
 		},
 		copyScapeSetup: function copyScapeSetup(url, data) {
-			var _this3 = this;
+			var _this2 = this;
 
 			this.isLoading = true;
 			this.isError = false;
@@ -5711,39 +5707,40 @@ var ArticleMixin = {
 				var data = response.data;
 
 				// api result response success
-				_this3.isLoading = false;
-				_this3.copyscape = data;
-				_this3.responseSuccess = true;
-				_this3.$refs.csButton.disabled = false;
+				_this2.isLoading = false;
+				_this2.copyscape = data;
+				_this2.responseSuccess = true;
+				_this2.$refs.csButton.disabled = false;
 
 				// find all duplicate occurences
 				// this.copyScapeData(data.result);
 
 				// check if api response is fail
 				if (data.error) {
-					_this3.error = data.error;
-					_this3.isError = true;
-					_this3.responseSuccess = false;
+					_this2.error = data.error;
+					_this2.isError = true;
+					_this2.responseSuccess = false;
 				} else {
 					// find all duplicate occurences
 					if (data.hasOwnProperty('result')) {
-						_this3.isCsHasResult = true;
+						_this2.isCsHasResult = true;
 						// Vue.nextTick(() => this.copyScapeData(data.result));
 						Vue.nextTick(function () {
-							return _this3.copyScapeData(data);
+							return _this2.copyScapeData(data);
 						});
 					} else {
-						_this3.isCsHasResult = false;
+						_this2.isCsHasResult = false;
 					}
 				}
 
 				// check if counter = 5
-				if (_this3.type == 'edit-article' && _this3.csCounter == 0) {
-					_this3.updateCsCheckHitMax();
+				if (_this2.type == 'edit-article' && _this2.csCounter == 0) {
+					_this2.updateCsCheckHitMax();
 				}
 			});
 		},
 		processToCopyscape: function processToCopyscape() {
+			this.duplicates = []; //  reset duplicates value
 			this.spin['type'] = this.type;
 			var url = '/words/processToCopyscape';
 
@@ -5778,7 +5775,7 @@ var ArticleMixin = {
 			}
 		},
 		processToTextGear: function processToTextGear() {
-			var _this4 = this;
+			var _this3 = this;
 
 			this.isLoading = true;
 			this.isError = false;
@@ -5791,10 +5788,10 @@ var ArticleMixin = {
 
 				if (data.result) {
 					// api result response success
-					_this4.isLoading = false;
-					_this4.textgear = data;
-					_this4.isGrammarTrue = true;
-					_this4.$refs.tgButton.disabled = false;
+					_this3.isLoading = false;
+					_this3.textgear = data;
+					_this3.isGrammarTrue = true;
+					_this3.$refs.tgButton.disabled = false;
 
 					// add span tag on a bad words result in check grammar
 					var article = payload.text;
@@ -5833,14 +5830,15 @@ var ArticleMixin = {
 					// console.log(result);
 				} else {
 					// check if api response is fail
-					_this4.error = data.error;
-					_this4.isError = true;
-					_this4.isGrammarTrue = false;
+					_this3.error = data.error;
+					_this3.isError = true;
+					_this3.isGrammarTrue = false;
 				}
 			});
 		},
 		updateDuplicates: function updateDuplicates(duplicates) {
 			this.articleDuplicates = duplicates;
+			// Vue.set(this.articleDuplicates, [], duplicates);
 		},
 		generateNewArticle: function generateNewArticle(article) {
 			axios.post('/words/generateFullArticle', { article: article }).then(function (response) {
@@ -5851,7 +5849,7 @@ var ArticleMixin = {
 			});
 		},
 		spinDuplicatesAndCopyscape: function spinDuplicatesAndCopyscape() {
-			var _this5 = this;
+			var _this4 = this;
 
 			this.isLoading = true;
 			this.$refs.spinAndCsButton.disabled = true;
@@ -5867,8 +5865,8 @@ var ArticleMixin = {
 			axios.post('/words', this.spin).then(function (response) {
 				var data = response.data;
 
-				_this5.isLoading = false;
-				_this5.$refs.spinAndCsButton.disabled = false;
+				_this4.isLoading = false;
+				_this4.$refs.spinAndCsButton.disabled = false;
 
 				// check if api response is success
 				if (data.status === 'Success') {
@@ -5879,12 +5877,12 @@ var ArticleMixin = {
 
 					// article is now the spintax result
 					// display finish full article
-					_this5.generateNewArticle(_this5.spin.article);
+					_this4.generateNewArticle(_this4.spin.article);
 				}
 
 				// check if api response is fail
 				if (data.status === 'Failure') {
-					_this5.error = data.error;
+					_this4.error = data.error;
 				}
 			});
 
@@ -33818,6 +33816,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -35712,9 +35711,30 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-	props: ['copy'],
+	props: ['copy', 'duplicates'],
 	mounted: function mounted() {
 		this.articleDuplicates();
 	},
@@ -40248,7 +40268,7 @@ exports.push([module.i, "\ntable td[data-v-770ade1b] { padding: .5em 1em;\n}\n.T
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.results_title[data-v-7819b81c] {\n    text-align: left;\n    background-color: #e5e5ff;\n    padding: 6px 15px;\n    margin-bottom: 20px;\n    margin-top: 0;\n    font-size: 13px;\n    border: 1px solid #CECEF0;\n}\n.Copyscape__result[data-v-7819b81c] {\n    margin-bottom: 2em;\n    background: #e5e8ea;\n    padding: .5em 1em;\n}\n", ""]);
+exports.push([module.i, "\n.results_title[data-v-7819b81c] {\n\t    text-align: left;\n\t    background-color: #e5e5ff;\n\t    padding: 6px 15px;\n\t    margin-bottom: 20px;\n\t    margin-top: 0;\n\t    font-size: 13px;\n\t    border: 1px solid #CECEF0;\n}\n.Copyscape__result[data-v-7819b81c] {\n\t    margin-bottom: 2em;\n\t    background: #e5e8ea;\n\t    padding: .5em 1em;\n}\n.cs-duplicates[data-v-7819b81c] {\n        background: #ff5b5b;\n        color: #fff;\n        margin-bottom: 5em;\n}\n.cs-duplicates h4[data-v-7819b81c] {\n        padding-top: 1em;\n        padding-left: 0.3em;\n}\nul.duplicates[data-v-7819b81c] { padding-bottom: 1em;\n}\nul.duplicates li[data-v-7819b81c] {\n        font-size: 1.1em;\n        margin-bottom: 0.5em;\n}\n", ""]);
 
 /***/ }),
 /* 270 */
@@ -63725,7 +63745,8 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }
   }) : _vm._e(), _vm._v(" "), (_vm.responseSuccess) ? _c('copyscape-result', {
     attrs: {
-      "copy": _vm.copyscape
+      "copy": _vm.copyscape,
+      "duplicates": _vm.duplicates
     },
     on: {
       "updateduplicates": _vm.updateDuplicates
@@ -66841,8 +66862,12 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   return _c('div', {
     staticClass: "Copyscape"
   }, [_c('div', {
+    staticClass: "row"
+  }, [_c('div', {
+    staticClass: "col-md-6"
+  }, [_c('div', {
     staticClass: "results_title"
-  }, [_c('b', [_vm._v(_vm._s(_vm.copy.count) + "  result")]), _vm._v("\n\t\tfound for the text you pasted  (" + _vm._s(_vm.copy.querywords) + " words).\n\t")]), _vm._v(" "), _vm._l((_vm.copy.result), function(copy) {
+  }, [_c('b', [_vm._v(_vm._s(_vm.copy.count) + "  result")]), _vm._v("\n                    found for the text you pasted  (" + _vm._s(_vm.copy.querywords) + " words).\n                ")]), _vm._v(" "), _vm._l((_vm.copy.result), function(copy) {
     return _c('div', {
       staticClass: "Copyscape__result"
     }, [_c('a', {
@@ -66851,8 +66876,20 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         "target": "_tab"
       }
     }, [_vm._v(_vm._s(copy.title))]), _vm._v(" "), _c('p', [_vm._v(_vm._s(copy.textsnippet))]), _vm._v(" "), _c('em', [_vm._v(_vm._s(copy.url))])])
-  })], 2)
-},staticRenderFns: []}
+  })], 2), _vm._v(" "), _c('div', {
+    staticClass: "cs-duplicates col-md-6"
+  }, [_c('h4', [_vm._v("\n                    Copyscape Duplicates \n                    "), _c('span', {
+    staticClass: "badge"
+  }, [_vm._v(_vm._s(_vm.duplicates.length))])]), _c('hr'), _vm._v(" "), (_vm.duplicates.length > 0) ? _c('ul', {
+    staticClass: "duplicates"
+  }, _vm._l((_vm.duplicates), function(duplicate) {
+    return _c('li', [_vm._v(_vm._s(duplicate))])
+  })) : _c('ul', {
+    staticClass: "duplicates"
+  }, [_vm._m(0)])])])])
+},staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('li', [_c('em', [_vm._v("No duplicaets found")])])
+}]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()

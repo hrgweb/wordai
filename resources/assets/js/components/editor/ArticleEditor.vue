@@ -102,6 +102,7 @@
                 <!-- copyscape -->
                 <copyscape-result
                     :copy="copyscape"
+                    :duplicates="duplicates"
                     @updateduplicates="updateDuplicates"
                     v-if="responseSuccess">
                 </copyscape-result>

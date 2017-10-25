@@ -194,10 +194,10 @@ export const ArticleMixin = {
 			this.prependMarkTagToSearchSendtenceAndHighlight(article, finds);
 
 			// replace duplicates and color by red
-			Vue.nextTick(() => this.colorDuplicatesInRed(finds));
+			// Vue.nextTick(() => this.colorDuplicatesInRed(finds));
 
 			// store as result in vue data
-			this.duplicates = finds;
+            this.duplicates = finds;
 		},
 
 		copyScapeSetup(url, data) {
@@ -250,6 +250,7 @@ export const ArticleMixin = {
 		},
 
 		processToCopyscape() {
+            this.duplicates = []; //  reset duplicates value
 			this.spin['type'] = this.type;
 			let url = '/words/processToCopyscape';
 
@@ -354,6 +355,7 @@ export const ArticleMixin = {
 
 		updateDuplicates(duplicates) {
 			this.articleDuplicates = duplicates;
+            // Vue.set(this.articleDuplicates, [], duplicates);
 		},
 
 		generateNewArticle(article) {
