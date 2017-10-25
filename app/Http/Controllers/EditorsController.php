@@ -103,7 +103,7 @@ class EditorsController extends Controller
             ])*/
             ->whereRaw('(isProcess = 0 OR isProcess = 1) AND (isEditorUpdateSC = 0 OR isEditorEdit = 0)')
             // ->orderBy('firstname')
-            ->oldest()
+            ->latest()
             ->paginate(20);
     }
 
