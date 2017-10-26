@@ -66245,7 +66245,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_c('table', {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
-    return _c('tr', [_c('td', [_vm._v(_vm._s(++index))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.firstname) + " " + _vm._s(article.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.time(article.created_at).format('ll')))]), _vm._v(" "), _c('td', [_c('button', {
+    return _c('tr', [_c('td', [_vm._v(_vm._s(++index))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.firstname) + " " + _vm._s(article.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(_vm.time(article.created_at).format('MMMM Do YYYY, h:mm:ss a')))]), _vm._v(" "), _c('td', [_c('button', {
       staticClass: "btn btn-info",
       attrs: {
         "type": "button"

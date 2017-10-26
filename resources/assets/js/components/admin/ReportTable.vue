@@ -23,7 +23,7 @@
                     <!-- <td>
                         <p>{{ (article.article.length > 100) ? article.article.substr(0, 100) + '...' : article.article }}</p>
                     </td> -->
-                    <td>{{ time(article.created_at).format('ll') }}</td>
+                    <td>{{ time(article.created_at).format('MMMM Do YYYY, h:mm:ss a') }}</td>
                     <td>
                         <button type="button" class="btn btn-info" @click="editArticle(article, index)">Edit Article</button>
                         <button type="button" class="btn btn-danger" ref="btnPublish" @click="publishArticle(article, index)">Publish</button>
