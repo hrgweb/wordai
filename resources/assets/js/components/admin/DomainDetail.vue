@@ -18,13 +18,13 @@
 			</div>
 
 			<!-- Portfolio -->
-			<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding: 0 0 2em 1em;">
+			<!-- <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" style="padding: 0 0 2em 1em;">
 				<label for="portfolio">Portfolio</label>
 				<select class="form-control" v-model="detail.domain_id">
 					<option id="domain" value="select">Select a domain</option>
 					<option id="domain" v-for="domain in domains" :value="domain.id">{{ domain.domain }}</option>
 				</select>
-			</div><br>
+			</div><br> -->
 
             <div class="wrapper-div" v-if="isDomainChange">
                 <!-- Domain Group -->

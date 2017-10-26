@@ -68252,49 +68252,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "id": "domain"
     }
-  }, [_vm._v(_vm._s(_vm.detail.domain))])])]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6",
-    staticStyle: {
-      "padding": "0 0 2em 1em"
-    }
-  }, [_c('label', {
-    attrs: {
-      "for": "portfolio"
-    }
-  }, [_vm._v("Portfolio")]), _vm._v(" "), _c('select', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.detail.domain_id),
-      expression: "detail.domain_id"
-    }],
-    staticClass: "form-control",
-    on: {
-      "change": function($event) {
-        var $$selectedVal = Array.prototype.filter.call($event.target.options, function(o) {
-          return o.selected
-        }).map(function(o) {
-          var val = "_value" in o ? o._value : o.value;
-          return val
-        });
-        _vm.detail.domain_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
-      }
-    }
-  }, [_c('option', {
-    attrs: {
-      "id": "domain",
-      "value": "select"
-    }
-  }, [_vm._v("Select a domain")]), _vm._v(" "), _vm._l((_vm.domains), function(domain) {
-    return _c('option', {
-      attrs: {
-        "id": "domain"
-      },
-      domProps: {
-        "value": domain.id
-      }
-    }, [_vm._v(_vm._s(domain.domain))])
-  })], 2)]), _c('br'), _vm._v(" "), (_vm.isDomainChange) ? _c('div', {
+  }, [_vm._v(_vm._s(_vm.detail.domain))])])]), _vm._v(" "), (_vm.isDomainChange) ? _c('div', {
     staticClass: "wrapper-div"
   }, [_c('div', {
     staticClass: "form-group"
