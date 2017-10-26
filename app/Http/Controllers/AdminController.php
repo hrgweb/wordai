@@ -195,6 +195,7 @@ class AdminController extends Controller
 
             // save new domain details
             $userList = [];
+            $domain = [];
             for ($i=0; $i < count($users); $i++) {
                 $domain = DomainDetail::create([
                     'user_id' => (int) $users[$i]['id'],
