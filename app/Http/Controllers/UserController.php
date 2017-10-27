@@ -65,9 +65,9 @@ class UserController extends Controller
     public function userArticles()
     {
     	return DB::table('words AS w')
-    		->join('users AS u', 'u.id', '=', 'w.user_id')
-    		->join('article_types AS at', 'at.id', '=', 'w.article_type_id')
-    		->join('domains AS d', 'd.id', '=', 'w.domain_id')
+    		->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
+    		->leftJoin('article_types AS at', 'at.id', '=', 'w.article_type_id')
+    		->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
     		->select([
     			'w.id',
     			'u.firstname',
