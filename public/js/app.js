@@ -16361,6 +16361,7 @@ var Editor = function () {
                     spintax: spintax,
                     spintax_copy: spintax_copy,
                     synonym: item.synonym,
+                    citation: item.citation,
                     writer: item.firstname + ' ' + item.lastname,
                     filename: filename,
                     file: filename + '.txt',
@@ -33817,6 +33818,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 
@@ -33845,6 +33852,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             showDisapprovePanel: false,
             input: {
                 protected: this.article.protected,
+                citation: this.article.citation,
                 company: '',
                 city: '',
                 state: ''
@@ -63580,6 +63588,32 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.input.protected = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "citation"
+    }
+  }, [_vm._v("Citations")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.article.citation),
+      expression: "article.citation"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "12"
+    },
+    domProps: {
+      "value": (_vm.article.citation)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.article.citation = $event.target.value
       }
     }
   })]), _vm._v(" "), _c('div', {

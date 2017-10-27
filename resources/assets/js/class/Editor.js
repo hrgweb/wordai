@@ -37,6 +37,7 @@ class Editor
                 spintax: spintax,
                 spintax_copy: spintax_copy,
                 synonym: item.synonym,
+                citation: item.citation,
                 writer: item.firstname + ' ' + item.lastname,
                 filename: filename,
                 file: filename + '.txt',

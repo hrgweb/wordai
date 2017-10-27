@@ -19,6 +19,12 @@
                 <textarea class="form-control" rows="6" v-model="input.protected"></textarea>
             </div>
 
+            <!-- citation -->
+            <div class="form-group">
+                <label for="citation">Citations</label>
+                <textarea class="form-control" rows="12" v-model="article.citation"></textarea>
+            </div>
+
             <!-- original article -->
             <div class="Original__article">
                 <h3>Original Article</h3>
@@ -195,6 +201,7 @@
                 showDisapprovePanel: false,
                 input: {
                     protected: this.article.protected,
+                    citation: this.article.citation,
                     company: '',
                     city: '',
                     state: ''
