@@ -228,9 +228,12 @@ class EditorsController extends Controller
          * UPLOAD TO DROPBOX
          */
 
-        define('DBX_CLIENT_ID', 'dmy4zp7f6ebghwx');
-        define('DBX_CLIENT_SECRET', 'zmwx6uvuy19y4il');
-        define('DBX_ACCESS_TOKEN', 'VpCqPkG8geAAAAAAAAAAka8klHASsdg-TR0iVy5RfcPNLENRn4KhCGkEfYgZ1406');
+        define('DBX_CLIENT_ID', 'smecxm74gt9cnn0');
+        define('DBX_CLIENT_SECRET', 'ljz8cpf3jlvk2cn');
+        define('DBX_ACCESS_TOKEN', 'VpCqPkG8geAAAAAAAAAAlVRwb5tqIBXAROYMfeoPkmCi5iUmpOffg5Rj6_fhUQ6N');
+        // define('DBX_CLIENT_ID', 'zhl093jkvtcy04j');
+        // define('DBX_CLIENT_SECRET', 'fq6u8j5aj4tsaxo');
+        // define('DBX_ACCESS_TOKEN', 'KYHOK1FjB1AAAAAAAAFw1Kdo-NkqD16kCniILCKJtZ3kcv3YdjD9-fRRB6rmqPvr');
 
         $app = new DropboxApp(DBX_CLIENT_ID, DBX_CLIENT_SECRET, DBX_ACCESS_TOKEN);
         $dropbox = new Dropbox($app);
@@ -242,9 +245,11 @@ class EditorsController extends Controller
         $dropboxFile1 = new DropboxFile($articleToUpload);
         $dropboxFile2 = new DropboxFile($spintaxToUpload);
 
-        $article = '/CNXCONTENTMACHINE/ARTICLES/';
+        // $article = '/CNXCONTENTMACHINE/ARTICLES/';
+        $article = '/1-Content-Suite-Publish-Articles/ARTICLES/';
         $article = $article.$domain.$filename.'.txt';
-        $apintax = '/CNXCONTENTMACHINE/SPINS/';
+        // $apintax = '/CNXCONTENTMACHINE/SPINS/';
+        $apintax = '/1-Content-Suite-Publish-Articles/SPINS/';
         $apintax = $apintax.$domain.$filename.'.txt';
 
         try {

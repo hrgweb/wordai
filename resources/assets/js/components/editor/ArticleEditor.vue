@@ -25,7 +25,7 @@
                 <div id="orig-article-editor"></div>
 
                 <!-- <button type="button" class="btn btn-success" @click.prevent="updateOriginalArticle">PROCESS</button> -->
-                <button type="button" class="btn btn-success" ref="wordaiBtn" @click.prevent="runWordai">Run WordAI</button>
+                <button type="button" class="btn btn-success" ref="wordaiBtn" @click.prevent="runWordai">Spin Article</button>
 
                 <!-- Misc -->
                 &nbsp;&nbsp;&nbsp;

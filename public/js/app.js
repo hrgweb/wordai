@@ -63600,7 +63600,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.runWordai($event)
       }
     }
-  }, [_vm._v("Run WordAI")]), _vm._v(" "), _vm._v("\n                   \n                "), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
+  }, [_vm._v("Spin Article")]), _vm._v(" "), _vm._v("\n                   \n                "), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
     staticStyle: {
       "color": "#940a0a",
       "font-size": ".9em"
