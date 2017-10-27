@@ -93,7 +93,7 @@ class UserController extends Controller
 				'w.created_at'
     		])
             ->where('w.user_id', auth()->user()->id)
-            ->orderBy('w.created_at', 'desc')
+            ->latest()
             ->paginate(20);
     }
 
