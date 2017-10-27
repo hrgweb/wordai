@@ -296,6 +296,7 @@ class AdminController extends Controller
             'spin',
             'protected',
             'synonym',
+            'citation',
             'isEditorEdit',
             'isEditorUpdateSC',
             'isCsCheckHitMax',
