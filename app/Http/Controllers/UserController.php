@@ -118,7 +118,7 @@ class UserController extends Controller
 
     public function updateArticle()
     {
-    	return Word::where('id', request('word_id'))->update(['article' => request('article'), 'isUserEdit' => 0]);
+    	return Word::where('id', request('word_id'))->update(['article' => request('article'), 'isUserEdit' => 1]);
     }
 
     public function userDomainSetup() {
