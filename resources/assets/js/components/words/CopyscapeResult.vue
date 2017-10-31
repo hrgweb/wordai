@@ -26,7 +26,7 @@
                 </ul>
                 <!-- no duplicates -->
                 <ul class="duplicates" v-else>
-                    <li><em>No duplicaets found</em></li>
+                    <li><em>No duplicates found</em></li>
                 </ul>
             </div>
         </div>

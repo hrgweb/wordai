@@ -66922,7 +66922,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "duplicates"
   }, [_vm._m(0)])])])])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('li', [_c('em', [_vm._v("No duplicaets found")])])
+  return _c('li', [_c('em', [_vm._v("No duplicates found")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
