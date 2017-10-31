@@ -34136,7 +34136,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         resetSpinArticle: function resetSpinArticle() {
             var _this8 = this;
 
-            var editor = $('div.note-editable');
+            var editor = $('div.Process__article').find('div.note-editable');
 
             editor.text('');
             Vue.nextTick(function () {

@@ -487,7 +487,7 @@
             },
 
             resetSpinArticle() {
-                let editor  = $('div.note-editable');
+                let editor  = $('div.Process__article').find('div.note-editable');
 
                 editor.text('');
                 Vue.nextTick(() => editor.html(this.article.spin));
