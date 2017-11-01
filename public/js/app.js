@@ -5392,23 +5392,35 @@ var ArticleEditorMixin = {
             if (data) {
                 // update articles
                 if (this.tableType === 'article-to-edit') {
-                    Vue.set(this.listToEdit, this.index, data);
+                    /*=============== OLD ===============*/
+
+                    // Vue.set(this.listToEdit, this.index, data);
 
                     // find the result object to articles edited and update the value
-                    this.updateRecordsByIndex(this.listEditedArticles, data);
+                    // this.updateRecordsByIndex(this.listEditedArticles, data);
+
+                    /*=============== NEW ===============*/
+                    // remove this article from list of to edit articles
+                    this.listToEdit.splice(this.index, 1);
+
+                    // push to articles edited list
+                    this.listEditedArticles.unshift(data);
                 } else if (this.tableType === 'article-edited') {
-                    Vue.set(this.listEditedArticles, this.index, data);
+                    /*=============== OLD ===============*/
+
+                    // Vue.set(this.listEditedArticles, this.index, data);
 
                     // find the result object to articles edited and update the value
-                    this.updateRecordsByIndex(this.listToEdit, data);
+                    // this.updateRecordsByIndex(this.listToEdit, data);
+
+                    /*=============== NEW ===============*/
+
                 }
             }
         },
         dismissUpdate: function dismissUpdate(payload) {
             this.isEdit = false;
             this.setupToUpdateRecord(payload);
-
-            console.log(payload);
         },
         updateArticleData: function updateArticleData() {
             var _this2 = this;
