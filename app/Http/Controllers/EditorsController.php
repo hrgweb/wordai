@@ -127,7 +127,8 @@ class EditorsController extends Controller
             // ->where('words.hr_spent_editor_edit_article', '>', 0)
             // ->orWhere('words.min_spent_editor_edit_article', '>', 0)
             // ->orWhere('words.sec_spent_editor_edit_article', '>', 0)
-            ->orderBy('words.updated_at', 'desc')
+            // ->orderBy('words.updated_at', 'desc')
+            ->latest()
             ->paginate(20);
     }
 
