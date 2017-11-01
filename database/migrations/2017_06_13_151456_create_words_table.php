@@ -45,6 +45,8 @@ class CreateWordsTable extends Migration
             $table->boolean('isArticleApprove')->default(0);
             $table->char('reasonArticleNotAprrove', 20)->nullable();
             $table->text('reasonArticleNotAprroveBody')->nullable();
+            $table->boolean('isCopyscape')->default(0);
+            $table->boolean('isPublish')->default(0);
             $table->integer('hr_spent_editor_edit_article')->unsigned()->default(0);
             $table->integer('min_spent_editor_edit_article')->unsigned()->default(0);
             $table->integer('sec_spent_editor_edit_article')->unsigned()->default(0);
