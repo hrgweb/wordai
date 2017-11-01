@@ -322,7 +322,10 @@ class WordsController extends Controller
 		);
 
         // update csCounter column in words table
-        Word::where('id', request('id'))->update(['csCounter' => request('csCounter')]);
+        Word::where('id', request('id'))->update([
+            'csCounter' => request('csCounter'),
+            'isCopyscape' => 1
+        ]);
 
 		return response()->json($result);
 	}
