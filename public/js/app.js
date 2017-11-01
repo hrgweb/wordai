@@ -5407,6 +5407,8 @@ var ArticleEditorMixin = {
         dismissUpdate: function dismissUpdate(payload) {
             this.isEdit = false;
             this.setupToUpdateRecord(payload);
+
+            console.log(payload);
         },
         updateArticleData: function updateArticleData() {
             var _this2 = this;
@@ -34859,12 +34861,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.isLoading = false;
                 _this.$refs.changesBtn.disabled = false;
 
-                if (data.result) {
-                    data.result['spin'] = data.spun;
-
-                    $('div.Process__article').find('div.note-editable').html(data.spun); // update spun
-                    _this.$emit('isPowerEditorDismiss', data.result); // close the power editor component
-                    ArticleBus.$emit('editorUpdatedSpintaxCopy', data.result);
+                if (data) {
+                    $('div.Process__article').find('div.note-editable').html(data.spin); // update spun
+                    _this.$emit('isPowerEditorDismiss', data); // close the power editor component
+                    ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
 
                     // successfully updated
                     new Noty({

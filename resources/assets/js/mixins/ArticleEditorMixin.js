@@ -151,6 +151,8 @@ export const ArticleEditorMixin = {
         dismissUpdate(payload) {
             this.isEdit = false;
             this.setupToUpdateRecord(payload);
+
+            console.log(payload)
         },
 
         updateArticleData() {

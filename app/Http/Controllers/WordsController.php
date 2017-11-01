@@ -426,6 +426,7 @@ class WordsController extends Controller
         $company = (request('input.company') !== null) ? request('input.company') : '%company%';
         $city = (request('input.city') !== null) ? request('input.city') : '%city%';
         $state = (request('input.state') !== null) ? request('input.state') : '%state%';
+        $userId = auth()->user()->id;
 
         // return request()->all();
         // return $spintax;
@@ -438,13 +439,20 @@ class WordsController extends Controller
             'city' => $city,
             'state' => $state,
             'isEditorUpdateSC' => 1,
-            'editor_id' => auth()->user()->id
+            'editor_id' => $userId
         ]);
 
         // generate spun article
         $spun = $this->spin->process($spintax);
 
-		return response()->json(['result' => request()->all(), 'spun' => $spun]);
+        request()['spintax'] = $spintax;
+        request()['spintax_copy'] = $spintax;
+        request()['isEditorUpdateSC'] = 1;
+        request()['editor_id'] = $userId;
+        request()['spin'] = $spun;
+
+        // return response()->json(['result' => request()->all(), 'spun' => $spun]);
+		return response()->json(request()->all());
 	}
 
 	public function updateCsCheckHitMax() {

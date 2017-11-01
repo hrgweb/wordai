@@ -135,12 +135,10 @@
                         this.isLoading = false;
                         this.$refs.changesBtn.disabled = false;
 
-                        if (data.result) {
-                            data.result['spin'] = data.spun;
-
-                            $('div.Process__article').find('div.note-editable').html(data.spun); // update spun
-                            this.$emit('isPowerEditorDismiss', data.result);  // close the power editor component
-                            ArticleBus.$emit('editorUpdatedSpintaxCopy', data.result);
+                        if (data) {
+                            $('div.Process__article').find('div.note-editable').html(data.spin); // update spun
+                            this.$emit('isPowerEditorDismiss', data);  // close the power editor component
+                            ArticleBus.$emit('editorUpdatedSpintaxCopy', data);
 
                             // successfully updated
                             new Noty({
