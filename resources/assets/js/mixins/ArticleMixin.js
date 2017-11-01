@@ -240,6 +240,9 @@ export const ArticleMixin = {
                     } else {
                         this.isCsHasResult = false;
                     }
+
+                    // emit action to remove article record that is edited
+                    ArticleBus.$emit('editorUpdatedSpintaxCopy');
 				}
 
 				// check if counter = 5

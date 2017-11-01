@@ -5415,6 +5415,11 @@ var ArticleEditorMixin = {
 
                     /*=============== NEW ===============*/
 
+                    // remove this article from list of to edited articles
+                    this.listEditedArticles.splice(this.index, 1);
+
+                    // push to articles edited list
+                    this.listArticleToPublish.unshift(data);
                 }
             }
         },
@@ -5745,6 +5750,9 @@ var ArticleMixin = {
 					} else {
 						_this2.isCsHasResult = false;
 					}
+
+					// emit action to remove article record that is edited
+					ArticleBus.$emit('editorUpdatedSpintaxCopy');
 				}
 
 				// check if counter = 5

@@ -158,6 +158,11 @@ export const ArticleEditorMixin = {
 
                     /*=============== NEW ===============*/
 
+                    // remove this article from list of to edited articles
+                    this.listEditedArticles.splice(this.index, 1)
+
+                    // push to articles edited list
+                    this.listArticleToPublish.unshift(data);
                 }
             }
         },
