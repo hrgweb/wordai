@@ -34654,7 +34654,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             return _this.updateRecord(data);
         });
         ArticleBus.$on('articleIsPublished', function (data) {
-            return console.log(_this.index);
+            return _this.publisedArticle(data);
         });
     },
 
@@ -34691,6 +34691,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     Vue.set(this.listToEdit, this.index, payload);
                 }
             }
+        },
+        publisedArticle: function publisedArticle(payload) {
+            this.listArticleToPublish.splice(payload.index, 1);
         }
     }
 });
@@ -35005,7 +35008,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                     }).show();
 
                     // remove article after successfull published
-                    ArticleBus.$emit('articleIsPublished');
+                    ArticleBus.$emit('articleIsPublished', { index: index });
                 }
             });
         }

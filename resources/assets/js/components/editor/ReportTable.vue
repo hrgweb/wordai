@@ -89,7 +89,7 @@
                         }).show();
 
                         // remove article after successfull published
-                        ArticleBus.$emit('articleIsPublished');
+                        ArticleBus.$emit('articleIsPublished', { index: index });
                     }
                 });
             }

@@ -91,7 +91,7 @@
             ReportingBus.$on('isLoadedListEditedArticles', data => this.listEditedArticles = data);
             ReportingBus.$on('isLoadedListArticlesToPublish', data => this.listArticleToPublish = data);
             ArticleBus.$on('editorUpdatedSpintaxCopy', data => this.updateRecord(data));
-            ArticleBus.$on('articleIsPublished', data => console.log(this.index));
+            ArticleBus.$on('articleIsPublished', data => this.publisedArticle(data));
         },
 		methods: {
 			articleList() {
@@ -136,6 +136,10 @@
                         Vue.set(this.listToEdit, this.index, payload);
                     }
                 }
+            },
+
+            publisedArticle(payload) {
+                this.listArticleToPublish.splice(payload.index, 1);
             }
 		}
 	}
