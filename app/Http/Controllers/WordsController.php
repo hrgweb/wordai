@@ -433,7 +433,7 @@ class WordsController extends Controller
 
         // update words
         // DB::table('words')->where('id', request('word_id'))->update(['spintax_copy' => $spintax, 'isEditorUpdateSC' => 1]);
-		Word::where('id', request('id'))->update([
+		$result = Word::where('id', request('id'))->update([
             'spintax_copy' => $spintax,
             'company' => $company,
             'city' => $city,
@@ -451,8 +451,10 @@ class WordsController extends Controller
         request()['editor_id'] = $userId;
         request()['spin'] = $spun;
 
-        // return response()->json(['result' => request()->all(), 'spun' => $spun]);
-		return response()->json(request()->all());
+        if ($result) {
+            // return response()->json(['result' => request()->all(), 'spun' => $spun]);
+            return response()->json(request()->all());
+        }
 	}
 
 	public function updateCsCheckHitMax() {
