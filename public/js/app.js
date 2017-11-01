@@ -5419,7 +5419,7 @@ var ArticleEditorMixin = {
                     this.listEditedArticles.splice(this.index, 1);
 
                     // push to articles edited list
-                    this.listArticleToPublish.unshift(data);
+                    this.listArticleToPublish.unshift(this.editor.mapResultOfArticles(data[0]));
                 }
             }
         },

@@ -139,7 +139,7 @@ class EditorsController extends Controller
             ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
             ->select($this->columnsNeedForArticle())
             // ->where('words.isEditorEdit', 1)
-            ->whereRaw('editor_id > 0 AND isPublish = 0')
+            ->whereRaw('editor_id > 0 AND isCopyscape = 1 AND isPublish = 0')
             // ->orderBy('firstname')
             ->latest()
             ->paginate(20);
