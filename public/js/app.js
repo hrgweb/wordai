@@ -34852,40 +34852,39 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.newArticle['spintax'] = this.replaceVarsWithData(this.newArticle.spintax, vars);
 
             // check if has replace value from vars
-            if (this.hasReplaceVars) {
-                axios.patch('/words/updateSpintaxArticle', this.newArticle).then(function (response) {
-                    var data = response.data;
+            // if (this.hasReplaceVars) {
+            axios.patch('/words/updateSpintaxArticle', this.newArticle).then(function (response) {
+                var data = response.data;
 
-                    _this.isLoading = false;
-                    _this.$refs.changesBtn.disabled = false;
+                _this.isLoading = false;
+                _this.$refs.changesBtn.disabled = false;
 
-                    if (data.result) {
-                        data.result['spin'] = data.spun;
+                if (data.result) {
+                    data.result['spin'] = data.spun;
 
-                        $('div.Process__article').find('div.note-editable').html(data.spun); // update spun
-                        _this.$emit('isPowerEditorDismiss', data.result); // close the power editor component
-                        ArticleBus.$emit('editorUpdatedSpintaxCopy', data.result);
+                    $('div.Process__article').find('div.note-editable').html(data.spun); // update spun
+                    _this.$emit('isPowerEditorDismiss', data.result); // close the power editor component
+                    ArticleBus.$emit('editorUpdatedSpintaxCopy', data.result);
 
-                        // successfully updated
-                        new Noty({
-                            type: 'info',
-                            text: '1 spintax article successfully updated.',
-                            layout: 'bottomLeft',
-                            timeout: 5000
-                        }).show();
-                    }
-                });
-            } else {
+                    // successfully updated
+                    new Noty({
+                        type: 'info',
+                        text: '1 spintax article successfully updated.',
+                        layout: 'bottomLeft',
+                        timeout: 5000
+                    }).show();
+                }
+            });
+            /*} else {
                 this.isLoading = false;
                 this.$refs.changesBtn.disabled = false;
-
-                new Noty({
+                 new Noty({
                     type: 'error',
-                    text: 'Nothing replace can\'t find placeholder. Please update yor article and add placeholder to change.',
+                    text: `Nothing replace can't find placeholder. Please update yor article and add placeholder to change.`,
                     layout: 'bottomLeft',
                     timeout: 5000
                 }).show();
-            }
+            }*/
         }
     }
 });

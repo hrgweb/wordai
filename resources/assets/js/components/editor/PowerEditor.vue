@@ -128,7 +128,7 @@
                 this.newArticle['spintax'] = this.replaceVarsWithData(this.newArticle.spintax, vars);
 
                 // check if has replace value from vars
-                if (this.hasReplaceVars) {
+                // if (this.hasReplaceVars) {
                     axios.patch('/words/updateSpintaxArticle', this.newArticle).then(response => {
                         let data = response.data;
 
@@ -151,7 +151,7 @@
                             }).show();
                         }
                     });
-                } else {
+                /*} else {
                     this.isLoading = false;
                     this.$refs.changesBtn.disabled = false;
 
@@ -161,7 +161,7 @@
                         layout: 'bottomLeft',
                         timeout: 5000
                     }).show();
-                }
+                }*/
 			}
 		}
 	}

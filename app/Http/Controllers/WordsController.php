@@ -418,7 +418,8 @@ class WordsController extends Controller
         return $spin;
 	}
 
-	public function updateSpintaxArticle() {
+	public function updateSpintaxArticle()
+    {
 		$spintax = request('spintax');
         $company = (request('input.company') !== null) ? request('input.company') : '%company%';
         $city = (request('input.city') !== null) ? request('input.city') : '%city%';
@@ -434,7 +435,8 @@ class WordsController extends Controller
             'company' => $company,
             'city' => $city,
             'state' => $state,
-            'isEditorUpdateSC' => 1
+            'isEditorUpdateSC' => 1,
+            'editor_id' => auth()->user()->id
         ]);
 
         // generate spun article
