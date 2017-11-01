@@ -122,7 +122,7 @@ class EditorsController extends Controller
                 ['isProcess', '=', 1]
             ])*/
             // ->whereRaw('(isProcess = 0 OR isProcess = 1) AND (isEditorUpdateSC = 1 OR isEditorEdit = 1)')
-            ->whereRaw('editor_id > 0')
+            ->whereRaw('editor_id > 0 AND isCopyscape = 0')
             // ->orWhere(['isEditorUpdateSC' => 1, 'isEditorEdit' => 1])
             // ->where('words.hr_spent_editor_edit_article', '>', 0)
             // ->orWhere('words.min_spent_editor_edit_article', '>', 0)
