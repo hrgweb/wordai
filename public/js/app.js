@@ -34523,6 +34523,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.articles = _this.editor.mapResultOfArticles(payload.data);
                 _this.pageCount = payload.last_page;
                 _this.urlPath = payload.path;
+
+                ReportingBus.$emit('isLoadedListArticlesToPublish', _this.articles);
             });
         }
     }
@@ -34645,8 +34647,14 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         ReportingBus.$on('isLoadedListEditedArticles', function (data) {
             return _this.listEditedArticles = data;
         });
+        ReportingBus.$on('isLoadedListArticlesToPublish', function (data) {
+            return _this.listArticleToPublish = data;
+        });
         ArticleBus.$on('editorUpdatedSpintaxCopy', function (data) {
             return _this.updateRecord(data);
+        });
+        ArticleBus.$on('articleIsPublished', function (data) {
+            return console.log(_this.index);
         });
     },
 
@@ -34995,6 +35003,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                         layout: 'bottomLeft',
                         timeout: 5000
                     }).show();
+
+                    // remove article after successfull published
+                    ArticleBus.$emit('articleIsPublished');
                 }
             });
         }

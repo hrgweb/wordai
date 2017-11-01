@@ -89,7 +89,9 @@
         mounted() {
             ReportingBus.$on('isLoadedListToEdit', data => this.listToEdit = data);
             ReportingBus.$on('isLoadedListEditedArticles', data => this.listEditedArticles = data);
+            ReportingBus.$on('isLoadedListArticlesToPublish', data => this.listArticleToPublish = data);
             ArticleBus.$on('editorUpdatedSpintaxCopy', data => this.updateRecord(data));
+            ArticleBus.$on('articleIsPublished', data => console.log(this.index));
         },
 		methods: {
 			articleList() {

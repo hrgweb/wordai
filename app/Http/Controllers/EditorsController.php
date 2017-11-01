@@ -138,7 +138,7 @@ class EditorsController extends Controller
             ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
             ->select($this->columnsNeedForArticle())
             // ->where('words.isEditorEdit', 1)
-            ->whereRaw('editor_id > 0')
+            ->whereRaw('editor_id > 0 AND isPublish = 0')
             // ->orderBy('firstname')
             ->latest()
             ->paginate(20);
@@ -257,8 +257,8 @@ class EditorsController extends Controller
         $apintax = $apintax.$domain.$filename.'.txt';
 
         try {
-            $file = $dropbox->upload($dropboxFile1, $article, ['mode' => 'overwrite', 'autorename' => false]);
-            $file2 = $dropbox->upload($dropboxFile2, $apintax, ['mode' => 'overwrite', 'autorename' => false]);
+            // $file = $dropbox->upload($dropboxFile1, $article, ['mode' => 'overwrite', 'autorename' => false]);
+            // $file2 = $dropbox->upload($dropboxFile2, $apintax, ['mode' => 'overwrite', 'autorename' => false]);
 
             // update words table isPublish column
             Word::where('id', request('id'))->update(['isPublish' => 1]);

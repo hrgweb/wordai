@@ -88,6 +88,8 @@
                             timeout: 5000
                         }).show();
 
+                        // remove article after successfull published
+                        ArticleBus.$emit('articleIsPublished');
                     }
                 });
             }

@@ -52,6 +52,8 @@
                         this.articles = this.editor.mapResultOfArticles(payload.data);
                         this.pageCount = payload.last_page;
                         this.urlPath = payload.path;
+
+                        ReportingBus.$emit('isLoadedListArticlesToPublish', this.articles);
                     });
             }
         }
