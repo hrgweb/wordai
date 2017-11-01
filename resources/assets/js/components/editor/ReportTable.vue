@@ -63,6 +63,7 @@
                 this.publishBtnState('Publishing...', true);
 
                 const payload = {
+                    id: article.id,
                     domain: article.domain,
                     title: article.doc_title,
                     keyword: article.keyword,

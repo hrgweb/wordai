@@ -259,6 +259,9 @@ class EditorsController extends Controller
         try {
             $file = $dropbox->upload($dropboxFile1, $article, ['mode' => 'overwrite', 'autorename' => false]);
             $file2 = $dropbox->upload($dropboxFile2, $apintax, ['mode' => 'overwrite', 'autorename' => false]);
+
+            // update words table isPublish column
+            Word::where('id', request('id'))->update(['isPublish' => 1]);
         } catch (Exception $e) {
             // ignore
         }

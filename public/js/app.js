@@ -34971,6 +34971,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.publishBtnState('Publishing...', true);
 
             var payload = {
+                id: article.id,
                 domain: article.domain,
                 title: article.doc_title,
                 keyword: article.keyword,
