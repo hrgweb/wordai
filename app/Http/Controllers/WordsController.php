@@ -162,6 +162,8 @@ class WordsController extends Controller
                 'article' => request('article'),
                 'spintax' => $spintax->text,
                 'spin' => $spin,
+                'isEditorEdit' => 1,
+                'editor_id' => auth()->user()->id,
                 'isProcess' => 1
             ]);
 
