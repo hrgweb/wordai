@@ -137,9 +137,10 @@ class EditorsController extends Controller
             ->leftJoin('article_types', 'article_types.id', '=', 'words.article_type_id')
             ->leftJoin('domains', 'domains.id', '=', 'words.domain_id')
             ->select($this->columnsNeedForArticle())
-            ->where('words.isEditorEdit', 1)
+            // ->where('words.isEditorEdit', 1)
+            ->whereRaw('editor_id > 0')
             // ->orderBy('firstname')
-            ->oldest()
+            ->latest()
             ->paginate(20);
     }
 
