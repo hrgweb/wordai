@@ -131,7 +131,8 @@ export const ArticleEditorMixin = {
         },
 
         updateRecord(data) {
-            if (data) {
+            // if (data) {
+
                 // update articles
                 if (this.tableType === 'article-to-edit') {
                     /*=============== OLD ===============*/
@@ -142,11 +143,14 @@ export const ArticleEditorMixin = {
                     // this.updateRecordsByIndex(this.listEditedArticles, data);
 
                     /*=============== NEW ===============*/
+                    // push to articles edited list
+                    // console.log(this.listToEdit[this.index])
+                    // this.listEditedArticles.unshift(this.listToEdit[this.index]);
+
                     // remove this article from list of to edit articles
                     this.listToEdit.splice(this.index, 1);
 
-                    // push to articles edited list
-                    this.listEditedArticles.unshift(data);
+                    // console.log('to edit')
                 }
                 else if (this.tableType === 'article-edited') {
                     /*=============== OLD ===============*/
@@ -158,13 +162,17 @@ export const ArticleEditorMixin = {
 
                     /*=============== NEW ===============*/
 
+                    // push to articles edited list
+                    // console.log(this.listEditedArticles[this.index])
+                    // this.listArticleToPublish.unshift(this.listEditedArticles[this.index]);
+
                     // remove this article from list of to edited articles
                     this.listEditedArticles.splice(this.index, 1)
 
-                    // push to articles edited list
-                    this.listArticleToPublish.unshift(this.editor.mapResultOfArticles(data[0]));
+                    // console.log('edited')
+
                 }
-            }
+            // }
         },
 
         dismissUpdate(payload) {

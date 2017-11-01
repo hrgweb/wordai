@@ -5389,39 +5389,46 @@ var ArticleEditorMixin = {
             }
         },
         updateRecord: function updateRecord(data) {
-            if (data) {
-                // update articles
-                if (this.tableType === 'article-to-edit') {
-                    /*=============== OLD ===============*/
+            // if (data) {
 
-                    // Vue.set(this.listToEdit, this.index, data);
+            // update articles
+            if (this.tableType === 'article-to-edit') {
+                /*=============== OLD ===============*/
 
-                    // find the result object to articles edited and update the value
-                    // this.updateRecordsByIndex(this.listEditedArticles, data);
+                // Vue.set(this.listToEdit, this.index, data);
 
-                    /*=============== NEW ===============*/
-                    // remove this article from list of to edit articles
-                    this.listToEdit.splice(this.index, 1);
+                // find the result object to articles edited and update the value
+                // this.updateRecordsByIndex(this.listEditedArticles, data);
 
-                    // push to articles edited list
-                    this.listEditedArticles.unshift(data);
-                } else if (this.tableType === 'article-edited') {
-                    /*=============== OLD ===============*/
+                /*=============== NEW ===============*/
+                // push to articles edited list
+                // console.log(this.listToEdit[this.index])
+                // this.listEditedArticles.unshift(this.listToEdit[this.index]);
 
-                    // Vue.set(this.listEditedArticles, this.index, data);
+                // remove this article from list of to edit articles
+                this.listToEdit.splice(this.index, 1);
 
-                    // find the result object to articles edited and update the value
-                    // this.updateRecordsByIndex(this.listToEdit, data);
+                // console.log('to edit')
+            } else if (this.tableType === 'article-edited') {
+                /*=============== OLD ===============*/
 
-                    /*=============== NEW ===============*/
+                // Vue.set(this.listEditedArticles, this.index, data);
 
-                    // remove this article from list of to edited articles
-                    this.listEditedArticles.splice(this.index, 1);
+                // find the result object to articles edited and update the value
+                // this.updateRecordsByIndex(this.listToEdit, data);
 
-                    // push to articles edited list
-                    this.listArticleToPublish.unshift(this.editor.mapResultOfArticles(data[0]));
-                }
+                /*=============== NEW ===============*/
+
+                // push to articles edited list
+                // console.log(this.listEditedArticles[this.index])
+                // this.listArticleToPublish.unshift(this.listEditedArticles[this.index]);
+
+                // remove this article from list of to edited articles
+                this.listEditedArticles.splice(this.index, 1);
+
+                // console.log('edited')
             }
+            // }
         },
         dismissUpdate: function dismissUpdate(payload) {
             this.isEdit = false;
