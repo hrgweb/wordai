@@ -29137,26 +29137,28 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__components_admin_ArticleToEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_19__components_admin_ArticleToEdit_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_admin_ArticleSpun_vue__ = __webpack_require__(293);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_admin_ArticleSpun_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_20__components_admin_ArticleSpun_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_words_WordApi_vue__ = __webpack_require__(336);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_words_WordApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__components_words_WordApi_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_words_WordApi2_vue__ = __webpack_require__(337);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_words_WordApi2_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__components_words_WordApi2_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_words_CurationEdit_vue__ = __webpack_require__(331);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_words_CurationEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23__components_words_CurationEdit_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_words_PasteArticle_vue__ = __webpack_require__(334);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_words_PasteArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24__components_words_PasteArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_words_CreateArticle_vue__ = __webpack_require__(330);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_words_CreateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_25__components_words_CreateArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_words_CopyscapeApiResult_vue__ = __webpack_require__(329);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_words_CopyscapeApiResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26__components_words_CopyscapeApiResult_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_words_GenerateArticle_vue__ = __webpack_require__(333);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_words_GenerateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_27__components_words_GenerateArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_words_UserArticle_vue__ = __webpack_require__(335);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_words_UserArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_28__components_words_UserArticle_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_editor_Editor_vue__ = __webpack_require__(322);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_editor_Editor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_29__components_editor_Editor_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_editor_SuperEditor_vue__ = __webpack_require__(325);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_editor_SuperEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_30__components_editor_SuperEditor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_admin_NewCopyscape_vue__ = __webpack_require__(447);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__components_admin_NewCopyscape_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_21__components_admin_NewCopyscape_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_words_WordApi_vue__ = __webpack_require__(336);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__components_words_WordApi_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_22__components_words_WordApi_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_words_WordApi2_vue__ = __webpack_require__(337);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__components_words_WordApi2_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_23__components_words_WordApi2_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_words_CurationEdit_vue__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__components_words_CurationEdit_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_24__components_words_CurationEdit_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_words_PasteArticle_vue__ = __webpack_require__(334);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_25__components_words_PasteArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_25__components_words_PasteArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_words_CreateArticle_vue__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_26__components_words_CreateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_26__components_words_CreateArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_words_CopyscapeApiResult_vue__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_27__components_words_CopyscapeApiResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_27__components_words_CopyscapeApiResult_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_words_GenerateArticle_vue__ = __webpack_require__(333);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_28__components_words_GenerateArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_28__components_words_GenerateArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_words_UserArticle_vue__ = __webpack_require__(335);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_29__components_words_UserArticle_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_29__components_words_UserArticle_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_editor_Editor_vue__ = __webpack_require__(322);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_30__components_editor_Editor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_30__components_editor_Editor_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__components_editor_SuperEditor_vue__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_31__components_editor_SuperEditor_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_31__components_editor_SuperEditor_vue__);
 __webpack_require__(237);
 
 /*=============== Class ===============*/
@@ -29177,6 +29179,7 @@ window.ArticleBus = __WEBPACK_IMPORTED_MODULE_2__eventbus_ArticleBus_js__["a" /*
 window.DomainBus = __WEBPACK_IMPORTED_MODULE_3__eventbus_DomainBus_js__["a" /* DomainBus */];
 
 /*=============== Components ===============*/
+
 
 
 
@@ -29227,16 +29230,17 @@ var app = new Vue({
         ArticleEdited: __WEBPACK_IMPORTED_MODULE_18__components_admin_ArticleEdited_vue___default.a,
         ArticleToEdit: __WEBPACK_IMPORTED_MODULE_19__components_admin_ArticleToEdit_vue___default.a,
         ArticleSpun: __WEBPACK_IMPORTED_MODULE_20__components_admin_ArticleSpun_vue___default.a,
-        WordApi: __WEBPACK_IMPORTED_MODULE_21__components_words_WordApi_vue___default.a,
-        WordApi2: __WEBPACK_IMPORTED_MODULE_22__components_words_WordApi2_vue___default.a,
-        CurationEdit: __WEBPACK_IMPORTED_MODULE_23__components_words_CurationEdit_vue___default.a,
-        PasteArticle: __WEBPACK_IMPORTED_MODULE_24__components_words_PasteArticle_vue___default.a,
-        CreateArticle: __WEBPACK_IMPORTED_MODULE_25__components_words_CreateArticle_vue___default.a,
-        CopyscapeApiResult: __WEBPACK_IMPORTED_MODULE_26__components_words_CopyscapeApiResult_vue___default.a,
-        GenerateArticle: __WEBPACK_IMPORTED_MODULE_27__components_words_GenerateArticle_vue___default.a,
-        UserArticle: __WEBPACK_IMPORTED_MODULE_28__components_words_UserArticle_vue___default.a,
-        Editor: __WEBPACK_IMPORTED_MODULE_29__components_editor_Editor_vue___default.a,
-        SuperEditor: __WEBPACK_IMPORTED_MODULE_30__components_editor_SuperEditor_vue___default.a
+        NewCopyscape: __WEBPACK_IMPORTED_MODULE_21__components_admin_NewCopyscape_vue___default.a,
+        WordApi: __WEBPACK_IMPORTED_MODULE_22__components_words_WordApi_vue___default.a,
+        WordApi2: __WEBPACK_IMPORTED_MODULE_23__components_words_WordApi2_vue___default.a,
+        CurationEdit: __WEBPACK_IMPORTED_MODULE_24__components_words_CurationEdit_vue___default.a,
+        PasteArticle: __WEBPACK_IMPORTED_MODULE_25__components_words_PasteArticle_vue___default.a,
+        CreateArticle: __WEBPACK_IMPORTED_MODULE_26__components_words_CreateArticle_vue___default.a,
+        CopyscapeApiResult: __WEBPACK_IMPORTED_MODULE_27__components_words_CopyscapeApiResult_vue___default.a,
+        GenerateArticle: __WEBPACK_IMPORTED_MODULE_28__components_words_GenerateArticle_vue___default.a,
+        UserArticle: __WEBPACK_IMPORTED_MODULE_29__components_words_UserArticle_vue___default.a,
+        Editor: __WEBPACK_IMPORTED_MODULE_30__components_editor_Editor_vue___default.a,
+        SuperEditor: __WEBPACK_IMPORTED_MODULE_31__components_editor_SuperEditor_vue___default.a
     }
 });
 
@@ -70163,6 +70167,151 @@ module.exports = function listToStyles (parentId, list) {
 __webpack_require__(156);
 module.exports = __webpack_require__(157);
 
+
+/***/ }),
+/* 439 */,
+/* 440 */,
+/* 441 */,
+/* 442 */,
+/* 443 */,
+/* 444 */,
+/* 445 */,
+/* 446 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    data: function data() {
+        return {
+            form: new Form({
+                article: ''
+            })
+        };
+    },
+
+    methods: {
+        onSubmit: function onSubmit() {
+            this.form.post('/words/processToNewCopyscape').then(function (data) {
+                var account = JSON.parse(data.account);
+                var response = JSON.parse(data.response);
+
+                console.log(account);
+                console.log(response);
+            });
+        }
+    }
+});
+
+/***/ }),
+/* 447 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(446),
+  /* template */
+  __webpack_require__(448),
+  /* scopeId */
+  null,
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\admin\\NewCopyscape.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] NewCopyscape.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-2d8f7412", Component.options)
+  } else {
+    hotAPI.reload("data-v-2d8f7412", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 448 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "NewCopyscape"
+  }, [_c('form', {
+    attrs: {
+      "method": "POST"
+    }
+  }, [_c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "article"
+    }
+  }, [_vm._v("Article")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.form.article),
+      expression: "form.article"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "12"
+    },
+    domProps: {
+      "value": (_vm.form.article)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.form.article = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-primary",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.onSubmit($event)
+      }
+    }
+  }, [_vm._v("Copyscape")])])])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-2d8f7412", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

@@ -330,6 +330,24 @@ class WordsController extends Controller
 		return response()->json($result);
 	}
 
+    public function processToNewCopyscape()
+    {
+        $article = request('article');
+        $newcs_key = Config::get('newcopyscape.key');
+
+        // account profile
+        $account = Curl::to('https://www.prepostseo.com/apis')
+            ->withData(['key' => $newcs_key])
+            ->post();
+
+        // api response
+        $response = Curl::to('https://www.prepostseo.com/apis/checkPlag')
+            ->withData(['key' => $newcs_key, 'data' => $article])
+            ->post();
+
+        return response()->json(['account' => $account, 'response' => $response]);
+    }
+
 	public function runCurl()
 	{
 		// With a POST you pass the data via the CURLOPT_POSTFIELDS option instead

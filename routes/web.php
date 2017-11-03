@@ -63,6 +63,7 @@ Route::prefix('words')->group(function() {
 	Route::post('generateRespintax', 'WordsController@generateRespintax');
 	Route::post('postSpinTax', 'WordsController@postSpinTax');
 	Route::post('processToCopyscape', 'WordsController@processToCopyscape');
+    Route::post('processToNewCopyscape', 'WordsController@processToNewCopyscape');
 	Route::post('processTextGrammar', 'WordsController@processTextGrammar');
     Route::post('respinArticle', 'WordsController@respinArticle');
 	Route::post('saveAndProcessNow', 'WordsController@saveAndProcessNow');

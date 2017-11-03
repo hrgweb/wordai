@@ -39,6 +39,7 @@ import ArticleReport from './components/admin/ArticleReport.vue';
 import ArticleEdited from './components/admin/ArticleEdited.vue';
 import ArticleToEdit from './components/admin/ArticleToEdit.vue';
 import ArticleSpun from './components/admin/ArticleSpun.vue';
+import NewCopyscape from './components/admin/NewCopyscape.vue';
 import WordApi from './components/words/WordApi.vue';
 import WordApi2 from './components/words/WordApi2.vue';
 import CurationEdit from './components/words/CurationEdit.vue';
@@ -71,6 +72,7 @@ const app = new Vue({
         ArticleEdited,
         ArticleToEdit,
         ArticleSpun,
+        NewCopyscape,
     	WordApi,
     	WordApi2,
     	CurationEdit,
