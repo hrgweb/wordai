@@ -22,6 +22,7 @@ Route::get('verification', 'PagesController@verification');
 Route::get('editor', 'PagesController@editor');
 Route::get('writer', 'PagesController@writer');
 Route::get('copyscape-page', 'PagesController@copyscapePage');
+Route::get('new-copyscape', 'PagesController@newCopyscapePage');
 Route::get('super-editor', 'PagesController@superEditor');
 Route::get('edit-article', 'PagesController@editArticle');
 Route::get('search-article', 'PagesController@searchArticle');

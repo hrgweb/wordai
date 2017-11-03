@@ -164,4 +164,9 @@ class PagesController extends Controller
     {
         return view('editor.domain-detail');
     }
+
+    public function newCopyscapePage()
+    {
+        return view('admin.newcopyscape');
+    }
 }

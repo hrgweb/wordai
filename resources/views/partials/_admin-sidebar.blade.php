@@ -104,6 +104,11 @@
                     <em class="fa fa-cc" aria-hidden="true"></em> Copyscape
                 </a>
             </li>
+            <li>
+                <a href="{{ url('new-copyscape') }}">
+                    <em class="fa fa-cc" aria-hidden="true"></em> New Copyscape
+                </a>
+            </li>
         </ul>
     </nav>
 </aside>
