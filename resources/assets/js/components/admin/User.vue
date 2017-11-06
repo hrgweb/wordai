@@ -134,7 +134,20 @@
 			},
 
             deleteUser(user, index) {
-                console.log(user, index)
+
+                axios.delete('/user/removeUser?id='+user.id).then(response => {
+                    if (response.data) {
+                        this.users.splice(index, 1); // remove user on table list
+
+                        // popup message
+                        new Noty({
+                            type: 'info',
+                            text: `1 user successfully removed.`,
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+                    }
+                });
             }
 		}
 	}

@@ -33623,7 +33623,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			}
 		},
 		deleteUser: function deleteUser(user, index) {
-			console.log(user, index);
+			var _this4 = this;
+
+			axios.delete('/user/removeUser?id=' + user.id).then(function (response) {
+				if (response.data) {
+					_this4.users.splice(index, 1); // remove user on table list
+
+					// popup message
+					new Noty({
+						type: 'info',
+						text: '1 user successfully removed.',
+						layout: 'bottomLeft',
+						timeout: 5000
+					}).show();
+				}
+			});
 		}
 	}
 });
@@ -40336,7 +40350,7 @@ exports.push([module.i, "\nh2[data-v-48e391eb] { text-align: center;\n}\t\n", ""
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t/*table tr { cursor: pointer; }*/\ntable tbody tr[data-v-4a549d11]:hover { background: #EAFFEA;\n}\ntable tbody td[data-v-4a549d11] { background: #fff;\n}\n\n    /*button:nth-child(2) { background: #d58512 !important; }*/\n    /*button:nth-child(2):hover { background: #C27B15 !important; }*/\nbutton[data-v-4a549d11]:hover { border: 1px solid transparent;\n}\n.icon-pe[data-v-4a549d11] {\n\t\tposition: absolute;\n\t    width: 35px;\n\t    top: 5px;\n\t    right: 5px;\n}\n.icon-pe img[data-v-4a549d11] { width: 100%;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t/*table tr { cursor: pointer; }*/\ntable tbody tr[data-v-4a549d11]:hover { background: #EAFFEA;\n}\ntable tbody td[data-v-4a549d11] { background: #fff;\n}\n\n    /*button:nth-child(2) { background: #d58512 !important; }*/\n    /*button:nth-child(2):hover { background: #C27B15 !important; }*/\nbutton[data-v-4a549d11]:hover { border: 1px solid transparent;\n}\n.icon-pe[data-v-4a549d11] {\n\t\tposition: absolute;\n\t    width: 35px;\n\t    top: 5px;\n\t    right: 5px;\n}\n.icon-pe img[data-v-4a549d11] { width: 100%;\n}\n", ""]);
 
 /***/ }),
 /* 266 */

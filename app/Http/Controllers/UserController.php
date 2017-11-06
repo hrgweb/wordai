@@ -158,4 +158,9 @@ class UserController extends Controller
     {
         return Group::where('id', request('group_id'))->first(['id', 'group']);
     }
+
+    public function removeUser()
+    {
+        return User::where('id', request('id'))->update(['isDeleted' => 1]);
+    }
 }
