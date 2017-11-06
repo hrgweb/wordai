@@ -39,7 +39,8 @@ class UserController extends Controller
 
     public function allUsers()
     {
-        return User::all();
+        // return User::all();
+        return User::where('isDeleted', '0')->get();
     }
 
     public function userLevelList()
