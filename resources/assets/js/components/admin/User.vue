@@ -38,7 +38,8 @@
 					<td>{{ user.created_at }}</td>
 					<td>
 						<button type="button" class="btn btn-info" @click="changeRole(user, index)">Permissions</button>
-						<button type="button" style="width: 70px;" class="btn btn-danger" ref="btnSuspend" @click="suspendUser(user, index)">{{ (user.status_id === 3) ? 'Active' : 'Suspend' }}</button>
+                        <button type="button" style="width: 70px;" class="btn btn-danger" ref="btnSuspend" @click="suspendUser(user, index)">{{ (user.status_id === 3) ? 'Active' : 'Suspend' }}</button>
+						<button type="button" style="width: 70px;" class="btn btn-warning" ref="btnDelete" @click="deleteUser(user, index)">Remove</button>
 					</td>
 				</tr>
 			</tbody>
@@ -130,7 +131,11 @@
 					let hasAccess = (data.peditor === 'no') ? 0 : 1;
 					this.users[this.index].has_peditor_access = hasAccess;
 				}
-			}
+			},
+
+            deleteUser(user, index) {
+                console.log(user, index)
+            }
 		}
 	}
 </script>
@@ -140,9 +145,11 @@
 	table tbody tr:hover { background: #EAFFEA; }
 	table tbody td { background: #fff; }
 
+    /*button:nth-child(2) { background: #d58512 !important; }*/
+    /*button:nth-child(2):hover { background: #C27B15 !important; }*/
 	button:hover { border: 1px solid transparent; }
 
-	 .icon-pe {
+	.icon-pe {
 		position: absolute;
 	    width: 35px;
 	    top: 5px;
