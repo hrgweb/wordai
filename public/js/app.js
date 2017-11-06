@@ -33531,6 +33531,20 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -33548,7 +33562,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			stat: new __WEBPACK_IMPORTED_MODULE_1__class_UserStatus_js__["a" /* default */](),
 			lev: new __WEBPACK_IMPORTED_MODULE_2__class_UserLevel_js__["a" /* default */](),
 			levels: [],
-			index: 0
+			index: 0,
+			isAboutToDelete: false
 		};
 	},
 
@@ -33622,12 +33637,18 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 				this.users[this.index].has_peditor_access = hasAccess;
 			}
 		},
-		deleteUser: function deleteUser(user, index) {
+		aboutToDelete: function aboutToDelete(user, index) {
+			this.user = user;
+			this.index = index;
+			this.isAboutToDelete = true;
+		},
+		deleteUser: function deleteUser() {
 			var _this4 = this;
 
-			axios.delete('/user/removeUser?id=' + user.id).then(function (response) {
+			axios.delete('/user/removeUser?id=' + this.user.id).then(function (response) {
 				if (response.data) {
-					_this4.users.splice(index, 1); // remove user on table list
+					_this4.isAboutToDelete = false;
+					_this4.users.splice(_this4.index, 1); // remove user on table list
 
 					// popup message
 					new Noty({
@@ -33638,6 +33659,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					}).show();
 				}
 			});
+		},
+		cancelDelete: function cancelDelete() {
+			this.isAboutToDelete = false;
 		}
 	}
 });
@@ -40350,7 +40374,7 @@ exports.push([module.i, "\nh2[data-v-48e391eb] { text-align: center;\n}\t\n", ""
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t/*table tr { cursor: pointer; }*/\ntable tbody tr[data-v-4a549d11]:hover { background: #EAFFEA;\n}\ntable tbody td[data-v-4a549d11] { background: #fff;\n}\n\n    /*button:nth-child(2) { background: #d58512 !important; }*/\n    /*button:nth-child(2):hover { background: #C27B15 !important; }*/\nbutton[data-v-4a549d11]:hover { border: 1px solid transparent;\n}\n.icon-pe[data-v-4a549d11] {\n\t\tposition: absolute;\n\t    width: 35px;\n\t    top: 5px;\n\t    right: 5px;\n}\n.icon-pe img[data-v-4a549d11] { width: 100%;\n}\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\t/*table tr { cursor: pointer; }*/\ntable tbody tr[data-v-4a549d11]:hover { background: #EAFFEA;\n}\ntable tbody td[data-v-4a549d11] { background: #fff;\n}\n\n    /*button:nth-child(2) { background: #d58512 !important; }*/\n    /*button:nth-child(2):hover { background: #C27B15 !important; }*/\nbutton[data-v-4a549d11]:hover { border: 1px solid transparent;\n}\n.icon-pe[data-v-4a549d11] {\n\t\tposition: absolute;\n\t    width: 35px;\n\t    top: 5px;\n\t    right: 5px;\n}\n.icon-pe img[data-v-4a549d11] { width: 100%;\n}\n.Remove[data-v-4a549d11] {\n        background: #fff;\n        margin: 13em auto;\n        padding: .1em 1em 1em;\n        width: 350px;\n}\n", ""]);
 
 /***/ }),
 /* 266 */
@@ -66147,7 +66171,35 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "closeRoleComponent": _vm.updateRoleDone,
       "closeAccessComponent": _vm.updateAccessDone
     }
-  }) : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("User List")]), _vm._v(" "), _c('table', {
+  }) : _vm._e(), _vm._v(" "), (_vm.isAboutToDelete) ? _c('div', {
+    staticClass: "overlay"
+  }, [_c('div', {
+    staticClass: "Remove"
+  }, [_c('h2', [_vm._v("Remove User")]), _vm._v(" "), _c('p', [_vm._v("Are you sure you want to remove "), _c('b', [_vm._v(_vm._s(_vm.user.firstname) + " " + _vm._s(_vm.user.lastname))]), _vm._v("?")]), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
+    staticClass: "buttons"
+  }, [_c('button', {
+    staticClass: "btn btn-success",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.deleteUser($event)
+      }
+    }
+  }, [_vm._v("Remove")]), _vm._v(" "), _c('button', {
+    staticClass: "btn btn-danger",
+    attrs: {
+      "type": "button"
+    },
+    on: {
+      "click": function($event) {
+        $event.preventDefault();
+        _vm.cancelDelete($event)
+      }
+    }
+  }, [_vm._v("Cancel")])])])]) : _vm._e(), _vm._v(" "), _c('h2', [_vm._v("User List")]), _vm._v(" "), _c('table', {
     staticClass: "table table-striped table-hover"
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.users), function(user, index) {
     return _c('tr', [_c('td', [_vm._v(_vm._s(user.id))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.firstname) + " " + _vm._s(user.lastname))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(user.email))]), _vm._v(" "), _c('td', {
@@ -66203,7 +66255,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       },
       on: {
         "click": function($event) {
-          _vm.deleteUser(user, index)
+          _vm.aboutToDelete(user, index)
         }
       }
     }, [_vm._v("Remove")])])])

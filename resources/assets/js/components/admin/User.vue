@@ -9,6 +9,20 @@
 			@closeAccessComponent="updateAccessDone">
  		</change-role>
 
+        <!-- remove user -->
+        <div class="overlay" v-if="isAboutToDelete">
+            <div class="Remove">
+                <h2>Remove User</h2>
+                <p>Are you sure you want to remove <b>{{ user.firstname }} {{ user.lastname }}</b>?</p>
+                <br>
+
+                <div class="buttons">
+                    <button type="button" class="btn btn-success" @click.prevent="deleteUser">Remove</button>
+                    <button type="button" class="btn btn-danger" @click.prevent="cancelDelete">Cancel</button>
+                </div>
+            </div>
+        </div>
+
 		<h2>User List</h2>
 
 		<table class="table table-striped table-hover">
@@ -39,7 +53,7 @@
 					<td>
 						<button type="button" class="btn btn-info" @click="changeRole(user, index)">Permissions</button>
                         <button type="button" style="width: 70px;" class="btn btn-danger" ref="btnSuspend" @click="suspendUser(user, index)">{{ (user.status_id === 3) ? 'Active' : 'Suspend' }}</button>
-						<button type="button" style="width: 70px;" class="btn btn-warning" ref="btnDelete" @click="deleteUser(user, index)">Remove</button>
+						<button type="button" style="width: 70px;" class="btn btn-warning" ref="btnDelete" @click="aboutToDelete(user, index)">Remove</button>
 					</td>
 				</tr>
 			</tbody>
@@ -64,7 +78,8 @@
 				stat: new UserStatus(),
 				lev: new UserLevel(),
 				levels: [],
-				index: 0
+				index: 0,
+                isAboutToDelete: false
 			}
 		},
 		watch: {
@@ -133,11 +148,17 @@
 				}
 			},
 
-            deleteUser(user, index) {
+            aboutToDelete(user, index) {
+                this.user = user;
+                this.index = index;
+                this.isAboutToDelete = true;
+            },
 
-                axios.delete('/user/removeUser?id='+user.id).then(response => {
+            deleteUser() {
+                axios.delete('/user/removeUser?id='+this.user.id).then(response => {
                     if (response.data) {
-                        this.users.splice(index, 1); // remove user on table list
+                        this.isAboutToDelete = false;
+                        this.users.splice(this.index, 1); // remove user on table list
 
                         // popup message
                         new Noty({
@@ -148,6 +169,10 @@
                         }).show();
                     }
                 });
+            },
+
+            cancelDelete() {
+                this.isAboutToDelete = false;
             }
 		}
 	}
@@ -170,4 +195,11 @@
 	}
 
 	.icon-pe img { width: 100%; }
+
+    .Remove {
+        background: #fff;
+        margin: 13em auto;
+        padding: .1em 1em 1em;
+        width: 350px;
+    }
 </style>
