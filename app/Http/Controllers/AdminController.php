@@ -647,12 +647,29 @@ class AdminController extends Controller
     {
         $from = request('from') . ' 00:00:00';
         $to = request('to') . ' 23:59:59';
+        $input = trim(request('input'));
 
         // get articles match by keyword
         return DB::table('words AS w')
             ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
             ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
-            ->whereRaw('w.keyword LIKE "%' . request('input') . '%"')
+            ->whereRaw('w.keyword LIKE "%' . $input . '%"')
+            ->whereBetween('w.created_at', [$from, $to])
+            ->orderBy('w.created_at')
+            ->get($this->columnsNeedForArticle());
+    }
+
+    public function searchByTitle()
+    {
+        $from = request('from') . ' 00:00:00';
+        $to = request('to') . ' 23:59:59';
+        $input = trim(request('input'));
+
+        // get articles match by keyword
+        return DB::table('words AS w')
+            ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
+            ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
+            ->whereRaw('w.doc_title LIKE "%' . $input . '%"')
             ->whereBetween('w.created_at', [$from, $to])
             ->orderBy('w.created_at')
             ->get($this->columnsNeedForArticle());

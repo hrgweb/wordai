@@ -17666,6 +17666,10 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
                     this.form.post('/admin/searchByKeyword').then(function (data) {
                         return _this4.setArticlesData(data);
                     });
+                } else if (this.searchBy === 'title') {
+                    this.form.post('/admin/searchByTitle').then(function (data) {
+                        return _this4.setArticlesData(data);
+                    });
                 }
             } else {
                 new Noty({

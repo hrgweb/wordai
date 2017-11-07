@@ -265,6 +265,8 @@ export const ReportingBus = new Vue({
                     this.form.post('/admin/searchByWebsite').then(data => this.setArticlesData(data));
                 } else if (this.searchBy === 'keyword') {
                     this.form.post('/admin/searchByKeyword').then(data => this.setArticlesData(data));
+                } else if (this.searchBy === 'title') {
+                    this.form.post('/admin/searchByTitle').then(data => this.setArticlesData(data));
                 }
             } else {
                 new Noty({
