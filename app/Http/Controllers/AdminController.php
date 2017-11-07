@@ -643,6 +643,21 @@ class AdminController extends Controller
         }
     }
 
+    public function searchByKeyword()
+    {
+        $from = request('from') . ' 00:00:00';
+        $to = request('to') . ' 23:59:59';
+
+        // get articles match by keyword
+        return DB::table('words AS w')
+            ->leftJoin('users AS u', 'u.id', '=', 'w.user_id')
+            ->leftJoin('domains AS d', 'd.id', '=', 'w.domain_id')
+            ->whereRaw('w.keyword LIKE "%' . request('input') . '%"')
+            ->whereBetween('w.created_at', [$from, $to])
+            ->orderBy('w.created_at')
+            ->get($this->columnsNeedForArticle());
+    }
+
     public function downloadArticle()
     {
         // $article = request('spin');

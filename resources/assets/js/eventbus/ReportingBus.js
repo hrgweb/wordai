@@ -3,10 +3,10 @@ import Editor from './../class/Editor.js'
 import Form from './../class/Form.js'
 
 export const ReportingBus = new Vue({
-	data() {
-		return {
+    data() {
+        return {
             articles: [],
-			isEditorEditBtnDisable: false,
+            isEditorEditBtnDisable: false,
             reportingFilter: {
                 groupBy: 'select',
                 orderBy: 'date',
@@ -40,8 +40,8 @@ export const ReportingBus = new Vue({
             searchByArticlesCount: 0,
             searchBy: 'select',
             isLoading: false
-		};
-	},
+        };
+    },
 
     computed: {
         placeHolder() {
@@ -172,16 +172,16 @@ export const ReportingBus = new Vue({
             let date = this.date;
 
             if (this.isSameMonth === true) {
-                return '?fromMon='+date.fromMon+'&toSun='+date.toSun+'&curMonth='+date.curMonth+'&curYear='+date.curYear+'&monthSame='+date.monthSame;
+                return '?fromMon=' + date.fromMon + '&toSun=' + date.toSun + '&curMonth=' + date.curMonth + '&curYear=' + date.curYear + '&monthSame=' + date.monthSame;
             } else {
-                return '?fromMon='+date.fromMon+'&toSun='+date.toSun+'&curMonthMon='+date.curMonthMon+'&curMonthSun='+date.curMonthSun+'&curYear='+date.curYear+'&monthSame='+date.monthSame;
+                return '?fromMon=' + date.fromMon + '&toSun=' + date.toSun + '&curMonthMon=' + date.curMonthMon + '&curMonthSun=' + date.curMonthSun + '&curYear=' + date.curYear + '&monthSame=' + date.monthSame;
             }
         },
 
         articlesThisWeek() {
             let params = this.paramsForDate();
 
-            axios.get('/admin/articlesThisWeek'+params).then(response => this.articles = this.editor.mapResultOfArticles(response.data));
+            axios.get('/admin/articlesThisWeek' + params).then(response => this.articles = this.editor.mapResultOfArticles(response.data));
         },
 
         articlesEditedThisWeek() {
@@ -214,12 +214,12 @@ export const ReportingBus = new Vue({
         filterGroupByChanged() {
             let params = this.paramsForDate();
 
-            switch(this.reportingFilter.groupBy) {
+            switch (this.reportingFilter.groupBy) {
                 case 'user':
-                    axios.get('/admin/articlesCreator'+params).then(response => this.creatorOfArticles = response.data);
+                    axios.get('/admin/articlesCreator' + params).then(response => this.creatorOfArticles = response.data);
                     break;
                 case 'domain':
-                    axios.get('/admin/articlesDomain'+params).then(response => this.creatorOfArticles = response.data);
+                    axios.get('/admin/articlesDomain' + params).then(response => this.creatorOfArticles = response.data);
                     break;
             }
         },
@@ -247,7 +247,7 @@ export const ReportingBus = new Vue({
 
         setArticlesData(articles) {
             this.isLoading = false;
-            this.searchByArticlesData =  this.editor.mapResultOfArticles(articles);
+            this.searchByArticlesData = this.editor.mapResultOfArticles(articles);
         },
 
         searchNow(data) {
@@ -263,6 +263,8 @@ export const ReportingBus = new Vue({
                     this.form.post('/admin/searchByGroup').then(data => this.setArticlesData(data));
                 } else if (this.searchBy === 'website') {
                     this.form.post('/admin/searchByWebsite').then(data => this.setArticlesData(data));
+                } else if (this.searchBy === 'keyword') {
+                    this.form.post('/admin/searchByKeyword').then(data => this.setArticlesData(data));
                 }
             } else {
                 new Noty({

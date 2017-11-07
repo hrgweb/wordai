@@ -39,7 +39,7 @@
                 </div>
 
                 <!-- Input -->
-                <div class="input" v-else-if="report.searchBy === 'user' || report.searchBy === 'group' || report.searchBy === 'website'">
+                <div class="input" v-else-if="report.searchBy === 'user' || report.searchBy === 'group' || report.searchBy === 'website' || report.searchBy === 'keyword' || report.searchBy === 'title'">
                     <form method="POST" @submit.prevent>
                         <input
                             type="text"
@@ -93,7 +93,7 @@
         mixins: [ ArticleEditorMixin ],
         data() {
             return {
-                search: { by: ['range', 'user', 'group', 'website'] },
+                search: { by: ['range', 'user', 'group', 'website', 'keyword', 'title'] },
                 report: ReportingBus
             }
         }
@@ -102,7 +102,7 @@
 
 <style scoped>
     .controls {
-        width: 170px;
+        width: 190px;
         float: left;
         /*margin-right: 1em;*/
     }

@@ -17662,6 +17662,10 @@ var ReportingBus = new __WEBPACK_IMPORTED_MODULE_0_vue___default.a({
                     this.form.post('/admin/searchByWebsite').then(function (data) {
                         return _this4.setArticlesData(data);
                     });
+                } else if (this.searchBy === 'keyword') {
+                    this.form.post('/admin/searchByKeyword').then(function (data) {
+                        return _this4.setArticlesData(data);
+                    });
                 }
             } else {
                 new Noty({
@@ -33466,7 +33470,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     mixins: [__WEBPACK_IMPORTED_MODULE_4__mixins_ArticleEditorMixin_js__["a" /* ArticleEditorMixin */]],
     data: function data() {
         return {
-            search: { by: ['range', 'user', 'group', 'website'] },
+            search: { by: ['range', 'user', 'group', 'website', 'keyword', 'title'] },
             report: __WEBPACK_IMPORTED_MODULE_3__eventbus_ReportingBus_js__["a" /* ReportingBus */]
         };
     }
@@ -40318,7 +40322,7 @@ exports.push([module.i, "\n.Comment p[data-v-285f1c69] { font-size: 1.2em;\n}\n"
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(2)();
-exports.push([module.i, "\n.controls[data-v-30597736] {\n    width: 170px;\n    float: left;\n    /*margin-right: 1em;*/\n}\n.misc[data-v-30597736] {\n    color: #fff;\n    font-size: 1.3em;\n    text-transform: uppercase;\n    margin-top: 0.3em;\n    margin-left: 1em;\n}\n.search-by[data-v-30597736],\n.input[data-v-30597736] { display: -webkit-box; display: -ms-flexbox; display: flex;\n}\n", ""]);
+exports.push([module.i, "\n.controls[data-v-30597736] {\n    width: 190px;\n    float: left;\n    /*margin-right: 1em;*/\n}\n.misc[data-v-30597736] {\n    color: #fff;\n    font-size: 1.3em;\n    text-transform: uppercase;\n    margin-top: 0.3em;\n    margin-left: 1em;\n}\n.search-by[data-v-30597736],\n.input[data-v-30597736] { display: -webkit-box; display: -ms-flexbox; display: flex;\n}\n", ""]);
 
 /***/ }),
 /* 258 */
@@ -65129,7 +65133,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.report.searchArticlesByRange($event)
       }
     }
-  }, [_vm._v("Search Now")])])]) : (_vm.report.searchBy === 'user' || _vm.report.searchBy === 'group' || _vm.report.searchBy === 'website') ? _c('div', {
+  }, [_vm._v("Search Now")])])]) : (_vm.report.searchBy === 'user' || _vm.report.searchBy === 'group' || _vm.report.searchBy === 'website' || _vm.report.searchBy === 'keyword' || _vm.report.searchBy === 'title') ? _c('div', {
     staticClass: "input"
   }, [_c('form', {
     attrs: {
