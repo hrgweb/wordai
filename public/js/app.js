@@ -4877,20 +4877,20 @@ function applyToTag (styleElement, obj) {
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CrudMixin; });
 var CrudMixin = {
-	data: function data() {
-		return {
-			isEdit: false,
-			isSuccess: false,
-			isLoading: false,
-			errors: [],
-			authUser: {},
-			notify: {
-				type: true,
-				message: 'Domain',
-				action: 'saved'
-			}
-		};
-	}
+    data: function data() {
+        return {
+            isEdit: false,
+            isSuccess: false,
+            isLoading: false,
+            errors: [],
+            authUser: {},
+            notify: {
+                type: true,
+                message: 'Domain',
+                action: 'saved'
+            }
+        };
+    }
 };
 
 /***/ }),
@@ -32727,6 +32727,21 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__words_PrepostResult_vue__ = __webpack_require__(449);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__words_PrepostResult_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__words_PrepostResult_vue__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -32745,9 +32760,17 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+    components: { PrepostResult: __WEBPACK_IMPORTED_MODULE_0__words_PrepostResult_vue___default.a },
     data: function data() {
         return {
+            prepost: {},
+            error: '',
+            hasPrepost: false,
+            isLoading: false,
+            isError: false,
             form: new Form({
                 article: ''
             })
@@ -32756,9 +32779,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
     methods: {
         onSubmit: function onSubmit() {
+            var _this = this;
+
+            this.hasPrepost = false;
+            this.isLoading = true;
+
             this.form.post('/words/processToNewCopyscape').then(function (data) {
                 var account = JSON.parse(data.account);
                 var response = JSON.parse(data.response);
+
+                _this.hasPrepost = true;
+                _this.isLoading = false;
+
+                // check if server is failed
+                if (response.hasOwnProperty('error')) {
+                    _this.isError = true;
+                    console.log('has error');
+                } else {
+                    _this.isError = false;
+                    _this.prepost = response;
+                    console.log('no error');
+                }
 
                 console.log(account);
                 console.log(response);
@@ -64875,7 +64916,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.onSubmit($event)
       }
     }
-  }, [_vm._v("Copyscape")])])])
+  }, [_vm._v("Copyscape")])]), _vm._v(" "), _vm._v("\n       \n    "), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _vm._v(" "), (_vm.isError) ? _c('span', {
+    staticStyle: {
+      "color": "red"
+    }
+  }, [_vm._v(_vm._s(_vm.error))]) : _vm._e(), _c('br'), _vm._v(" "), (_vm.hasPrepost) ? _c('prepost-result', {
+    attrs: {
+      "prepost": _vm.prepost
+    }
+  }) : _vm._e()], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
 if (false) {
@@ -70398,6 +70447,166 @@ module.exports = function listToStyles (parentId, list) {
 __webpack_require__(156);
 module.exports = __webpack_require__(157);
 
+
+/***/ }),
+/* 442 */,
+/* 443 */,
+/* 444 */,
+/* 445 */,
+/* 446 */,
+/* 447 */,
+/* 448 */,
+/* 449 */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+/* styles */
+__webpack_require__(455)
+
+var Component = __webpack_require__(1)(
+  /* script */
+  __webpack_require__(450),
+  /* template */
+  __webpack_require__(452),
+  /* scopeId */
+  "data-v-4a185278",
+  /* cssModules */
+  null
+)
+Component.options.__file = "C:\\xampp\\htdocs\\laravel\\development\\wordai\\resources\\assets\\js\\components\\words\\PrepostResult.vue"
+if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
+if (Component.options.functional) {console.error("[vue-loader] PrepostResult.vue: functional components are not supported with templates, they should use render functions.")}
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4a185278", Component.options)
+  } else {
+    hotAPI.reload("data-v-4a185278", Component.options)
+  }
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 450 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['prepost']
+});
+
+/***/ }),
+/* 451 */,
+/* 452 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('div', {
+    staticClass: "prepost"
+  }, [_c('h4', [_vm._v("PrepostSEO Result")]), _c('hr'), _vm._v(" "), _c('ul', {
+    staticClass: "prepost nav inline-block"
+  }, [_c('li', [_vm._v("Plagiarism: "), _c('b', [_vm._v(_vm._s(_vm.prepost.plagPercent))]), _vm._v("%")]), _vm._v(" "), _c('li', [_vm._v("Uniqueness: "), _c('b', [_vm._v(_vm._s(_vm.prepost.uniquePercent))]), _vm._v("%")])]), _c('br'), _vm._v(" "), _c('ul', {
+    staticClass: "result nav"
+  }, _vm._l((_vm.prepost.details), function(item, index) {
+    return _c('li', {
+      key: index
+    }, [_c('div', {
+      staticClass: "item alert",
+      class: {
+        'alert-success': item.unique === 'true', 'alert-danger': item.unique === 'false'
+      }
+    }, [_c('p', [_vm._v(_vm._s(item.query))]), _vm._v(" "), (item.matched_urls.length > 0) ? _c('ul', {
+      staticClass: "url"
+    }, _vm._l((item.matched_urls), function(url, index) {
+      return _c('li', {
+        key: index
+      }, [_c('a', {
+        attrs: {
+          "href": url,
+          "target": "_blank"
+        }
+      }, [_vm._v(_vm._s(url))])])
+    })) : _vm._e()])])
+  }))])
+},staticRenderFns: []}
+module.exports.render._withStripped = true
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+     require("vue-hot-reload-api").rerender("data-v-4a185278", module.exports)
+  }
+}
+
+/***/ }),
+/* 453 */,
+/* 454 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)();
+exports.push([module.i, "\nul.prepost li[data-v-4a185278] {\n  display: inline-block;\n  margin-right: 2em;\n}\ndiv.prepost[data-v-4a185278] {\n  background: #787879;\n  color: #fff;\n  padding: .5em 1.5em;\n  border: 1px solid #dad4d4;\n}\ndiv.item[data-v-4a185278] {\n  margin: 0;\n}\ndiv.item p[data-v-4a185278] {\n    font-size: 1.1em;\n}\nul.url[data-v-4a185278] {\n  margin-top: 1em;\n}\nul.url a[data-v-4a185278] {\n    color: #00f1ff !important;\n}\nul.result li[data-v-4a185278] {\n  margin-bottom: .3em !important;\n}\n.alert-success[data-v-4a185278],\n.alert-danger[data-v-4a185278] {\n  color: #fff !important;\n  border-radius: 0 !important;\n}\n.alert-success[data-v-4a185278] {\n  background-color: #5bc530 !important;\n  border-color: #4fab2a !important;\n}\n.alert-danger[data-v-4a185278] {\n  background-color: #d44f4f !important;\n  border-color: #b94747 !important;\n}\n", ""]);
+
+/***/ }),
+/* 455 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(454);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("3516a74c", content, false);
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4a185278\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PrepostResult.vue", function() {
+     var newContent = require("!!../../../../../node_modules/css-loader/index.js!../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-4a185278\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../../node_modules/sass-loader/lib/loader.js!../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PrepostResult.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
 
 /***/ })
 /******/ ]);
