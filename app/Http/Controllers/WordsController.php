@@ -126,10 +126,18 @@ class WordsController extends Controller
 		// if validation fails
         if ($validator->fails()) {
             return response()->json(['isError' => true, 'errors' => $validator->errors()]);
-        }
+		}
 
+		//================ USING QUEUE
+		// NEW CODE
+        $result = $this->postSpinTax(request()->all());     // post article
+
+        return response()->json(['isError' => false, 'result' => $result]);
+
+		//================ NOT USING QUEUE
+		// OLD CODE
         // if validation success, generate spintax
-        $spintax = $this->generateSpintax($request->all(), $request->article);
+        /* $spintax = $this->generateSpintax($request->all(), $request->article);
         $spintax = json_decode($spintax);
 
         if (strtolower($spintax->status) === 'success') {
@@ -143,9 +151,7 @@ class WordsController extends Controller
 
         } else {
             return response()->json(['isError' => false, 'spintaxStatus' => false, 'result' => $spintax]);
-        }
-
-        // return response()->json(['isError' => false, 'result' => $result]);
+		} */
 	}
 
     public function runWordai(Request $request)

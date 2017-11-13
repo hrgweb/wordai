@@ -76,7 +76,27 @@ export const CreateArticleMixin = {
                         } else { // validation success
                             this.isValidationFail = false;
 
-                            if (data.spintaxStatus) {
+                            //================ USING QUEUE
+                            // NEW CODE
+                            // notify user article posted successfully
+                            let articleTitle = this.spin.doc_title;
+                            new Noty({
+                                type: 'success',
+                                text: `<b>${articleTitle}</b> article successfully saved.`,
+                                layout: 'bottomLeft',
+                                timeout: 5000
+                            }).show();
+
+                            // reset spin values
+                            this.resetInputFields();
+
+                            // animate div to top
+                            $('html, body').animate({ scrollTop: 0 });
+
+
+                            //================ NOT USING QUEUE
+                            // OLD CODE
+                            /* if (data.spintaxStatus) {
                                 this.isValidationFail = false;
 
                                 // notify user article posted successfully
@@ -98,7 +118,7 @@ export const CreateArticleMixin = {
                                 this.isValidationFail = true;
                                 this.errorType = 0;
                                 this.errors = data.result.error;
-                            }
+                            } */
                         }
                     });
                 } else {
