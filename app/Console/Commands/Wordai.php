@@ -140,7 +140,9 @@ class Wordai extends Command
 		if ($this->has_unprocess_article()) { 		// if there is unprocess article
 			$result = json_decode($this->api()); 	// decode json result from the response of server
 			$status = $result->status;
-
+			
+			// dd($this->article->article);
+			
 			if ($status === 'Success') {
 				$spintax = $result->text;
 				$articleObj = $this->article;
