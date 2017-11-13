@@ -62,43 +62,36 @@ export const CreateArticleMixin = {
                     // this.showNotificationKeywordNotExist();
                     this.wordaiBus.isKeywordExist = false;
 
-                    axios.post('/words', this.spin).then(response => {
-                        let data = response.data;
-
-                        this.isLoading = false;
-                        this.isDomainNotSet = false;
+                    // check if article is exceeds 1800 words
+                    let wordcount = parseInt($('b#word-count').text(), 10);
+                    if (wordcount > this.wordsMax) {
                         this.$refs.spinButton.disabled = false;
+                        this.isLoading = false;
 
-                        if (data.isError) { // validation fails
-                            this.isValidationFail = true;
-                            this.errorType = 1;
-                            this.errors = data.errors;
-                        } else { // validation success
-                            this.isValidationFail = false;
+                        new Noty({
+                            type: 'error',
+                            text: `Article must not exceed 1800 words`,
+                            layout: 'bottomLeft',
+                            timeout: 5000
+                        }).show();
+                    } else {
+                        // post the article
+                        axios.post('/words', this.spin).then(response => {
+                            let data = response.data;
 
-                            //================ USING QUEUE
-                            // NEW CODE
-                            // notify user article posted successfully
-                            let articleTitle = this.spin.doc_title;
-                            new Noty({
-                                type: 'success',
-                                text: `<b>${articleTitle}</b> article successfully saved.`,
-                                layout: 'bottomLeft',
-                                timeout: 5000
-                            }).show();
+                            this.isLoading = false;
+                            this.isDomainNotSet = false;
+                            this.$refs.spinButton.disabled = false;
 
-                            // reset spin values
-                            this.resetInputFields();
-
-                            // animate div to top
-                            $('html, body').animate({ scrollTop: 0 });
-
-
-                            //================ NOT USING QUEUE
-                            // OLD CODE
-                            /* if (data.spintaxStatus) {
+                            if (data.isError) { // validation fails
+                                this.isValidationFail = true;
+                                this.errorType = 1;
+                                this.errors = data.errors;
+                            } else { // validation success
                                 this.isValidationFail = false;
 
+                                //================ USING QUEUE
+                                // NEW CODE
                                 // notify user article posted successfully
                                 let articleTitle = this.spin.doc_title;
                                 new Noty({
@@ -114,13 +107,35 @@ export const CreateArticleMixin = {
                                 // animate div to top
                                 $('html, body').animate({ scrollTop: 0 });
 
-                            } else { // check if spintax is error
-                                this.isValidationFail = true;
-                                this.errorType = 0;
-                                this.errors = data.result.error;
-                            } */
-                        }
-                    });
+
+                                //================ NOT USING QUEUE
+                                // OLD CODE
+                                /* if (data.spintaxStatus) {
+                                    this.isValidationFail = false;
+
+                                    // notify user article posted successfully
+                                    let articleTitle = this.spin.doc_title;
+                                    new Noty({
+                                        type: 'success',
+                                        text: `<b>${articleTitle}</b> article successfully saved.`,
+                                        layout: 'bottomLeft',
+                                        timeout: 5000
+                                    }).show();
+
+                                    // reset spin values
+                                    this.resetInputFields();
+
+                                    // animate div to top
+                                    $('html, body').animate({ scrollTop: 0 });
+
+                                } else { // check if spintax is error
+                                    this.isValidationFail = true;
+                                    this.errorType = 0;
+                                    this.errors = data.result.error;
+                                } */
+                            }
+                        });
+                    }
                 } else {
                     let msg = `
                         <h4>Possible reason for error</h4>

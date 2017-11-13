@@ -85,7 +85,7 @@
 			<br>
 
 			<div class="form-group">
-				<span>Words count: <b>{{ count }}</b></span>
+				<span>Words count: <b id="word-count">{{ count }}</b></span>
 			</div>
 			<br>
 
