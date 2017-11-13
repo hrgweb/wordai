@@ -47,8 +47,7 @@ class Wordai extends Command
      */
     public function handle()
     {
-
-    	// $this->process_api();
+    	$this->process_api();
     }
 
     /**
@@ -62,7 +61,7 @@ class Wordai extends Command
 		// $this->article = Word::where('isArticleApprove', 1)->first();
         // $this->article = Word::where(['isEditorEdit' => 1, 'isProcess' => 0])->first();
         $this->article = Word::where('isProcess', '=', 0)
-                            ->whereRaw('(isEditorUpdateSC = 1 OR isEditorEdit = 1)')
+                            // ->whereRaw('(isEditorUpdateSC = 1 OR isEditorEdit = 1)')
                             ->first();
 
 		return count($this->article) > 0 ? true : false;
@@ -93,7 +92,7 @@ class Wordai extends Command
         $protected = $this->word_repo->remove_underline_and_spaces_for_terms($protected);
 		$synonyms = $article->synonym;
 
-		$quality = 'readable';
+		$quality = 'Readable';
 		$nonested = 'off';
 		$sentence = 'on';
 		$paragraph = 'on';
