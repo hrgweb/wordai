@@ -30355,6 +30355,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 
@@ -63314,13 +63316,7 @@ module.exports = Component.exports
 module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('div', {
     staticClass: "Word"
-  }, [(_vm.wordaiBus.isKeywordExist) ? _c('keyword-alert', {
-    on: {
-      "closeAlertBox": function($event) {
-        _vm.wordaiBus.isKeywordExist = false
-      }
-    }
-  }) : _vm._e(), _vm._v(" "), _c('h1', [_vm._v("Create Article")]), _c('hr'), _vm._v(" "), _c('form', {
+  }, [_c('h1', [_vm._v("Create Article")]), _c('hr'), _vm._v(" "), _c('form', {
     attrs: {
       "method": "POST"
     }
@@ -63338,7 +63334,11 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "dom_name"
     }
-  }, [_vm._v("Domain Name")]), _vm._v("  \n            "), _c('select', {
+  }, [_vm._v("Domain Name")]), _vm._v("   "), (_vm.isDomainNotSet) ? _c('span', {
+    staticStyle: {
+      "color": "red"
+    }
+  }, [_vm._v("This domain not set yet.")]) : _vm._e(), _vm._v(" "), _c('select', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -63357,13 +63357,17 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.spin.domain_id = $event.target.multiple ? $$selectedVal : $$selectedVal[0]
       }, _vm.domainChange]
     }
-  }, _vm._l((_vm.domains), function(domain) {
+  }, [_c('option', {
+    attrs: {
+      "value": "select"
+    }
+  }, [_vm._v("Select a domain")]), _vm._v(" "), _vm._l((_vm.domains), function(domain) {
     return _c('option', {
       domProps: {
         "value": domain.id
       }
     }, [_vm._v(_vm._s(domain.domain.toUpperCase()))])
-  })), _vm._v("   \n            ")]), _vm._v(" "), _c('div', {
+  })], 2)]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -63399,6 +63403,33 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       }
     }, [_vm._v(_vm._s(type.article_type))])
   })], 2) : _vm._e()]), _vm._v(" "), _c('div', {
+    staticClass: "form-group"
+  }, [_c('label', {
+    attrs: {
+      "for": "group_name"
+    }
+  }, [_vm._v("Group Name")]), _vm._v(" "), _c('input', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.group_name),
+      expression: "spin.group_name"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "type": "text",
+      "disabled": "disabled"
+    },
+    domProps: {
+      "value": (_vm.spin.group_name)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.group_name = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
     staticClass: "form-group"
   }, [_c('label', {
     attrs: {
@@ -63511,35 +63542,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
   }, [_c('label', {
     attrs: {
-      "for": "protected"
-    }
-  }, [_vm._v("Protected Terms")]), _vm._v(" "), _c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.spin.protected),
-      expression: "spin.protected"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "rows": "8"
-    },
-    domProps: {
-      "value": (_vm.spin.protected)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.spin.protected = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
-  }, [_c('label', {
-    attrs: {
       "for": "domain_protected"
     }
-  }, [_vm._v("Domain Protected Terms")]), _vm._v(" "), _c('textarea', {
+  }, [_vm._v("Protected Terms")]), _vm._v(" "), _c('textarea', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -63559,18 +63564,52 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.spin.domain_protected = $event.target.value
       }
     }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c('label', {
+    attrs: {
+      "for": "protected"
+    }
+  }, [_vm._v("Domain Protected Terms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.protected),
+      expression: "spin.protected"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.spin.protected)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.protected = $event.target.value
+      }
+    }
   })])]), _c('br'), _vm._v(" "), _c('label', {
     attrs: {
       "for": "article"
     }
-  }, [_vm._v("Original Article")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.isValidationFail) ? _c('error', {
+  }, [_vm._v("Original Article")]), _vm._v(" "), _vm._m(0), _vm._v(" "), _c('br'), _vm._v(" "), _c('label', {
+    attrs: {
+      "for": "citation"
+    }
+  }, [_vm._v("Citation")]), _vm._v(" "), _vm._m(1), _vm._v(" "), _c('br'), _vm._v(" "), (_vm.isValidationFail) ? _c('error', {
     attrs: {
       "type": _vm.errorType,
       "list": _vm.errors
     }
   }) : _vm._e(), _vm._v(" "), _c('br'), _vm._v(" "), _c('div', {
     staticClass: "form-group"
-  }, [_c('span', [_vm._v("Words count: "), _c('b', [_vm._v(_vm._s(_vm.count))])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
+  }, [_c('span', [_vm._v("Words count: "), _c('b', {
+    attrs: {
+      "id": "word-count"
+    }
+  }, [_vm._v(_vm._s(_vm.count))])])]), _vm._v(" "), _c('br'), _vm._v(" "), _c('button', {
     ref: "spinButton",
     staticClass: "btn btn-primary",
     attrs: {
@@ -63582,11 +63621,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
         _vm.saveArticle($event)
       }
     }
-  }, [_vm._v("Save Article")]), _vm._v(" "), _vm._v("\n           \n        "), (_vm.isLoading) ? _c('span', {
-    attrs: {
-      "id": "loading"
-    }
-  }, [_vm._v("Verifying Article....")]) : _vm._e(), _c('br')], 1)], 1)
+  }, [_vm._v("Save Article")]), _vm._v(" "), _vm._v("\n\t\t\t   \n\t\t\t"), (_vm.isLoading) ? _c('span', [_vm._v("LOADING....")]) : _vm._e(), _c('br')], 1)])
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
   return _c('textarea', {
     directives: [{
@@ -63608,6 +63643,29 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.spin.article = $event.target.value
+      }
+    }
+  })
+},function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
+  return _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.citation),
+      expression: "spin.citation"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "id": "citation",
+      "rows": "10"
+    },
+    domProps: {
+      "value": (_vm.spin.citation)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.citation = $event.target.value
       }
     }
   })
