@@ -63,9 +63,9 @@
                     <textarea class="form-control" rows="8" v-model="detail.lsi"></textarea><br>
                 </div>
 
-                <!-- Protected Terms -->
+                <!-- Domain Protected Terms -->
                 <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" style="padding-right: 1em;">
-                    <label for="protected">Protected Terms</label>
+                    <label for="protected">Domain Protected Terms</label>
                     <textarea class="form-control" rows="8" v-model="detail.protected"></textarea><br>
                 </div>
 
