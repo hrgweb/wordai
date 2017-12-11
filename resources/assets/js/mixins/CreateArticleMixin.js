@@ -44,6 +44,19 @@ export const CreateArticleMixin = {
             }).show();
         },
 
+        cleanTerms(terms) {
+            // find all line breaks and replace with comma(,)
+            let result = terms.replace(/[\n]/g, ',');
+
+            // results
+            result = result.match(/[^\,]+/g);
+
+            // trim space on each results
+            result = result.map(item => item !== null ? item.trim() : '');
+
+            return result.join(',');
+        },
+
         saveArticle() {
             // check if domain_id is set and article type
             if (
@@ -75,6 +88,12 @@ export const CreateArticleMixin = {
                             timeout: 5000
                         }).show();
                     } else {
+                        // prepare saving the article
+
+                        // update pt and dpt, add space as what api require
+                        this.spin['protected'] = this.cleanTerms(this.spin.protected);
+                        this.spin['domain_protected'] = this.cleanTerms(this.spin.domain_protected);
+
                         // post the article
                         axios.post('/words', this.spin).then(response => {
                             let data = response.data;
