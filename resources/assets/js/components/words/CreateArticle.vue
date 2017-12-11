@@ -56,15 +56,15 @@
 			</div><br>
 
 			<div class="row">
-                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                    <label for="domain_protected">Protected Terms</label>
-                    <textarea class="form-control" rows="8" v-model="spin.domain_protected"></textarea>
-                </div>
-
 				<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-					<label for="protected">Domain Protected Terms</label>
+					<label for="protected">Protected Terms</label>
 					<textarea class="form-control" rows="8" v-model="spin.protected"></textarea>
 				</div>
+
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                    <label for="domain_protected">Domain Protected Terms</label>
+                    <textarea class="form-control" rows="8" v-model="spin.domain_protected"></textarea>
+                </div>
 			</div><br>
 
 			<!-- <textarea class="form-control" rows="8" :maxlength="wordsMax" v-model="words" @keyup="wordCount"></textarea> -->
