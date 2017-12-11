@@ -159,7 +159,7 @@
                         domain_id: item.domain_id,
 						group_id: item.group_id,
 						domain: item.domain,
-                        protected: item.protected.length < 100 ? item.protected : item.protected.substr(0, 100) + '...',
+                        protected: (item.protected != null && item.protected.length > 100) ? item.protected.substr(0, 100) + '...' : item.protected,
 						// protected_orig: item.protected,
 						synonym: item.synonym,
 						created_at: item.created_at
