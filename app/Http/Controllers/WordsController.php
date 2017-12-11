@@ -59,10 +59,11 @@ class WordsController extends Controller
         $protected = strlen($request['keyword']) > 0 ? $request['keyword'] . ', ' : '';                         // keyword
         $protected .= strlen($request['lsi_terms']) > 0 ? $request['lsi_terms'] . ', ' : '';                    // lsi tems
         $protected .= strlen($request['domain_protected']) > 0 ? $request['domain_protected'] . ', ' : '';      // domain_protected
-        $protected .= strlen($request['protected']) > 0 ? $request['protected'] : '';                           // protected
-        $protected .= $protected . ',' . $company . ',' . $city . ',' . $state;
+        $protected .= strlen($request['protected']) > 0 ? $request['protected'] . ', ' : '';                    // protected
+        // $protected .= $protected . ',' . $company . ',' . $city . ',' . $state;
+        $protected .= $company . ',' . $city . ',' . $state;
         $protected = $this->word->remove_underline_and_spaces_for_terms($protected);
-        $synonyms = $request['synonym'];
+		$synonyms = $request['synonym'];
 
         // OLD CODE
         // $request['keyword'] = $word->remove_underline_and_spaces_for_terms(request('keyword'));
@@ -158,7 +159,7 @@ class WordsController extends Controller
     {
         // if validation success, generate spintax
         $spintax = $this->generateSpintax($request->all(), $request->article);
-        $spintax = json_decode($spintax);
+		$spintax = json_decode($spintax);
 
         if (strtolower($spintax->status) === 'success') {
             $spin = $this->spin->process($spintax->text); // spin result

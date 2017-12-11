@@ -12,7 +12,7 @@ export const ArticleEditorMixin = {
         };
     },
 
-    mixins: [ UserArticleMixin ],
+    mixins: [UserArticleMixin],
 
     mounted() {
         this.authUser = JSON.parse(this.user);
@@ -48,7 +48,7 @@ export const ArticleEditorMixin = {
             this.article = data.article;
             this.index = data.index;
             this.tableType = data.tableType;
-            Vue.nextTick(() => this.isEdit = true );
+            Vue.nextTick(() => this.isEdit = true);
         },
 
         setArticleAndTime(article, spin, times) {
@@ -64,7 +64,7 @@ export const ArticleEditorMixin = {
         setupToUpdateRecord(data) {
             let index = 0;
 
-            switch(this.tableType) {
+            switch (this.tableType) {
                 case 'article-to-edit':
                     this.setArticleAndTime(
                         this.listToEdit[this.index],
@@ -133,45 +133,44 @@ export const ArticleEditorMixin = {
         updateRecord(data) {
             // if (data) {
 
-                // update articles
-                if (this.tableType === 'article-to-edit') {
-                    /*=============== OLD ===============*/
+            // update articles
+            if (this.tableType === 'article-to-edit') {
+                /*=============== OLD ===============*/
 
-                    // Vue.set(this.listToEdit, this.index, data);
+                // Vue.set(this.listToEdit, this.index, data);
 
-                    // find the result object to articles edited and update the value
-                    // this.updateRecordsByIndex(this.listEditedArticles, data);
+                // find the result object to articles edited and update the value
+                // this.updateRecordsByIndex(this.listEditedArticles, data);
 
-                    /*=============== NEW ===============*/
-                    // push to articles edited list
-                    // console.log(this.listToEdit[this.index])
-                    // this.listEditedArticles.unshift(this.listToEdit[this.index]);
+                /*=============== NEW ===============*/
+                // push to articles edited list
+                // console.log(this.listToEdit[this.index])
+                // this.listEditedArticles.unshift(this.listToEdit[this.index]);
 
-                    // remove this article from list of to edit articles
-                    this.listToEdit.splice(this.index, 1);
+                // remove this article from list of to edit articles
+                this.listToEdit.splice(this.index, 1);
 
-                    // console.log('to edit')
-                }
-                else if (this.tableType === 'article-edited') {
-                    /*=============== OLD ===============*/
+                // console.log('to edit')
+            } else if (this.tableType === 'article-edited') {
+                /*=============== OLD ===============*/
 
-                    // Vue.set(this.listEditedArticles, this.index, data);
+                // Vue.set(this.listEditedArticles, this.index, data);
 
-                    // find the result object to articles edited and update the value
-                    // this.updateRecordsByIndex(this.listToEdit, data);
+                // find the result object to articles edited and update the value
+                // this.updateRecordsByIndex(this.listToEdit, data);
 
-                    /*=============== NEW ===============*/
+                /*=============== NEW ===============*/
 
-                    // push to articles edited list
-                    // console.log(this.listEditedArticles[this.index])
-                    // this.listArticleToPublish.unshift(this.listEditedArticles[this.index]);
+                // push to articles edited list
+                // console.log(this.listEditedArticles[this.index])
+                // this.listArticleToPublish.unshift(this.listEditedArticles[this.index]);
 
-                    // remove this article from list of to edited articles
-                    this.listEditedArticles.splice(this.index, 1)
+                // remove this article from list of to edited articles
+                this.listEditedArticles.splice(this.index, 1)
 
-                    // console.log('edited')
+                // console.log('edited')
 
-                }
+            }
             // }
         },
 

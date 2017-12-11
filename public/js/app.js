@@ -16557,235 +16557,235 @@ module.exports = defaults;
 
 
 var ArticleActionMixin = {
-	props: ['user', 'token'],
-	components: { Error: __WEBPACK_IMPORTED_MODULE_0__components_errors_Error_vue___default.a, SeparateParagraph: __WEBPACK_IMPORTED_MODULE_1__components_words_SeparateParagraph_vue___default.a, FullArticle: __WEBPACK_IMPORTED_MODULE_3__components_words_FullArticle_vue___default.a, CopyscapeApi: __WEBPACK_IMPORTED_MODULE_2__components_words_CopyscapeApi_vue___default.a },
-	data: function data() {
-		return {
-			article: '',
-			wordsMax: 1800,
-			count: 0,
-			paragraph: '',
-			paragraphs: [],
-			spintaxResult: '',
-			isValidationFail: false,
-			errorType: 1, // legend: 1-input validation, 0-fail response result from server
-			spintaxType: 'article',
-			spin: {
-				article_type_id: 'select',
-				doc_title: '',
-				domain_id: 'select',
-				group_id: 0,
-				group_name: '',
-				domain: '',
-				keyword: '',
-				lsi_terms: '',
-				domain_protected: '',
-				article: '',
-				protected: '',
-				synonym: '',
-				citation: ''
-			},
-			articleTypes: [],
-			isCurated: false,
-			isArticleTypesLoaded: false,
-			domains: [],
-			isDomainNotSet: false,
-			userObj: new __WEBPACK_IMPORTED_MODULE_4__class_User_js__["a" /* default */]()
-		};
-	},
-	created: function created() {
-		this.authUser = JSON.parse(this.user);
+    props: ['user', 'token'],
+    components: { Error: __WEBPACK_IMPORTED_MODULE_0__components_errors_Error_vue___default.a, SeparateParagraph: __WEBPACK_IMPORTED_MODULE_1__components_words_SeparateParagraph_vue___default.a, FullArticle: __WEBPACK_IMPORTED_MODULE_3__components_words_FullArticle_vue___default.a, CopyscapeApi: __WEBPACK_IMPORTED_MODULE_2__components_words_CopyscapeApi_vue___default.a },
+    data: function data() {
+        return {
+            article: '',
+            wordsMax: 1800,
+            count: 0,
+            paragraph: '',
+            paragraphs: [],
+            spintaxResult: '',
+            isValidationFail: false,
+            errorType: 1, // legend: 1-input validation, 0-fail response result from server
+            spintaxType: 'article',
+            spin: {
+                article_type_id: 'select',
+                doc_title: '',
+                domain_id: 'select',
+                group_id: 0,
+                group_name: '',
+                domain: '',
+                keyword: '',
+                lsi_terms: '',
+                domain_protected: '',
+                article: '',
+                protected: '',
+                synonym: '',
+                citation: ''
+            },
+            articleTypes: [],
+            isCurated: false,
+            isArticleTypesLoaded: false,
+            domains: [],
+            isDomainNotSet: false,
+            userObj: new __WEBPACK_IMPORTED_MODULE_4__class_User_js__["a" /* default */]()
+        };
+    },
+    created: function created() {
+        this.authUser = JSON.parse(this.user);
 
-		this.listOfArticleType();
-		this.userDomainList();
-		// this.userDomainSetup();
-	},
+        this.listOfArticleType();
+        this.userDomainList();
+        // this.userDomainSetup();
+    },
 
-	watch: {
-		articleTypes: function articleTypes(data) {
-			this.isArticleTypesLoaded = data.length > 0 ? true : false;
-		},
-		article: function article(data) {
-			this.spin['spin'] = data;
-			this.postSpinTax(this.spin); // post article
-		}
-	},
-	methods: {
-		wordCount: function wordCount() {
-			var count = 1;
-			var words = this.spin.article.trim();
+    watch: {
+        articleTypes: function articleTypes(data) {
+            this.isArticleTypesLoaded = data.length > 0 ? true : false;
+        },
+        article: function article(data) {
+            this.spin['spin'] = data;
+            this.postSpinTax(this.spin); // post article
+        }
+    },
+    methods: {
+        wordCount: function wordCount() {
+            var count = 1;
+            var words = this.spin.article.trim();
 
-			for (var i = 0; i < words.length; i++) {
-				var char = words.charAt(i);
+            for (var i = 0; i < words.length; i++) {
+                var char = words.charAt(i);
 
-				if (char === ' ') {
-					count++;
-				}
-			}
+                if (char === ' ') {
+                    count++;
+                }
+            }
 
-			this.count = count;
-		},
-		spinTax: function spinTax() {
-			var _this = this;
+            this.count = count;
+        },
+        spinTax: function spinTax() {
+            var _this = this;
 
-			this.isLoading = true;
-			this.isValidationFail = false;
-			this.isSuccess = false;
-			this.$refs.spinButton.disabled = true;
+            this.isLoading = true;
+            this.isValidationFail = false;
+            this.isSuccess = false;
+            this.$refs.spinButton.disabled = true;
 
-			axios.post('/words', this.spin).then(function (response) {
-				var data = response.data;
+            axios.post('/words', this.spin).then(function (response) {
+                var data = response.data;
 
-				_this.isValidationFail = data.isError;
+                _this.isValidationFail = data.isError;
 
-				// check if validation fail
-				if (_this.isValidationFail === true) {
-					_this.errors = data.errors;
-					_this.isValidationFail = true;
-					_this.isLoading = false;
-				} else {
-					_this.isValidationFail = false;
-					_this.isLoading = false;
-					_this.$refs.spinButton.disabled = false;
+                // check if validation fail
+                if (_this.isValidationFail === true) {
+                    _this.errors = data.errors;
+                    _this.isValidationFail = true;
+                    _this.isLoading = false;
+                } else {
+                    _this.isValidationFail = false;
+                    _this.isLoading = false;
+                    _this.$refs.spinButton.disabled = false;
 
-					// check if api response is success
-					if (data.status === 'Success') {
-						var text = data.text;
-						var paragraphs = text.split(/\n\n\n/); // regex expression finding new line
+                    // check if api response is success
+                    if (data.status === 'Success') {
+                        var text = data.text;
+                        var paragraphs = text.split(/\n\n\n/); // regex expression finding new line
 
-						_this.spintaxResult = text;
+                        _this.spintaxResult = text;
 
-						// article is now the spintax result
-						// display finish full article
-						_this.generateFullArticle(_this.spin.article);
+                        // article is now the spintax result
+                        // display finish full article
+                        _this.generateFullArticle(_this.spin.article);
 
-						// post article
-						_this.spin['article'] = _this.spin.article;
-						_this.spin['spintax'] = text;
-					}
+                        // post article
+                        _this.spin['article'] = _this.spin.article;
+                        _this.spin['spintax'] = text;
+                    }
 
-					// check if api response is fail
-					if (data.status === 'Failure') {
-						_this.errorType = 0;
-						_this.isValidationFail = true;
-						_this.errors = data.error;
-					}
-				}
-			});
-		},
-		postSpinTax: function postSpinTax(data) {
-			axios.post('/words/postSpinTax', data).then(function (response) {
-				return console.log(response.data);
-			});
-		},
-		generateFullArticle: function generateFullArticle(article) {
-			var _this2 = this;
+                    // check if api response is fail
+                    if (data.status === 'Failure') {
+                        _this.errorType = 0;
+                        _this.isValidationFail = true;
+                        _this.errors = data.error;
+                    }
+                }
+            });
+        },
+        postSpinTax: function postSpinTax(data) {
+            axios.post('/words/postSpinTax', data).then(function (response) {
+                return console.log(response.data);
+            });
+        },
+        generateFullArticle: function generateFullArticle(article) {
+            var _this2 = this;
 
-			axios.post('/words/generateFullArticle', { article: article }).then(function (response) {
-				_this2.article = response.data;
-				_this2.isSuccess = true;
-			});
-		},
-		generateParagraph: function generateParagraph(paragraphs) {
-			var _this3 = this;
+            axios.post('/words/generateFullArticle', { article: article }).then(function (response) {
+                _this2.article = response.data;
+                _this2.isSuccess = true;
+            });
+        },
+        generateParagraph: function generateParagraph(paragraphs) {
+            var _this3 = this;
 
-			axios.post('/words/generateParagraph', { paragraphs: paragraphs }).then(function (response) {
-				return _this3.paragraphs = response.data;
-			});
-		},
-		respinParagraph: function respinParagraph(payload) {
-			console.log(payload);
-			this.paragraphs[payload.index] = payload.paragraph;
-		},
-		listOfArticleType: function listOfArticleType() {
-			var _this4 = this;
+            axios.post('/words/generateParagraph', { paragraphs: paragraphs }).then(function (response) {
+                return _this3.paragraphs = response.data;
+            });
+        },
+        respinParagraph: function respinParagraph(payload) {
+            console.log(payload);
+            this.paragraphs[payload.index] = payload.paragraph;
+        },
+        listOfArticleType: function listOfArticleType() {
+            var _this4 = this;
 
-			axios.get('/articleType/listOfArticleType').then(function (response) {
-				return _this4.articleTypes = response.data;
-			});
-		},
-		domainList: function domainList() {
-			var _this5 = this;
+            axios.get('/articleType/listOfArticleType').then(function (response) {
+                return _this4.articleTypes = response.data;
+            });
+        },
+        domainList: function domainList() {
+            var _this5 = this;
 
-			axios.get('/admin/domainList').then(function (response) {
-				return _this5.domains = response.data;
-			});
-		},
-		domainFillIn: function domainFillIn(isSet, lsi, term, synonym) {
-			this.isDomainNotSet = isSet;
-			this.spin['lsi_terms'] = lsi;
-			this.spin['protected'] = term;
-			this.spin['synonym'] = synonym;
-		},
-		setupDomainChange: function setupDomainChange(url) {
-			var _this6 = this;
+            axios.get('/admin/domainList').then(function (response) {
+                return _this5.domains = response.data;
+            });
+        },
+        domainFillIn: function domainFillIn(isSet, lsi, term, synonym) {
+            this.isDomainNotSet = isSet;
+            this.spin['lsi_terms'] = lsi;
+            this.spin['domain_protected'] = term;
+            this.spin['synonym'] = synonym;
+        },
+        setupDomainChange: function setupDomainChange(url) {
+            var _this6 = this;
 
-			axios.get(url).then(function (response) {
-				var data = response.data;
+            axios.get(url).then(function (response) {
+                var data = response.data;
 
-				if (data) {
-					_this6.domainFillIn(false, data.lsi_terms, data.protected, data.synonym);
-					_this6.groupName('/user/groupName?group_id=' + data.group_id);
-				} else {
-					_this6.domainFillIn(true, '', '', '');
-					_this6.spin['group_id'] = 0;
-					_this6.spin['group_name'] = '';
-				}
-			});
-		},
-		groupName: function groupName(url) {
-			var _this7 = this;
+                if (data) {
+                    _this6.domainFillIn(false, data.lsi_terms, data.protected, data.synonym);
+                    _this6.groupName('/user/groupName?group_id=' + data.group_id);
+                } else {
+                    _this6.domainFillIn(true, '', '', '');
+                    _this6.spin['group_id'] = 0;
+                    _this6.spin['group_name'] = '';
+                }
+            });
+        },
+        groupName: function groupName(url) {
+            var _this7 = this;
 
-			axios.get(url).then(function (response) {
-				var data = response.data;
+            axios.get(url).then(function (response) {
+                var data = response.data;
 
-				_this7.spin['group_id'] = data.id;
-				_this7.spin['group_name'] = data.group.toUpperCase();
-			});
-		},
-		domainChange: function domainChange() {
-			var vm = this;
-			// let options = $('datalist#domains').find('option');
-			// let domain_id = this.userObj.getUserId(vm, options, vm.spin.domain);
-			// this.spin.domain_id = domain_id.attributes[1].value;
+                _this7.spin['group_id'] = data.id;
+                _this7.spin['group_name'] = data.group.toUpperCase();
+            });
+        },
+        domainChange: function domainChange() {
+            var vm = this;
+            // let options = $('datalist#domains').find('option');
+            // let domain_id = this.userObj.getUserId(vm, options, vm.spin.domain);
+            // this.spin.domain_id = domain_id.attributes[1].value;
 
-			var domain_id = this.spin.domain_id;
-			var url = '/words/domainChange?domain_id=' + domain_id;
+            var domain_id = this.spin.domain_id;
+            var url = '/words/domainChange?domain_id=' + domain_id;
 
-			if (parseInt(domain_id, 10) > 0) {
-				this.setupDomainChange(url);
-				this.wordaiBus.getKeywordsAssociatedByDomain(domain_id);
-			} else {
-				this.spin['protected'] = '';
-				this.spin['synonym'] = '';
-				this.spin['group_id'] = 0;
-				this.spin['group_name'] = '';
-			}
-		},
-		userDomainSetup: function userDomainSetup() {
-			var _this8 = this;
+            if (parseInt(domain_id, 10) > 0) {
+                this.setupDomainChange(url);
+                this.wordaiBus.getKeywordsAssociatedByDomain(domain_id);
+            } else {
+                this.spin['protected'] = '';
+                this.spin['synonym'] = '';
+                this.spin['group_id'] = 0;
+                this.spin['group_name'] = '';
+            }
+        },
+        userDomainSetup: function userDomainSetup() {
+            var _this8 = this;
 
-			axios.get('/user/userDomainSetup').then(function (response) {
-				var data = _.head(response.data);
+            axios.get('/user/userDomainSetup').then(function (response) {
+                var data = _.head(response.data);
 
-				if (data) {
-					_this8.spin['domain'] = data.domain;
-					_this8.spin['domain_id'] = data.domain_id;
-					_this8.spin['protected'] = data.protected;
-					_this8.spin['synonym'] = data.synonym;
-				}
-			});
-		},
-		userDomainList: function userDomainList() {
-			var _this9 = this;
+                if (data) {
+                    _this8.spin['domain'] = data.domain;
+                    _this8.spin['domain_id'] = data.domain_id;
+                    _this8.spin['protected'] = data.protected;
+                    _this8.spin['synonym'] = data.synonym;
+                }
+            });
+        },
+        userDomainList: function userDomainList() {
+            var _this9 = this;
 
-			var user_id = this.authUser.id;
-			// axios.get('/user/userDomainList?user_id='+user_id).then(response => {
-			axios.get('/admin/domainList').then(function (response) {
-				_this9.domains = response.data;
-			});
-		}
-	}
+            var user_id = this.authUser.id;
+            // axios.get('/user/userDomainList?user_id='+user_id).then(response => {
+            axios.get('/admin/domainList').then(function (response) {
+                _this9.domains = response.data;
+            });
+        }
+    }
 };
 
 /***/ }),
@@ -17738,6 +17738,20 @@ var CreateArticleMixin = {
                 timeout: 5000
             }).show();
         },
+        cleanTerms: function cleanTerms(terms) {
+            // find all line breaks and replace with comma(,)
+            var result = terms.replace(/[\n]/g, ',');
+
+            // results
+            result = result.match(/[^\,]+/g);
+
+            // trim space on each results
+            result = result.map(function (item) {
+                return item !== null ? item.trim() : '';
+            });
+
+            return result.join(',');
+        },
         saveArticle: function saveArticle() {
             var _this = this;
 
@@ -17768,6 +17782,12 @@ var CreateArticleMixin = {
                             timeout: 5000
                         }).show();
                     } else {
+                        // prepare saving the article
+
+                        // update pt and dpt, add space as what api require
+                        this.spin['protected'] = this.cleanTerms(this.spin.protected);
+                        this.spin['domain_protected'] = this.cleanTerms(this.spin.domain_protected);
+
                         // post the article
                         axios.post('/words', this.spin).then(function (response) {
                             var data = response.data;
@@ -31682,7 +31702,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 					domain_id: item.domain_id,
 					group_id: item.group_id,
 					domain: item.domain,
-					protected: item.protected.length < 100 ? item.protected : item.protected.substr(0, 100) + '...',
+					protected: item.protected != null && item.protected.length > 100 ? item.protected.substr(0, 100) + '...' : item.protected,
 					// protected_orig: item.protected,
 					synonym: item.synonym,
 					created_at: item.created_at
@@ -68943,7 +68963,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "for": "protected"
     }
-  }, [_vm._v("Protected Terms")]), _vm._v(" "), _c('textarea', {
+  }, [_vm._v("Domain Protected Terms")]), _vm._v(" "), _c('textarea', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -69381,35 +69401,9 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
   }, [_c('label', {
     attrs: {
-      "for": "domain_protected"
-    }
-  }, [_vm._v("Protected Terms")]), _vm._v(" "), _c('textarea', {
-    directives: [{
-      name: "model",
-      rawName: "v-model",
-      value: (_vm.spin.domain_protected),
-      expression: "spin.domain_protected"
-    }],
-    staticClass: "form-control",
-    attrs: {
-      "rows": "8"
-    },
-    domProps: {
-      "value": (_vm.spin.domain_protected)
-    },
-    on: {
-      "input": function($event) {
-        if ($event.target.composing) { return; }
-        _vm.spin.domain_protected = $event.target.value
-      }
-    }
-  })]), _vm._v(" "), _c('div', {
-    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
-  }, [_c('label', {
-    attrs: {
       "for": "protected"
     }
-  }, [_vm._v("Domain Protected Terms")]), _vm._v(" "), _c('textarea', {
+  }, [_vm._v("Protected Terms")]), _vm._v(" "), _c('textarea', {
     directives: [{
       name: "model",
       rawName: "v-model",
@@ -69427,6 +69421,32 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "input": function($event) {
         if ($event.target.composing) { return; }
         _vm.spin.protected = $event.target.value
+      }
+    }
+  })]), _vm._v(" "), _c('div', {
+    staticClass: "col-xs-6 col-sm-6 col-md-6 col-lg-6"
+  }, [_c('label', {
+    attrs: {
+      "for": "domain_protected"
+    }
+  }, [_vm._v("Domain Protected Terms")]), _vm._v(" "), _c('textarea', {
+    directives: [{
+      name: "model",
+      rawName: "v-model",
+      value: (_vm.spin.domain_protected),
+      expression: "spin.domain_protected"
+    }],
+    staticClass: "form-control",
+    attrs: {
+      "rows": "8"
+    },
+    domProps: {
+      "value": (_vm.spin.domain_protected)
+    },
+    on: {
+      "input": function($event) {
+        if ($event.target.composing) { return; }
+        _vm.spin.domain_protected = $event.target.value
       }
     }
   })])]), _c('br'), _vm._v(" "), _c('label', {
