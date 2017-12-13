@@ -58,7 +58,7 @@ class WordsController extends Controller
 
         $protected = strlen($request['keyword']) > 0 ? $request['keyword'] . ', ' : '';                         // keyword
         $protected .= strlen($request['lsi_terms']) > 0 ? $request['lsi_terms'] . ', ' : '';                    // lsi tems
-        $protected .= strlen($request['domain_protected']) > 0 ? $request['domain_protected'] . ', ' : '';      // domain_protected
+        $protected .= $request['domain_protected'] !== null ? $request['domain_protected'] . ', ' : '';      // domain_protected
         $protected .= strlen($request['protected']) > 0 ? $request['protected'] . ', ' : '';                    // protected
         // $protected .= $protected . ',' . $company . ',' . $city . ',' . $state;
         $protected .= $company . ',' . $city . ',' . $state;
@@ -160,10 +160,7 @@ class WordsController extends Controller
     {
         // if validation success, generate spintax
 		$spintax = $this->generateSpintax($request->all(), $request->article);
-
-		return $spintax;
-		
-		/* $spintax = json_decode($spintax);
+		$spintax = json_decode($spintax);
 
         if (strtolower($spintax->status) === 'success') {
             $spin = $this->spin->process($spintax->text); // spin result
@@ -190,7 +187,7 @@ class WordsController extends Controller
 
         } else {
             return response()->json(['isError' => false, 'spintaxStatus' => false, 'result' => $spintax]);
-        } */
+        }
     }
 
     public function saveAndProcessNow(Request $request) {

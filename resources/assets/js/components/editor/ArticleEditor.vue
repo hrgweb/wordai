@@ -533,7 +533,7 @@
             },
 
             cleanTerms(terms) {
-                if (terms !== null) {
+                if (terms !== null && terms.length > 0) {
                     // find all line breaks and replace with comma(,)
                     let result = terms.replace(/[\n]/g, ',');
 

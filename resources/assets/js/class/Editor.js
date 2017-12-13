@@ -15,7 +15,7 @@ class Editor {
                 created_at: item.created_at,
                 doc_title: (title !== null && title.length > 50) ? title.substr(0, 50) + '...' : title,
                 domain: domain,
-                domain_protected: item.domain_protected,
+                domain_protected: item.domain_protected !== null ? item.domain_protected : '',
                 domain_protected_copy: (item.domain_protected !== null && item.domain_protected.length > 50) ? item.domain_protected.substr(0, 50) + '...' : item.domain_protected,
                 firstname: item.firstname,
                 hr_spent_editor_edit_article: item.hr_spent_editor_edit_article,

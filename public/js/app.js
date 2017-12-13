@@ -16369,7 +16369,7 @@ var Editor = function () {
                     created_at: item.created_at,
                     doc_title: title !== null && title.length > 50 ? title.substr(0, 50) + '...' : title,
                     domain: domain,
-                    domain_protected: item.domain_protected,
+                    domain_protected: item.domain_protected !== null ? item.domain_protected : '',
                     domain_protected_copy: item.domain_protected !== null && item.domain_protected.length > 50 ? item.domain_protected.substr(0, 50) + '...' : item.domain_protected,
                     firstname: item.firstname,
                     hr_spent_editor_edit_article: item.hr_spent_editor_edit_article,
@@ -34404,7 +34404,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.showDisapprovePanel = false;
         },
         cleanTerms: function cleanTerms(terms) {
-            if (terms !== null) {
+            if (terms !== null && terms.length > 0) {
                 // find all line breaks and replace with comma(,)
                 var result = terms.replace(/[\n]/g, ',');
 
@@ -68530,15 +68530,6 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     attrs: {
       "paginationPath": _vm.paginationPath,
       "tableType": _vm.tableType
-    }
-  }), _vm._v(" "), _c('article-edited', {
-    attrs: {
-      "tableType": _vm.tableType,
-      "index": _vm.index
-    }
-  }), _vm._v(" "), _c('article-to-publish', {
-    attrs: {
-      "articles": _vm.listArticleToPublish
     }
   })], 1)], 1)
 },staticRenderFns: []}
