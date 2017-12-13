@@ -16370,6 +16370,7 @@ var Editor = function () {
                     doc_title: title !== null && title.length > 50 ? title.substr(0, 50) + '...' : title,
                     domain: domain,
                     domain_protected: item.domain_protected,
+                    domain_protected_copy: item.domain_protected !== null && item.domain_protected.length > 50 ? item.domain_protected.substr(0, 50) + '...' : item.domain_protected,
                     firstname: item.firstname,
                     hr_spent_editor_edit_article: item.hr_spent_editor_edit_article,
                     id: item.word_id,
@@ -16383,8 +16384,10 @@ var Editor = function () {
                     keyword: keyword,
                     lastname: item.lastname,
                     lsi_terms: item.lsi_terms,
+                    lsi_terms_copy: item.lsi_terms !== null && item.lsi_terms.length > 50 ? item.lsi_terms.substr(0, 50) + '...' : item.lsi_terms,
                     min_spent_editor_edit_article: item.min_spent_editor_edit_article,
-                    protected: item.protected !== null && item.protected.length > 100 ? item.protected.substr(0, 100) + '...' : item.protected,
+                    protected: item.protected,
+                    protected_copy: item.protected !== null && item.protected.length > 50 ? item.protected.substr(0, 50) + '...' : item.protected,
                     sec_spent_editor_edit_article: item.sec_spent_editor_edit_article,
                     spin: spin,
                     spintax: spintax,
@@ -63842,7 +63845,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
   }, [_vm._m(0), _vm._v(" "), _c('tbody', _vm._l((_vm.articles), function(article, index) {
     return _c('tr', {
       key: index
-    }, [_c('td', [_vm._v(_vm._s(article.writer))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.article_type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.lsi_terms))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.protected))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.synonym))]), _vm._v(" "), _c('td', [(!_vm.isPublish) ? _c('button', {
+    }, [_c('td', [_vm._v(_vm._s(article.writer))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.article_type))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.domain))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.doc_title))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.keyword))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.lsi_terms_copy))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.protected_copy))]), _vm._v(" "), _c('td', [_vm._v(_vm._s(article.synonym))]), _vm._v(" "), _c('td', [(!_vm.isPublish) ? _c('button', {
       staticClass: "btn btn-info",
       attrs: {
         "type": "button"

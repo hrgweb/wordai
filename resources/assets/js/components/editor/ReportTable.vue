@@ -22,9 +22,9 @@
                     <td>{{ article.domain }}</td>
                     <td>{{ article.doc_title }}</td>
                     <td>{{ article.keyword }}</td>
-                    <td>{{ article.lsi_terms }}</td>
+                    <td>{{ article.lsi_terms_copy }}</td>
                     <!-- <td>{{ article.domain_protected }}</td> -->
-                    <td>{{ article.protected }}</td>
+                    <td>{{ article.protected_copy }}</td>
                     <td>{{ article.synonym }}</td>
                     <td>
                         <button type="button" class="btn btn-info" v-if="! isPublish" @click="editArticle(article, index)">Edit Article</button>
