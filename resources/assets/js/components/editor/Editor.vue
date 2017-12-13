@@ -28,15 +28,15 @@
             </article-to-edit>
 
             <!-- Article Edited -->
-            <!-- <article-edited
+            <article-edited
                 :tableType="tableType"
                 :index="index">
-            </article-edited> -->
+            </article-edited>
 
             <!-- Article To Publish -->
-            <!-- <article-to-publish
+            <article-to-publish
                 :articles="listArticleToPublish">
-            </article-to-publish> -->
+            </article-to-publish>
 
             <!-- <h2>Article List <span class="badge">{{ articlesCount }}</span></h2> -->
 

@@ -68531,6 +68531,15 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
       "paginationPath": _vm.paginationPath,
       "tableType": _vm.tableType
     }
+  }), _vm._v(" "), _c('article-edited', {
+    attrs: {
+      "tableType": _vm.tableType,
+      "index": _vm.index
+    }
+  }), _vm._v(" "), _c('article-to-publish', {
+    attrs: {
+      "articles": _vm.listArticleToPublish
+    }
   })], 1)], 1)
 },staticRenderFns: []}
 module.exports.render._withStripped = true
