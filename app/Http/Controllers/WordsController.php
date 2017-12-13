@@ -75,6 +75,7 @@ class WordsController extends Controller
         // $terms_protected = $word->remove_underline_and_spaces_for_terms($terms_protected);
 
 		// $paragraphs = $word->split_article_into_paragraph($request->article);
+		// END OLD CODE
 
 		$result = $this->api(
 			$text,
@@ -158,8 +159,11 @@ class WordsController extends Controller
     public function runWordai(Request $request)
     {
         // if validation success, generate spintax
-        $spintax = $this->generateSpintax($request->all(), $request->article);
-		$spintax = json_decode($spintax);
+		$spintax = $this->generateSpintax($request->all(), $request->article);
+
+		return $spintax;
+		
+		/* $spintax = json_decode($spintax);
 
         if (strtolower($spintax->status) === 'success') {
             $spin = $this->spin->process($spintax->text); // spin result
@@ -186,7 +190,7 @@ class WordsController extends Controller
 
         } else {
             return response()->json(['isError' => false, 'spintaxStatus' => false, 'result' => $spintax]);
-        }
+        } */
     }
 
     public function saveAndProcessNow(Request $request) {

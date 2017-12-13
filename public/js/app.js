@@ -34403,6 +34403,24 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         isCancelDisapprove: function isCancelDisapprove() {
             this.showDisapprovePanel = false;
         },
+        cleanTerms: function cleanTerms(terms) {
+            if (terms !== null) {
+                // find all line breaks and replace with comma(,)
+                var result = terms.replace(/[\n]/g, ',');
+
+                // results
+                result = result.match(/[^\,]+/g);
+
+                // trim space on each results
+                result = result.map(function (item) {
+                    return item !== null ? item.trim() : '';
+                });
+
+                return result.join(',');
+            } else {
+                return '';
+            }
+        },
         runWordai: function runWordai() {
             var _this9 = this;
 
@@ -34412,6 +34430,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
             // modify newArticle data
             this.newArticle['article'] = $('div.Original__article').find('.note-editable').text();
+
+            // update pt and dpt, add space as what api require
+            this.newArticle['protected'] = this.cleanTerms(this.article.protected);
+            this.newArticle['domain_protected'] = this.cleanTerms(this.article.domain_protected);
 
             axios.post('/words/runWordai', this.newArticle).then(function (response) {
                 var data = response.data;

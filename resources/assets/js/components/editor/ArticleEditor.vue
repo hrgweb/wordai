@@ -532,6 +532,23 @@
                 this.showDisapprovePanel = false;
             },
 
+            cleanTerms(terms) {
+                if (terms !== null) {
+                    // find all line breaks and replace with comma(,)
+                    let result = terms.replace(/[\n]/g, ',');
+
+                    // results
+                    result = result.match(/[^\,]+/g);
+
+                    // trim space on each results
+                    result = result.map(item => item !== null ? item.trim() : '');
+
+                    return result.join(',');
+                } else {
+                    return '';
+                }
+            },
+
             runWordai() {
                 this.isLoading = true;
                 this.isError = false;
@@ -539,6 +556,10 @@
 
                 // modify newArticle data
                 this.newArticle['article'] = $('div.Original__article').find('.note-editable').text();
+
+                // update pt and dpt, add space as what api require
+                this.newArticle['protected'] = this.cleanTerms(this.article.protected);
+                this.newArticle['domain_protected'] = this.cleanTerms(this.article.domain_protected);
 
                 axios.post('/words/runWordai', this.newArticle).then(response => {
                     let data = response.data;
