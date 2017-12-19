@@ -167,7 +167,8 @@ class WordsController extends Controller
 
             // update article record
             $result = Word::where('id', request('id'))->update([
-                'article' => request('article'),
+				'article' => request('article'),
+				'protected' => request('protected'),
                 'spintax' => $spintax->text,
                 'spin' => $spin,
                 'isEditorEdit' => 1,

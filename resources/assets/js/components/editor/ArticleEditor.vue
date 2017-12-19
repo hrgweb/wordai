@@ -16,7 +16,7 @@
             <!-- protected -->
             <div class="form-group">
                 <label for="protected">Protected Terms</label>
-                <textarea class="form-control" rows="6" v-model="input.protected"></textarea>
+                <textarea class="form-control" id="protected" rows="6" v-model="input.protected"></textarea>
             </div>
 
             <!-- citation -->
@@ -558,7 +558,7 @@
                 this.newArticle['article'] = $('div.Original__article').find('.note-editable').text();
 
                 // update pt and dpt, add space as what api require
-                this.newArticle['protected'] = this.cleanTerms(this.article.protected);
+                this.newArticle['protected'] = this.cleanTerms($('textarea#protected').val());
                 this.newArticle['domain_protected'] = this.cleanTerms(this.article.domain_protected);
 
                 axios.post('/words/runWordai', this.newArticle).then(response => {

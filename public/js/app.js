@@ -34432,7 +34432,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             this.newArticle['article'] = $('div.Original__article').find('.note-editable').text();
 
             // update pt and dpt, add space as what api require
-            this.newArticle['protected'] = this.cleanTerms(this.article.protected);
+            this.newArticle['protected'] = this.cleanTerms($('textarea#protected').val());
             this.newArticle['domain_protected'] = this.cleanTerms(this.article.domain_protected);
 
             axios.post('/words/runWordai', this.newArticle).then(function (response) {
@@ -64012,6 +64012,7 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     }],
     staticClass: "form-control",
     attrs: {
+      "id": "protected",
       "rows": "6"
     },
     domProps: {
